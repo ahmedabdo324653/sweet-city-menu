@@ -42,7 +42,99 @@
     }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    #thermalReceiptPrintArea { display: none; }
+    @media print {
+      @page {
+        size: 80mm auto;
+        margin: 0mm;
+      }
+      html, body {
+        width: 80mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      body > *:not(#thermalReceiptPrintArea) {
+        display: none !important;
+        visibility: hidden !important;
+      }
+      #thermalReceiptPrintArea {
+        display: block !important;
+        visibility: visible !important;
+        width: 80mm !important;
+        max-width: 80mm !important;
+        margin: 0 auto !important;
+        padding: 4mm 3mm !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-family: 'Cairo', 'Courier New', monospace !important;
+        font-size: 12px !important;
+        line-height: 1.45 !important;
+        direction: rtl !important;
+      }
+      #thermalReceiptPrintArea * {
+        color: #000000 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+      .thermal-receipt-header {
+        text-align: center;
+        border-bottom: 1.5px dashed #000000;
+        padding-bottom: 6px;
+        margin-bottom: 6px;
+      }
+      .thermal-receipt-title {
+        font-size: 16px !important;
+        font-weight: 900 !important;
+        margin: 0 !important;
+      }
+      .thermal-receipt-sub {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        margin: 2px 0 0 0 !important;
+      }
+      .thermal-receipt-body {
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-family: 'Cairo', 'Courier New', monospace !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+      }
+      .thermal-receipt-footer {
+        text-align: center;
+        border-top: 1.5px dashed #000000;
+        margin-top: 8px;
+        padding-top: 6px;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+      }
+    }
   </style>
+  <script>
+    function handleHeaderLogoError(imgEl) {
+      if (!imgEl) return;
+      if (!imgEl.dataset.triedPng && imgEl.getAttribute('src') !== 'logo.png') {
+        imgEl.dataset.triedPng = '1';
+        imgEl.src = 'logo.png';
+        return;
+      }
+      if (!imgEl.dataset.triedJpg) {
+        imgEl.dataset.triedJpg = '1';
+        imgEl.src = 'logo.jpg';
+        return;
+      }
+      imgEl.style.display = 'none';
+      const fb = document.getElementById('uiHeaderLogoFallback');
+      if (fb) {
+        fb.classList.remove('hidden');
+        fb.classList.add('flex');
+      }
+    }
+  </script>
 </head>
 <body class="min-h-screen pb-24 text-[13px]">
 
@@ -163,9 +255,7 @@
 
     <div class="h-px bg-gradient-to-r from-transparent via-[#d4af37]/40 to-transparent my-3"></div>
 
-    <main id="productsGrid" class="grid grid-cols-1 gap-3"></main>
-
-    <footer class="mt-8 pt-5 pb-6 border-t border-[#d4af37]/20 text-center text-[11px] sm:text-xs text-stone-400 space-y-1.5">
+    <main id="productsGrid" class="grid grid-cols-1 gap-3"></main><footer class="mt-8 pt-5 pb-6 border-t border-[#d4af37]/20 text-center text-[11px] sm:text-xs text-stone-400 space-y-1.5">
       <p class="font-semibold text-stone-300">جميع الحقوق محفوظة © SWEET CITY - Bakery & Pastry - العاشر من رمضان</p>
       <p>العاشر من رمضان - المجاورة 18 - مول تن بوينت | واتساب وخدمة العملاء: <span id="uiFooterPhone" class="text-[#d4af37] font-bold" dir="ltr">01040224226</span></p>
       <div class="flex flex-wrap items-center justify-center gap-2 pt-1 text-[11px]">
@@ -633,6 +723,7 @@
           <span>📲</span>
           <span>إرسال الفاتورة وتأكيدها عبر واتساب الآن</span>
         </a>
+        <button type="button" onclick="printCashierReceipt(lastInvoiceText || (document.getElementById('tyInvoicePre') ? document.getElementById('tyInvoicePre').textContent : ''))" class="w-full py-2 px-3 rounded-xl bg-[#1f1a11] hover:bg-[#2c2315] border border-[#d4af37]/60 text-[#f3d266] font-black text-xs cursor-pointer flex items-center justify-center gap-1.5">🖨️ طباعة الفاتورة</button>
         <div class="grid grid-cols-2 gap-2">
           <button type="button" onclick="copyLastInvoiceText()" class="py-2 px-3 rounded-xl bg-[#251f14] border border-[#d4af37]/40 text-[#f3d266] font-bold text-xs cursor-pointer">📋 نسخ الفاتورة</button>
           <button type="button" onclick="closeThankYouModal()" class="py-2 px-3 rounded-xl bg-stone-800 text-stone-200 font-bold text-xs cursor-pointer">إغلاق النافذة</button>
@@ -644,8 +735,7 @@
   <!-- إشعار Toast عائم غير حاجب للشاشة -->
   <div id="scToast" class="hidden fixed top-4 inset-x-4 max-w-md mx-auto z-[70] px-4 py-3 rounded-2xl bg-[#16130d] border-2 border-[#d4af37] text-[#f3d266] text-xs font-black text-center shadow-[0_10px_30px_rgba(0,0,0,0.85)] transition-all"></div>
 
-  <script id="scMainScript">
-    // ============================================================================
+  <script id="scMainScript">// ============================================================================
     // 1. هيكل البيانات الثابت (GALLERY_IMGS & RAW)
     // ============================================================================
     const GALLERY_IMGS = [
@@ -897,7 +987,8 @@
     let ADMIN_CLOUD_ORDERS = [];
 
     function getPersonalOrders() {
-      try {const parsed = JSON.parse(localStorage.getItem(PERSONAL_ORDERS_KEY) || '[]');
+      try {
+        const parsed = JSON.parse(localStorage.getItem(PERSONAL_ORDERS_KEY) || '[]');
         return Array.isArray(parsed) ? parsed : [];
       } catch (e) {
         return [];
@@ -1092,26 +1183,6 @@
           if (submitIcon) submitIcon.textContent = '⛔';
           if (submitText) submitText.textContent = STORE_SETTINGS.closureMessage || 'نعتذر، المحل مزدحم حالياً وسنعاود استقبال الطلبات قريباً';
         }
-      }
-    }
-
-    function handleHeaderLogoError(imgEl) {
-      if (!imgEl) return;
-      if (!imgEl.dataset.triedPng && imgEl.getAttribute('src') !== 'logo.png') {
-        imgEl.dataset.triedPng = '1';
-        imgEl.src = 'logo.png';
-        return;
-      }
-      if (!imgEl.dataset.triedJpg) {
-        imgEl.dataset.triedJpg = '1';
-        imgEl.src = 'logo.jpg';
-        return;
-      }
-      imgEl.style.display = 'none';
-      const fb = document.getElementById('uiHeaderLogoFallback');
-      if (fb) {
-        fb.classList.remove('hidden');
-        fb.classList.add('flex');
       }
     }
 
@@ -1796,7 +1867,8 @@
       }
 
       const key = `${item.id}_${w}`;
-      const exactPrice = Number((item.price * w).toFixed(2));const existing = cart.find(c => c.key === key);
+      const exactPrice = Number((item.price * w).toFixed(2));
+      const existing = cart.find(c => c.key === key);
       if (existing) {
         existing.qty += 1;
       } else {
@@ -2676,12 +2748,15 @@
         box.innerHTML = '<div class="p-6 text-center rounded-2xl bg-[#12100b] border border-stone-800 text-stone-400 text-xs">لا توجد طلبات مسجلة حتى الآن.</div>';
         return;
       }
-      box.innerHTML = orders.map(o => `
+      box.innerHTML = orders.map((o, idx) => `
         <div class="p-3.5 rounded-2xl bg-[#12100b] border border-[#d4af37]/30 space-y-1.5 text-xs">
           <div class="flex flex-wrap items-center justify-between gap-2 pb-1.5 border-b border-stone-800">
             <span class="font-black text-[#e3b938]" dir="ltr">#${o.id}</span>
             <span class="text-stone-400">${o.date || ''} ${o.time ? '— ' + o.time : ''}</span>
-            <span class="font-black text-emerald-400">${o.total} ج.م</span>
+            <div class="flex items-center gap-2">
+              <span class="font-black text-emerald-400">${o.total} ج.م</span>
+              <button type="button" onclick="printAdminOrderReceipt(${idx})" class="px-2.5 py-1 rounded-lg bg-[#262012] hover:bg-[#342b18] border border-[#d4af37]/50 text-[#f3d266] text-[11px] font-black cursor-pointer">🖨️ طباعة الفاتورة</button>
+            </div>
           </div>
           ${o.customerName || o.phone ? `<div class="text-stone-300 text-[11px]">👤 العميل: <b>${o.customerName || '-'}</b> | 📱 الموبايل: <b dir="ltr">${o.phone || '-'}</b> ${o.address ? '| 📍 ' + o.address : ''}</div>` : ''}
           <pre class="whitespace-pre-wrap font-sans text-[11px] text-stone-200 bg-black/60 p-2 rounded-xl border border-stone-800">${o.itemsSummary || o.summary || ''}</pre>
@@ -2695,7 +2770,8 @@
         reader.onload = function(ev) {
           const img = new Image();
           img.onload = function() {
-            const canvas = document.createElement('canvas');const maxDim = 800;
+            const canvas = document.createElement('canvas');
+            const maxDim = 800;
             let w = img.width;
             let h = img.height;
             if (w > h && w > maxDim) {
@@ -3331,6 +3407,160 @@
         return e.returnValue;
       }
     });
+
+    function printAdminOrderReceipt(idx) {
+      const orders = Array.isArray(ADMIN_CLOUD_ORDERS) ? ADMIN_CLOUD_ORDERS : [];
+      const o = orders[idx];
+      if (!o) return;
+      const lines = [
+        `رقم الطلب: #${o.id || ''}`,
+        (o.date || o.time) ? `التاريخ: ${o.date || ''} ${o.time ? '- ' + o.time : ''}` : '',
+        o.customerName ? `العميل: ${o.customerName}` : '',
+        o.phone ? `الموبايل: ${o.phone}` : '',
+        o.address ? `العنوان: ${o.address}` : '',
+        '------------------------------',
+        String(o.itemsSummary || o.summary || '').trim(),
+        '------------------------------',
+        `الإجمالي المطلوب: ${o.total || 0} ج.م`
+      ].filter(Boolean).join('\n');
+      printCashierReceipt(lines);
+    }
+
+    function printCashierReceipt(invoiceText) {
+      const rawText = String(invoiceText || '').trim();
+      if (!rawText) {
+        if (typeof showToast === 'function') {
+          showToast('⚠️ لا توجد بيانات فاتورة للطباعة', true);
+        }
+        return;
+      }
+
+      const escapeHtml = function (str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      };
+
+      const storeTitle = 'سويت سيتي 1999 | SWEET CITY';
+      const branchAddr = (typeof STORE_SETTINGS !== 'undefined' && STORE_SETTINGS.branchAddress)
+        ? STORE_SETTINGS.branchAddress
+        : 'العاشر من رمضان - المجاورة 18 - مول تن بوينت';
+      const storePhone = (typeof STORE_SETTINGS !== 'undefined' && STORE_SETTINGS.phone)
+        ? STORE_SETTINGS.phone
+        : '01040224226';
+
+      const formattedLinesHtml = rawText
+        .split(/\r?\n/)
+        .map(function (line) {
+          const trimmed = line.trim();
+          if (!trimmed) return '<div class="spacer"></div>';
+          if (/^[━═\-_]{4,}$/.test(trimmed)) {
+            return '<div class="dashed-sep"></div>';
+          }
+          return '<div class="line">' + escapeHtml(trimmed) + '</div>';
+        })
+        .join('');
+
+      const receiptHtml =
+        '<!DOCTYPE html>' +
+        '<html lang="ar" dir="rtl">' +
+        '<head>' +
+        '<meta charset="UTF-8" />' +
+        '<title>فاتورة سويت سيتي 1999</title>' +
+        '<link rel="preconnect" href="https://fonts.googleapis.com">' +
+        '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' +
+        '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&display=swap" rel="stylesheet">' +
+        '<style>' +
+        '@page { size: 80mm auto; margin: 0mm; }' +
+        '* { box-sizing: border-box; color: #000000 !important; background: #ffffff !important; }' +
+        'html, body { width: 78mm; max-width: 78mm; margin: 0 auto; padding: 3mm 2.5mm; background: #ffffff !important; color: #000000 !important; font-family: "Cairo", Tahoma, Arial, sans-serif; font-size: 12px; font-weight: 700; line-height: 1.45; direction: rtl; -webkit-print-color-adjust: exact; print-color-adjust: exact; }' +
+        '.receipt-wrap { width: 100%; background: #ffffff; color: #000000; }' +
+        '.header { text-align: center; padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1.5px dashed #000000; }' +
+        '.title { margin: 0; font-size: 16px; font-weight: 900; color: #000000; }' +
+        '.subtitle { margin: 2px 0 0 0; font-size: 10px; font-weight: 800; color: #000000; }' +
+        '.body { margin: 4px 0; font-size: 11.5px; font-weight: 700; word-break: break-word; }' +
+        '.line { margin: 2px 0; }' +
+        '.spacer { height: 4px; }' +
+        '.dashed-sep { border-top: 1.5px dashed #000000; margin: 5px 0; height: 0; }' +
+        '.footer { text-align: center; border-top: 1.5px dashed #000000; margin-top: 8px; padding-top: 6px; font-size: 10.5px; font-weight: 800; color: #000000; }' +
+        '</style>' +
+        '</head>' +
+        '<body>' +
+        '<div class="receipt-wrap">' +
+        '<div class="header">' +
+        '<h1 class="title">' + escapeHtml(storeTitle) + '</h1>' +
+        '<p class="subtitle">' + escapeHtml(branchAddr) + '</p>' +
+        '<p class="subtitle">ت: ' + escapeHtml(storePhone) + '</p>' +
+        '</div>' +
+        '<div class="body">' + formattedLinesHtml + '</div>' +
+        '<div class="footer">شكراً لزيارتكم — مخبز وحلواني سويت سيتي 1999</div>' +
+        '</div>' +
+        '</body>' +
+        '</html>';
+
+      const oldFrame = document.getElementById('scHiddenPrintFrame');
+      if (oldFrame && oldFrame.parentNode) {
+        oldFrame.parentNode.removeChild(oldFrame);
+      }
+
+      const iframe = document.createElement('iframe');
+      iframe.id = 'scHiddenPrintFrame';
+      iframe.style.display = 'none';
+      iframe.style.width = '0';
+      iframe.style.height = '0';
+      iframe.style.border = '0';
+      iframe.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(iframe);
+
+      let cleaned = false;
+      const cleanupIframe = function () {
+        if (cleaned) return;
+        cleaned = true;
+        if (iframe && iframe.parentNode) {
+          iframe.parentNode.removeChild(iframe);
+        }
+      };
+
+      const doc = iframe.contentWindow ? iframe.contentWindow.document : iframe.contentDocument;
+      if (!doc) {
+        cleanupIframe();
+        return;
+      }
+
+      let printTriggered = false;
+      const triggerPrint = function () {
+        if (printTriggered) return;
+        printTriggered = true;
+        try {
+          const win = iframe.contentWindow;
+          if (!win) {
+            cleanupIframe();
+            return;
+          }
+          win.onafterprint = function () {
+            setTimeout(cleanupIframe, 300);
+          };
+          win.focus();
+          win.print();
+          setTimeout(cleanupIframe, 60000);
+        } catch (err) {
+          cleanupIframe();
+        }
+      };
+
+      iframe.onload = function () {
+        setTimeout(triggerPrint, 120);
+      };
+
+      doc.open();
+      doc.write(receiptHtml);
+      doc.close();
+
+      setTimeout(triggerPrint, 300);
+    }
 
     initApp();
     syncFromGoogleSheet(false);
