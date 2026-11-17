@@ -34,6 +34,7 @@
       background-image: radial-gradient(circle at 50% 0%, #1d170c 0%, #0b0a08 42%, #070604 100%);
       color: #f5f0e6;
       overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
     }
     .font-en { font-family: 'Playfair Display', serif; }
     .gold-grad { background: linear-gradient(135deg, #f4d365 0%, #d4af37 52%, #b78a1e 100%); }
@@ -79,6 +80,7 @@
         0 4px 18px -4px rgba(212, 175, 55, 0.12),
         inset 0 1px 0 rgba(255, 232, 163, 0.10);
       transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+      contain: content;
     }
     #productsGrid > .card-surface:hover {
       transform: translateY(-2px);
