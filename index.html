@@ -35,6 +35,8 @@
       color: #f5f0e6;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     .font-en { font-family: 'Playfair Display', serif; }
     .gold-grad { background: linear-gradient(135deg, #f4d365 0%, #d4af37 52%, #b78a1e 100%); }
@@ -70,6 +72,9 @@
       background: linear-gradient(135deg, #3a2c14 0%, #261d0e 55%, #352711 100%);
       box-shadow: 0 8px 20px rgba(212, 175, 55, 0.26);
     }
+    #productsGrid {
+      overscroll-behavior-y: contain;
+    }
     #productsGrid > .card-surface {
       background: linear-gradient(165deg, #211c13 0%, #15120d 55%, #0f0d09 100%);
       border: 1px solid rgba(212, 175, 55, 0.34);
@@ -80,7 +85,7 @@
         0 4px 18px -4px rgba(212, 175, 55, 0.12),
         inset 0 1px 0 rgba(255, 232, 163, 0.10);
       transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
-      contain: content;
+      contain: layout paint;
     }
     #productsGrid > .card-surface:hover {
       transform: translateY(-2px);
