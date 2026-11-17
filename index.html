@@ -45,13 +45,58 @@
       border: 1px solid rgba(212, 175, 55, 0.30);
       box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.78);
     }
+    body > div.max-w-lg {
+      padding-top: 8px !important;
+    }
+    header.card-surface {
+      padding: 10px 12px !important;
+    }
+    header.card-surface > div:first-child {
+      margin-top: -10px !important;
+      margin-bottom: 6px !important;
+    }
+    header.card-surface > div:nth-child(3) {
+      margin-top: 8px !important;
+      padding-top: 5px !important;
+      padding-bottom: 5px !important;
+    }
+    header > div.grid.grid-cols-2 {
+      gap: 8px !important;
+      margin-top: 8px !important;
+    }
+    header > div.relative {
+      margin-top: 8px !important;
+      margin-bottom: 8px !important;
+    }
+    #categoriesBar {
+      margin-top: 6px !important;
+      margin-bottom: 4px !important;
+    }
+    header + div.h-px {
+      margin-top: 6px !important;
+      margin-bottom: 6px !important;
+    }
     .sc-action-btn {
-      min-height: 42px;
       border-radius: 12px;
       background: linear-gradient(160deg, #1e1a12 0%, #14110b 100%);
       border: 1px solid rgba(212, 175, 55, 0.32);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 232, 163, 0.08);
       transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      font-size: 13px !important;
+      padding: 8px 10px !important;
+      min-width: 0 !important;
+    }
+    .sc-action-btn > span {
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      min-width: 0;
+    }
+    .sc-action-btn > span:first-child {
+      flex-shrink: 0;
     }
     .sc-action-btn:hover {
       border-color: rgba(243, 210, 102, 0.75);
@@ -75,6 +120,8 @@
     #productsGrid {
       overscroll-behavior-y: contain;
       -webkit-overflow-scrolling: touch;
+      margin-top: 4px !important;
+      padding-top: 0 !important;
     }
     #productsGrid > .card-surface {
       background: linear-gradient(165deg, #211c13 0%, #15120d 55%, #0f0d09 100%);
