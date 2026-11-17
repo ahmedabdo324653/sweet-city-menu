@@ -31,14 +31,143 @@
       padding: 0;
       font-family: 'Cairo', sans-serif;
       background-color: #0b0a08;
+      background-image: radial-gradient(circle at 50% 0%, #1d170c 0%, #0b0a08 42%, #070604 100%);
       color: #f5f0e6;
       overflow-x: hidden;
     }
     .font-en { font-family: 'Playfair Display', serif; }
-    .gold-grad { background: linear-gradient(135deg, #ecc94b 0%, #d4af37 50%, #b78a1e 100%); }
+    .gold-grad { background: linear-gradient(135deg, #f4d365 0%, #d4af37 52%, #b78a1e 100%); }
     .card-surface {
       background: radial-gradient(circle at top, #1f1b13 0%, #12100c 100%);
+      border: 1px solid rgba(212, 175, 55, 0.30);
+      box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.78);
+    }
+    .sc-action-btn {
+      min-height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(160deg, #1e1a12 0%, #14110b 100%);
+      border: 1px solid rgba(212, 175, 55, 0.32);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 232, 163, 0.08);
+      transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .sc-action-btn:hover {
+      border-color: rgba(243, 210, 102, 0.75);
+      background: linear-gradient(160deg, #282216 0%, #1a160e 100%);
+      box-shadow: 0 6px 16px rgba(212, 175, 55, 0.16), inset 0 1px 0 rgba(255, 232, 163, 0.14);
+      transform: translateY(-1px);
+    }
+    .sc-action-btn:active {
+      transform: scale(0.97);
+    }
+    .sc-action-btn-featured {
+      background: linear-gradient(135deg, #2f2411 0%, #1f170b 55%, #2b200e 100%);
+      border: 1px solid rgba(212, 175, 55, 0.68);
+      box-shadow: 0 6px 16px rgba(212, 175, 55, 0.15), inset 0 1px 0 rgba(255, 232, 163, 0.16);
+    }
+    .sc-action-btn-featured:hover {
+      border-color: #f3d266;
+      background: linear-gradient(135deg, #3a2c14 0%, #261d0e 55%, #352711 100%);
+      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.26);
+    }
+    #productsGrid > .card-surface {
+      background: linear-gradient(165deg, #211c13 0%, #15120d 55%, #0f0d09 100%);
+      border: 1px solid rgba(212, 175, 55, 0.34);
+      border-radius: 20px;
+      padding: 14px;
+      box-shadow:
+        0 14px 34px -10px rgba(0, 0, 0, 0.88),
+        0 4px 18px -4px rgba(212, 175, 55, 0.12),
+        inset 0 1px 0 rgba(255, 232, 163, 0.10);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+    #productsGrid > .card-surface:hover {
+      transform: translateY(-2px);
+      border-color: rgba(243, 210, 102, 0.58);
+      box-shadow:
+        0 18px 42px -10px rgba(0, 0, 0, 0.94),
+        0 8px 24px -4px rgba(212, 175, 55, 0.20),
+        inset 0 1px 0 rgba(255, 232, 163, 0.16);
+    }
+    #productsGrid > .card-surface > div:first-child {
+      height: 200px;
+      min-height: 200px;
+      max-height: 200px;
+      border-radius: 12px;
       border: 1px solid rgba(212, 175, 55, 0.28);
+      box-shadow: inset 0 0 26px rgba(0, 0, 0, 0.45);
+      background: radial-gradient(circle at center, #282115 0%, #14110b 75%, #0d0b07 100%);
+      overflow: hidden;
+    }
+    #productsGrid > .card-surface > div:first-child > span {
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    #productsGrid > .card-surface > div:first-child img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 12px;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+    #productsGrid > .card-surface:hover > div:first-child img {
+      transform: scale(1.03);
+    }
+    #productsGrid > .card-surface h3 {
+      color: #fffcf4;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+    #productsGrid > .card-surface p {
+      color: #d6cfc2;
+      line-height: 1.5;
+    }
+    #productsGrid > .card-surface > div:nth-child(2) > div:last-child {
+      background: #1a160e;
+      border-color: rgba(212, 175, 55, 0.45);
+      padding: 6px 10px;
+    }
+    #productsGrid > .card-surface > div:nth-child(2) > div:last-child span:first-child {
+      color: #d6cfc2;
+    }
+    #productsGrid > .card-surface > div:nth-child(3) {
+      background: #110e09;
+      border-color: rgba(212, 175, 55, 0.34);
+      padding: 10px;
+    }
+    #productsGrid > .card-surface > div:nth-child(3) > div:first-child > span:first-child {
+      color: #ede6d8;
+    }
+    #productsGrid > .card-surface > div:nth-child(4) > div:first-child > span:last-child {
+      color: #cfc7b8;
+    }
+    #productsGrid button[onclick^="adjustItemWeight("],
+    #productsGrid button[onclick^="addToCart("] {
+      transition: transform 0.16s ease, filter 0.18s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    #productsGrid button[onclick^="adjustItemWeight("][onclick*=", 1)"]:not(:disabled),
+    #productsGrid button[onclick^="adjustItemWeight("][onclick*=", 0.25)"]:not(:disabled),
+    #productsGrid button[onclick^="addToCart("]:not(:disabled) {
+      background: linear-gradient(135deg, #f4d365 0%, #d4af37 52%, #b88919 100%);
+      color: #100c04;
+      border: 1px solid rgba(255, 240, 185, 0.72);
+      font-weight: 900;
+      box-shadow: 0 6px 18px rgba(212, 175, 55, 0.34), inset 0 1px 0 rgba(255, 250, 224, 0.45);
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.22);
+    }
+    #productsGrid button[onclick^="adjustItemWeight("][onclick*=", 1)"]:not(:disabled):hover,
+    #productsGrid button[onclick^="adjustItemWeight("][onclick*=", 0.25)"]:not(:disabled):hover,
+    #productsGrid button[onclick^="addToCart("]:not(:disabled):hover {
+      background: linear-gradient(135deg, #fae084 0%, #e3be45 52%, #c79822 100%);
+      box-shadow: 0 8px 24px rgba(227, 185, 56, 0.48), inset 0 1px 0 rgba(255, 252, 232, 0.6);
+      transform: translateY(-1px);
+    }
+    #productsGrid button[onclick^="adjustItemWeight("][onclick*=", 1)"]:not(:disabled):active,
+    #productsGrid button[onclick^="adjustItemWeight("][onclick*=", 0.25)"]:not(:disabled):active,
+    #productsGrid button[onclick^="addToCart("]:not(:disabled):active {
+      transform: scale(0.96);
+      box-shadow: 0 3px 10px rgba(212, 175, 55, 0.28);
     }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -139,18 +268,18 @@
 <body class="min-h-screen pb-24 text-[13px]">
 
   <!-- الرأس والواجهة الرئيسية للمنيو بمقاسات مدمجة متناسقة (تصميم الزبائن الأصلي 100%) -->
-  <div class="max-w-md mx-auto px-2.5 pt-2.5">
-    <header class="card-surface rounded-[22px] p-3.5 shadow-2xl relative overflow-hidden">
-      <div class="w-12 h-1.5 rounded-b-full border-x border-b border-[#d4af37]/60 mx-auto -mt-3.5 mb-3"></div>
+  <div class="max-w-lg mx-auto px-3 pt-3">
+    <header class="card-surface rounded-[24px] p-4 shadow-[0_18px_48px_rgba(0,0,0,0.88),0_0_32px_rgba(212,175,55,0.12)] relative overflow-hidden">
+      <div class="w-14 h-1.5 rounded-b-full border-x border-b border-[#d4af37]/70 mx-auto -mt-4 mb-3.5 bg-[#d4af37]/15"></div>
 
-      <div class="flex items-center justify-between gap-2.5">
+      <div class="flex items-center justify-between gap-3">
         <div class="text-left flex-1">
-          <h1 id="uiStoreNameEn" class="font-en text-2xl sm:text-3xl font-black text-[#d4af37] tracking-wider leading-none">SWEET CITY</h1>
-          <p id="uiSubtitleEn" class="text-xs sm:text-sm font-extrabold text-white mt-0.5">Bakery & Pastry</p>
-          <p id="uiAddress" class="text-[11px] sm:text-xs text-stone-400 mt-0.5 font-semibold">العاشر من رمضان - المجاورة 18 - مول تن بوينت</p>
+          <h1 id="uiStoreNameEn" class="font-en text-2xl sm:text-3xl font-black text-[#d4af37] tracking-wider leading-none drop-shadow-[0_2px_10px_rgba(212,175,55,0.22)]">SWEET CITY</h1>
+          <p id="uiSubtitleEn" class="text-xs sm:text-sm font-extrabold text-[#fffcf4] mt-1">Bakery & Pastry</p>
+          <p id="uiAddress" class="text-[11px] sm:text-xs text-stone-300 mt-1 font-semibold">العاشر من رمضان - المجاورة 18 - مول تن بوينت</p>
         </div>
 
-        <button type="button" id="scLogoBtn" title="شعار سويت سيتي 1999" class="w-16 h-16 sm:w-18 sm:h-18 rounded-full border-2 border-[#d4af37] bg-[#14110b] flex flex-col items-center justify-center shrink-0 shadow-[0_0_20px_rgba(212,175,55,0.28)] cursor-pointer transition-transform active:scale-95 overflow-hidden relative">
+        <button type="button" id="scLogoBtn" title="شعار سويت سيتي 1999" class="w-16 h-16 sm:w-18 sm:h-18 rounded-full border-2 border-[#d4af37] bg-[#14110b] flex flex-col items-center justify-center shrink-0 shadow-[0_0_24px_rgba(212,175,55,0.34)] cursor-pointer transition-transform active:scale-95 overflow-hidden relative">
           <img id="uiHeaderLogoImg" src="logo.png" alt="سويت سيتي 1999" class="w-full h-full object-cover rounded-full" onerror="handleHeaderLogoError(this)" />
           <div id="uiHeaderLogoFallback" class="hidden flex-col items-center justify-center">
             <span class="font-en text-xl sm:text-2xl font-black text-[#d4af37] leading-none tracking-wider">SC</span>
@@ -159,42 +288,42 @@
         </button>
       </div>
 
-      <div class="mt-3 py-1.5 px-3 rounded-full bg-[#17140d] border border-[#d4af37]/30 flex items-center justify-center gap-1.5 text-[11px] sm:text-xs font-bold">
+      <div class="mt-3.5 py-2 px-3.5 rounded-xl bg-[#16130c]/95 border border-[#d4af37]/35 flex items-center justify-center gap-2 text-[11px] sm:text-xs font-bold shadow-inner">
         <span id="uiStatusDot" class="w-2 h-2 rounded-full bg-emerald-400 inline-block shadow-[0_0_8px_#34d399]"></span>
         <span id="uiOpenStatus" class="text-stone-100">مفتوح الآن 24 ساعة</span>
         <span class="text-stone-500">•</span>
-        <span class="text-[#d4af37] font-black">✨ <span id="uiTotalItemsCount">156</span> صنف طازج</span>
+        <span class="text-[#f3d266] font-black">✨ <span id="uiTotalItemsCount">156</span> صنف طازج</span>
       </div>
 
-      <div class="grid grid-cols-2 gap-2 mt-2.5 text-[11px] sm:text-xs font-bold">
-        <button type="button" onclick="openAiModal()" class="py-2 px-2.5 rounded-full bg-gradient-to-r from-[#2c2211] via-[#1f180c] to-[#2c2211] hover:border-[#d4af37] border border-[#d4af37]/60 text-[#f3d266] flex items-center justify-center gap-1.5 transition cursor-pointer shadow-sm">
-          <span>👨‍🍳</span>
+      <div class="grid grid-cols-2 gap-2.5 mt-3 text-[11px] sm:text-xs font-bold">
+        <button type="button" onclick="openAiModal()" class="sc-action-btn sc-action-btn-featured py-2.5 px-3 text-[#ffe28a] flex items-center justify-center gap-1.5 cursor-pointer">
+          <span class="text-sm">👨‍🍳</span>
           <span class="assistant-title">المساعد الذكي AI</span>
         </button>
-        <button type="button" onclick="openOrdersModal()" class="py-2 px-2.5 rounded-full bg-[#1a1710] hover:bg-[#252015] border border-[#d4af37]/30 text-stone-100 flex items-center justify-center gap-1 transition cursor-pointer">
-          <span>🕒</span>
+        <button type="button" onclick="openOrdersModal()" class="sc-action-btn py-2.5 px-3 text-[#f8f3e8] flex items-center justify-center gap-1.5 cursor-pointer">
+          <span class="text-sm">🕒</span>
           <span>طلباتي السابقة ( <span id="uiPastOrdersCount">0</span> )</span>
         </button>
-        <a id="uiMapLink" href="https://maps.google.com/?q=العاشر+من+رمضان+المجاورة+18+مول+تن+بوينت" target="_blank" rel="noopener noreferrer" class="py-2 px-2.5 rounded-full bg-[#1a1710] hover:bg-[#252015] border border-[#d4af37]/30 text-stone-100 flex items-center justify-center gap-1 transition">
-          <span>🗺️</span>
+        <a id="uiMapLink" href="https://maps.google.com/?q=العاشر+من+رمضان+المجاورة+18+مول+تن+بوينت" target="_blank" rel="noopener noreferrer" class="sc-action-btn py-2.5 px-3 text-[#f8f3e8] flex items-center justify-center gap-1.5">
+          <span class="text-sm">🗺️</span>
           <span>موقع الفرع</span>
         </a>
-        <button type="button" onclick="shareMenu()" class="py-2 px-2.5 rounded-full bg-[#1a1710] hover:bg-[#252015] border border-[#d4af37]/30 text-stone-100 flex items-center justify-center gap-1 transition cursor-pointer">
-          <span>📤</span>
+        <button type="button" onclick="shareMenu()" class="sc-action-btn py-2.5 px-3 text-[#f8f3e8] flex items-center justify-center gap-1.5 cursor-pointer">
+          <span class="text-sm">📤</span>
           <span>مشاركة المنيو</span>
         </button>
-        <a id="uiFacebookLink" href="https://www.facebook.com/share/1c9jj4wD3R/" target="_blank" rel="noopener noreferrer" class="py-2 px-2.5 rounded-full bg-[#1a1710] hover:bg-[#252015] border border-[#d4af37]/35 hover:border-[#d4af37] text-[#f3d266] flex items-center justify-center gap-1.5 transition">
-          <span>📘</span>
+        <a id="uiFacebookLink" href="https://www.facebook.com/share/1c9jj4wD3R/" target="_blank" rel="noopener noreferrer" class="sc-action-btn py-2.5 px-3 text-[#f3d266] flex items-center justify-center gap-1.5">
+          <span class="text-sm">📘</span>
           <span>صفحتنا على فيسبوك</span>
         </a>
-        <a id="uiInstagramLink" href="https://www.instagram.com/sweetcity_18?obrf=dnFuNGdlZXF1Ymhy" target="_blank" rel="noopener noreferrer" class="py-2 px-2.5 rounded-full bg-[#1a1710] hover:bg-[#252015] border border-[#d4af37]/35 hover:border-[#d4af37] text-[#f3d266] flex items-center justify-center gap-1.5 transition">
-          <span>📸</span>
+        <a id="uiInstagramLink" href="https://www.instagram.com/sweetcity_18?obrf=dnFuNGdlZXF1Ymhy" target="_blank" rel="noopener noreferrer" class="sc-action-btn py-2.5 px-3 text-[#f3d266] flex items-center justify-center gap-1.5">
+          <span class="text-sm">📸</span>
           <span>تابعنا على إنستجرام</span>
         </a>
-        <button type="button" onclick="toggleBranchesPanel()" class="col-span-2 py-2 px-3 rounded-full bg-gradient-to-r from-[#2c2211] via-[#1f180c] to-[#2c2211] hover:border-[#d4af37] border border-[#d4af37]/60 text-[#f3d266] flex items-center justify-center gap-1.5 transition cursor-pointer shadow-sm">
-          <span>🏪</span>
+        <button type="button" onclick="toggleBranchesPanel()" class="col-span-2 sc-action-btn sc-action-btn-featured py-2.5 px-3.5 text-[#ffe28a] flex items-center justify-center gap-1.5 cursor-pointer">
+          <span class="text-sm">🏪</span>
           <span>فروعنا وأرقامنا</span>
-          <span id="branchesArrow" class="text-[10px] text-[#d4af37]">▼</span>
+          <span id="branchesArrow" class="text-[10px] text-[#f3d266]">▼</span>
         </button>
       </div>
 
@@ -238,33 +367,33 @@
         </div>
       </div>
 
-      <div class="relative mt-3">
+      <div class="relative mt-3.5">
         <input
           id="searchInput"
           type="text"
           oninput="handleSearch(this.value)"
           placeholder="ابحث في الأصناف (كرواسون، باتيه، قهوة، كعك...)"
-          class="w-full py-2.5 pr-3.5 pl-14 rounded-full bg-[#12100b] border border-[#d4af37]/45 focus:border-[#d4af37] text-xs text-white placeholder-stone-500 outline-none transition"
+          class="w-full py-2.5 pr-4 pl-14 rounded-xl bg-[#110e09] border border-[#d4af37]/45 focus:border-[#f3d266] text-xs text-white placeholder-stone-400 outline-none transition shadow-inner"
         />
         <button type="button" id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute left-9 top-1/2 -translate-y-1/2 text-blue-400 hover:text-white text-base font-bold px-1 cursor-pointer">×</button>
-        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm">🔍</span>
+        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm">🔍</span>
       </div>
 
       <div id="categoriesBar" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar mt-3 pt-0.5 pb-0.5"></div>
     </header>
 
-    <div class="h-px bg-gradient-to-r from-transparent via-[#d4af37]/40 to-transparent my-3"></div>
+    <div class="h-px bg-gradient-to-r from-transparent via-[#d4af37]/45 to-transparent my-3.5"></div>
 
-    <main id="productsGrid" class="grid grid-cols-1 gap-3"></main>
+    <main id="productsGrid" class="grid grid-cols-1 gap-3.5"></main>
 
-    <footer class="mt-8 pt-5 pb-6 border-t border-[#d4af37]/20 text-center text-[11px] sm:text-xs text-stone-400 space-y-1.5">
-      <p class="font-semibold text-stone-300">جميع الحقوق محفوظة © SWEET CITY - Bakery & Pastry - العاشر من رمضان</p>
-      <p>العاشر من رمضان - المجاورة 18 - مول تن بوينت | واتساب وخدمة العملاء: <span id="uiFooterPhone" class="text-[#d4af37] font-bold" dir="ltr">01040224226</span></p>
+    <footer class="mt-8 pt-5 pb-6 border-t border-[#d4af37]/25 text-center text-[11px] sm:text-xs text-stone-300 space-y-1.5">
+      <p class="font-semibold text-stone-200">جميع الحقوق محفوظة © SWEET CITY - Bakery & Pastry - العاشر من رمضان</p>
+      <p>العاشر من رمضان - المجاورة 18 - مول تن بوينت | واتساب وخدمة العملاء: <span id="uiFooterPhone" class="text-[#f3d266] font-bold" dir="ltr">01040224226</span></p>
       <div class="flex flex-wrap items-center justify-center gap-2 pt-1 text-[11px]">
-        <button type="button" onclick="copyPaymentNum('01040224226', 'فودافون كاش')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-200 hover:border-[#d4af37] transition cursor-pointer">
+        <button type="button" onclick="copyPaymentNum('01040224226', 'فودافون كاش')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-100 hover:border-[#d4af37] transition cursor-pointer">
           🔴 فودافون كاش: <span class="text-[#e3b938] font-black" dir="ltr">01040224226</span>
         </button>
-        <button type="button" onclick="copyPaymentNum('01090000421', 'إنستا باي InstaPay')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-200 hover:border-[#d4af37] transition cursor-pointer">
+        <button type="button" onclick="copyPaymentNum('01090000421', 'إنستا باي InstaPay')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-100 hover:border-[#d4af37] transition cursor-pointer">
           🟣 إنستا باي: <span class="text-[#e3b938] font-black" dir="ltr">01090000421</span>
         </button>
       </div>
@@ -282,10 +411,10 @@
   </div>
 
   <!-- شريط السلة العائم بالأسفل -->
-  <div id="floatingCartBar" class="hidden fixed bottom-3 inset-x-3 max-w-md mx-auto z-40">
-    <button type="button" onclick="openCartModal()" class="w-full gold-grad text-black font-black py-3 px-4 rounded-2xl shadow-[0_10px_28px_rgba(212,175,55,0.45)] flex items-center justify-between cursor-pointer">
+  <div id="floatingCartBar" class="hidden fixed bottom-3 inset-x-3 max-w-lg mx-auto z-40">
+    <button type="button" onclick="openCartModal()" class="w-full gold-grad text-[#100c04] font-black py-3.5 px-4 rounded-2xl shadow-[0_12px_30px_rgba(212,175,55,0.48)] border border-[#fff0b9]/65 flex items-center justify-between cursor-pointer transition-transform hover:-translate-y-0.5 active:scale-[0.98]">
       <div class="flex items-center gap-2">
-        <span class="bg-black text-[#d4af37] w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black" id="cartCountBadge">0</span>
+        <span class="bg-black text-[#f3d266] w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black" id="cartCountBadge">0</span>
         <span class="text-xs sm:text-sm">سلة الطلبات وتأكيد الفاتورة 🛒</span>
       </div>
       <span class="text-sm sm:text-base font-black"><span id="cartTotalBadge">0</span> ج.م</span>
@@ -452,11 +581,10 @@
       </div>
 
       <div class="space-y-2 shrink-0">
-        <a id="tyWhatsAppBtn" href="#" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-xs sm:text-sm shadow-lg flex items-center justify-center gap-1.5 cursor-pointer">
+        <a id="tyWhatsAppBtn" href="#" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-xl gold-grad hover:brightness-105 text-[#100c04] font-black text-xs sm:text-sm shadow-[0_6px_18px_rgba(212,175,55,0.35)] flex items-center justify-center gap-1.5 cursor-pointer transition active:scale-[0.98]">
           <span>📲</span>
           <span>إرسال الفاتورة وتأكيدها عبر واتساب الآن</span>
         </a>
-        <button type="button" onclick="printCashierReceipt(lastInvoiceText || (document.getElementById('tyInvoicePre') ? document.getElementById('tyInvoicePre').textContent : ''))" class="w-full py-2 px-3 rounded-xl bg-[#1f1a11] hover:bg-[#2c2315] border border-[#d4af37]/60 text-[#f3d266] font-black text-xs cursor-pointer flex items-center justify-center gap-1.5">🖨️ طباعة الفاتورة</button>
         <div class="grid grid-cols-2 gap-2">
           <button type="button" onclick="copyLastInvoiceText()" class="py-2 px-3 rounded-xl bg-[#251f14] border border-[#d4af37]/40 text-[#f3d266] font-bold text-xs cursor-pointer">📋 نسخ الفاتورة</button>
           <button type="button" onclick="closeThankYouModal()" class="py-2 px-3 rounded-xl bg-stone-800 text-stone-200 font-bold text-xs cursor-pointer">إغلاق النافذة</button>
