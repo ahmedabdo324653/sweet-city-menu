@@ -307,6 +307,30 @@
     }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    body.sc-has-bottom-nav {
+      padding-bottom: calc(136px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+    #scSpaTabsBar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(22, 18, 12, 0.96) 0%, rgba(11, 10, 8, 0.99) 100%);
+      border-top: 1px solid rgba(212, 175, 55, 0.48);
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.88);
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)) 12px;
+    }
+    #floatingCartBar {
+      bottom: calc(78px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+    #cartModal, #ordersModal, #aiModal, #thankYouModal {
+      z-index: 1100 !important;
+    }
+    #scToast {
+      z-index: 1200 !important;
+    }
     #thermalReceiptPrintArea { display: none; }
     @media print {
       @page {
@@ -401,7 +425,7 @@
     }
   </script>
 </head>
-<body class="min-h-screen pb-24 text-[13px]">
+<body class="min-h-screen pb-32 sc-has-bottom-nav text-[13px]">
 
   <!-- الرأس والواجهة الرئيسية للمنيو بمقاسات مدمجة متناسقة (تصميم الزبائن الأصلي 100%) -->
   <div class="max-w-lg mx-auto px-3 pt-3">
@@ -503,7 +527,7 @@
         </div>
       </div>
 
-      <div class="relative mt-3.5">
+      <div id="menuSearchWrap" class="relative mt-3.5">
         <input
           id="searchInput"
           type="text"
@@ -518,16 +542,12 @@
       <div id="categoriesBar" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar mt-3 pt-0.5 pb-0.5"></div>
     </header>
 
-    <!-- بانر استوديو التورت المضغوط (شريط أفقي رفيع) -->
-    <a id="cakeStudioSlimBanner" href="#cakeDesignerSection" class="sc-cake-banner card-surface">
-      <span class="sc-cake-banner-title">🎂 صمّم تورتتك الخاصة</span>
-      <span class="sc-cake-banner-cta">ابدأ الآن</span>
-    </a>
-
-    <main id="productsGrid" class="grid grid-cols-1 gap-3.5"></main>
+    <div id="menuTabPanel" class="mt-3" style="display: block;">
+      <main id="productsGrid" class="grid grid-cols-1 gap-3.5"></main>
+    </div>
 
     <!-- قسم مصمم التورت المخصصة (Cake Designer Section) -->
-    <section id="cakeDesignerSection" class="card-surface rounded-[22px] p-4 mt-5 border border-[#d4af37]/50 space-y-4">
+    <section id="cakeDesignerSection" class="hidden card-surface rounded-[22px] p-4 mt-3 border border-[#d4af37]/50 space-y-4">
       <div class="text-center pb-3 border-b border-[#d4af37]/25 space-y-1">
         <span class="inline-block px-3 py-0.5 rounded-full bg-[#262012] border border-[#d4af37]/40 text-[10px] font-black text-[#f3d266]">استوديو سويت سيتي الملكي</span>
         <h2 class="text-lg sm:text-xl font-black text-[#e3b938]">🎂 صمّم تورتتك الخاصة</h2>
@@ -848,8 +868,8 @@
         <button type="button" onclick="copyPaymentNum('01040224226', 'فودافون كاش')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-100 hover:border-[#d4af37] transition cursor-pointer">
           🔴 فودافون كاش: <span class="text-[#e3b938] font-black" dir="ltr">01040224226</span>
         </button>
-        <button type="button" onclick="copyPaymentNum('01090000421', 'إنستا باي InstaPay')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-100 hover:border-[#d4af37] transition cursor-pointer">
-          🟣 إنستا باي: <span class="text-[#e3b938] font-black" dir="ltr">01090000421</span>
+        <button type="button" onclick="copyPaymentNum('+201060809671', 'إنستا باي InstaPay')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-100 hover:border-[#d4af37] transition cursor-pointer">
+          🟣 إنستا باي: <span class="text-[#e3b938] font-black" dir="ltr">+201060809671</span>
         </button>
       </div>
       <div class="flex flex-wrap items-center justify-center gap-2 pt-1.5 text-[11px]">
@@ -861,9 +881,27 @@
           <span>📸</span>
           <span>إنستجرام @sweetcity_18</span>
         </a>
+        <a href="https://vt.tiktok.com/ZSp78DMGU/" target="_blank" rel="noopener noreferrer" class="px-3 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/35 text-[#f3d266] hover:border-[#d4af37] font-bold flex items-center gap-1 transition">
+          <span>🎵</span>
+          <span>تيك توك سويت سيتي</span>
+        </a>
       </div>
     </footer>
   </div>
+
+  <!-- شريط التنقل السفلي الثابت (Mobile-First Bottom Navigation Bar) -->
+  <nav id="scSpaTabsBar" aria-label="أقسام التطبيق الرئيسية">
+    <div class="max-w-lg mx-auto grid grid-cols-2 gap-2">
+      <button type="button" id="tabBtnMenu" data-tab="menu" aria-selected="true" onclick="switchMainTab('menu')" class="py-2 px-3 rounded-xl gold-grad text-[#100c04] font-black text-xs sm:text-sm shadow-[0_4px_14px_rgba(212,175,55,0.35)] flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 cursor-pointer transition active:scale-[0.97]">
+        <span class="text-base sm:text-sm leading-none">🥐</span>
+        <span>المنيو / المخبوزات</span>
+      </button>
+      <button type="button" id="tabBtnCake" data-tab="cake" aria-selected="false" onclick="switchMainTab('cake')" class="py-2 px-3 rounded-xl bg-[#14110c] text-[#f3d266] border border-[#d4af37]/35 hover:border-[#d4af37] font-bold text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 cursor-pointer transition active:scale-[0.97]">
+        <span class="text-base sm:text-sm leading-none">🎂</span>
+        <span>صمّم تورتتك</span>
+      </button>
+    </div>
+  </nav>
 
   <!-- شريط السلة العائم بالأسفل -->
   <div id="floatingCartBar" class="hidden fixed bottom-3 inset-x-3 max-w-lg mx-auto z-40">
@@ -3210,6 +3248,68 @@
           });
         }
       });
+    })();
+  </script>
+  <script id="scSpaTabsScript">
+    (function initSpaTabsNavigation() {
+      const ACTIVE_TAB_CLS = 'py-2 px-3 rounded-xl gold-grad text-[#100c04] font-black text-xs sm:text-sm shadow-[0_4px_14px_rgba(212,175,55,0.35)] flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 cursor-pointer transition active:scale-[0.97]';
+      const INACTIVE_TAB_CLS = 'py-2 px-3 rounded-xl bg-[#14110c] text-[#f3d266] border border-[#d4af37]/35 hover:border-[#d4af37] font-bold text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 cursor-pointer transition active:scale-[0.97]';
+
+      window.switchMainTab = function (tabName, skipScroll) {
+        const isCakeTab = tabName === 'cake';
+        const menuPanel = document.getElementById('menuTabPanel');
+        const cakeSection = document.getElementById('cakeDesignerSection');
+        const searchWrap = document.getElementById('menuSearchWrap');
+        const categoriesBar = document.getElementById('categoriesBar');
+        const btnMenu = document.getElementById('tabBtnMenu');
+        const btnCake = document.getElementById('tabBtnCake');
+
+        if (menuPanel) {
+          menuPanel.classList.toggle('hidden', isCakeTab);
+          menuPanel.style.display = isCakeTab ? 'none' : 'block';
+        }
+        if (searchWrap) {
+          searchWrap.classList.toggle('hidden', isCakeTab);
+          searchWrap.style.display = isCakeTab ? 'none' : 'block';
+        }
+        if (categoriesBar) {
+          categoriesBar.classList.toggle('hidden', isCakeTab);
+          categoriesBar.style.display = isCakeTab ? 'none' : 'flex';
+        }
+        if (cakeSection) {
+          cakeSection.classList.toggle('hidden', !isCakeTab);
+          cakeSection.style.display = isCakeTab ? 'block' : 'none';
+        }
+
+        if (btnMenu) {
+          btnMenu.className = isCakeTab ? INACTIVE_TAB_CLS : ACTIVE_TAB_CLS;
+          btnMenu.setAttribute('aria-selected', isCakeTab ? 'false' : 'true');
+        }
+        if (btnCake) {
+          btnCake.className = isCakeTab ? ACTIVE_TAB_CLS : INACTIVE_TAB_CLS;
+          btnCake.setAttribute('aria-selected', isCakeTab ? 'true' : 'false');
+        }
+
+        if (!skipScroll) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      };
+
+      function syncTabFromHash() {
+        if (window.location.hash === '#cakeDesignerSection') {
+          window.switchMainTab('cake', true);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        if (window.location.hash === '#cakeDesignerSection') {
+          window.switchMainTab('cake', true);
+        } else {
+          window.switchMainTab('menu', true);
+        }
+      });
+
+      window.addEventListener('hashchange', syncTabFromHash);
     })();
   </script>
 </body>
