@@ -519,12 +519,327 @@
     </header>
 
     <!-- بانر استوديو التورت المضغوط (شريط أفقي رفيع) -->
-    <a id="cakeStudioSlimBanner" href="/assets/aistudio/index_5fefad64.html" class="sc-cake-banner card-surface">
+    <a id="cakeStudioSlimBanner" href="#cakeDesignerSection" class="sc-cake-banner card-surface">
       <span class="sc-cake-banner-title">🎂 صمّم تورتتك الخاصة</span>
       <span class="sc-cake-banner-cta">ابدأ الآن</span>
     </a>
 
     <main id="productsGrid" class="grid grid-cols-1 gap-3.5"></main>
+
+    <!-- قسم مصمم التورت المخصصة (Cake Designer Section) -->
+    <section id="cakeDesignerSection" class="card-surface rounded-[22px] p-4 mt-5 border border-[#d4af37]/50 space-y-4">
+      <div class="text-center pb-3 border-b border-[#d4af37]/25 space-y-1">
+        <span class="inline-block px-3 py-0.5 rounded-full bg-[#262012] border border-[#d4af37]/40 text-[10px] font-black text-[#f3d266]">استوديو سويت سيتي الملكي</span>
+        <h2 class="text-lg sm:text-xl font-black text-[#e3b938]">🎂 صمّم تورتتك الخاصة</h2>
+        <p class="text-[11px] text-stone-300">اختر المقاس والنكهة والحشوات والإضافات وفق أسعار سويت سيتي الرسمية وأضفها للسلة فوراً</p>
+      </div>
+
+      <!-- 1. الحجم والمقاس (الأسعار الحقيقية من قائمة سويت سيتي) -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs sm:text-sm font-black text-[#f3d266]">1. الحجم والمقاس (التورت المستطيلة والمدورة)</h3>
+          <span class="text-[10px] text-stone-400">اختر مقاساً واحداً *</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <label for="cakeSize_20x20" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_20x20" type="radio" name="cakeSize" value="تورتة 20/20" data-name="تورتة 20/20" data-price="300" checked class="accent-[#e3b938]" />
+              <span>تورتة 20/20</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">300 ج.م</span>
+          </label>
+          <label for="cakeSize_25x25" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_25x25" type="radio" name="cakeSize" value="تورتة 25/25" data-name="تورتة 25/25" data-price="400" class="accent-[#e3b938]" />
+              <span>تورتة 25/25</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">400 ج.م</span>
+          </label>
+          <label for="cakeSize_30x30" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_30x30" type="radio" name="cakeSize" value="تورتة 30/30" data-name="تورتة 30/30" data-price="600" class="accent-[#e3b938]" />
+              <span>تورتة 30/30</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">600 ج.م</span>
+          </label>
+          <label for="cakeSize_40x30" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_40x30" type="radio" name="cakeSize" value="تورتة 40/30" data-name="تورتة 40/30" data-price="850" class="accent-[#e3b938]" />
+              <span>تورتة 40/30</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">850 ج.م</span>
+          </label>
+          <label for="cakeSize_40x40" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_40x40" type="radio" name="cakeSize" value="تورتة 40/40" data-name="تورتة 40/40" data-price="1100" class="accent-[#e3b938]" />
+              <span>تورتة 40/40</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">1100 ج.م</span>
+          </label>
+          <label for="cakeSize_60x40" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_60x40" type="radio" name="cakeSize" value="تورتة 60/40" data-name="تورتة 60/40" data-price="1600" class="accent-[#e3b938]" />
+              <span>تورتة 60/40</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">1600 ج.م</span>
+          </label>
+          <label for="cakeSize_r22" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_r22" type="radio" name="cakeSize" value="تورتة مدورة مقاس 22" data-name="تورتة مدورة مقاس 22" data-price="350" class="accent-[#e3b938]" />
+              <span>مدورة مقاس 22</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">350 ج.م</span>
+          </label>
+          <label for="cakeSize_r24" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_r24" type="radio" name="cakeSize" value="تورتة مدورة مقاس 24" data-name="تورتة مدورة مقاس 24" data-price="400" class="accent-[#e3b938]" />
+              <span>مدورة مقاس 24</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">400 ج.م</span>
+          </label>
+          <label for="cakeSize_r26" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_r26" type="radio" name="cakeSize" value="تورتة مدورة مقاس 26" data-name="تورتة مدورة مقاس 26" data-price="450" class="accent-[#e3b938]" />
+              <span>مدورة مقاس 26</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">450 ج.م</span>
+          </label>
+          <label for="cakeSize_r28" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_r28" type="radio" name="cakeSize" value="تورتة مدورة مقاس 28" data-name="تورتة مدورة مقاس 28" data-price="525" class="accent-[#e3b938]" />
+              <span>مدورة مقاس 28</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">525 ج.م</span>
+          </label>
+          <label for="cakeSize_r30" class="col-span-2 flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_r30" type="radio" name="cakeSize" value="تورتة مدورة مقاس 30" data-name="تورتة مدورة مقاس 30" data-price="600" class="accent-[#e3b938]" />
+              <span>تورتة مدورة مقاس 30</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">600 ج.م</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 2. الشكل الهندسي -->
+      <div class="space-y-2">
+        <h3 class="text-xs sm:text-sm font-black text-[#f3d266]">2. الشكل الهندسي</h3>
+        <div class="grid grid-cols-3 gap-2 text-[11px]">
+          <label for="cakeShape_round" class="flex flex-col items-center gap-1 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1 font-bold text-white">
+              <input id="cakeShape_round" type="radio" name="cakeShape" value="دائري" data-name="دائري" data-price="0" checked class="accent-[#e3b938]" />
+              <span>دائري</span>
+            </span>
+            <span class="text-[10px] text-stone-400">مشمول</span>
+          </label>
+          <label for="cakeShape_square" class="flex flex-col items-center gap-1 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1 font-bold text-white">
+              <input id="cakeShape_square" type="radio" name="cakeShape" value="مربع / مستطيل" data-name="مربع / مستطيل" data-price="0" class="accent-[#e3b938]" />
+              <span>مربع / مستطيل</span>
+            </span>
+            <span class="text-[10px] text-stone-400">مشمول</span>
+          </label>
+          <label for="cakeShape_heart" class="flex flex-col items-center gap-1 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1 font-bold text-white">
+              <input id="cakeShape_heart" type="radio" name="cakeShape" value="قلب" data-name="قلب" data-price="50" class="accent-[#e3b938]" />
+              <span>قلب ♥</span>
+            </span>
+            <span class="text-[10px] font-bold text-[#f3d266]">+50 ج.م</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 3. نكهة الكيك الداخلي (السبونج) -->
+      <div class="space-y-2">
+        <h3 class="text-xs sm:text-sm font-black text-[#f3d266]">3. نكهة الكيك الداخلي (السبونج)</h3>
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <label for="cakeFlavor_vanilla" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFlavor_vanilla" type="radio" name="cakeFlavor" value="فانيليا" data-name="فانيليا" data-price="0" checked class="accent-[#e3b938]" />
+              <span>فانيليا</span>
+            </span>
+            <span class="text-[10px] text-stone-400">مشمول</span>
+          </label>
+          <label for="cakeFlavor_choc" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFlavor_choc" type="radio" name="cakeFlavor" value="شوكولاتة فادج" data-name="شوكولاتة فادج" data-price="40" class="accent-[#e3b938]" />
+              <span>شوكولاتة فادج</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+40 ج.م</span>
+          </label>
+          <label for="cakeFlavor_redvelvet" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFlavor_redvelvet" type="radio" name="cakeFlavor" value="ريد فيلفيت" data-name="ريد فيلفيت" data-price="60" class="accent-[#e3b938]" />
+              <span>ريد فيلفيت</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+60 ج.م</span>
+          </label>
+          <label for="cakeFlavor_half" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFlavor_half" type="radio" name="cakeFlavor" value="نصفين (فانيليا وشوكولاتة)" data-name="نصفين (فانيليا وشوكولاتة)" data-price="50" class="accent-[#e3b938]" />
+              <span>نصفين</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+50 ج.م</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 4. الحشوات الداخلية (متعددة الاختيار) -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs sm:text-sm font-black text-[#f3d266]">4. الحشوات الداخلية</h3>
+          <span class="text-[10px] text-stone-400">متعددة الاختيار</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <label for="cakeFilling_chantilly" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFilling_chantilly" type="checkbox" name="cakeFilling" value="كريمة شانتيه" data-name="كريمة شانتيه" data-price="0" checked class="accent-[#e3b938]" />
+              <span>كريمة شانتيه</span>
+            </span>
+            <span class="text-[10px] text-stone-400">مشمول</span>
+          </label>
+          <label for="cakeFilling_crunchy" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFilling_crunchy" type="checkbox" name="cakeFilling" value="كرانشي نوتيلا" data-name="كرانشي نوتيلا" data-price="70" class="accent-[#e3b938]" />
+              <span>كرانشي نوتيلا</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+70 ج.م</span>
+          </label>
+          <label for="cakeFilling_lotus" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFilling_lotus" type="checkbox" name="cakeFilling" value="لوتس كراميل" data-name="لوتس كراميل" data-price="75" class="accent-[#e3b938]" />
+              <span>لوتس كراميل</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+75 ج.م</span>
+          </label>
+          <label for="cakeFilling_pistachio" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFilling_pistachio" type="checkbox" name="cakeFilling" value="كريمة بستاشيو" data-name="كريمة بستاشيو" data-price="120" class="accent-[#e3b938]" />
+              <span>كريمة بستاشيو</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+120 ج.م</span>
+          </label>
+          <label for="cakeFilling_fruits" class="col-span-2 flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFilling_fruits" type="checkbox" name="cakeFilling" value="قطع فواكه طازجة" data-name="قطع فواكه طازجة" data-price="65" class="accent-[#e3b938]" />
+              <span>قطع فواكه طازجة</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+65 ج.م</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 5. التغليف الخارجي -->
+      <div class="space-y-2">
+        <h3 class="text-xs sm:text-sm font-black text-[#f3d266]">5. التغليف الخارجي والصوص</h3>
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <label for="cakeFrosting_white" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFrosting_white" type="radio" name="cakeFrosting" value="أبيض ملكي" data-name="أبيض ملكي" data-price="0" checked class="accent-[#e3b938]" />
+              <span>أبيض ملكي</span>
+            </span>
+            <span class="text-[10px] text-stone-400">مشمول</span>
+          </label>
+          <label for="cakeFrosting_choc" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFrosting_choc" type="radio" name="cakeFrosting" value="شوكولاتة بلجيكي + دريب" data-name="شوكولاتة بلجيكي + دريب" data-price="45" class="accent-[#e3b938]" />
+              <span>شوكولاتة + دريب</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+45 ج.م</span>
+          </label>
+          <label for="cakeFrosting_lotus" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFrosting_lotus" type="radio" name="cakeFrosting" value="لوتس كراميل مملح" data-name="لوتس كراميل مملح" data-price="45" class="accent-[#e3b938]" />
+              <span>لوتس كراميل</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+45 ج.م</span>
+          </label>
+          <label for="cakeFrosting_pistachio" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFrosting_pistachio" type="radio" name="cakeFrosting" value="بستاشيو فستقي" data-name="بستاشيو فستقي" data-price="60" class="accent-[#e3b938]" />
+              <span>بستاشيو فستقي</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+60 ج.م</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 6. الإضافات والزينة -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs sm:text-sm font-black text-[#f3d266]">6. الإضافات والزينة</h3>
+          <span class="text-[10px] text-stone-400">اختياري</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <label for="cakeAddon_strawberry" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeAddon_strawberry" type="checkbox" name="cakeAddon" value="فراولة طازجة" data-name="فراولة طازجة" data-price="60" class="accent-[#e3b938]" />
+              <span>فراولة طازجة</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+60 ج.م</span>
+          </label>
+          <label for="cakeAddon_ferrero" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeAddon_ferrero" type="checkbox" name="cakeAddon" value="كرات شوكولاتة ذهبية" data-name="كرات شوكولاتة ذهبية" data-price="75" class="accent-[#e3b938]" />
+              <span>شوكولاتة ذهبية</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+75 ج.م</span>
+          </label>
+          <label for="cakeAddon_nuts" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeAddon_nuts" type="checkbox" name="cakeAddon" value="مكسرات وفستق محمص" data-name="مكسرات وفستق محمص" data-price="80" class="accent-[#e3b938]" />
+              <span>مكسرات وفستق</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+80 ج.م</span>
+          </label>
+          <label for="cakeAddon_topper" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeAddon_topper" type="checkbox" name="cakeAddon" value="توبر ذهبي فاخر" data-name="توبر ذهبي فاخر" data-price="55" class="accent-[#e3b938]" />
+              <span>توبر ذهبي</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+55 ج.م</span>
+          </label>
+          <label for="cakeAddon_candle" class="col-span-2 flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeAddon_candle" type="checkbox" name="cakeAddon" value="شمع أرقام ذهبي" data-name="شمع أرقام ذهبي" data-price="35" class="accent-[#e3b938]" />
+              <span>شمع أرقام ذهبي</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+35 ج.م</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 7. التاريخ والعبارة ورفع صورة نموذجية -->
+      <div class="space-y-2.5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div>
+            <label for="cakeEventDate" class="block text-[11px] font-bold text-[#f3d266] mb-1">تاريخ الاستلام</label>
+            <input id="cakeEventDate" type="date" name="eventDate" class="w-full py-2 px-3 rounded-xl bg-[#110f0a] border border-[#d4af37]/40 text-xs text-white outline-none focus:border-[#e3b938]" />
+          </div>
+          <div>
+            <label for="cakeGreeting" class="block text-[11px] font-bold text-[#f3d266] mb-1">عبارة التهنئة على التورتة</label>
+            <input id="cakeGreeting" type="text" name="cakeGreeting" maxlength="45" placeholder="مثال: كل سنة وأنت طيب" class="w-full py-2 px-3 rounded-xl bg-[#110f0a] border border-[#d4af37]/40 text-xs text-white outline-none focus:border-[#e3b938]" />
+          </div>
+        </div>
+
+        <div id="customCakeUploadContainer" class="p-3 rounded-xl bg-[#110f0a] border border-dashed border-[#d4af37]/50 space-y-2">
+          <label for="customCakePhotoInput" class="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-[#262012] hover:bg-[#332b18] border border-[#d4af37]/50 text-[#f3d266] text-xs font-black cursor-pointer transition">
+            <span>📷</span>
+            <span>رفع صورة للتصميم المطلوب (للمعاينة)</span>
+            <input id="customCakePhotoInput" type="file" name="cakePhoto" accept="image/*" class="hidden" />
+          </label>
+          <div id="customCakePhotoPreviewWrapper" class="hidden rounded-xl overflow-hidden border border-[#d4af37]/40">
+            <img id="customCakePhotoPreview" src="" alt="معاينة التورتة" class="w-full max-h-48 object-cover" />
+          </div>
+          <div id="customCakePhotoNotice"></div>
+        </div>
+      </div>
+
+      <button type="button" id="addCustomCakeToCartBtn" data-action="add-custom-cake" class="w-full py-3 px-4 rounded-xl gold-grad text-[#100c04] font-black text-xs sm:text-sm shadow-[0_8px_22px_rgba(212,175,55,0.38)] flex items-center justify-center gap-2 cursor-pointer transition active:scale-[0.98]">
+        <span>🎂</span>
+        <span>إتمام الطلب / أضف للسلة</span>
+      </button>
+    </section>
 
     <footer class="mt-8 pt-5 pb-6 border-t border-[#d4af37]/25 text-center text-[11px] sm:text-xs text-stone-300 space-y-1.5">
       <p class="font-semibold text-stone-200">جميع الحقوق محفوظة © SWEET CITY - Bakery & Pastry - العاشر من رمضان</p>
@@ -2595,6 +2910,307 @@
 
     initApp();
     syncFromGoogleSheet(false);
+  </script>
+  <script>
+    /**
+     * Sweet City 1999 — Cake Designer <-> Main Menu Cart Bridge (Vanilla JS)
+     * Zero Backend / Apps Script Changes
+     */
+    (function initCakeDesignerCartBridge() {
+      const CART_STORAGE_KEY = 'SC_CART_V1';
+      let localCakePreviewBase64 = '';
+      let localCakePreviewName = '';
+
+      const SELECTORS = {
+        designerRoot: '#cakeDesignerSection, #customCakeModal, .cake-designer-container',
+        submitBtn: '#addCustomCakeToCartBtn, [data-action="add-custom-cake"]',
+        sizeChecked: 'input[name="cakeSize"]:checked, input[name="size"]:checked, #cakeSizeSelect',
+        shapeChecked: 'input[name="cakeShape"]:checked, input[name="shape"]:checked, #cakeShapeSelect',
+        spongeChecked: 'input[name="cakeFlavor"]:checked, input[name="cakeSponge"]:checked, input[name="sponge"]:checked, #cakeSpongeSelect',
+        frostingChecked: 'input[name="cakeFrosting"]:checked, input[name="frosting"]:checked, #cakeFrostingSelect',
+        fillingsChecked: 'input[name="cakeFilling"]:checked, input[name="filling"]:checked, input[name="fillings"]:checked',
+        addonsChecked: 'input[name="cakeAddon"]:checked, input[name="addon"]:checked, input[name="addons"]:checked',
+        dateInput: '#cakeEventDate, #eventDateInput, input[name="eventDate"]',
+        greetingInput: '#cakeGreeting, #greetingInput, input[name="cakeGreeting"]',
+        photoInput: '#customCakePhotoInput, input[name="cakePhoto"][type="file"]',
+        photoPreviewImg: '#customCakePhotoPreview, #mainCakePhoto',
+        photoPreviewWrap: '#customCakePhotoPreviewWrapper, #photoPreviewContainer',
+        photoNoticeHost: '#customCakePhotoNotice, #customCakeUploadContainer'
+      };
+
+      function parseSafePrice(val) {
+        if (typeof val === 'number') return Number.isFinite(val) && val >= 0 ? val : 0;
+        const arabicNums = { '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4', '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9' };
+        const normalized = String(val || '')
+          .replace(/[٠-٩]/g, d => arabicNums[d] || d)
+          .replace(/[,،]/g, '')
+          .replace(/[^\d.]/g, '');
+        const n = parseFloat(normalized);
+        return Number.isFinite(n) && n >= 0 ? n : 0;
+      }
+
+      function cleanInputText(str) {
+        if (typeof window.sanitizeText === 'function') return window.sanitizeText(str);
+        return String(str || '').replace(/[<>]/g, '').replace(/^[=+\-@]+/, '').trim();
+      }
+
+      function readOptionInfo(el) {
+        if (!el) return { label: '', price: 0 };
+        if (el.tagName === 'SELECT') {
+          const opt = el.options[el.selectedIndex];
+          if (!opt) return { label: '', price: 0 };
+          return {
+            label: cleanInputText(opt.getAttribute('data-name') || opt.getAttribute('data-title') || opt.textContent || opt.value),
+            price: parseSafePrice(opt.getAttribute('data-price') || opt.dataset.price || 0)
+          };
+        }
+        const labelEl = el.id ? document.querySelector(`label[for="${el.id}"]`) : null;
+        const label = cleanInputText(
+          el.getAttribute('data-name') ||
+          el.getAttribute('data-title') ||
+          (labelEl ? labelEl.textContent : '') ||
+          el.value
+        );
+        const price = parseSafePrice(el.getAttribute('data-price') || el.dataset.price || 0);
+        return { label, price };
+      }
+
+      function syncCartToLocalStorage() {
+        try {
+          if (typeof cart !== 'undefined' && Array.isArray(cart)) {
+            localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+          }
+        } catch (e) {}
+      }
+
+      function restoreCartFromLocalStorage() {
+        try {
+          if (typeof cart !== 'undefined' && Array.isArray(cart) && cart.length === 0) {
+            const saved = localStorage.getItem(CART_STORAGE_KEY);
+            if (saved) {
+              const parsed = JSON.parse(saved);
+              if (Array.isArray(parsed) && parsed.length > 0) {
+                cart.push(...parsed);
+                if (typeof updateCartBadge === 'function') updateCartBadge();
+              }
+            }
+          }
+        } catch (e) {}
+      }
+
+      function handleCustomCakeOrder() {
+        let sizeName = 'غير محدد';
+        let shapeName = 'دائري';
+        let spongeName = 'فانيليا';
+        let frostingName = 'أبيض ملكي';
+        let fillingsNames = [];
+        let totalPrice = 0;
+        let eventDate = '';
+        let greetingText = '';
+
+        if (typeof window.calculatePricing === 'function' && typeof window.state === 'object') {
+          const pricing = window.calculatePricing();
+          sizeName = cleanInputText(pricing.size?.title || 'غير محدد');
+          shapeName = cleanInputText(pricing.shape?.title || 'دائري');
+          spongeName = cleanInputText(pricing.sponge?.title || 'فانيليا');
+          frostingName = cleanInputText(pricing.frosting?.title || 'أبيض ملكي');
+          fillingsNames = (pricing.fillings || []).map(f => cleanInputText(f.title)).filter(Boolean);
+          totalPrice = parseSafePrice(pricing.total);
+          eventDate = cleanInputText(window.state.eventDate || '');
+          greetingText = cleanInputText(window.state.greeting || '');
+        } else {
+          const sizeEl = document.querySelector(SELECTORS.sizeChecked);
+          const shapeEl = document.querySelector(SELECTORS.shapeChecked);
+          const spongeEl = document.querySelector(SELECTORS.spongeChecked);
+          const frostingEl = document.querySelector(SELECTORS.frostingChecked);
+
+          const sizeInfo = readOptionInfo(sizeEl);
+          const shapeInfo = readOptionInfo(shapeEl);
+          const spongeInfo = readOptionInfo(spongeEl);
+          const frostingInfo = readOptionInfo(frostingEl);
+
+          if (!sizeInfo.label || sizeInfo.price <= 0) {
+            if (typeof showToast === 'function') {
+              showToast('⚠️ يرجى اختيار الحجم والأدوار للتورتة أولاً', true);
+            }
+            return false;
+          }
+
+          sizeName = sizeInfo.label;
+          shapeName = shapeInfo.label || 'دائري';
+          spongeName = spongeInfo.label || 'فانيليا';
+          frostingName = frostingInfo.label || 'أبيض ملكي';
+
+          totalPrice += sizeInfo.price + shapeInfo.price + spongeInfo.price + frostingInfo.price;
+
+          const checkedFillings = document.querySelectorAll(SELECTORS.fillingsChecked);
+          checkedFillings.forEach(el => {
+            const info = readOptionInfo(el);
+            if (info.label) fillingsNames.push(info.label);
+            totalPrice += info.price;
+          });
+
+          const checkedAddons = document.querySelectorAll(SELECTORS.addonsChecked);
+          const addonLabels = [];
+          checkedAddons.forEach(el => {
+            const info = readOptionInfo(el);
+            if (info.label) addonLabels.push(info.label);
+            totalPrice += info.price;
+          });
+
+          const dateEl = document.querySelector(SELECTORS.dateInput);
+          const greetingEl = document.querySelector(SELECTORS.greetingInput);
+          eventDate = cleanInputText(dateEl ? dateEl.value : '');
+          greetingText = cleanInputText(greetingEl ? greetingEl.value : '');
+
+          if (addonLabels.length > 0) {
+            frostingName = `${frostingName} (إضافات: ${addonLabels.join('، ')})`;
+          }
+        }
+
+        const finalTotal = Number(totalPrice.toFixed(2));
+        const fillingsFormatted = fillingsNames.length > 0 ? fillingsNames.join('، ') : 'بدون إضافات حشو';
+        const dateFormatted = eventDate || 'يُحدد بالتنسيق';
+        const greetingFormatted = greetingText || 'بدون عبارة';
+        const photoMarker = localCakePreviewBase64 ? ' [مرفق صورة نموذج ستُرسل واتساب]' : '';
+
+        const formattedProductDescription =
+          `تورتة عمولة: ${sizeName} - الشكل: ${shapeName} - الكيك: ${spongeName} - الحشوات: ${fillingsFormatted} - التغليف: ${frostingName} - تاريخ الاستلام: ${dateFormatted} - العبارة: ${greetingFormatted}${photoMarker}`;
+
+        injectCustomCakeIntoCart(formattedProductDescription, finalTotal);
+        return true;
+      }
+
+      function injectCustomCakeIntoCart(productDescription, finalPrice) {
+        const safePrice = parseSafePrice(finalPrice);
+        const uniqueKey = 'CUSTOM_CAKE_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+
+        if (typeof cart !== 'undefined' && Array.isArray(cart)) {
+          cart.push({
+            key: uniqueKey,
+            itemId: uniqueKey,
+            name: productDescription,
+            unitType: 'piece',
+            unitMode: 'piece',
+            weightFactor: 1,
+            weightLabel: 'قطعة',
+            baseKiloPrice: safePrice,
+            unitPrice: safePrice,
+            qty: 1
+          });
+        } else if (typeof window.addToCart === 'function') {
+          window.addToCart({
+            id: uniqueKey,
+            name: productDescription,
+            price: safePrice,
+            unitType: 'piece',
+            qty: 1
+          });
+        }
+
+        syncCartToLocalStorage();
+
+        if (typeof updateCartBadge === 'function') updateCartBadge();
+        if (typeof renderCart === 'function') renderCart();
+        if (typeof showToast === 'function') {
+          showToast('🎂 تمت إضافة التورتة المصممة إلى السلة بنجاح!', false);
+        }
+        if (typeof openCartModal === 'function') {
+          openCartModal();
+        }
+      }
+
+      function ensurePhotoWhatsAppNotice() {
+        const photoInput = document.querySelector(SELECTORS.photoInput);
+        if (!photoInput) return;
+
+        let noticeEl = document.getElementById('cakePhotoWhatsappNotice');
+        if (!noticeEl) {
+          noticeEl = document.createElement('p');
+          noticeEl.id = 'cakePhotoWhatsappNotice';
+          noticeEl.className = 'mt-2 px-3 py-2 rounded-xl bg-[#1a1510] border border-[#d4af37]/40 text-[#f3d266] text-[11px] font-bold leading-relaxed';
+          noticeEl.textContent = '📸 ملاحظة: سيتم إرسال الصورة مباشرة عبر الواتساب عند إتمام الطلب.';
+          const host = document.querySelector(SELECTORS.photoNoticeHost) || photoInput.parentElement;
+          if (host) host.appendChild(noticeEl);
+        }
+      }
+
+      function bindCustomPhotoPreview() {
+        const photoInput = document.querySelector(SELECTORS.photoInput);
+        if (!photoInput || photoInput.dataset.bridgeBound === '1') return;
+        photoInput.dataset.bridgeBound = '1';
+
+        ensurePhotoWhatsAppNotice();
+
+        photoInput.addEventListener('change', function (e) {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+
+          if (!file.type || !file.type.startsWith('image/')) {
+            if (typeof showToast === 'function') showToast('⚠️ يرجى اختيار ملف صورة صالح', true);
+            e.target.value = '';
+            return;
+          }
+
+          const reader = new FileReader();
+          reader.onload = function (ev) {
+            localCakePreviewBase64 = String(ev.target?.result || '');
+            localCakePreviewName = file.name || 'custom-cake.jpg';
+
+            const previewImg = document.querySelector(SELECTORS.photoPreviewImg);
+            const previewWrap = document.querySelector(SELECTORS.photoPreviewWrap);
+            if (previewImg) {
+              previewImg.src = localCakePreviewBase64;
+              previewImg.alt = localCakePreviewName;
+              previewImg.classList.remove('hidden');
+            }
+            if (previewWrap) {
+              previewWrap.classList.remove('hidden');
+            }
+
+            ensurePhotoWhatsAppNotice();
+            if (typeof showToast === 'function') {
+              showToast('📷 تم عرض الصورة محلياً للمعاينة (تُرسل عبر واتساب عند تأكيد الطلب)', false);
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      const origChangeCartQty = window.changeCartQty;
+      if (typeof origChangeCartQty === 'function') {
+        window.changeCartQty = function () {
+          const res = origChangeCartQty.apply(this, arguments);
+          syncCartToLocalStorage();
+          return res;
+        };
+      }
+
+      const origSubmitOrderWhatsApp = window.submitOrderWhatsApp;
+      if (typeof origSubmitOrderWhatsApp === 'function') {
+        window.submitOrderWhatsApp = function () {
+          const res = origSubmitOrderWhatsApp.apply(this, arguments);
+          syncCartToLocalStorage();
+          return res;
+        };
+      }
+
+      window.addCustomCakeToCart = handleCustomCakeOrder;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        restoreCartFromLocalStorage();
+        bindCustomPhotoPreview();
+
+        const submitBtn = document.querySelector(SELECTORS.submitBtn);
+        if (submitBtn && submitBtn.dataset.bridgeBound !== '1') {
+          submitBtn.dataset.bridgeBound = '1';
+          submitBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            handleCustomCakeOrder();
+          });
+        }
+      });
+    })();
   </script>
 </body>
 </html>
