@@ -26,12 +26,12 @@
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html, body, button, a, input, select, textarea { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
     button { user-select: none; -webkit-user-select: none; }
+    html { background-color: #0b0a08; }
     body {
       margin: 0;
       padding: 0;
       font-family: 'Cairo', sans-serif;
       background-color: #0b0a08;
-      background-image: radial-gradient(circle at 50% 0%, #1d170c 0%, #0b0a08 42%, #070604 100%);
       color: #f5f0e6;
       overflow-x: clip;
       -webkit-font-smoothing: antialiased;
@@ -546,6 +546,7 @@
 
     <div id="menuTabPanel" class="mt-3" style="display: block;">
       <main id="productsGrid" class="grid grid-cols-1 gap-3.5"></main>
+      <div id="scInfiniteSentinel" style="height:1px;width:100%;"></div>
     </div>
 
     <!-- قسم مصمم التورت المخصصة (Cake Designer Section) -->
@@ -1603,6 +1604,23 @@
     async function syncFromGoogleSheet(showNotification) {
       const activeScriptUrl = (STORE_SETTINGS.webhookUrl || GOOGLE_SHEETS_CONFIG.scriptUrl || SCRIPT_URL).trim();
       const activeSheetId = (STORE_SETTINGS.sheetId || GOOGLE_SHEETS_CONFIG.sheetId || '').trim();
+      const getItemsSignature = (list) => JSON.stringify(
+        (Array.isArray(list) ? list : [])
+          .map(i => [
+            Number(i.id) || 0,
+            String(i.name || '').trim(),
+            String(i.category || '').trim(),
+            Number(i.price) || 0,
+            Number(i.oldPrice) || 0,
+            normalizeUnitType(i.unitType, i.category, i.id, i.name),
+            String(i.desc || '').trim(),
+            String(i.emoji || '').trim(),
+            isItemAvailable(i),
+            String(i.img || '').trim(),
+            isItemPopular(i)
+          ])
+          .sort((a, b) => a[0] - b[0])
+      );
 
       if (activeScriptUrl && activeScriptUrl.startsWith('https://script.google.com/')) {
         try {
@@ -1624,14 +1642,13 @@
                   alert(emptyMsg);
                 }
               } else {
-                const prevRawSnapshot = JSON.stringify(RAW);
                 const incomingItems = data.items.map(item => ({
                   ...item,
                   unitType: normalizeUnitType(item.unitType, item.category, item.id, item.name),
                   available: isItemAvailable(item),
                   popular: isItemPopular(item)
                 })).sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
-                if (JSON.stringify(incomingItems) !== prevRawSnapshot) {
+                if (getItemsSignature(incomingItems) !== getItemsSignature(RAW)) {
                   RAW = incomingItems;
                   sortRawById();
                   saveMenuCacheToLocal();
@@ -1661,7 +1678,11 @@
             }
 
             if (hasChanges || showNotification) {
+              const savedScrollY = window.scrollY;
               initApp();
+              if (!showNotification && savedScrollY > 0) {
+                window.scrollTo(0, savedScrollY);
+              }
             }
             if (showNotification && Array.isArray(data.items) && data.items.length > 0) {
               showToast('✅ تم سحب أحدث الأصناف والأسعار والإعدادات من Google Sheets بنجاح!', false);
@@ -1721,21 +1742,24 @@
               }
             } else {
               let hasChanges = false;
-              const prevRawSnapshot = JSON.stringify(RAW);
               const normalizedPulled = pulledItems.map(item => ({
                 ...item,
                 unitType: normalizeUnitType(item.unitType, item.category, item.id, item.name),
                 available: isItemAvailable(item),
                 popular: isItemPopular(item)
               })).sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
-              if (JSON.stringify(normalizedPulled) !== prevRawSnapshot) {
+              if (getItemsSignature(normalizedPulled) !== getItemsSignature(RAW)) {
                 RAW = normalizedPulled;
                 sortRawById();
                 saveMenuCacheToLocal();
                 hasChanges = true;
               }
               if (hasChanges || showNotification) {
+                const savedScrollY = window.scrollY;
                 initApp();
+                if (!showNotification && savedScrollY > 0) {
+                  window.scrollTo(0, savedScrollY);
+                }
               }
               if (showNotification) showToast('✅ تم تحديث قائمة الأصناف والأسعار مباشرة من جدول Google Sheet!', false);
             }
@@ -1903,7 +1927,7 @@
         ? Math.max(0, Math.round((Number(weight) || 0) * 100) / 100)
         : Math.max(0, Math.round(Number(weight) || 0));
       selectedWeights[itemId] = clean;
-      renderProducts();
+      updateSingleProductCard(itemId);
     }
 
     function adjustItemWeight(itemId, delta) {
@@ -1914,7 +1938,7 @@
         ? Math.max(0, Math.round((current + delta) * 100) / 100)
         : Math.max(0, Math.round(current + delta));
       selectedWeights[itemId] = next;
-      renderProducts();
+      updateSingleProductCard(itemId);
     }
 
     function resolveProductImage(item) {
@@ -1930,24 +1954,205 @@
       };
     }
 
+    const SC_BLANK_IMG = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+    const scImgObserver = (typeof IntersectionObserver !== 'undefined') ? new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const img = entry.target;
+        if (!img || img.dataset.imgFailed === '1') return;
+        if (entry.isIntersecting) {
+          if (img.dataset.src && (img.dataset.unloaded === '1' || img.getAttribute('src') === SC_BLANK_IMG)) {
+            img.dataset.unloaded = '0';
+            img.src = img.dataset.src;
+          }
+        } else {
+          if (img.getAttribute('src') && img.getAttribute('src') !== SC_BLANK_IMG) {
+            img.dataset.unloaded = '1';
+            img.src = SC_BLANK_IMG;
+          }
+        }
+      });
+    }, { rootMargin: '1200px 0px' }) : null;
+
+    function observeProductImages(rootEl) {
+      const container = rootEl || document.getElementById('productsGrid');
+      if (!container) return;
+      const imgs = container.querySelectorAll('img[data-src]:not([data-observed="1"])');
+      imgs.forEach((img) => {
+        img.dataset.observed = '1';
+        if (scImgObserver) {
+          scImgObserver.observe(img);
+        } else {
+          img.dataset.unloaded = '0';
+          img.src = img.dataset.src;
+        }
+      });
+    }
+
     function handleProductImgError(imgEl) {
-      if (!imgEl) return;
+      if (!imgEl || imgEl.dataset.unloaded === '1' || imgEl.getAttribute('src') === SC_BLANK_IMG) return;
       const itemId = Number(imgEl.getAttribute('data-item-id'));
       const item = RAW.find(i => i.id === itemId);
       const resolved = resolveProductImage(item);
       const nextIdx = (Number(imgEl.getAttribute('data-try-idx')) || 0) + 1;
       if (nextIdx < resolved.candidates.length) {
         imgEl.setAttribute('data-try-idx', String(nextIdx));
+        imgEl.dataset.src = resolved.candidates[nextIdx];
         imgEl.src = resolved.candidates[nextIdx];
       } else {
+        imgEl.dataset.imgFailed = '1';
         imgEl.style.display = 'none';
         const fallbackEl = document.getElementById('prodFallback_' + itemId);
         if (fallbackEl) {
-          fallbackEl.classList.remove('hidden');
-          fallbackEl.classList.add('flex');
+          fallbackEl.style.display = 'flex';
         }
       }
     }
+
+    let scFilteredItems = [];
+    let scRenderedCount = 0;
+    const SC_BATCH_SIZE = 16;
+
+    function buildProductCardHtml(item, eagerLoad) {
+      const mode = getItemUnitMode(item);
+      const isWeight = mode === 'weight';
+      const isCup = mode === 'cup';
+      const isBox = mode === 'box';
+      const w = selectedWeights[item.id] !== undefined ? selectedWeights[item.id] : 0;
+      const totalAutoPrice = Number((item.price * w).toFixed(2));
+      const unavailable = !isItemAvailable(item);
+      const basePriceTitle = isWeight ? 'سعر الكيلو' : (isCup ? 'سعر الكوب' : (isBox ? 'سعر البوكس' : 'سعر القطعة'));
+      const qtyTitleLabel = isWeight
+        ? 'الوزن المختار (بالكيلو):'
+        : (isCup ? 'الكمية المختارة (بالكوب):' : (isBox ? 'الكمية المختارة (بالبوكس):' : 'الكمية المختارة (بالقطعة):'));
+      const addOneLabel = isCup ? '+ أضف كوب (+1)' : (isBox ? '+ أضف بوكس (+1)' : '+ أضف قطعة (+1)');
+      const subOneLabel = isCup ? '− إنقاص كوب (-1)' : (isBox ? '− إنقاص بوكس (-1)' : '− إنقاص قطعة (-1)');
+      const chooseZeroLabel = isWeight
+        ? '+ اختر الوزن أولاً'
+        : (isCup ? '+ اختر عدد الأكواب' : (isBox ? '+ اختر عدد البوكسات' : '+ اختر عدد القطع'));
+
+      const hasDiscount = Number(item.oldPrice) > Number(item.price) && Number(item.oldPrice) > 0;
+      const discountPct = hasDiscount ? Math.round(((Number(item.oldPrice) - Number(item.price)) / Number(item.oldPrice)) * 100) : 0;
+      const isOfferCategory = String(item.category || '').includes('عروض') || String(item.category || '').toLowerCase().includes('offers');
+      const isPop = isItemPopular(item);
+
+      let promoBadgeHtml = '';
+      if (unavailable) {
+        promoBadgeHtml = '<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-red-900/90 text-white text-[10px] font-black shadow-md">نفد حالياً</span>';
+      } else if (hasDiscount) {
+        promoBadgeHtml = `<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#ff7b00] to-[#e3b938] text-black text-[10px] font-black shadow-[0_0_12px_rgba(255,123,0,0.6)]">🔥 عرض - خصم ${discountPct}%</span>`;
+      } else if (isOfferCategory) {
+        promoBadgeHtml = '<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#ff7b00] to-[#e3b938] text-black text-[10px] font-black shadow-md">🔥 عرض مميز</span>';
+      } else if (isPop) {
+        promoBadgeHtml = '<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-[#1a150b]/95 border border-[#e3b938] text-[#f3d266] text-[10px] font-black shadow-[0_0_10px_rgba(212,175,55,0.4)]">⭐ الأكثر طلباً</span>';
+      }
+
+      const resolvedImg = resolveProductImage(item);
+
+      return `
+        <div id="productCard_${item.id}" class="card-surface rounded-[20px] p-3 flex flex-col justify-between relative overflow-hidden ${unavailable ? 'opacity-60 grayscale' : ''}">
+          <div class="relative rounded-xl bg-gradient-to-b from-[#251f13] via-[#18140d] to-[#110e09] border border-[#d4af37]/20 h-36 flex flex-col items-center justify-center overflow-hidden">
+            ${promoBadgeHtml}
+            ${resolvedImg.primary ? `<img src="${eagerLoad ? resolvedImg.primary : SC_BLANK_IMG}" data-src="${resolvedImg.primary}" data-unloaded="${eagerLoad ? '0' : '1'}" width="400" height="300" decoding="async" data-item-id="${item.id}" data-try-idx="0" alt="${item.name}" onerror="handleProductImgError(this)" class="w-full h-full object-cover" />` : ''}
+            <div id="prodFallback_${item.id}" class="flex flex-col items-center justify-center" style="${resolvedImg.primary ? 'display:none;' : 'display:flex;'}">
+              <div class="text-4xl mb-2">${item.emoji || '🍩'}</div>
+              <span class="font-en text-[11px] tracking-[0.2em] text-[#d4af37] font-bold">SWEET CITY 1999</span>
+            </div>
+          </div>
+
+          <div class="mt-2.5 flex items-start justify-between gap-2 text-right">
+            <div>
+              <h3 class="text-base sm:text-lg font-black text-white">${item.name}</h3>
+              <p class="text-[11px] sm:text-xs text-stone-400 mt-0.5">${item.desc || 'مخبوز طازج يومياً'}</p>
+            </div>
+            <div class="shrink-0 px-2 py-1 rounded-xl bg-[#16130c] border border-[#d4af37]/35 text-center">
+              <span class="block text-[9px] text-stone-400">${basePriceTitle}</span>
+              ${hasDiscount ? `<del class="block text-[10px] text-stone-500 font-bold leading-none my-0.5">${item.oldPrice} ج.م</del>` : ''}
+              <span class="text-xs font-black text-[#f3d266]">${item.price} ج.م</span>
+            </div>
+          </div>
+
+          <div class="mt-2.5 p-2.5 rounded-2xl bg-[#13100a] border border-[#d4af37]/30 space-y-2">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="font-bold text-stone-300">${qtyTitleLabel}</span>
+              <span class="font-black text-[#f3d266]">${formatQuantityArabic(w, mode)}</span>
+            </div>
+
+            ${isWeight ? `
+              <div class="grid grid-cols-5 gap-1.5 items-center">
+                <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 0.5)"`} class="py-2 rounded-xl bg-[#262012] hover:bg-[#342b18] border border-[#d4af37]/50 text-[#f3d266] font-black text-xs cursor-pointer disabled:opacity-40">+0.5</button>
+                <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 0.25)"`} class="py-2 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-xs cursor-pointer disabled:opacity-40">+0.25</button>
+                <input type="number" min="0" step="0.25" value="${w}" ${unavailable ? 'disabled' : `onchange="setItemWeight(${item.id}, this.value)"`} class="w-full py-1.5 px-1 rounded-xl bg-black border-2 border-[#d4af37] text-center font-black text-xs sm:text-sm text-white outline-none" />
+                <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -0.25)"`} class="py-2 rounded-xl bg-[#251f14] hover:bg-[#332b1c] border border-[#d4af37]/45 text-[#e3b938] font-black text-xs cursor-pointer disabled:opacity-35">-0.25</button>
+                <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -0.5)"`} class="py-2 rounded-xl bg-[#1b170f] hover:bg-[#282216] border border-stone-700 text-stone-300 font-black text-xs cursor-pointer disabled:opacity-35">-0.5</button>
+              </div>
+            ` : `
+              <div class="grid grid-cols-3 gap-2 items-center">
+                <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 1)"`} class="py-2 px-3 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-xs cursor-pointer disabled:opacity-40">${addOneLabel}</button>
+                <input type="number" min="0" step="1" value="${Math.round(w)}" ${unavailable ? 'disabled' : `onchange="setItemWeight(${item.id}, this.value)"`} class="w-full py-1.5 px-2 rounded-xl bg-black border-2 border-[#d4af37] text-center font-black text-xs sm:text-sm text-white outline-none" />
+                <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -1)"`} class="py-2 px-3 rounded-xl bg-[#251f14] hover:bg-[#332b1c] border border-[#d4af37]/45 text-[#e3b938] font-black text-xs cursor-pointer disabled:opacity-35">${subOneLabel}</button>
+              </div>
+            `}
+
+            ${w > 0 ? `
+              <div class="flex items-center justify-between pt-1 text-[10px] text-stone-400">
+                <span>حساب السعر: ${formatQuantityArabic(w, mode)} × ${item.price} ج.م = <b class="text-[#f3d266]">${totalAutoPrice} ج.م</b></span>
+                <button type="button" onclick="setItemWeight(${item.id}, 0)" class="text-red-400 hover:underline font-bold cursor-pointer">تصفير (0)</button>
+              </div>
+            ` : ''}
+          </div>
+
+          <div class="mt-2.5 pt-2.5 border-t border-dashed border-[#d4af37]/25 flex items-center justify-between">
+            <div class="text-right">
+              <span class="text-lg sm:text-xl font-black text-[#e3b938]">${totalAutoPrice} ج.م</span>
+              <span class="block text-[10px] text-stone-400">${w > 0 ? ('الإجمالي لـ ' + formatQuantityArabic(w, mode)) : 'اختر الكمية لحساب الإجمالي'}</span>
+            </div>
+            <button
+              type="button"
+              ${unavailable ? 'disabled' : `onclick="addToCart(${item.id})"`}
+              class="${w > 0 ? 'bg-[#e3b938] hover:bg-[#f3c846] text-black' : 'bg-[#251f14] text-[#f3d266] border border-[#d4af37]/50'} font-black py-2 px-4 rounded-xl text-xs sm:text-sm transition active:scale-95 disabled:opacity-40 cursor-pointer"
+            >
+              ${unavailable ? 'غير متاح' : (w > 0 ? `+ أضف للسلة (${totalAutoPrice} ج.م)` : chooseZeroLabel)}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function appendNextProductsBatch() {
+      const grid = document.getElementById('productsGrid');
+      if (!grid || scRenderedCount >= scFilteredItems.length) return;
+      const batch = scFilteredItems.slice(scRenderedCount, scRenderedCount + SC_BATCH_SIZE);
+      scRenderedCount += batch.length;
+      grid.insertAdjacentHTML('beforeend', batch.map(item => buildProductCardHtml(item, false)).join(''));
+      observeProductImages(grid);
+    }
+
+    function updateSingleProductCard(itemId) {
+      const item = RAW.find(i => i.id === itemId);
+      const cardEl = document.getElementById('productCard_' + itemId);
+      if (!item || !cardEl) return;
+      cardEl.outerHTML = buildProductCardHtml(item, true);
+      const newCardEl = document.getElementById('productCard_' + itemId);
+      if (newCardEl) {
+        observeProductImages(newCardEl);
+      }
+    }
+
+    const scSentinelObserver = (typeof IntersectionObserver !== 'undefined') ? new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && scRenderedCount < scFilteredItems.length) {
+          appendNextProductsBatch();
+        }
+      });
+    }, { rootMargin: '1400px 0px' }) : null;
+
+    (function initInfiniteSentinel() {
+      const sentinel = document.getElementById('scInfiniteSentinel');
+      if (sentinel && scSentinelObserver) {
+        scSentinelObserver.observe(sentinel);
+      }
+    })();
 
     function renderProducts() {
       sortRawById();
@@ -1970,121 +2175,27 @@
         return matchCat && matchSearch;
       });
 
+      scFilteredItems = filtered;
+      scRenderedCount = 0;
+
       if (filtered.length === 0) {
         grid.innerHTML = '<div class="col-span-full py-14 text-center text-stone-400 text-sm">لا توجد أصناف مطابقة لبحثك.</div>';
         return;
       }
 
-      grid.innerHTML = filtered.map(item => {
-        const mode = getItemUnitMode(item);
-        const isWeight = mode === 'weight';
-        const isCup = mode === 'cup';
-        const isBox = mode === 'box';
-        const w = selectedWeights[item.id] !== undefined ? selectedWeights[item.id] : 0;
-        const totalAutoPrice = Number((item.price * w).toFixed(2));
-        const unavailable = !isItemAvailable(item);
-        const basePriceTitle = isWeight ? 'سعر الكيلو' : (isCup ? 'سعر الكوب' : (isBox ? 'سعر البوكس' : 'سعر القطعة'));
-        const badgeIcon = isWeight ? '⚖️' : (isCup ? '☕' : (isBox ? '🎁' : '🍩'));
-        const qtyTitleLabel = isWeight
-          ? 'الوزن المختار (بالكيلو):'
-          : (isCup ? 'الكمية المختارة (بالكوب):' : (isBox ? 'الكمية المختارة (بالبوكس):' : 'الكمية المختارة (بالقطعة):'));
-        const addOneLabel = isCup ? '+ أضف كوب (+1)' : (isBox ? '+ أضف بوكس (+1)' : '+ أضف قطعة (+1)');
-        const subOneLabel = isCup ? '− إنقاص كوب (-1)' : (isBox ? '− إنقاص بوكس (-1)' : '− إنقاص قطعة (-1)');
-        const chooseZeroLabel = isWeight
-          ? '+ اختر الوزن أولاً'
-          : (isCup ? '+ اختر عدد الأكواب' : (isBox ? '+ اختر عدد البوكسات' : '+ اختر عدد القطع'));
-
-        const hasDiscount = Number(item.oldPrice) > Number(item.price) && Number(item.oldPrice) > 0;
-        const discountPct = hasDiscount ? Math.round(((Number(item.oldPrice) - Number(item.price)) / Number(item.oldPrice)) * 100) : 0;
-        const isOfferCategory = String(item.category || '').includes('عروض') || String(item.category || '').toLowerCase().includes('offers');
-        const isPop = isItemPopular(item);
-
-        let promoBadgeHtml = '';
-        if (unavailable) {
-          promoBadgeHtml = '<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-red-900/90 text-white text-[10px] font-black shadow-md">نفد حالياً</span>';
-        } else if (hasDiscount) {
-          promoBadgeHtml = `<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#ff7b00] to-[#e3b938] text-black text-[10px] font-black shadow-[0_0_12px_rgba(255,123,0,0.6)]">🔥 عرض - خصم ${discountPct}%</span>`;
-        } else if (isOfferCategory) {
-          promoBadgeHtml = '<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#ff7b00] to-[#e3b938] text-black text-[10px] font-black shadow-md">🔥 عرض مميز</span>';
-        } else if (isPop) {
-          promoBadgeHtml = '<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-[#1a150b]/95 border border-[#e3b938] text-[#f3d266] text-[10px] font-black shadow-[0_0_10px_rgba(212,175,55,0.4)]">⭐ الأكثر طلباً</span>';
+      grid.innerHTML = '';
+      appendNextProductsBatch();
+      if (scSentinelObserver) {
+        const sentinel = document.getElementById('scInfiniteSentinel');
+        if (sentinel) {
+          scSentinelObserver.unobserve(sentinel);
+          scSentinelObserver.observe(sentinel);
         }
-
-        const resolvedImg = resolveProductImage(item);
-        const hasManualImg = Boolean(item.img && String(item.img).trim());
-
-        return `
-          <div class="card-surface rounded-[20px] p-3 flex flex-col justify-between relative overflow-hidden ${unavailable ? 'opacity-60 grayscale' : ''}">
-            <div class="relative rounded-xl bg-gradient-to-b from-[#251f13] via-[#18140d] to-[#110e09] border border-[#d4af37]/20 h-36 flex flex-col items-center justify-center overflow-hidden">
-              <span style="position:absolute;top:10px;left:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-[#15120c]/90 border border-[#d4af37]/40 text-[10px] font-bold text-[#d4af37]">
-                ${badgeIcon} ${basePriceTitle}: ${item.price} ج.م
-              </span>
-              ${promoBadgeHtml}
-              ${resolvedImg.primary ? `<img src="${resolvedImg.primary}" loading="lazy" decoding="async" data-item-id="${item.id}" data-try-idx="0" alt="${item.name}" onerror="handleProductImgError(this)" class="w-full h-full object-cover" />` : ''}
-              <div id="prodFallback_${item.id}" class="${resolvedImg.primary ? 'hidden' : 'flex'} flex-col items-center justify-center">
-                <div class="text-4xl mb-2">${item.emoji || '🍩'}</div>
-                <span class="font-en text-[11px] tracking-[0.2em] text-[#d4af37] font-bold">SWEET CITY 1999</span>
-              </div>
-            </div>
-
-            <div class="mt-2.5 flex items-start justify-between gap-2 text-right">
-              <div>
-                <h3 class="text-base sm:text-lg font-black text-white">${item.name}</h3>
-                <p class="text-[11px] sm:text-xs text-stone-400 mt-0.5">${item.desc || 'مخبوز طازج يومياً'}</p>
-              </div>
-              <div class="shrink-0 px-2 py-1 rounded-xl bg-[#16130c] border border-[#d4af37]/35 text-center">
-                <span class="block text-[9px] text-stone-400">${basePriceTitle}</span>
-                ${hasDiscount ? `<del class="block text-[10px] text-stone-500 font-bold leading-none my-0.5">${item.oldPrice} ج.م</del>` : ''}
-                <span class="text-xs font-black text-[#f3d266]">${item.price} ج.م</span>
-              </div>
-            </div>
-
-            <div class="mt-2.5 p-2.5 rounded-2xl bg-[#13100a] border border-[#d4af37]/30 space-y-2">
-              <div class="flex items-center justify-between text-[11px]">
-                <span class="font-bold text-stone-300">${qtyTitleLabel}</span>
-                <span class="font-black text-[#f3d266]">${formatQuantityArabic(w, mode)}</span>
-              </div>
-
-              ${isWeight ? `
-                <div class="grid grid-cols-5 gap-1.5 items-center">
-                  <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 0.5)"`} class="py-2 rounded-xl bg-[#262012] hover:bg-[#342b18] border border-[#d4af37]/50 text-[#f3d266] font-black text-xs cursor-pointer disabled:opacity-40">+0.5</button>
-                  <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 0.25)"`} class="py-2 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-xs cursor-pointer disabled:opacity-40">+0.25</button>
-                  <input type="number" min="0" step="0.25" value="${w}" ${unavailable ? 'disabled' : `onchange="setItemWeight(${item.id}, this.value)"`} class="w-full py-1.5 px-1 rounded-xl bg-black border-2 border-[#d4af37] text-center font-black text-xs sm:text-sm text-white outline-none" />
-                  <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -0.25)"`} class="py-2 rounded-xl bg-[#251f14] hover:bg-[#332b1c] border border-[#d4af37]/45 text-[#e3b938] font-black text-xs cursor-pointer disabled:opacity-35">-0.25</button>
-                  <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -0.5)"`} class="py-2 rounded-xl bg-[#1b170f] hover:bg-[#282216] border border-stone-700 text-stone-300 font-black text-xs cursor-pointer disabled:opacity-35">-0.5</button>
-                </div>
-              ` : `
-                <div class="grid grid-cols-3 gap-2 items-center">
-                  <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 1)"`} class="py-2 px-3 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-xs cursor-pointer disabled:opacity-40">${addOneLabel}</button>
-                  <input type="number" min="0" step="1" value="${Math.round(w)}" ${unavailable ? 'disabled' : `onchange="setItemWeight(${item.id}, this.value)"`} class="w-full py-1.5 px-2 rounded-xl bg-black border-2 border-[#d4af37] text-center font-black text-xs sm:text-sm text-white outline-none" />
-                  <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -1)"`} class="py-2 px-3 rounded-xl bg-[#251f14] hover:bg-[#332b1c] border border-[#d4af37]/45 text-[#e3b938] font-black text-xs cursor-pointer disabled:opacity-35">${subOneLabel}</button>
-                </div>
-              `}
-
-              ${w > 0 ? `
-                <div class="flex items-center justify-between pt-1 text-[10px] text-stone-400">
-                  <span>حساب السعر: ${formatQuantityArabic(w, mode)} × ${item.price} ج.م = <b class="text-[#f3d266]">${totalAutoPrice} ج.م</b></span>
-                  <button type="button" onclick="setItemWeight(${item.id}, 0)" class="text-red-400 hover:underline font-bold cursor-pointer">تصفير (0)</button>
-                </div>
-              ` : ''}
-            </div>
-
-            <div class="mt-2.5 pt-2.5 border-t border-dashed border-[#d4af37]/25 flex items-center justify-between">
-              <div class="text-right">
-                <span class="text-lg sm:text-xl font-black text-[#e3b938]">${totalAutoPrice} ج.م</span>
-                <span class="block text-[10px] text-stone-400">${w > 0 ? ('الإجمالي لـ ' + formatQuantityArabic(w, mode)) : (basePriceTitle + ': ' + item.price + ' ج.م')}</span>
-              </div>
-              <button
-                type="button"
-                ${unavailable ? 'disabled' : `onclick="addToCart(${item.id})"`}
-                class="${w > 0 ? 'bg-[#e3b938] hover:bg-[#f3c846] text-black' : 'bg-[#251f14] text-[#f3d266] border border-[#d4af37]/50'} font-black py-2 px-4 rounded-xl text-xs sm:text-sm transition active:scale-95 disabled:opacity-40 cursor-pointer"
-              >
-                ${unavailable ? 'غير متاح' : (w > 0 ? `+ أضف للسلة (${totalAutoPrice} ج.م)` : chooseZeroLabel)}
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
+      } else {
+        while (scRenderedCount < scFilteredItems.length) {
+          appendNextProductsBatch();
+        }
+      }
     }
 
     function addToCart(itemId) {
@@ -2123,7 +2234,7 @@
           });
         }
         selectedWeights[item.id] = 0;
-        renderProducts();
+        updateSingleProductCard(itemId);
         updateCartBadge();
         return;
       }
@@ -2149,7 +2260,7 @@
         });
       }
       selectedWeights[item.id] = 0;
-      renderProducts();
+      updateSingleProductCard(itemId);
       updateCartBadge();
     }
 
