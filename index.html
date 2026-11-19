@@ -26,15 +26,14 @@
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html, body, button, a, input, select, textarea { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
     button { user-select: none; -webkit-user-select: none; }
+    html { background-color: #0b0a08; }
     body {
       margin: 0;
       padding: 0;
       font-family: 'Cairo', sans-serif;
       background-color: #0b0a08;
-      background-image: radial-gradient(circle at 50% 0%, #1d170c 0%, #0b0a08 42%, #070604 100%);
       color: #f5f0e6;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
+      overflow-x: clip;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -46,23 +45,46 @@
       box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.78);
     }
     body > div.max-w-lg {
-      padding-top: 4px !important;
+      padding-top: 6px !important;
+      padding-left: 10px !important;
+      padding-right: 10px !important;
     }
     header.card-surface {
       padding: 6px 10px !important;
+      border-radius: 18px !important;
     }
     header.card-surface > div:first-child {
       margin-top: -6px !important;
       margin-bottom: 4px !important;
+      height: 4px !important;
+    }
+    header.card-surface > div:nth-child(2) {
+      gap: 8px !important;
+    }
+    #uiStoreNameEn {
+      font-size: 20px !important;
+      line-height: 1.05 !important;
+    }
+    #uiSubtitleEn {
+      font-size: 11px !important;
+      margin-top: 2px !important;
+    }
+    #uiAddress {
+      font-size: 10px !important;
+      margin-top: 2px !important;
+    }
+    #scLogoBtn {
+      width: 48px !important;
+      height: 48px !important;
     }
     header.card-surface > div:nth-child(3) {
       margin-top: 6px !important;
-      padding-top: 3px !important;
-      padding-bottom: 3px !important;
+      padding: 3px 8px !important;
+      font-size: 10.5px !important;
     }
     header > div.grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
       gap: 6px !important;
       margin-top: 6px !important;
     }
@@ -70,14 +92,63 @@
       margin-top: 6px !important;
       margin-bottom: 6px !important;
     }
+    #searchInput {
+      padding-top: 7px !important;
+      padding-bottom: 7px !important;
+      font-size: 11.5px !important;
+    }
     #categoriesBar {
       margin-top: 0 !important;
       margin-bottom: 0 !important;
       padding-top: 0 !important;
       padding-bottom: 0 !important;
+      gap: 6px !important;
+    }
+    .sc-cake-banner {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 8px !important;
+      height: 44px !important;
+      max-height: 48px !important;
+      padding: 6px 12px !important;
+      margin-top: 6px !important;
+      margin-bottom: 6px !important;
+      border-radius: 12px !important;
+      background: linear-gradient(135deg, #2b2110 0%, #17130c 60%, #241b0d 100%) !important;
+      border: 1px solid rgba(212, 175, 55, 0.55) !important;
+      text-decoration: none !important;
+      overflow: hidden !important;
+      transition: transform 0.16s ease, border-color 0.2s ease !important;
+    }
+    .sc-cake-banner:hover {
+      border-color: #f3d266 !important;
+    }
+    .sc-cake-banner:active {
+      transform: scale(0.985) !important;
+    }
+    .sc-cake-banner-title {
+      font-size: 13px !important;
+      font-weight: 800 !important;
+      color: #ffe28a !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      line-height: 1.2 !important;
+    }
+    .sc-cake-banner-cta {
+      flex-shrink: 0 !important;
+      background: linear-gradient(135deg, #f4d365 0%, #d4af37 52%, #b78a1e 100%) !important;
+      color: #100c04 !important;
+      font-size: 11px !important;
+      font-weight: 900 !important;
+      padding: 4px 12px !important;
+      border-radius: 999px !important;
+      line-height: 1.3 !important;
+      white-space: nowrap !important;
     }
     .sc-action-btn {
-      border-radius: 10px;
+      border-radius: 10px !important;
       background: linear-gradient(160deg, #1e1a12 0%, #14110b 100%);
       border: 1px solid rgba(212, 175, 55, 0.32);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 232, 163, 0.08);
@@ -87,8 +158,9 @@
       text-overflow: ellipsis !important;
       font-size: 11px !important;
       padding: 4px 6px !important;
+      height: 34px !important;
       max-height: 36px !important;
-      height: 32px;
+      gap: 4px !important;
       min-width: 0 !important;
     }
     .sc-action-btn > span {
@@ -99,6 +171,7 @@
     }
     .sc-action-btn > span:first-child {
       flex-shrink: 0;
+      font-size: 12px !important;
     }
     .sc-action-btn:hover {
       border-color: rgba(243, 210, 102, 0.75);
@@ -120,60 +193,59 @@
       box-shadow: 0 8px 20px rgba(212, 175, 55, 0.26);
     }
     #productsGrid {
-      overscroll-behavior-y: contain;
-      -webkit-overflow-scrolling: touch;
       margin-top: 0 !important;
       padding-top: 0 !important;
+      overflow: visible;
+      overflow-anchor: none;
     }
     #productsGrid > .card-surface {
-      background: linear-gradient(165deg, #211c13 0%, #15120d 55%, #0f0d09 100%);
+      background-color: #110e0c;
+      background-image: none;
       border: 1px solid rgba(212, 175, 55, 0.34);
       border-radius: 20px;
       padding: 14px;
-      box-shadow:
-        0 14px 34px -10px rgba(0, 0, 0, 0.88),
-        0 4px 18px -4px rgba(212, 175, 55, 0.12),
-        inset 0 1px 0 rgba(255, 232, 163, 0.10);
-      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+      box-shadow: none;
+      transition: border-color 0.2s ease;
     }
     #productsGrid > .card-surface:hover {
-      transform: translateY(-2px);
       border-color: rgba(243, 210, 102, 0.58);
-      box-shadow:
-        0 18px 42px -10px rgba(0, 0, 0, 0.94),
-        0 8px 24px -4px rgba(212, 175, 55, 0.20),
-        inset 0 1px 0 rgba(255, 232, 163, 0.16);
+      box-shadow: none;
     }
     #productsGrid > .card-surface > div:first-child {
       position: relative;
       width: 100%;
-      height: 200px;
-      min-height: 200px;
-      max-height: 200px;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background-color: #1a1513;
+      background-image: none;
+      display: block;
       border-radius: 12px 12px 0 0;
       border: 1px solid rgba(212, 175, 55, 0.28);
-      box-shadow: inset 0 0 26px rgba(0, 0, 0, 0.45);
-      background: radial-gradient(circle at center, #282115 0%, #14110b 75%, #0d0b07 100%);
-      overflow: hidden;
+      box-shadow: none;
     }
     #productsGrid > .card-surface > div:first-child > span {
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background-color: #15120c;
     }
-    #productsGrid > .card-surface > div:first-child img {
+    #productsGrid > .card-surface img {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100% !important;
+      height: 100% !important;
       object-fit: cover;
       object-position: center;
+      border: none;
       border-radius: 0;
+      margin: 0;
+      padding: 0;
       display: block;
-      transition: transform 0.35s ease;
     }
-    #productsGrid > .card-surface:hover > div:first-child img {
-      transform: scale(1.03);
+    #productsGrid > .card-surface img,
+    #productsGrid > .card-surface > div:first-child {
+      transition: none !important;
+      transform: none !important;
+      animation: none !important;
     }
     #productsGrid > .card-surface h3 {
       color: #fffcf4;
@@ -232,6 +304,35 @@
     }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    body.sc-has-bottom-nav {
+      padding-bottom: calc(136px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+    #scSpaTabsBar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(22, 18, 12, 0.96) 0%, rgba(11, 10, 8, 0.99) 100%);
+      border-top: 1px solid rgba(212, 175, 55, 0.48);
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.88);
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)) 12px;
+      transform: translate3d(0, 0, 0);
+      -webkit-transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      will-change: transform;
+    }
+    #floatingCartBar {
+      bottom: calc(78px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+    #cartModal, #ordersModal, #aiModal, #thankYouModal {
+      z-index: 1100 !important;
+    }
+    #scToast {
+      z-index: 1200 !important;
+    }
     #thermalReceiptPrintArea { display: none; }
     @media print {
       @page {
@@ -303,31 +404,6 @@
         font-weight: 700 !important;
       }
     }
-    @keyframes scStudioGlow {
-      0%, 100% { box-shadow: 0 10px 28px -8px rgba(212, 175, 55, 0.30), inset 0 1px 0 rgba(255, 232, 163, 0.14); }
-      50% { box-shadow: 0 14px 36px -6px rgba(212, 175, 55, 0.52), inset 0 1px 0 rgba(255, 232, 163, 0.28); }
-    }
-    @keyframes scStudioShimmer {
-      0% { transform: translateX(120%); }
-      60%, 100% { transform: translateX(-140%); }
-    }
-    .sc-studio-banner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      height: 44px;
-      max-height: 48px;
-      padding: 6px 12px;
-      margin-top: 6px;
-      margin-bottom: 6px;
-      background: linear-gradient(135deg, #251c0d 0%, #16120b 52%, #2a1f0e 100%);
-      border: 1.5px solid rgba(212, 175, 55, 0.65);
-      animation: scStudioGlow 3.2s ease-in-out infinite;
-    }
-    .sc-studio-shimmer {
-      animation: scStudioShimmer 4s ease-in-out infinite;
-    }
   </style>
   <script>
     function handleHeaderLogoError(imgEl) {
@@ -351,30 +427,30 @@
     }
   </script>
 </head>
-<body class="min-h-screen pb-24 text-[13px]">
+<body class="min-h-screen pb-32 sc-has-bottom-nav text-[13px]">
 
   <!-- الرأس والواجهة الرئيسية للمنيو بمقاسات مدمجة متناسقة (تصميم الزبائن الأصلي 100%) -->
-  <div class="max-w-lg mx-auto px-3 pt-1">
-    <header class="card-surface rounded-[20px] p-2 shadow-[0_18px_48px_rgba(0,0,0,0.88),0_0_32px_rgba(212,175,55,0.12)] relative overflow-hidden">
-      <div class="w-12 h-1 rounded-b-full border-x border-b border-[#d4af37]/70 mx-auto -mt-1.5 mb-1 bg-[#d4af37]/15"></div>
+  <div class="max-w-lg mx-auto px-3 pt-3">
+    <header class="card-surface rounded-[24px] p-4 shadow-[0_18px_48px_rgba(0,0,0,0.88),0_0_32px_rgba(212,175,55,0.12)] relative overflow-hidden">
+      <div class="w-14 h-1.5 rounded-b-full border-x border-b border-[#d4af37]/70 mx-auto -mt-4 mb-3.5 bg-[#d4af37]/15"></div>
 
-      <div class="flex items-center justify-between gap-2">
-        <div class="text-left flex-1 min-w-0">
-          <h1 id="uiStoreNameEn" class="font-en text-xl sm:text-2xl font-black text-[#d4af37] tracking-wider leading-none drop-shadow-[0_2px_10px_rgba(212,175,55,0.22)]">SWEET CITY</h1>
-          <p id="uiSubtitleEn" class="text-[11px] font-extrabold text-[#fffcf4] mt-0.5 leading-tight">Bakery & Pastry</p>
-          <p id="uiAddress" class="text-[10px] text-stone-300 mt-0.5 font-semibold leading-tight truncate">العاشر من رمضان - المجاورة 18 - مول تن بوينت</p>
+      <div class="flex items-center justify-between gap-3">
+        <div class="text-left flex-1">
+          <h1 id="uiStoreNameEn" class="font-en text-2xl sm:text-3xl font-black text-[#d4af37] tracking-wider leading-none drop-shadow-[0_2px_10px_rgba(212,175,55,0.22)]">SWEET CITY</h1>
+          <p id="uiSubtitleEn" class="text-xs sm:text-sm font-extrabold text-[#fffcf4] mt-1">Bakery & Pastry</p>
+          <p id="uiAddress" class="text-[11px] sm:text-xs text-stone-300 mt-1 font-semibold">العاشر من رمضان - المجاورة 18 - مول تن بوينت</p>
         </div>
 
-        <button type="button" id="scLogoBtn" title="شعار سويت سيتي 1999" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-[#d4af37] bg-[#14110b] flex flex-col items-center justify-center shrink-0 shadow-[0_0_24px_rgba(212,175,55,0.34)] cursor-pointer transition-transform active:scale-95 overflow-hidden relative">
+        <button type="button" id="scLogoBtn" title="شعار سويت سيتي 1999" class="w-16 h-16 sm:w-18 sm:h-18 rounded-full border-2 border-[#d4af37] bg-[#14110b] flex flex-col items-center justify-center shrink-0 shadow-[0_0_24px_rgba(212,175,55,0.34)] cursor-pointer transition-transform active:scale-95 overflow-hidden relative">
           <img id="uiHeaderLogoImg" src="logo.png" alt="سويت سيتي 1999" class="w-full h-full object-cover rounded-full" onerror="handleHeaderLogoError(this)" />
           <div id="uiHeaderLogoFallback" class="hidden flex-col items-center justify-center">
-            <span class="font-en text-base sm:text-lg font-black text-[#d4af37] leading-none tracking-wider">SC</span>
-            <span class="text-[9px] font-bold text-[#f5f0e6] mt-0.5 tracking-widest">1999</span>
+            <span class="font-en text-xl sm:text-2xl font-black text-[#d4af37] leading-none tracking-wider">SC</span>
+            <span class="text-[10px] sm:text-xs font-bold text-[#f5f0e6] mt-0.5 tracking-widest">1999</span>
           </div>
         </button>
       </div>
 
-      <div class="mt-1.5 py-1 px-2.5 rounded-xl bg-[#16130c]/95 border border-[#d4af37]/35 flex items-center justify-center gap-1.5 text-[10px] sm:text-[11px] font-bold shadow-inner">
+      <div class="mt-3.5 py-2 px-3.5 rounded-xl bg-[#16130c]/95 border border-[#d4af37]/35 flex items-center justify-center gap-2 text-[11px] sm:text-xs font-bold shadow-inner">
         <span id="uiStatusDot" class="w-2 h-2 rounded-full bg-emerald-400 inline-block shadow-[0_0_8px_#34d399]"></span>
         <span id="uiOpenStatus" class="text-stone-100">مفتوح الآن 24 ساعة</span>
         <span class="text-stone-500">•</span>
@@ -392,7 +468,7 @@
         </button>
         <a id="uiMapLink" href="https://maps.google.com/?q=العاشر+من+رمضان+المجاورة+18+مول+تن+بوينت" target="_blank" rel="noopener noreferrer" class="sc-action-btn text-[#f8f3e8] flex items-center justify-center gap-1">
           <span class="text-xs">🗺️</span>
-          <span>موقع الفرع</span>
+          <span>موقعنا</span>
         </a>
         <button type="button" onclick="shareMenu()" class="sc-action-btn text-[#f8f3e8] flex items-center justify-center gap-1 cursor-pointer">
           <span class="text-xs">📤</span>
@@ -406,7 +482,7 @@
           <span class="text-xs">📸</span>
           <span>إنستجرام</span>
         </a>
-        <button type="button" onclick="toggleBranchesPanel()" class="col-span-3 sc-action-btn sc-action-btn-featured text-[#ffe28a] flex items-center justify-center gap-1.5 cursor-pointer">
+        <button type="button" onclick="toggleBranchesPanel()" class="col-span-3 sc-action-btn sc-action-btn-featured text-[#ffe28a] flex items-center justify-center gap-1 cursor-pointer">
           <span class="text-xs">🏪</span>
           <span>فروعنا وأرقامنا</span>
           <span id="branchesArrow" class="text-[10px] text-[#f3d266]">▼</span>
@@ -414,7 +490,7 @@
       </div>
 
       <!-- قائمة فروعنا وأرقامنا المنظمة في الهيدر -->
-      <div id="branchesPanel" class="hidden mt-2 p-2.5 rounded-2xl bg-[#13100b] border border-[#d4af37]/50 space-y-1.5 text-xs shadow-inner">
+      <div id="branchesPanel" class="hidden mt-2.5 p-3 rounded-2xl bg-[#13100b] border border-[#d4af37]/50 space-y-2 text-xs shadow-inner">
         <div class="text-center font-black text-[#e3b938] text-[11px] pb-1 border-b border-[#d4af37]/25">
           📍 عناوين فروع سويت سيتي وأرقام التليفونات المباشرة
         </div>
@@ -453,39 +529,340 @@
         </div>
       </div>
 
-      <div class="relative mt-1.5 mb-1.5">
+      <div id="menuSearchWrap" class="relative mt-3.5">
         <input
           id="searchInput"
           type="text"
           oninput="handleSearch(this.value)"
           placeholder="ابحث في الأصناف (كرواسون، باتيه، قهوة، كعك...)"
-          class="w-full py-1.5 pr-3 pl-12 rounded-xl bg-[#110e09] border border-[#d4af37]/45 focus:border-[#f3d266] text-xs text-white placeholder-stone-400 outline-none transition shadow-inner"
+          class="w-full py-2.5 pr-4 pl-14 rounded-xl bg-[#110e09] border border-[#d4af37]/45 focus:border-[#f3d266] text-xs text-white placeholder-stone-400 outline-none transition shadow-inner"
         />
         <button type="button" id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute left-9 top-1/2 -translate-y-1/2 text-blue-400 hover:text-white text-base font-bold px-1 cursor-pointer">×</button>
-        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs">🔍</span>
+        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm">🔍</span>
       </div>
 
-      <div id="categoriesBar" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar"></div>
+      <div id="categoriesBar" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar mt-3 pt-0.5 pb-0.5"></div>
     </header>
 
-    <!-- بنر استوديو تصميم التورت الترويجي المتحرك -->
-    <a
-      href="cake-studio.html"
-      onclick="allowStudioNavigation = true;"
-      class="sc-studio-banner relative rounded-xl overflow-hidden group transition-transform active:scale-[0.985]"
-    >
-      <div class="sc-studio-shimmer pointer-events-none absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-[#f3d266]/15 to-transparent -skew-x-12"></div>
-      <span class="relative text-[13px] font-black text-[#fffcf4] leading-none whitespace-nowrap truncate">
-        🎂 صمّم تورتتك الخاصة
-      </span>
-      <span class="relative shrink-0 gold-grad text-[#100c04] font-black text-[11px] px-2.5 py-1 rounded-lg shadow-[0_4px_12px_rgba(212,175,55,0.35)] group-hover:brightness-105 transition whitespace-nowrap">
-        ابدأ الآن
-      </span>
-    </a>
+    <div id="menuTabPanel" class="mt-3" style="display: block;">
+      <main id="productsGrid" class="grid grid-cols-1 gap-3.5"></main>
+      <div id="scInfiniteSentinel" style="height:1px;width:100%;"></div>
+    </div>
 
-    <div class="h-px bg-gradient-to-r from-transparent via-[#d4af37]/45 to-transparent my-0"></div>
+    <!-- قسم مصمم التورت المخصصة (Cake Designer Section) -->
+    <section id="cakeDesignerSection" class="hidden card-surface rounded-[22px] p-4 mt-3 border border-[#d4af37]/50 space-y-4">
+      <div class="text-center pb-3 border-b border-[#d4af37]/25 space-y-1">
+        <span class="inline-block px-3 py-0.5 rounded-full bg-[#262012] border border-[#d4af37]/40 text-[10px] font-black text-[#f3d266]">استوديو سويت سيتي الملكي</span>
+        <h2 class="text-lg sm:text-xl font-black text-[#e3b938]">🎂 صمّم تورتتك الخاصة</h2>
+        <p class="text-[11px] text-stone-300">اختر المقاس والنكهة والحشوات والإضافات وفق أسعار سويت سيتي الرسمية وأضفها للسلة فوراً</p>
+      </div>
 
-    <main id="productsGrid" class="grid grid-cols-1 gap-3.5"></main>
+      <!-- 1. الحجم والمقاس (الأسعار الحقيقية من قائمة سويت سيتي) -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs sm:text-sm font-black text-[#f3d266]">1. الحجم والمقاس (التورت المستطيلة والمدورة)</h3>
+          <span class="text-[10px] text-stone-400">اختر مقاساً واحداً *</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <label for="cakeSize_20x20" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_20x20" type="radio" name="cakeSize" value="تورتة 20/20" data-name="تورتة 20/20" data-price="300" checked class="accent-[#e3b938]" />
+              <span>تورتة 20/20</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">300 ج.م</span>
+          </label>
+          <label for="cakeSize_25x25" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_25x25" type="radio" name="cakeSize" value="تورتة 25/25" data-name="تورتة 25/25" data-price="400" class="accent-[#e3b938]" />
+              <span>تورتة 25/25</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">400 ج.م</span>
+          </label>
+          <label for="cakeSize_30x30" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_30x30" type="radio" name="cakeSize" value="تورتة 30/30" data-name="تورتة 30/30" data-price="600" class="accent-[#e3b938]" />
+              <span>تورتة 30/30</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">600 ج.م</span>
+          </label>
+          <label for="cakeSize_40x30" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_40x30" type="radio" name="cakeSize" value="تورتة 40/30" data-name="تورتة 40/30" data-price="850" class="accent-[#e3b938]" />
+              <span>تورتة 40/30</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">850 ج.م</span>
+          </label>
+          <label for="cakeSize_40x40" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_40x40" type="radio" name="cakeSize" value="تورتة 40/40" data-name="تورتة 40/40" data-price="1100" class="accent-[#e3b938]" />
+              <span>تورتة 40/40</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">1100 ج.م</span>
+          </label>
+          <label for="cakeSize_60x40" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_60x40" type="radio" name="cakeSize" value="تورتة 60/40" data-name="تورتة 60/40" data-price="1600" class="accent-[#e3b938]" />
+              <span>تورتة 60/40</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">1600 ج.م</span>
+          </label>
+          <label for="cakeSize_r22" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_r22" type="radio" name="cakeSize" value="تورتة مدورة مقاس 22" data-name="تورتة مدورة مقاس 22" data-price="350" class="accent-[#e3b938]" />
+              <span>مدورة مقاس 22</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">350 ج.م</span>
+          </label>
+          <label for="cakeSize_r24" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_r24" type="radio" name="cakeSize" value="تورتة مدورة مقاس 24" data-name="تورتة مدورة مقاس 24" data-price="400" class="accent-[#e3b938]" />
+              <span>مدورة مقاس 24</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">400 ج.م</span>
+          </label>
+          <label for="cakeSize_r26" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_r26" type="radio" name="cakeSize" value="تورتة مدورة مقاس 26" data-name="تورتة مدورة مقاس 26" data-price="450" class="accent-[#e3b938]" />
+              <span>مدورة مقاس 26</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">450 ج.م</span>
+          </label>
+          <label for="cakeSize_r28" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_r28" type="radio" name="cakeSize" value="تورتة مدورة مقاس 28" data-name="تورتة مدورة مقاس 28" data-price="525" class="accent-[#e3b938]" />
+              <span>مدورة مقاس 28</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">525 ج.م</span>
+          </label>
+          <label for="cakeSize_r30" class="col-span-2 flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeSize_r30" type="radio" name="cakeSize" value="تورتة مدورة مقاس 30" data-name="تورتة مدورة مقاس 30" data-price="600" class="accent-[#e3b938]" />
+              <span>تورتة مدورة مقاس 30</span>
+            </span>
+            <span class="font-black text-[#f3d266] shrink-0">600 ج.م</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 2. الشكل الهندسي -->
+      <div class="space-y-2">
+        <h3 class="text-xs sm:text-sm font-black text-[#f3d266]">2. الشكل الهندسي</h3>
+        <div class="grid grid-cols-3 gap-2 text-[11px]">
+          <label for="cakeShape_round" class="flex flex-col items-center gap-1 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1 font-bold text-white">
+              <input id="cakeShape_round" type="radio" name="cakeShape" value="دائري" data-name="دائري" data-price="0" checked class="accent-[#e3b938]" />
+              <span>دائري</span>
+            </span>
+            <span class="text-[10px] text-stone-400">مشمول</span>
+          </label>
+          <label for="cakeShape_square" class="flex flex-col items-center gap-1 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1 font-bold text-white">
+              <input id="cakeShape_square" type="radio" name="cakeShape" value="مربع / مستطيل" data-name="مربع / مستطيل" data-price="0" class="accent-[#e3b938]" />
+              <span>مربع / مستطيل</span>
+            </span>
+            <span class="text-[10px] text-stone-400">مشمول</span>
+          </label>
+          <label for="cakeShape_heart" class="flex flex-col items-center gap-1 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1 font-bold text-white">
+              <input id="cakeShape_heart" type="radio" name="cakeShape" value="قلب" data-name="قلب" data-price="50" class="accent-[#e3b938]" />
+              <span>قلب ♥</span>
+            </span>
+            <span class="text-[10px] font-bold text-[#f3d266]">+50 ج.م</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 3. نكهة الكيك الداخلي (السبونج) -->
+      <div class="space-y-2">
+        <h3 class="text-xs sm:text-sm font-black text-[#f3d266]">3. نكهة الكيك الداخلي (السبونج)</h3>
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <label for="cakeFlavor_vanilla" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFlavor_vanilla" type="radio" name="cakeFlavor" value="فانيليا" data-name="فانيليا" data-price="0" checked class="accent-[#e3b938]" />
+              <span>فانيليا</span>
+            </span>
+            <span class="text-[10px] text-stone-400">مشمول</span>
+          </label>
+          <label for="cakeFlavor_choc" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFlavor_choc" type="radio" name="cakeFlavor" value="شوكولاتة فادج" data-name="شوكولاتة فادج" data-price="40" class="accent-[#e3b938]" />
+              <span>شوكولاتة فادج</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+40 ج.م</span>
+          </label>
+          <label for="cakeFlavor_redvelvet" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFlavor_redvelvet" type="radio" name="cakeFlavor" value="ريد فيلفيت" data-name="ريد فيلفيت" data-price="60" class="accent-[#e3b938]" />
+              <span>ريد فيلفيت</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+60 ج.م</span>
+          </label>
+          <label for="cakeFlavor_half" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFlavor_half" type="radio" name="cakeFlavor" value="نصفين (فانيليا وشوكولاتة)" data-name="نصفين (فانيليا وشوكولاتة)" data-price="50" class="accent-[#e3b938]" />
+              <span>نصفين</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+50 ج.م</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 4. الحشوات الداخلية (متعددة الاختيار) -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs sm:text-sm font-black text-[#f3d266]">4. الحشوات الداخلية</h3>
+          <span class="text-[10px] text-stone-400">متعددة الاختيار</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <label for="cakeFilling_chantilly" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFilling_chantilly" type="checkbox" name="cakeFilling" value="كريمة شانتيه" data-name="كريمة شانتيه" data-price="0" checked class="accent-[#e3b938]" />
+              <span>كريمة شانتيه</span>
+            </span>
+            <span class="text-[10px] text-stone-400">مشمول</span>
+          </label>
+          <label for="cakeFilling_crunchy" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFilling_crunchy" type="checkbox" name="cakeFilling" value="كرانشي نوتيلا" data-name="كرانشي نوتيلا" data-price="70" class="accent-[#e3b938]" />
+              <span>كرانشي نوتيلا</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+70 ج.م</span>
+          </label>
+          <label for="cakeFilling_lotus" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFilling_lotus" type="checkbox" name="cakeFilling" value="لوتس كراميل" data-name="لوتس كراميل" data-price="75" class="accent-[#e3b938]" />
+              <span>لوتس كراميل</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+75 ج.م</span>
+          </label>
+          <label for="cakeFilling_pistachio" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFilling_pistachio" type="checkbox" name="cakeFilling" value="كريمة بستاشيو" data-name="كريمة بستاشيو" data-price="120" class="accent-[#e3b938]" />
+              <span>كريمة بستاشيو</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+120 ج.م</span>
+          </label>
+          <label for="cakeFilling_fruits" class="col-span-2 flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFilling_fruits" type="checkbox" name="cakeFilling" value="قطع فواكه طازجة" data-name="قطع فواكه طازجة" data-price="65" class="accent-[#e3b938]" />
+              <span>قطع فواكه طازجة</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+65 ج.م</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 5. التغليف الخارجي -->
+      <div class="space-y-2">
+        <h3 class="text-xs sm:text-sm font-black text-[#f3d266]">5. التغليف الخارجي والصوص</h3>
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <label for="cakeFrosting_white" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFrosting_white" type="radio" name="cakeFrosting" value="أبيض ملكي" data-name="أبيض ملكي" data-price="0" checked class="accent-[#e3b938]" />
+              <span>أبيض ملكي</span>
+            </span>
+            <span class="text-[10px] text-stone-400">مشمول</span>
+          </label>
+          <label for="cakeFrosting_choc" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFrosting_choc" type="radio" name="cakeFrosting" value="شوكولاتة بلجيكي + دريب" data-name="شوكولاتة بلجيكي + دريب" data-price="45" class="accent-[#e3b938]" />
+              <span>شوكولاتة + دريب</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+45 ج.م</span>
+          </label>
+          <label for="cakeFrosting_lotus" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFrosting_lotus" type="radio" name="cakeFrosting" value="لوتس كراميل مملح" data-name="لوتس كراميل مملح" data-price="45" class="accent-[#e3b938]" />
+              <span>لوتس كراميل</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+45 ج.م</span>
+          </label>
+          <label for="cakeFrosting_pistachio" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeFrosting_pistachio" type="radio" name="cakeFrosting" value="بستاشيو فستقي" data-name="بستاشيو فستقي" data-price="60" class="accent-[#e3b938]" />
+              <span>بستاشيو فستقي</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+60 ج.م</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 6. الإضافات والزينة -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs sm:text-sm font-black text-[#f3d266]">6. الإضافات والزينة</h3>
+          <span class="text-[10px] text-stone-400">اختياري</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <label for="cakeAddon_strawberry" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeAddon_strawberry" type="checkbox" name="cakeAddon" value="فراولة طازجة" data-name="فراولة طازجة" data-price="60" class="accent-[#e3b938]" />
+              <span>فراولة طازجة</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+60 ج.م</span>
+          </label>
+          <label for="cakeAddon_ferrero" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeAddon_ferrero" type="checkbox" name="cakeAddon" value="كرات شوكولاتة ذهبية" data-name="كرات شوكولاتة ذهبية" data-price="75" class="accent-[#e3b938]" />
+              <span>شوكولاتة ذهبية</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+75 ج.م</span>
+          </label>
+          <label for="cakeAddon_nuts" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeAddon_nuts" type="checkbox" name="cakeAddon" value="مكسرات وفستق محمص" data-name="مكسرات وفستق محمص" data-price="80" class="accent-[#e3b938]" />
+              <span>مكسرات وفستق</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+80 ج.م</span>
+          </label>
+          <label for="cakeAddon_topper" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeAddon_topper" type="checkbox" name="cakeAddon" value="توبر ذهبي فاخر" data-name="توبر ذهبي فاخر" data-price="55" class="accent-[#e3b938]" />
+              <span>توبر ذهبي</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+55 ج.م</span>
+          </label>
+          <label for="cakeAddon_candle" class="col-span-2 flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer">
+            <span class="flex items-center gap-1.5 font-bold text-white">
+              <input id="cakeAddon_candle" type="checkbox" name="cakeAddon" value="شمع أرقام ذهبي" data-name="شمع أرقام ذهبي" data-price="35" class="accent-[#e3b938]" />
+              <span>شمع أرقام ذهبي</span>
+            </span>
+            <span class="font-bold text-[#f3d266]">+35 ج.م</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 7. التاريخ والعبارة ورفع صورة نموذجية -->
+      <div class="space-y-2.5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div>
+            <label for="cakeEventDate" class="block text-[11px] font-bold text-[#f3d266] mb-1">تاريخ الاستلام</label>
+            <input id="cakeEventDate" type="date" name="eventDate" class="w-full py-2 px-3 rounded-xl bg-[#110f0a] border border-[#d4af37]/40 text-xs text-white outline-none focus:border-[#e3b938]" />
+          </div>
+          <div>
+            <label for="cakeGreeting" class="block text-[11px] font-bold text-[#f3d266] mb-1">عبارة التهنئة على التورتة</label>
+            <input id="cakeGreeting" type="text" name="cakeGreeting" maxlength="45" placeholder="مثال: كل سنة وأنت طيب" class="w-full py-2 px-3 rounded-xl bg-[#110f0a] border border-[#d4af37]/40 text-xs text-white outline-none focus:border-[#e3b938]" />
+          </div>
+        </div>
+
+        <div id="customCakeUploadContainer" class="p-3 rounded-xl bg-[#110f0a] border border-dashed border-[#d4af37]/50 space-y-2">
+          <label for="customCakePhotoInput" class="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-[#262012] hover:bg-[#332b18] border border-[#d4af37]/50 text-[#f3d266] text-xs font-black cursor-pointer transition">
+            <span>📷</span>
+            <span>رفع صورة للتصميم المطلوب (للمعاينة)</span>
+            <input id="customCakePhotoInput" type="file" name="cakePhoto" accept="image/*" class="hidden" />
+          </label>
+          <div id="customCakePhotoPreviewWrapper" class="hidden rounded-xl overflow-hidden border border-[#d4af37]/40">
+            <img id="customCakePhotoPreview" src="" alt="معاينة التورتة" class="w-full max-h-48 object-cover" />
+          </div>
+          <div id="customCakePhotoNotice"></div>
+        </div>
+      </div>
+
+      <button type="button" id="addCustomCakeToCartBtn" data-action="add-custom-cake" class="w-full py-3 px-4 rounded-xl gold-grad text-[#100c04] font-black text-xs sm:text-sm shadow-[0_8px_22px_rgba(212,175,55,0.38)] flex items-center justify-center gap-2 cursor-pointer transition active:scale-[0.98]">
+        <span>🎂</span>
+        <span>إتمام الطلب / أضف للسلة</span>
+      </button>
+    </section>
 
     <footer class="mt-8 pt-5 pb-6 border-t border-[#d4af37]/25 text-center text-[11px] sm:text-xs text-stone-300 space-y-1.5">
       <p class="font-semibold text-stone-200">جميع الحقوق محفوظة © SWEET CITY - Bakery & Pastry - العاشر من رمضان</p>
@@ -494,8 +871,8 @@
         <button type="button" onclick="copyPaymentNum('01040224226', 'فودافون كاش')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-100 hover:border-[#d4af37] transition cursor-pointer">
           🔴 فودافون كاش: <span class="text-[#e3b938] font-black" dir="ltr">01040224226</span>
         </button>
-        <button type="button" onclick="copyPaymentNum('01090000421', 'إنستا باي InstaPay')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-100 hover:border-[#d4af37] transition cursor-pointer">
-          🟣 إنستا باي: <span class="text-[#e3b938] font-black" dir="ltr">01090000421</span>
+        <button type="button" onclick="copyPaymentNum('01060809671', 'إنستا باي InstaPay')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-100 hover:border-[#d4af37] transition cursor-pointer">
+          🟣 إنستا باي: <span class="text-[#e3b938] font-black" dir="ltr">01060809671</span>
         </button>
       </div>
       <div class="flex flex-wrap items-center justify-center gap-2 pt-1.5 text-[11px]">
@@ -507,9 +884,27 @@
           <span>📸</span>
           <span>إنستجرام @sweetcity_18</span>
         </a>
+        <a href="https://vt.tiktok.com/ZSp78DMGU/" target="_blank" rel="noopener noreferrer" class="px-3 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/35 text-[#f3d266] hover:border-[#d4af37] font-bold flex items-center gap-1 transition">
+          <span>🎵</span>
+          <span>تيك توك سويت سيتي</span>
+        </a>
       </div>
     </footer>
   </div>
+
+  <!-- شريط التنقل السفلي الثابت (Mobile-First Bottom Navigation Bar) -->
+  <nav id="scSpaTabsBar" aria-label="أقسام التطبيق الرئيسية">
+    <div class="max-w-lg mx-auto grid grid-cols-2 gap-2">
+      <button type="button" id="tabBtnMenu" data-tab="menu" aria-selected="true" onclick="switchMainTab('menu')" class="py-2 px-3 rounded-xl gold-grad text-[#100c04] font-black text-xs sm:text-sm shadow-[0_4px_14px_rgba(212,175,55,0.35)] flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 cursor-pointer transition active:scale-[0.97]">
+        <span class="text-base sm:text-sm leading-none">🥐</span>
+        <span>المنيو / المخبوزات</span>
+      </button>
+      <button type="button" id="tabBtnCake" data-tab="cake" aria-selected="false" onclick="switchMainTab('cake')" class="py-2 px-3 rounded-xl bg-[#14110c] text-[#f3d266] border border-[#d4af37]/35 hover:border-[#d4af37] font-bold text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 cursor-pointer transition active:scale-[0.97]">
+        <span class="text-base sm:text-sm leading-none">🎂</span>
+        <span>صمّم تورتتك</span>
+      </button>
+    </div>
+  </nav>
 
   <!-- شريط السلة العائم بالأسفل -->
   <div id="floatingCartBar" class="hidden fixed bottom-3 inset-x-3 max-w-lg mx-auto z-40">
@@ -528,7 +923,10 @@
       <div class="shrink-0 space-y-1.5">
         <div class="flex items-center justify-between pb-1.5 border-b border-[#d4af37]/25">
           <h2 class="text-sm sm:text-base font-black text-[#e3b938]">🛒 سلة الطلبات وتأكيد الفاتورة</h2>
-          <button type="button" onclick="closeCartModal()" class="w-7 h-7 rounded-full bg-[#1c1912] border border-[#d4af37]/30 text-stone-300 flex items-center justify-center text-sm font-bold cursor-pointer">×</button>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button type="button" id="clearCartBtn" onclick="clearCart()" style="display:none;" class="items-center gap-1 px-2.5 py-1 rounded-lg bg-[#251814] hover:bg-red-950/80 border border-red-500/45 text-red-300 text-[10px] font-black cursor-pointer transition shrink-0">🗑️ إفراغ السلة</button>
+            <button type="button" onclick="closeCartModal()" class="w-7 h-7 rounded-full bg-[#1c1912] border border-[#d4af37]/30 text-stone-300 flex items-center justify-center text-sm font-bold cursor-pointer">×</button>
+          </div>
         </div>
 
         <div class="px-2.5 py-1.5 rounded-xl bg-[#1a1710] border border-[#d4af37]/30">
@@ -591,30 +989,22 @@
               <button type="button" onclick="copyPaymentNum(STORE_SETTINGS.vodafoneCash || '01040224226', 'فودافون كاش')" class="w-full py-1 px-2 rounded-lg bg-[#272011] hover:bg-[#332a17] border border-[#d4af37]/40 text-[#f3d266] text-[10px] font-black text-center cursor-pointer transition">📋 نسخ فودافون</button>
             </div>
             <div class="p-2 rounded-xl bg-[#110f0a] border border-[#d4af37]/25 flex flex-col items-center justify-between gap-1.5 text-center h-full">
-              <span id="uiCartInstapayNum" class="block w-full font-black text-[#e3b938] text-xs tracking-wider text-center" dir="ltr">01090000421</span>
-              <button type="button" onclick="copyPaymentNum(STORE_SETTINGS.instaPay || '01090000421', 'إنستا باي')" class="w-full py-1 px-2 rounded-lg bg-[#272011] hover:bg-[#332a17] border border-[#d4af37]/40 text-[#f3d266] text-[10px] font-black text-center cursor-pointer transition">📋 نسخ إنستا</button>
+              <span id="uiCartInstapayNum" class="block w-full font-black text-[#e3b938] text-xs tracking-wider text-center" dir="ltr">01060809671</span>
+              <button type="button" onclick="copyPaymentNum(normalizeInstaPayNumber(STORE_SETTINGS.instaPay), 'إنستا باي')" class="w-full py-1 px-2 rounded-lg bg-[#272011] hover:bg-[#332a17] border border-[#d4af37]/40 text-[#f3d266] text-[10px] font-black text-center cursor-pointer transition">📋 نسخ إنستا</button>
             </div>
           </div>
         </div>
       </div>
 
       <div class="shrink-0 space-y-1.5 pt-0.5">
-        <div class="px-3 py-1.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/25 space-y-1 text-[11px]">
-          <div class="flex items-center justify-between gap-2">
-            <div class="text-stone-300">
-              <span>الأصناف: <b><span id="summarySubtotal">0</span> ج</b></span>
-              <span class="mx-1 text-stone-600">|</span>
-              <span>التوصيل: <b class="text-[#e3b938]" id="summaryDelivery">15 ج.م</b></span>
-            </div>
-            <div class="text-xs font-black text-stone-100">
-              الإجمالي النهائي: <span id="summaryTotal">0</span> ج.م
-            </div>
+        <div class="px-3 py-1.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/25 flex items-center justify-between text-[11px]">
+          <div class="text-stone-300">
+            <span>الأصناف: <b><span id="summarySubtotal">0</span> ج</b></span>
+            <span class="mx-1.5 text-stone-600">|</span>
+            <span>التوصيل: <b class="text-[#e3b938]" id="summaryDelivery">15 ج.م</b></span>
           </div>
-          <div class="pt-1 border-t border-[#d4af37]/20 flex items-center justify-between gap-2">
-            <span id="summaryDepositNote" class="text-[10px] font-bold text-stone-300 truncate"></span>
-            <div class="text-xs sm:text-sm font-black text-[#e3b938] shrink-0">
-              المطلوب دفعه الآن: <span id="summaryDueNow">0</span> ج.م
-            </div>
+          <div class="text-xs sm:text-sm font-black text-[#e3b938]">
+            الإجمالي: <span id="summaryTotal">0</span> ج.م
           </div>
         </div>
 
@@ -931,7 +1321,7 @@
       phone: "01040224226",
       whatsapp: "201040224226",
       vodafoneCash: "01040224226",
-      instaPay: "01090000421",
+      instaPay: "01060809671",
       mapUrl: "https://maps.google.com/?q=العاشر+من+رمضان+المجاورة+18+مول+تن+بوينت",
       facebookUrl: "https://www.facebook.com/share/1c9jj4wD3R/",
       instagramUrl: "https://www.instagram.com/sweetcity_18?obrf=dnFuNGdlZXF1Ymhy",
@@ -953,36 +1343,6 @@
 
     const MENU_CACHE_KEY = 'sweet_city_menu_cache_v1';
     const PERSONAL_ORDERS_KEY = 'SC_PERSONAL_ORDERS_V2';
-    const CART_STORAGE_KEY = 'SC_CART_V1';
-    let allowStudioNavigation = false;
-
-    function escapeCartHtml(str) {
-      return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    function saveCartToLocal() {
-      try {
-        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
-      } catch (e) {}
-    }
-
-    function loadCartFromLocal() {
-      try {
-        const raw = localStorage.getItem(CART_STORAGE_KEY);
-        if (!raw) return;
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed)) {
-          cart = parsed.filter(item => item && item.key && Number(item.qty) > 0 && Number.isFinite(Number(item.unitPrice)));
-        }
-      } catch (e) {
-        cart = [];
-      }
-    }
 
     function getPersonalOrders() {
       try {
@@ -1038,7 +1398,18 @@
         }
         STORE_SETTINGS = { ...STORE_SETTINGS, ...parsedSet };
       }
+      STORE_SETTINGS.instaPay = normalizeInstaPayNumber(STORE_SETTINGS.instaPay);
     } catch (e) {}
+
+    function normalizeInstaPayNumber(val) {
+      const digits = String(val || '').replace(/\s+/g, '').trim();
+      const legacyOld = ['0109', '0000', '421'].join('');
+      const legacyPlus = '+2' + '01060809671';
+      if (!digits || digits === legacyOld || digits === legacyPlus || digits === '201060809671') {
+        return '01060809671';
+      }
+      return digits;
+    }
 
     let activeCategory = 'الكل';
     let searchQuery = '';
@@ -1099,8 +1470,9 @@
       const vfNumEl = document.getElementById('uiCartVodafoneNum');
       if (vfNumEl && STORE_SETTINGS.vodafoneCash) vfNumEl.textContent = STORE_SETTINGS.vodafoneCash;
 
+      STORE_SETTINGS.instaPay = normalizeInstaPayNumber(STORE_SETTINGS.instaPay);
       const instaNumEl = document.getElementById('uiCartInstapayNum');
-      if (instaNumEl && STORE_SETTINGS.instaPay) instaNumEl.textContent = STORE_SETTINGS.instaPay;
+      if (instaNumEl) instaNumEl.textContent = STORE_SETTINGS.instaPay;
 
       const logoImgEl = document.getElementById('uiHeaderLogoImg');
       const logoFallbackEl = document.getElementById('uiHeaderLogoFallback');
@@ -1247,6 +1619,23 @@
     async function syncFromGoogleSheet(showNotification) {
       const activeScriptUrl = (STORE_SETTINGS.webhookUrl || GOOGLE_SHEETS_CONFIG.scriptUrl || SCRIPT_URL).trim();
       const activeSheetId = (STORE_SETTINGS.sheetId || GOOGLE_SHEETS_CONFIG.sheetId || '').trim();
+      const getItemsSignature = (list) => JSON.stringify(
+        (Array.isArray(list) ? list : [])
+          .map(i => [
+            Number(i.id) || 0,
+            String(i.name || '').trim(),
+            String(i.category || '').trim(),
+            Number(i.price) || 0,
+            Number(i.oldPrice) || 0,
+            normalizeUnitType(i.unitType, i.category, i.id, i.name),
+            String(i.desc || '').trim(),
+            String(i.emoji || '').trim(),
+            isItemAvailable(i),
+            String(i.img || '').trim(),
+            isItemPopular(i)
+          ])
+          .sort((a, b) => a[0] - b[0])
+      );
 
       if (activeScriptUrl && activeScriptUrl.startsWith('https://script.google.com/')) {
         try {
@@ -1259,6 +1648,7 @@
           }
 
           if (data) {
+            let hasChanges = false;
             if (Array.isArray(data.items)) {
               if (data.items.length === 0) {
                 if (showNotification) {
@@ -1267,28 +1657,49 @@
                   alert(emptyMsg);
                 }
               } else {
-                RAW = data.items;
-                sortRawById();
-                saveMenuCacheToLocal();
+                const incomingItems = data.items.map(item => ({
+                  ...item,
+                  unitType: normalizeUnitType(item.unitType, item.category, item.id, item.name),
+                  available: isItemAvailable(item),
+                  popular: isItemPopular(item)
+                })).sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
+                if (getItemsSignature(incomingItems) !== getItemsSignature(RAW)) {
+                  RAW = incomingItems;
+                  sortRawById();
+                  saveMenuCacheToLocal();
+                  hasChanges = true;
+                }
               }
             }
 
             if (data.settings && typeof data.settings === 'object') {
+              const prevSettingsSnapshot = JSON.stringify(STORE_SETTINGS);
               const incomingSettings = { ...data.settings };
               delete incomingSettings.adminPin;
               delete incomingSettings.admin_pin;
-              STORE_SETTINGS = {
+              const nextSettings = {
                 ...STORE_SETTINGS,
                 ...incomingSettings,
                 webhookUrl: incomingSettings.webhookUrl || activeScriptUrl
               };
               if (Array.isArray(incomingSettings.deliveryZones) && incomingSettings.deliveryZones.length > 0) {
-                STORE_SETTINGS.deliveryZones = incomingSettings.deliveryZones;
+                nextSettings.deliveryZones = incomingSettings.deliveryZones;
               }
-              saveMenuCacheToLocal();
+              nextSettings.instaPay = normalizeInstaPayNumber(nextSettings.instaPay);
+              if (JSON.stringify(nextSettings) !== prevSettingsSnapshot) {
+                STORE_SETTINGS = nextSettings;
+                saveMenuCacheToLocal();
+                hasChanges = true;
+              }
             }
 
-            initApp();
+            if (hasChanges || showNotification) {
+              const savedScrollY = window.scrollY;
+              initApp();
+              if (!showNotification && savedScrollY > 0) {
+                window.scrollTo(0, savedScrollY);
+              }
+            }
             if (showNotification && Array.isArray(data.items) && data.items.length > 0) {
               showToast('✅ تم سحب أحدث الأصناف والأسعار والإعدادات من Google Sheets بنجاح!', false);
             }
@@ -1346,10 +1757,26 @@
                 alert(emptyMsg);
               }
             } else {
-              RAW = pulledItems;
-              sortRawById();
-              saveMenuCacheToLocal();
-              initApp();
+              let hasChanges = false;
+              const normalizedPulled = pulledItems.map(item => ({
+                ...item,
+                unitType: normalizeUnitType(item.unitType, item.category, item.id, item.name),
+                available: isItemAvailable(item),
+                popular: isItemPopular(item)
+              })).sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
+              if (getItemsSignature(normalizedPulled) !== getItemsSignature(RAW)) {
+                RAW = normalizedPulled;
+                sortRawById();
+                saveMenuCacheToLocal();
+                hasChanges = true;
+              }
+              if (hasChanges || showNotification) {
+                const savedScrollY = window.scrollY;
+                initApp();
+                if (!showNotification && savedScrollY > 0) {
+                  window.scrollTo(0, savedScrollY);
+                }
+              }
               if (showNotification) showToast('✅ تم تحديث قائمة الأصناف والأسعار مباشرة من جدول Google Sheet!', false);
             }
           }
@@ -1516,7 +1943,7 @@
         ? Math.max(0, Math.round((Number(weight) || 0) * 100) / 100)
         : Math.max(0, Math.round(Number(weight) || 0));
       selectedWeights[itemId] = clean;
-      renderProducts();
+      updateSingleProductCard(itemId);
     }
 
     function adjustItemWeight(itemId, delta) {
@@ -1527,21 +1954,14 @@
         ? Math.max(0, Math.round((current + delta) * 100) / 100)
         : Math.max(0, Math.round(current + delta));
       selectedWeights[itemId] = next;
-      renderProducts();
+      updateSingleProductCard(itemId);
     }
 
     function resolveProductImage(item) {
       if (!item) return { primary: '', candidates: [] };
       const cleanName = String(item.name || '').trim();
       const id = item.id;
-      const autoCandidates = [
-        `images/${id}.jpg`,
-        `images/${id}.png`,
-        cleanName ? `images/${cleanName}.jpg` : '',
-        cleanName ? `images/${cleanName}.png` : '',
-        `${id}.jpg`,
-        `${id}.png`
-      ].filter(Boolean);
+      const autoCandidates = [`images/${id}.jpg`];
       const manualImg = String(item.img || '').trim();
       const all = manualImg ? [manualImg, ...autoCandidates] : autoCandidates;
       return {
@@ -1550,24 +1970,205 @@
       };
     }
 
+    const SC_BLANK_IMG = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+    const scImgObserver = (typeof IntersectionObserver !== 'undefined') ? new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const img = entry.target;
+        if (!img || img.dataset.imgFailed === '1') return;
+        if (entry.isIntersecting) {
+          if (img.dataset.src && (img.dataset.unloaded === '1' || img.getAttribute('src') === SC_BLANK_IMG)) {
+            img.dataset.unloaded = '0';
+            img.src = img.dataset.src;
+          }
+        } else {
+          if (img.getAttribute('src') && img.getAttribute('src') !== SC_BLANK_IMG) {
+            img.dataset.unloaded = '1';
+            img.src = SC_BLANK_IMG;
+          }
+        }
+      });
+    }, { rootMargin: '1200px 0px' }) : null;
+
+    function observeProductImages(rootEl) {
+      const container = rootEl || document.getElementById('productsGrid');
+      if (!container) return;
+      const imgs = container.querySelectorAll('img[data-src]:not([data-observed="1"])');
+      imgs.forEach((img) => {
+        img.dataset.observed = '1';
+        if (scImgObserver) {
+          scImgObserver.observe(img);
+        } else {
+          img.dataset.unloaded = '0';
+          img.src = img.dataset.src;
+        }
+      });
+    }
+
     function handleProductImgError(imgEl) {
-      if (!imgEl) return;
+      if (!imgEl || imgEl.dataset.unloaded === '1' || imgEl.getAttribute('src') === SC_BLANK_IMG) return;
       const itemId = Number(imgEl.getAttribute('data-item-id'));
       const item = RAW.find(i => i.id === itemId);
       const resolved = resolveProductImage(item);
       const nextIdx = (Number(imgEl.getAttribute('data-try-idx')) || 0) + 1;
       if (nextIdx < resolved.candidates.length) {
         imgEl.setAttribute('data-try-idx', String(nextIdx));
+        imgEl.dataset.src = resolved.candidates[nextIdx];
         imgEl.src = resolved.candidates[nextIdx];
       } else {
+        imgEl.dataset.imgFailed = '1';
         imgEl.style.display = 'none';
         const fallbackEl = document.getElementById('prodFallback_' + itemId);
         if (fallbackEl) {
-          fallbackEl.classList.remove('hidden');
-          fallbackEl.classList.add('flex');
+          fallbackEl.style.display = 'flex';
         }
       }
     }
+
+    let scFilteredItems = [];
+    let scRenderedCount = 0;
+    const SC_BATCH_SIZE = 16;
+
+    function buildProductCardHtml(item, eagerLoad) {
+      const mode = getItemUnitMode(item);
+      const isWeight = mode === 'weight';
+      const isCup = mode === 'cup';
+      const isBox = mode === 'box';
+      const w = selectedWeights[item.id] !== undefined ? selectedWeights[item.id] : 0;
+      const totalAutoPrice = Number((item.price * w).toFixed(2));
+      const unavailable = !isItemAvailable(item);
+      const basePriceTitle = isWeight ? 'سعر الكيلو' : (isCup ? 'سعر الكوب' : (isBox ? 'سعر البوكس' : 'سعر القطعة'));
+      const qtyTitleLabel = isWeight
+        ? 'الوزن المختار (بالكيلو):'
+        : (isCup ? 'الكمية المختارة (بالكوب):' : (isBox ? 'الكمية المختارة (بالبوكس):' : 'الكمية المختارة (بالقطعة):'));
+      const addOneLabel = isCup ? '+ أضف كوب (+1)' : (isBox ? '+ أضف بوكس (+1)' : '+ أضف قطعة (+1)');
+      const subOneLabel = isCup ? '− إنقاص كوب (-1)' : (isBox ? '− إنقاص بوكس (-1)' : '− إنقاص قطعة (-1)');
+      const chooseZeroLabel = isWeight
+        ? '+ اختر الوزن أولاً'
+        : (isCup ? '+ اختر عدد الأكواب' : (isBox ? '+ اختر عدد البوكسات' : '+ اختر عدد القطع'));
+
+      const hasDiscount = Number(item.oldPrice) > Number(item.price) && Number(item.oldPrice) > 0;
+      const discountPct = hasDiscount ? Math.round(((Number(item.oldPrice) - Number(item.price)) / Number(item.oldPrice)) * 100) : 0;
+      const isOfferCategory = String(item.category || '').includes('عروض') || String(item.category || '').toLowerCase().includes('offers');
+      const isPop = isItemPopular(item);
+
+      let promoBadgeHtml = '';
+      if (unavailable) {
+        promoBadgeHtml = '<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-red-900/90 text-white text-[10px] font-black shadow-md">نفد حالياً</span>';
+      } else if (hasDiscount) {
+        promoBadgeHtml = `<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#ff7b00] to-[#e3b938] text-black text-[10px] font-black shadow-[0_0_12px_rgba(255,123,0,0.6)]">🔥 عرض - خصم ${discountPct}%</span>`;
+      } else if (isOfferCategory) {
+        promoBadgeHtml = '<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#ff7b00] to-[#e3b938] text-black text-[10px] font-black shadow-md">🔥 عرض مميز</span>';
+      } else if (isPop) {
+        promoBadgeHtml = '<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-[#1a150b]/95 border border-[#e3b938] text-[#f3d266] text-[10px] font-black shadow-[0_0_10px_rgba(212,175,55,0.4)]">⭐ الأكثر طلباً</span>';
+      }
+
+      const resolvedImg = resolveProductImage(item);
+
+      return `
+        <div id="productCard_${item.id}" class="card-surface rounded-[20px] p-3 flex flex-col justify-between relative overflow-hidden ${unavailable ? 'opacity-60 grayscale' : ''}">
+          <div class="relative rounded-xl bg-gradient-to-b from-[#251f13] via-[#18140d] to-[#110e09] border border-[#d4af37]/20 h-36 flex flex-col items-center justify-center overflow-hidden">
+            ${promoBadgeHtml}
+            ${resolvedImg.primary ? `<img src="${eagerLoad ? resolvedImg.primary : SC_BLANK_IMG}" data-src="${resolvedImg.primary}" data-unloaded="${eagerLoad ? '0' : '1'}" width="400" height="300" decoding="async" data-item-id="${item.id}" data-try-idx="0" alt="${item.name}" onerror="handleProductImgError(this)" class="w-full h-full object-cover" />` : ''}
+            <div id="prodFallback_${item.id}" class="flex flex-col items-center justify-center" style="${resolvedImg.primary ? 'display:none;' : 'display:flex;'}">
+              <div class="text-4xl mb-2">${item.emoji || '🍩'}</div>
+              <span class="font-en text-[11px] tracking-[0.2em] text-[#d4af37] font-bold">SWEET CITY 1999</span>
+            </div>
+          </div>
+
+          <div class="mt-2.5 flex items-start justify-between gap-2 text-right">
+            <div>
+              <h3 class="text-base sm:text-lg font-black text-white">${item.name}</h3>
+              <p class="text-[11px] sm:text-xs text-stone-400 mt-0.5">${item.desc || 'مخبوز طازج يومياً'}</p>
+            </div>
+            <div class="shrink-0 px-2 py-1 rounded-xl bg-[#16130c] border border-[#d4af37]/35 text-center">
+              <span class="block text-[9px] text-stone-400">${basePriceTitle}</span>
+              ${hasDiscount ? `<del class="block text-[10px] text-stone-500 font-bold leading-none my-0.5">${item.oldPrice} ج.م</del>` : ''}
+              <span class="text-xs font-black text-[#f3d266]">${item.price} ج.م</span>
+            </div>
+          </div>
+
+          <div class="mt-2.5 p-2.5 rounded-2xl bg-[#13100a] border border-[#d4af37]/30 space-y-2">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="font-bold text-stone-300">${qtyTitleLabel}</span>
+              <span class="font-black text-[#f3d266]">${formatQuantityArabic(w, mode)}</span>
+            </div>
+
+            ${isWeight ? `
+              <div class="grid grid-cols-5 gap-1.5 items-center">
+                <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 0.5)"`} class="py-2 rounded-xl bg-[#262012] hover:bg-[#342b18] border border-[#d4af37]/50 text-[#f3d266] font-black text-xs cursor-pointer disabled:opacity-40">+0.5</button>
+                <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 0.25)"`} class="py-2 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-xs cursor-pointer disabled:opacity-40">+0.25</button>
+                <input type="number" min="0" step="0.25" value="${w}" ${unavailable ? 'disabled' : `onchange="setItemWeight(${item.id}, this.value)"`} class="w-full py-1.5 px-1 rounded-xl bg-black border-2 border-[#d4af37] text-center font-black text-xs sm:text-sm text-white outline-none" />
+                <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -0.25)"`} class="py-2 rounded-xl bg-[#251f14] hover:bg-[#332b1c] border border-[#d4af37]/45 text-[#e3b938] font-black text-xs cursor-pointer disabled:opacity-35">-0.25</button>
+                <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -0.5)"`} class="py-2 rounded-xl bg-[#1b170f] hover:bg-[#282216] border border-stone-700 text-stone-300 font-black text-xs cursor-pointer disabled:opacity-35">-0.5</button>
+              </div>
+            ` : `
+              <div class="grid grid-cols-3 gap-2 items-center">
+                <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 1)"`} class="py-2 px-3 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-xs cursor-pointer disabled:opacity-40">${addOneLabel}</button>
+                <input type="number" min="0" step="1" value="${Math.round(w)}" ${unavailable ? 'disabled' : `onchange="setItemWeight(${item.id}, this.value)"`} class="w-full py-1.5 px-2 rounded-xl bg-black border-2 border-[#d4af37] text-center font-black text-xs sm:text-sm text-white outline-none" />
+                <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -1)"`} class="py-2 px-3 rounded-xl bg-[#251f14] hover:bg-[#332b1c] border border-[#d4af37]/45 text-[#e3b938] font-black text-xs cursor-pointer disabled:opacity-35">${subOneLabel}</button>
+              </div>
+            `}
+
+            ${w > 0 ? `
+              <div class="flex items-center justify-between pt-1 text-[10px] text-stone-400">
+                <span>حساب السعر: ${formatQuantityArabic(w, mode)} × ${item.price} ج.م = <b class="text-[#f3d266]">${totalAutoPrice} ج.م</b></span>
+                <button type="button" onclick="setItemWeight(${item.id}, 0)" class="text-red-400 hover:underline font-bold cursor-pointer">تصفير (0)</button>
+              </div>
+            ` : ''}
+          </div>
+
+          <div class="mt-2.5 pt-2.5 border-t border-dashed border-[#d4af37]/25 flex items-center justify-between">
+            <div class="text-right">
+              <span class="text-lg sm:text-xl font-black text-[#e3b938]">${totalAutoPrice} ج.م</span>
+              <span class="block text-[10px] text-stone-400">${w > 0 ? ('الإجمالي لـ ' + formatQuantityArabic(w, mode)) : 'اختر الكمية لحساب الإجمالي'}</span>
+            </div>
+            <button
+              type="button"
+              ${unavailable ? 'disabled' : `onclick="addToCart(${item.id})"`}
+              class="${w > 0 ? 'bg-[#e3b938] hover:bg-[#f3c846] text-black' : 'bg-[#251f14] text-[#f3d266] border border-[#d4af37]/50'} font-black py-2 px-4 rounded-xl text-xs sm:text-sm transition active:scale-95 disabled:opacity-40 cursor-pointer"
+            >
+              ${unavailable ? 'غير متاح' : (w > 0 ? `+ أضف للسلة (${totalAutoPrice} ج.م)` : chooseZeroLabel)}
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function appendNextProductsBatch() {
+      const grid = document.getElementById('productsGrid');
+      if (!grid || scRenderedCount >= scFilteredItems.length) return;
+      const batch = scFilteredItems.slice(scRenderedCount, scRenderedCount + SC_BATCH_SIZE);
+      scRenderedCount += batch.length;
+      grid.insertAdjacentHTML('beforeend', batch.map(item => buildProductCardHtml(item, false)).join(''));
+      observeProductImages(grid);
+    }
+
+    function updateSingleProductCard(itemId) {
+      const item = RAW.find(i => i.id === itemId);
+      const cardEl = document.getElementById('productCard_' + itemId);
+      if (!item || !cardEl) return;
+      cardEl.outerHTML = buildProductCardHtml(item, true);
+      const newCardEl = document.getElementById('productCard_' + itemId);
+      if (newCardEl) {
+        observeProductImages(newCardEl);
+      }
+    }
+
+    const scSentinelObserver = (typeof IntersectionObserver !== 'undefined') ? new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && scRenderedCount < scFilteredItems.length) {
+          appendNextProductsBatch();
+        }
+      });
+    }, { rootMargin: '1400px 0px' }) : null;
+
+    (function initInfiniteSentinel() {
+      const sentinel = document.getElementById('scInfiniteSentinel');
+      if (sentinel && scSentinelObserver) {
+        scSentinelObserver.observe(sentinel);
+      }
+    })();
 
     function renderProducts() {
       sortRawById();
@@ -1590,121 +2191,27 @@
         return matchCat && matchSearch;
       });
 
+      scFilteredItems = filtered;
+      scRenderedCount = 0;
+
       if (filtered.length === 0) {
         grid.innerHTML = '<div class="col-span-full py-14 text-center text-stone-400 text-sm">لا توجد أصناف مطابقة لبحثك.</div>';
         return;
       }
 
-      grid.innerHTML = filtered.map(item => {
-        const mode = getItemUnitMode(item);
-        const isWeight = mode === 'weight';
-        const isCup = mode === 'cup';
-        const isBox = mode === 'box';
-        const w = selectedWeights[item.id] !== undefined ? selectedWeights[item.id] : 0;
-        const totalAutoPrice = Number((item.price * w).toFixed(2));
-        const unavailable = !isItemAvailable(item);
-        const basePriceTitle = isWeight ? 'سعر الكيلو' : (isCup ? 'سعر الكوب' : (isBox ? 'سعر البوكس' : 'سعر القطعة'));
-        const badgeIcon = isWeight ? '⚖️' : (isCup ? '☕' : (isBox ? '🎁' : '🍩'));
-        const qtyTitleLabel = isWeight
-          ? 'الوزن المختار (بالكيلو):'
-          : (isCup ? 'الكمية المختارة (بالكوب):' : (isBox ? 'الكمية المختارة (بالبوكس):' : 'الكمية المختارة (بالقطعة):'));
-        const addOneLabel = isCup ? '+ أضف كوب (+1)' : (isBox ? '+ أضف بوكس (+1)' : '+ أضف قطعة (+1)');
-        const subOneLabel = isCup ? '− إنقاص كوب (-1)' : (isBox ? '− إنقاص بوكس (-1)' : '− إنقاص قطعة (-1)');
-        const chooseZeroLabel = isWeight
-          ? '+ اختر الوزن أولاً'
-          : (isCup ? '+ اختر عدد الأكواب' : (isBox ? '+ اختر عدد البوكسات' : '+ اختر عدد القطع'));
-
-        const hasDiscount = Number(item.oldPrice) > Number(item.price) && Number(item.oldPrice) > 0;
-        const discountPct = hasDiscount ? Math.round(((Number(item.oldPrice) - Number(item.price)) / Number(item.oldPrice)) * 100) : 0;
-        const isOfferCategory = String(item.category || '').includes('عروض') || String(item.category || '').toLowerCase().includes('offers');
-        const isPop = isItemPopular(item);
-
-        let promoBadgeHtml = '';
-        if (unavailable) {
-          promoBadgeHtml = '<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-red-900/90 text-white text-[10px] font-black shadow-md">نفد حالياً</span>';
-        } else if (hasDiscount) {
-          promoBadgeHtml = `<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#ff7b00] to-[#e3b938] text-black text-[10px] font-black shadow-[0_0_12px_rgba(255,123,0,0.6)]">🔥 عرض - خصم ${discountPct}%</span>`;
-        } else if (isOfferCategory) {
-          promoBadgeHtml = '<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#ff7b00] to-[#e3b938] text-black text-[10px] font-black shadow-md">🔥 عرض مميز</span>';
-        } else if (isPop) {
-          promoBadgeHtml = '<span style="position:absolute;top:10px;right:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-[#1a150b]/95 border border-[#e3b938] text-[#f3d266] text-[10px] font-black shadow-[0_0_10px_rgba(212,175,55,0.4)]">⭐ الأكثر طلباً</span>';
+      grid.innerHTML = '';
+      appendNextProductsBatch();
+      if (scSentinelObserver) {
+        const sentinel = document.getElementById('scInfiniteSentinel');
+        if (sentinel) {
+          scSentinelObserver.unobserve(sentinel);
+          scSentinelObserver.observe(sentinel);
         }
-
-        const resolvedImg = resolveProductImage(item);
-        const hasManualImg = Boolean(item.img && String(item.img).trim());
-
-        return `
-          <div class="card-surface rounded-[20px] p-3 flex flex-col justify-between relative overflow-hidden ${unavailable ? 'opacity-60 grayscale' : ''}">
-            <div class="relative rounded-xl bg-gradient-to-b from-[#251f13] via-[#18140d] to-[#110e09] border border-[#d4af37]/20 h-36 flex flex-col items-center justify-center overflow-hidden">
-              <span style="position:absolute;top:10px;left:10px;pointer-events:none;z-index:10;" class="px-2.5 py-0.5 rounded-full bg-[#15120c]/90 border border-[#d4af37]/40 text-[10px] font-bold text-[#d4af37]">
-                ${badgeIcon} ${basePriceTitle}: ${item.price} ج.م
-              </span>
-              ${promoBadgeHtml}
-              ${resolvedImg.primary ? `<img src="${resolvedImg.primary}" data-item-id="${item.id}" data-try-idx="0" alt="${item.name}" loading="lazy" decoding="async" onerror="handleProductImgError(this)" class="w-full h-full object-cover" />` : ''}
-              <div id="prodFallback_${item.id}" class="${resolvedImg.primary ? 'hidden' : 'flex'} flex-col items-center justify-center">
-                <div class="text-4xl mb-2">${item.emoji || '🍩'}</div>
-                <span class="font-en text-[11px] tracking-[0.2em] text-[#d4af37] font-bold">SWEET CITY 1999</span>
-              </div>
-            </div>
-
-            <div class="mt-2.5 flex items-start justify-between gap-2 text-right">
-              <div>
-                <h3 class="text-base sm:text-lg font-black text-white">${item.name}</h3>
-                <p class="text-[11px] sm:text-xs text-stone-400 mt-0.5">${item.desc || 'مخبوز طازج يومياً'}</p>
-              </div>
-              <div class="shrink-0 px-2 py-1 rounded-xl bg-[#16130c] border border-[#d4af37]/35 text-center">
-                <span class="block text-[9px] text-stone-400">${basePriceTitle}</span>
-                ${hasDiscount ? `<del class="block text-[10px] text-stone-500 font-bold leading-none my-0.5">${item.oldPrice} ج.م</del>` : ''}
-                <span class="text-xs font-black text-[#f3d266]">${item.price} ج.م</span>
-              </div>
-            </div>
-
-            <div class="mt-2.5 p-2.5 rounded-2xl bg-[#13100a] border border-[#d4af37]/30 space-y-2">
-              <div class="flex items-center justify-between text-[11px]">
-                <span class="font-bold text-stone-300">${qtyTitleLabel}</span>
-                <span class="font-black text-[#f3d266]">${formatQuantityArabic(w, mode)}</span>
-              </div>
-
-              ${isWeight ? `
-                <div class="grid grid-cols-5 gap-1.5 items-center">
-                  <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 0.5)"`} class="py-2 rounded-xl bg-[#262012] hover:bg-[#342b18] border border-[#d4af37]/50 text-[#f3d266] font-black text-xs cursor-pointer disabled:opacity-40">+0.5</button>
-                  <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 0.25)"`} class="py-2 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-xs cursor-pointer disabled:opacity-40">+0.25</button>
-                  <input type="number" min="0" step="0.25" value="${w}" ${unavailable ? 'disabled' : `onchange="setItemWeight(${item.id}, this.value)"`} class="w-full py-1.5 px-1 rounded-xl bg-black border-2 border-[#d4af37] text-center font-black text-xs sm:text-sm text-white outline-none" />
-                  <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -0.25)"`} class="py-2 rounded-xl bg-[#251f14] hover:bg-[#332b1c] border border-[#d4af37]/45 text-[#e3b938] font-black text-xs cursor-pointer disabled:opacity-35">-0.25</button>
-                  <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -0.5)"`} class="py-2 rounded-xl bg-[#1b170f] hover:bg-[#282216] border border-stone-700 text-stone-300 font-black text-xs cursor-pointer disabled:opacity-35">-0.5</button>
-                </div>
-              ` : `
-                <div class="grid grid-cols-3 gap-2 items-center">
-                  <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 1)"`} class="py-2 px-3 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-xs cursor-pointer disabled:opacity-40">${addOneLabel}</button>
-                  <input type="number" min="0" step="1" value="${Math.round(w)}" ${unavailable ? 'disabled' : `onchange="setItemWeight(${item.id}, this.value)"`} class="w-full py-1.5 px-2 rounded-xl bg-black border-2 border-[#d4af37] text-center font-black text-xs sm:text-sm text-white outline-none" />
-                  <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -1)"`} class="py-2 px-3 rounded-xl bg-[#251f14] hover:bg-[#332b1c] border border-[#d4af37]/45 text-[#e3b938] font-black text-xs cursor-pointer disabled:opacity-35">${subOneLabel}</button>
-                </div>
-              `}
-
-              ${w > 0 ? `
-                <div class="flex items-center justify-between pt-1 text-[10px] text-stone-400">
-                  <span>حساب السعر: ${formatQuantityArabic(w, mode)} × ${item.price} ج.م = <b class="text-[#f3d266]">${totalAutoPrice} ج.م</b></span>
-                  <button type="button" onclick="setItemWeight(${item.id}, 0)" class="text-red-400 hover:underline font-bold cursor-pointer">تصفير (0)</button>
-                </div>
-              ` : ''}
-            </div>
-
-            <div class="mt-2.5 pt-2.5 border-t border-dashed border-[#d4af37]/25 flex items-center justify-between">
-              <div class="text-right">
-                <span class="text-lg sm:text-xl font-black text-[#e3b938]">${totalAutoPrice} ج.م</span>
-                <span class="block text-[10px] text-stone-400">${w > 0 ? ('الإجمالي لـ ' + formatQuantityArabic(w, mode)) : (basePriceTitle + ': ' + item.price + ' ج.م')}</span>
-              </div>
-              <button
-                type="button"
-                ${unavailable ? 'disabled' : `onclick="addToCart(${item.id})"`}
-                class="${w > 0 ? 'bg-[#e3b938] hover:bg-[#f3c846] text-black' : 'bg-[#251f14] text-[#f3d266] border border-[#d4af37]/50'} font-black py-2 px-4 rounded-xl text-xs sm:text-sm transition active:scale-95 disabled:opacity-40 cursor-pointer"
-              >
-                ${unavailable ? 'غير متاح' : (w > 0 ? `+ أضف للسلة (${totalAutoPrice} ج.م)` : chooseZeroLabel)}
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
+      } else {
+        while (scRenderedCount < scFilteredItems.length) {
+          appendNextProductsBatch();
+        }
+      }
     }
 
     function addToCart(itemId) {
@@ -1743,9 +2250,9 @@
           });
         }
         selectedWeights[item.id] = 0;
-        saveCartToLocal();
-        renderProducts();
+        updateSingleProductCard(itemId);
         updateCartBadge();
+        persistCartToStorage();
         return;
       }
 
@@ -1770,9 +2277,9 @@
         });
       }
       selectedWeights[item.id] = 0;
-      saveCartToLocal();
-      renderProducts();
+      updateSingleProductCard(itemId);
       updateCartBadge();
+      persistCartToStorage();
     }
 
     function changeCartQty(key, delta) {
@@ -1780,43 +2287,13 @@
       if (idx === -1) return;
       cart[idx].qty += delta;
       if (cart[idx].qty <= 0) cart.splice(idx, 1);
-      saveCartToLocal();
       updateCartBadge();
+      persistCartToStorage();
       renderCart();
     }
 
-    function getCartBreakdown() {
-      let customCakeTotal = 0;
-      let customCakeDeposit = 0;
-      let regularItemsTotal = 0;
-      let hasCustomCakes = false;
-
-      cart.forEach(c => {
-        const lineTotal = Number((Number(c.unitPrice || 0) * Number(c.qty || 1)).toFixed(2));
-        if (c.requiresDeposit === true) {
-          hasCustomCakes = true;
-          customCakeTotal = Number((customCakeTotal + lineTotal).toFixed(2));
-          customCakeDeposit += Math.round(lineTotal * 0.5);
-        } else {
-          regularItemsTotal = Number((regularItemsTotal + lineTotal).toFixed(2));
-        }
-      });
-
-      const subtotal = Number((customCakeTotal + regularItemsTotal).toFixed(2));
-      const customCakeRemaining = Number((customCakeTotal - customCakeDeposit).toFixed(2));
-
-      return {
-        hasCustomCakes,
-        customCakeTotal,
-        customCakeDeposit,
-        customCakeRemaining,
-        regularItemsTotal,
-        subtotal
-      };
-    }
-
     function getCartSubtotal() {
-      return getCartBreakdown().subtotal;
+      return cart.reduce((sum, c) => sum + c.unitPrice * c.qty, 0);
     }
 
     function updateCartBadge() {
@@ -1826,6 +2303,68 @@
       document.getElementById('cartCountBadge').textContent = totalItems;
       document.getElementById('cartTotalBadge').textContent = subtotal;
       bar.classList.toggle('hidden', cart.length === 0);
+      const clearBtn = document.getElementById('clearCartBtn');
+      if (clearBtn) {
+        clearBtn.style.display = (Array.isArray(cart) && cart.length > 0) ? 'inline-flex' : 'none';
+        if (!cart || cart.length === 0) {
+          clearBtn.dataset.confirming = '0';
+          clearBtn.innerHTML = '🗑️ إفراغ السلة';
+          clearBtn.className = 'items-center gap-1 px-2.5 py-1 rounded-lg bg-[#251814] hover:bg-red-950/80 border border-red-500/45 text-red-300 text-[10px] font-black cursor-pointer transition shrink-0';
+        }
+      }
+    }
+
+    function persistCartToStorage() {
+      try {
+        if (!Array.isArray(cart) || cart.length === 0) {
+          localStorage.removeItem('SC_CART_V1');
+        } else {
+          localStorage.setItem('SC_CART_V1', JSON.stringify(cart));
+        }
+      } catch (e) {}
+    }
+
+    let _scClearCartTimer = null;
+    function clearCart() {
+      if (!Array.isArray(cart) || cart.length === 0) {
+        if (typeof showToast === 'function') showToast('السلة فارغة بالفعل', false);
+        return;
+      }
+      const btn = document.getElementById('clearCartBtn');
+      if (btn && btn.dataset.confirming !== '1') {
+        btn.dataset.confirming = '1';
+        btn.innerHTML = '⚠️ اضغط للتأكيد';
+        btn.className = 'items-center gap-1 px-2.5 py-1 rounded-lg bg-red-700 hover:bg-red-600 border border-red-300 text-white text-[10px] font-black cursor-pointer transition shrink-0 animate-pulse';
+        if (_scClearCartTimer) clearTimeout(_scClearCartTimer);
+        _scClearCartTimer = setTimeout(() => {
+          if (btn && btn.dataset.confirming === '1') {
+            btn.dataset.confirming = '0';
+            btn.innerHTML = '🗑️ إفراغ السلة';
+            btn.className = 'items-center gap-1 px-2.5 py-1 rounded-lg bg-[#251814] hover:bg-red-950/80 border border-red-500/45 text-red-300 text-[10px] font-black cursor-pointer transition shrink-0';
+          }
+        }, 3500);
+        return;
+      }
+      if (_scClearCartTimer) {
+        clearTimeout(_scClearCartTimer);
+        _scClearCartTimer = null;
+      }
+      if (btn) {
+        btn.dataset.confirming = '0';
+        btn.innerHTML = '🗑️ إفراغ السلة';
+        btn.className = 'items-center gap-1 px-2.5 py-1 rounded-lg bg-[#251814] hover:bg-red-950/80 border border-red-500/45 text-red-300 text-[10px] font-black cursor-pointer transition shrink-0';
+      }
+      const previousItemIds = [...new Set(cart.map(c => c && (c.itemId !== undefined ? c.itemId : c.id)).filter(id => id !== undefined && id !== null))];
+      cart = [];
+      try {
+        localStorage.removeItem('SC_CART_V1');
+      } catch (e) {}
+      if (typeof updateCartBadge === 'function') updateCartBadge();
+      if (typeof renderCart === 'function') renderCart();
+      if (typeof updateSingleProductCard === 'function') {
+        previousItemIds.forEach(id => updateSingleProductCard(id));
+      }
+      if (typeof showToast === 'function') showToast('🗑️ تم إفراغ السلة بنجاح — يمكنك البدء من جديد', false);
     }
 
     function saveCustomerInfoToLocal() {
@@ -1862,6 +2401,16 @@
     }
 
     function closeCartModal() {
+      if (_scClearCartTimer) {
+        clearTimeout(_scClearCartTimer);
+        _scClearCartTimer = null;
+      }
+      const clearBtn = document.getElementById('clearCartBtn');
+      if (clearBtn && clearBtn.dataset.confirming === '1') {
+        clearBtn.dataset.confirming = '0';
+        clearBtn.innerHTML = '🗑️ إفراغ السلة';
+        clearBtn.className = 'items-center gap-1 px-2.5 py-1 rounded-lg bg-[#251814] hover:bg-red-950/80 border border-red-500/45 text-red-300 text-[10px] font-black cursor-pointer transition shrink-0';
+      }
       saveCustomerInfoToLocal();
       document.getElementById('cartModal').classList.add('hidden');
     }
@@ -1919,73 +2468,37 @@
       } else {
         container.innerHTML = cart.map(c => {
           const unitWord = getUnitArabicWord(c.unitMode);
-          const lineTotal = Number((Number(c.unitPrice || 0) * Number(c.qty || 1)).toFixed(2));
-          const safeKey = String(c.key).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-          if (c.requiresDeposit === true || c.specs || c.details) {
-            const depositAmt = c.requiresDeposit ? Math.round(lineTotal * 0.5) : lineTotal;
-            const specsRaw = String(c.specs || c.details || '').trim();
-            return `
-              <div class="px-2.5 py-2 rounded-xl bg-[#181510] border border-[#d4af37]/45 space-y-1">
-                <div class="flex items-start justify-between gap-2">
-                  <div class="text-right flex-1 min-w-0">
-                    <div class="flex items-center gap-1.5 flex-wrap">
-                      <span class="text-xs font-black text-[#f3d266] truncate">${escapeCartHtml(c.name)}</span>
-                      ${c.requiresDeposit ? '<span class="px-1.5 py-0.5 rounded-md bg-[#d4af37]/20 border border-[#d4af37]/50 text-[#f3d266] text-[9px] font-black shrink-0">عربون 50%</span>' : ''}
-                    </div>
-                    <div class="text-[10px] font-bold text-[#e3b938] mt-0.5">
-                      السعر: ${lineTotal} ج.م ${c.requiresDeposit ? `· عربون مطلوب الآن: ${depositAmt} ج.م` : ''}
-                    </div>
-                  </div>
-                  <div class="flex items-center gap-1 shrink-0">
-                    <button type="button" onclick="changeCartQty('${safeKey}', -1)" class="w-6 h-6 rounded-lg border border-[#d4af37] text-[#e3b938] text-xs font-black cursor-pointer">−</button>
-                    <span class="text-[11px] font-black text-white px-1">${c.qty} ${unitWord}</span>
-                    <button type="button" onclick="changeCartQty('${safeKey}', 1)" class="w-6 h-6 rounded-lg border border-[#d4af37] text-[#e3b938] text-xs font-black cursor-pointer">+</button>
-                  </div>
-                </div>
-                ${specsRaw ? `<div class="text-[9.5px] leading-relaxed text-stone-300 bg-black/35 rounded-lg px-2 py-1 border border-[#d4af37]/15 whitespace-pre-line">${escapeCartHtml(specsRaw)}</div>` : ''}
-              </div>
-            `;
-          }
           return `
           <div class="px-2.5 py-1.5 rounded-xl bg-[#181510] border border-[#d4af37]/25 flex items-center justify-between gap-2">
             <div class="text-right flex-1 min-w-0">
-              <div class="text-xs font-black text-white truncate">${escapeCartHtml(c.name)}</div>
+              <div class="text-xs font-black text-white truncate">${c.name}</div>
               <div class="text-[10px] font-bold text-[#d4af37] truncate">
-                ${c.unitMode === 'weight' ? `${c.weightLabel} = ${lineTotal} ج.م` : `${c.qty} ${unitWord} × ${c.unitPrice} ج.م = ${lineTotal} ج.م`}
+                ${c.unitMode === 'weight' ? `${c.weightLabel} = ${Number((c.unitPrice * c.qty).toFixed(2))} ج.م` : `${c.qty} ${unitWord} × ${c.unitPrice} ج.م = ${Number((c.unitPrice * c.qty).toFixed(2))} ج.م`}
               </div>
             </div>
             <div class="flex items-center gap-1 shrink-0">
-              <button type="button" onclick="changeCartQty('${safeKey}', -1)" class="w-6 h-6 rounded-lg border border-[#d4af37] text-[#e3b938] text-xs font-black cursor-pointer">−</button>
+              <button type="button" onclick="changeCartQty('${c.key}', -1)" class="w-6 h-6 rounded-lg border border-[#d4af37] text-[#e3b938] text-xs font-black cursor-pointer">−</button>
               <span class="text-[11px] font-black text-white px-1">${c.unitMode === 'weight' ? Number((c.weightFactor * c.qty).toFixed(2)) + ' كجم' : c.qty + ' ' + unitWord}</span>
-              <button type="button" onclick="changeCartQty('${safeKey}', 1)" class="w-6 h-6 rounded-lg border border-[#d4af37] text-[#e3b938] text-xs font-black cursor-pointer">+</button>
+              <button type="button" onclick="changeCartQty('${c.key}', 1)" class="w-6 h-6 rounded-lg border border-[#d4af37] text-[#e3b938] text-xs font-black cursor-pointer">+</button>
             </div>
           </div>
         `;
         }).join('');
       }
 
-      const breakdown = getCartBreakdown();
       const zoneSelect = document.getElementById('custZone');
       const selectedFee = zoneSelect && zoneSelect.value ? Number(zoneSelect.value) : 15;
-      const finalDelivery = deliveryMethod === 'pickup' ? 0 : (breakdown.subtotal >= threshold ? 0 : selectedFee);
-      const grandTotal = Number((breakdown.subtotal + finalDelivery).toFixed(2));
-      const dueNowTotal = Number((breakdown.customCakeDeposit + breakdown.regularItemsTotal + finalDelivery).toFixed(2));
-
-      document.getElementById('summarySubtotal').textContent = breakdown.subtotal;
+      const finalDelivery = deliveryMethod === 'pickup' ? 0 : (subtotal >= threshold ? 0 : selectedFee);
+      document.getElementById('summarySubtotal').textContent = subtotal;
       document.getElementById('summaryDelivery').textContent = finalDelivery === 0 ? 'مجاني 🎁' : finalDelivery + ' ج.م';
-      document.getElementById('summaryTotal').textContent = grandTotal;
-      const dueNowEl = document.getElementById('summaryDueNow');
-      if (dueNowEl) dueNowEl.textContent = dueNowTotal;
-      const depositNoteEl = document.getElementById('summaryDepositNote');
-      if (depositNoteEl) {
-        if (cart.length === 0) {
-          depositNoteEl.textContent = '';
-        } else if (breakdown.hasCustomCakes) {
-          depositNoteEl.textContent = `عربون تورت (50%): ${breakdown.customCakeDeposit} ج` +
-            (breakdown.regularItemsTotal > 0 ? ` + جاهز: ${breakdown.regularItemsTotal} ج` : '') +
-            (breakdown.customCakeRemaining > 0 ? ` | متبقي: ${breakdown.customCakeRemaining} ج` : '');
-        } else {
-          depositNoteEl.textContent = 'منتجات جاهزة (100% من السعر)';
+      document.getElementById('summaryTotal').textContent = subtotal + finalDelivery;
+      const clearBtn = document.getElementById('clearCartBtn');
+      if (clearBtn) {
+        clearBtn.style.display = (Array.isArray(cart) && cart.length > 0) ? 'inline-flex' : 'none';
+        if (!cart || cart.length === 0) {
+          clearBtn.dataset.confirming = '0';
+          clearBtn.innerHTML = '🗑️ إفراغ السلة';
+          clearBtn.className = 'items-center gap-1 px-2.5 py-1 rounded-lg bg-[#251814] hover:bg-red-950/80 border border-red-500/45 text-red-300 text-[10px] font-black cursor-pointer transition shrink-0';
         }
       }
     }
@@ -2029,41 +2542,27 @@
 
         saveCustomerInfoToLocal();
 
-        const breakdown = getCartBreakdown();
-        const subtotal = breakdown.subtotal;
+        const subtotal = getCartSubtotal();
         const threshold = Number(STORE_SETTINGS.freeDeliveryThreshold) || 250;
         const zoneSel = document.getElementById('custZone');
         const zoneFee = zoneSel ? Number(zoneSel.value) : 15;
         const zoneName = zoneSel && zoneSel.options[zoneSel.selectedIndex] ? zoneSel.options[zoneSel.selectedIndex].getAttribute('data-name') : '';
         const deliveryFee = deliveryMethod === 'pickup' ? 0 : (subtotal >= threshold ? 0 : zoneFee);
-        const total = Number((subtotal + deliveryFee).toFixed(2));
-        const dueNowTotal = Number((breakdown.customCakeDeposit + breakdown.regularItemsTotal + deliveryFee).toFixed(2));
-        const remainingTotal = Number((total - dueNowTotal).toFixed(2));
+        const total = subtotal + deliveryFee;
 
         const itemsLines = cart.map(c => {
           const unitWord = getUnitArabicWord(c.unitMode);
-          const itemSubtotal = Number((Number(c.unitPrice || 0) * Number(c.qty || 1)).toFixed(2));
-          if (c.requiresDeposit === true || c.specs || c.details) {
-            const cakeDeposit = c.requiresDeposit ? Math.round(itemSubtotal * 0.5) : itemSubtotal;
-            const specLines = String(c.specs || c.details || '')
-              .split(/\r?\n/)
-              .map(l => l.trim())
-              .filter(Boolean)
-              .map(l => `   - ${l}`)
-              .join('\n');
-            const headerLine = `• ${c.qty} × ${c.name} = ${itemSubtotal} ج.م${c.requiresDeposit ? ` (عربون 50%: ${cakeDeposit} ج.م)` : ''}`;
-            return specLines ? `${headerLine}\n${specLines}` : headerLine;
-          }
           const qtyLabel = c.unitMode === 'weight'
             ? `${Number((c.weightFactor * c.qty).toFixed(2))} كجم`
             : `${c.qty} ${unitWord}`;
+          const itemSubtotal = Number((c.unitPrice * c.qty).toFixed(2));
           return `• ${qtyLabel} ${c.name} = ${itemSubtotal} ج.م`;
         }).join('\n');
 
         const paymentMethodLabel = paymentMethod === 'vodafone'
           ? `فودافون كاش (${STORE_SETTINGS.vodafoneCash || '01040224226'})`
           : paymentMethod === 'instapay'
-          ? `إنستا باي (${STORE_SETTINGS.instaPay || '01090000421'})`
+          ? `إنستا باي (${normalizeInstaPayNumber(STORE_SETTINGS.instaPay)})`
           : 'كاش عند الاستلام';
 
         const notesEl = document.getElementById('custNotes');
@@ -2078,44 +2577,16 @@
           ? (neigh ? `${neigh} - ${addr}` : addr)
           : 'استلام من فرع المخبز';
 
-        const instaPayNum = STORE_SETTINGS.instaPay || '01090000421';
-        const vfNum = STORE_SETTINGS.vodafoneCash || '01040224226';
-        const financialLines = [];
-        if (breakdown.hasCustomCakes) {
-          financialLines.push(`🎂 قيمة التورت الخاصة: ${breakdown.customCakeTotal} ج.م`);
-          financialLines.push(`🔐 قيمة العربون للتورت (50%): ${breakdown.customCakeDeposit} ج.م`);
-          if (breakdown.regularItemsTotal > 0) {
-            financialLines.push(`🥐 قيمة المنتجات الجاهزة (100%): ${breakdown.regularItemsTotal} ج.م`);
-          }
-          financialLines.push(`🚚 التوصيل: ${deliveryFee === 0 ? 'مجاني' : deliveryFee + ' ج.م'}`);
-          financialLines.push(`💰 *الإجمالي النهائي للطلب: ${total} ج.م*`);
-          financialLines.push(`💳 *المطلوب تحويله الآن لتأكيد الطلب: ${dueNowTotal} ج.م*`);
-          if (remainingTotal > 0) {
-            financialLines.push(`⏳ المتبقي عند الاستلام: ${remainingTotal} ج.م`);
-          }
-          financialLines.push(`📲 حسابات التحويل: إنستا باي (${instaPayNum}) | فودافون كاش (${vfNum})`);
-        } else {
-          financialLines.push(`🥐 قيمة المنتجات الجاهزة (100%): ${breakdown.regularItemsTotal} ج.م`);
-          financialLines.push(`🚚 التوصيل: ${deliveryFee === 0 ? 'مجاني' : deliveryFee + ' ج.م'}`);
-          financialLines.push(`💰 *الإجمالي النهائي المطلوب: ${total} ج.م*`);
-          if (paymentMethod === 'instapay' || paymentMethod === 'vodafone') {
-            const targetAcc = paymentMethod === 'instapay' ? `إنستا باي (${instaPayNum})` : `فودافون كاش (${vfNum})`;
-            financialLines.push(`💳 *المطلوب تحويله الآن: ${dueNowTotal} ج.م* عبر ${targetAcc}`);
-          } else {
-            financialLines.push(`💳 المطلوب تحويله الآن لحسابات الدفع: 0 ج.م (الدفع كاش عند الاستلام: ${total} ج.م)`);
-            financialLines.push(`📲 للتحويل المسبق اختيارياً: إنستا باي (${instaPayNum}) | فودافون كاش (${vfNum})`);
-          }
-        }
-
         const msg = [
           `🧾 *طلب جديد — سويت سيتي* (#${newOrderId})`,
           `👤 ${name} | 📱 ${phone}`,
           `📍 ${locationLine}${gpsCoords ? ' | 🗺️ ' + gpsCoords : ''}`,
-          paymentMethodLabel ? `💳 الدفع المختار: ${paymentMethodLabel}` : '',
+          paymentMethodLabel ? `💳 الدفع: ${paymentMethodLabel}` : '',
           '━━━━━━━━━━━━━━',
           itemsLines,
           '━━━━━━━━━━━━━━',
-          ...financialLines,
+          `📦 الحساب: ${subtotal} ج + 🚚 توصيل: ${deliveryFee === 0 ? 'مجاني' : deliveryFee + ' ج'}`,
+          `💰 *الإجمالي المطلوب: ${total} ج.م*`,
           notes ? `📝 ملاحظات: ${notes}` : ''
         ].filter(Boolean).join('\n');
 
@@ -2163,8 +2634,10 @@
         const defaultAiNote = `شكراً جزيلاً لك يا ${name} 🌹 على طلبك من مخبز وحلواني سويت سيتي 1999! تم استلام طلبك رقم #${newOrderId} بنجاح، وشيفات سويت سيتي يجهزون لك أصنافك الطازجة الآن بكل حب وعناية. نتمنى لك مذاقاً سعيداً ويومك حلو زي حلوياتنا! ✨🥐🎂`;
 
         cart = [];
-        saveCartToLocal();
         updateCartBadge();
+        try {
+          localStorage.removeItem('SC_CART_V1');
+        } catch (e) {}
         closeCartModal();
 
         document.getElementById('tyHeaderTitle').textContent = `شكراً لطلبك من سويت سيتي 1999 يا ${name}!`;
@@ -2262,8 +2735,8 @@
           qty: 1
         });
       }
-      saveCartToLocal();
       updateCartBadge();
+      persistCartToStorage();
       showToast('🛒 تمت إضافة "' + boxObj.name + '" (بالبوكس) إلى السلة بنجاح!', false);
     }
 
@@ -2308,8 +2781,8 @@
           qty: 1
         });
       }
-      saveCartToLocal();
       updateCartBadge();
+      persistCartToStorage();
       showToast('🛒 تمت إضافة "' + item.name + '" إلى سلة الطلبات بنجاح!', false);
     }
 
@@ -2563,18 +3036,16 @@
 
     function initApp() {
       sortRawById();
-      loadCartFromLocal();
       loadCustomerInfoFromLocal();
       updatePastOrdersCountUI();
       applyStoreSettingsToUI();
       renderZonesDropdown();
       renderCategories();
       renderProducts();
-      updateCartBadge();
     }
 
     window.addEventListener('beforeunload', function (e) {
-      if (cart && cart.length > 0 && !allowStudioNavigation) {
+      if (cart && cart.length > 0) {
         e.preventDefault();
         e.returnValue = 'لديك أصناف في السلة لم يتم تأكيدها بعد. هل أنت متأكد من مغادرة الصفحة؟';
         return e.returnValue;
@@ -2719,6 +3190,376 @@
 
     initApp();
     syncFromGoogleSheet(false);
+  </script>
+  <script>
+    /**
+     * Sweet City 1999 — Cake Designer <-> Main Menu Cart Bridge (Vanilla JS)
+     * Zero Backend / Apps Script Changes
+     */
+    (function initCakeDesignerCartBridge() {
+      const CART_STORAGE_KEY = 'SC_CART_V1';
+      let localCakePreviewBase64 = '';
+      let localCakePreviewName = '';
+
+      const SELECTORS = {
+        designerRoot: '#cakeDesignerSection, #customCakeModal, .cake-designer-container',
+        submitBtn: '#addCustomCakeToCartBtn, [data-action="add-custom-cake"]',
+        sizeChecked: 'input[name="cakeSize"]:checked, input[name="size"]:checked, #cakeSizeSelect',
+        shapeChecked: 'input[name="cakeShape"]:checked, input[name="shape"]:checked, #cakeShapeSelect',
+        spongeChecked: 'input[name="cakeFlavor"]:checked, input[name="cakeSponge"]:checked, input[name="sponge"]:checked, #cakeSpongeSelect',
+        frostingChecked: 'input[name="cakeFrosting"]:checked, input[name="frosting"]:checked, #cakeFrostingSelect',
+        fillingsChecked: 'input[name="cakeFilling"]:checked, input[name="filling"]:checked, input[name="fillings"]:checked',
+        addonsChecked: 'input[name="cakeAddon"]:checked, input[name="addon"]:checked, input[name="addons"]:checked',
+        dateInput: '#cakeEventDate, #eventDateInput, input[name="eventDate"]',
+        greetingInput: '#cakeGreeting, #greetingInput, input[name="cakeGreeting"]',
+        photoInput: '#customCakePhotoInput, input[name="cakePhoto"][type="file"]',
+        photoPreviewImg: '#customCakePhotoPreview, #mainCakePhoto',
+        photoPreviewWrap: '#customCakePhotoPreviewWrapper, #photoPreviewContainer',
+        photoNoticeHost: '#customCakePhotoNotice, #customCakeUploadContainer'
+      };
+
+      function parseSafePrice(val) {
+        if (typeof val === 'number') return Number.isFinite(val) && val >= 0 ? val : 0;
+        const arabicNums = { '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4', '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9' };
+        const normalized = String(val || '')
+          .replace(/[٠-٩]/g, d => arabicNums[d] || d)
+          .replace(/[,،]/g, '')
+          .replace(/[^\d.]/g, '');
+        const n = parseFloat(normalized);
+        return Number.isFinite(n) && n >= 0 ? n : 0;
+      }
+
+      function cleanInputText(str) {
+        if (typeof window.sanitizeText === 'function') return window.sanitizeText(str);
+        return String(str || '').replace(/[<>]/g, '').replace(/^[=+\-@]+/, '').trim();
+      }
+
+      function readOptionInfo(el) {
+        if (!el) return { label: '', price: 0 };
+        if (el.tagName === 'SELECT') {
+          const opt = el.options[el.selectedIndex];
+          if (!opt) return { label: '', price: 0 };
+          return {
+            label: cleanInputText(opt.getAttribute('data-name') || opt.getAttribute('data-title') || opt.textContent || opt.value),
+            price: parseSafePrice(opt.getAttribute('data-price') || opt.dataset.price || 0)
+          };
+        }
+        const labelEl = el.id ? document.querySelector(`label[for="${el.id}"]`) : null;
+        const label = cleanInputText(
+          el.getAttribute('data-name') ||
+          el.getAttribute('data-title') ||
+          (labelEl ? labelEl.textContent : '') ||
+          el.value
+        );
+        const price = parseSafePrice(el.getAttribute('data-price') || el.dataset.price || 0);
+        return { label, price };
+      }
+
+      function syncCartToLocalStorage() {
+        try {
+          if (typeof cart !== 'undefined' && Array.isArray(cart)) {
+            if (cart.length === 0) {
+              localStorage.removeItem(CART_STORAGE_KEY);
+            } else {
+              localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+            }
+          }
+        } catch (e) {}
+      }
+
+      function restoreCartFromLocalStorage() {
+        try {
+          if (typeof cart !== 'undefined' && Array.isArray(cart) && cart.length === 0) {
+            const saved = localStorage.getItem(CART_STORAGE_KEY);
+            if (saved) {
+              const parsed = JSON.parse(saved);
+              if (Array.isArray(parsed) && parsed.length > 0) {
+                cart.push(...parsed);
+                if (typeof updateCartBadge === 'function') updateCartBadge();
+              }
+            }
+          }
+        } catch (e) {}
+      }
+
+      function handleCustomCakeOrder() {
+        let sizeName = 'غير محدد';
+        let shapeName = 'دائري';
+        let spongeName = 'فانيليا';
+        let frostingName = 'أبيض ملكي';
+        let fillingsNames = [];
+        let totalPrice = 0;
+        let eventDate = '';
+        let greetingText = '';
+
+        if (typeof window.calculatePricing === 'function' && typeof window.state === 'object') {
+          const pricing = window.calculatePricing();
+          sizeName = cleanInputText(pricing.size?.title || 'غير محدد');
+          shapeName = cleanInputText(pricing.shape?.title || 'دائري');
+          spongeName = cleanInputText(pricing.sponge?.title || 'فانيليا');
+          frostingName = cleanInputText(pricing.frosting?.title || 'أبيض ملكي');
+          fillingsNames = (pricing.fillings || []).map(f => cleanInputText(f.title)).filter(Boolean);
+          totalPrice = parseSafePrice(pricing.total);
+          eventDate = cleanInputText(window.state.eventDate || '');
+          greetingText = cleanInputText(window.state.greeting || '');
+        } else {
+          const sizeEl = document.querySelector(SELECTORS.sizeChecked);
+          const shapeEl = document.querySelector(SELECTORS.shapeChecked);
+          const spongeEl = document.querySelector(SELECTORS.spongeChecked);
+          const frostingEl = document.querySelector(SELECTORS.frostingChecked);
+
+          const sizeInfo = readOptionInfo(sizeEl);
+          const shapeInfo = readOptionInfo(shapeEl);
+          const spongeInfo = readOptionInfo(spongeEl);
+          const frostingInfo = readOptionInfo(frostingEl);
+
+          if (!sizeInfo.label || sizeInfo.price <= 0) {
+            if (typeof showToast === 'function') {
+              showToast('⚠️ يرجى اختيار الحجم والأدوار للتورتة أولاً', true);
+            }
+            return false;
+          }
+
+          sizeName = sizeInfo.label;
+          shapeName = shapeInfo.label || 'دائري';
+          spongeName = spongeInfo.label || 'فانيليا';
+          frostingName = frostingInfo.label || 'أبيض ملكي';
+
+          totalPrice += sizeInfo.price + shapeInfo.price + spongeInfo.price + frostingInfo.price;
+
+          const checkedFillings = document.querySelectorAll(SELECTORS.fillingsChecked);
+          checkedFillings.forEach(el => {
+            const info = readOptionInfo(el);
+            if (info.label) fillingsNames.push(info.label);
+            totalPrice += info.price;
+          });
+
+          const checkedAddons = document.querySelectorAll(SELECTORS.addonsChecked);
+          const addonLabels = [];
+          checkedAddons.forEach(el => {
+            const info = readOptionInfo(el);
+            if (info.label) addonLabels.push(info.label);
+            totalPrice += info.price;
+          });
+
+          const dateEl = document.querySelector(SELECTORS.dateInput);
+          const greetingEl = document.querySelector(SELECTORS.greetingInput);
+          eventDate = cleanInputText(dateEl ? dateEl.value : '');
+          greetingText = cleanInputText(greetingEl ? greetingEl.value : '');
+
+          if (addonLabels.length > 0) {
+            frostingName = `${frostingName} (إضافات: ${addonLabels.join('، ')})`;
+          }
+        }
+
+        const finalTotal = Number(totalPrice.toFixed(2));
+        const fillingsFormatted = fillingsNames.length > 0 ? fillingsNames.join('، ') : 'بدون إضافات حشو';
+        const dateFormatted = eventDate || 'يُحدد بالتنسيق';
+        const greetingFormatted = greetingText || 'بدون عبارة';
+        const photoMarker = localCakePreviewBase64 ? ' [مرفق صورة نموذج ستُرسل واتساب]' : '';
+
+        const formattedProductDescription =
+          `تورتة عمولة: ${sizeName} - الشكل: ${shapeName} - الكيك: ${spongeName} - الحشوات: ${fillingsFormatted} - التغليف: ${frostingName} - تاريخ الاستلام: ${dateFormatted} - العبارة: ${greetingFormatted}${photoMarker}`;
+
+        injectCustomCakeIntoCart(formattedProductDescription, finalTotal);
+        return true;
+      }
+
+      function injectCustomCakeIntoCart(productDescription, finalPrice) {
+        const safePrice = parseSafePrice(finalPrice);
+        const uniqueKey = 'CUSTOM_CAKE_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+
+        if (typeof cart !== 'undefined' && Array.isArray(cart)) {
+          cart.push({
+            key: uniqueKey,
+            itemId: uniqueKey,
+            name: productDescription,
+            unitType: 'piece',
+            unitMode: 'piece',
+            weightFactor: 1,
+            weightLabel: 'قطعة',
+            baseKiloPrice: safePrice,
+            unitPrice: safePrice,
+            qty: 1
+          });
+        } else if (typeof window.addToCart === 'function') {
+          window.addToCart({
+            id: uniqueKey,
+            name: productDescription,
+            price: safePrice,
+            unitType: 'piece',
+            qty: 1
+          });
+        }
+
+        syncCartToLocalStorage();
+
+        if (typeof updateCartBadge === 'function') updateCartBadge();
+        if (typeof persistCartToStorage === 'function') persistCartToStorage();
+        if (typeof renderCart === 'function') renderCart();
+        if (typeof showToast === 'function') {
+          showToast('🎂 تمت إضافة التورتة المصممة إلى السلة بنجاح!', false);
+        }
+        if (typeof openCartModal === 'function') {
+          openCartModal();
+        }
+      }
+
+      function ensurePhotoWhatsAppNotice() {
+        const photoInput = document.querySelector(SELECTORS.photoInput);
+        if (!photoInput) return;
+
+        let noticeEl = document.getElementById('cakePhotoWhatsappNotice');
+        if (!noticeEl) {
+          noticeEl = document.createElement('p');
+          noticeEl.id = 'cakePhotoWhatsappNotice';
+          noticeEl.className = 'mt-2 px-3 py-2 rounded-xl bg-[#1a1510] border border-[#d4af37]/40 text-[#f3d266] text-[11px] font-bold leading-relaxed';
+          noticeEl.textContent = '📸 ملاحظة: سيتم إرسال الصورة مباشرة عبر الواتساب عند إتمام الطلب.';
+          const host = document.querySelector(SELECTORS.photoNoticeHost) || photoInput.parentElement;
+          if (host) host.appendChild(noticeEl);
+        }
+      }
+
+      function bindCustomPhotoPreview() {
+        const photoInput = document.querySelector(SELECTORS.photoInput);
+        if (!photoInput || photoInput.dataset.bridgeBound === '1') return;
+        photoInput.dataset.bridgeBound = '1';
+
+        ensurePhotoWhatsAppNotice();
+
+        photoInput.addEventListener('change', function (e) {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+
+          if (!file.type || !file.type.startsWith('image/')) {
+            if (typeof showToast === 'function') showToast('⚠️ يرجى اختيار ملف صورة صالح', true);
+            e.target.value = '';
+            return;
+          }
+
+          const reader = new FileReader();
+          reader.onload = function (ev) {
+            localCakePreviewBase64 = String(ev.target?.result || '');
+            localCakePreviewName = file.name || 'custom-cake.jpg';
+
+            const previewImg = document.querySelector(SELECTORS.photoPreviewImg);
+            const previewWrap = document.querySelector(SELECTORS.photoPreviewWrap);
+            if (previewImg) {
+              previewImg.src = localCakePreviewBase64;
+              previewImg.alt = localCakePreviewName;
+              previewImg.classList.remove('hidden');
+            }
+            if (previewWrap) {
+              previewWrap.classList.remove('hidden');
+            }
+
+            ensurePhotoWhatsAppNotice();
+            if (typeof showToast === 'function') {
+              showToast('📷 تم عرض الصورة محلياً للمعاينة (تُرسل عبر واتساب عند تأكيد الطلب)', false);
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      const origChangeCartQty = window.changeCartQty;
+      if (typeof origChangeCartQty === 'function') {
+        window.changeCartQty = function () {
+          const res = origChangeCartQty.apply(this, arguments);
+          syncCartToLocalStorage();
+          return res;
+        };
+      }
+
+      const origSubmitOrderWhatsApp = window.submitOrderWhatsApp;
+      if (typeof origSubmitOrderWhatsApp === 'function') {
+        window.submitOrderWhatsApp = function () {
+          const res = origSubmitOrderWhatsApp.apply(this, arguments);
+          syncCartToLocalStorage();
+          return res;
+        };
+      }
+
+      window.addCustomCakeToCart = handleCustomCakeOrder;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        restoreCartFromLocalStorage();
+        bindCustomPhotoPreview();
+
+        const submitBtn = document.querySelector(SELECTORS.submitBtn);
+        if (submitBtn && submitBtn.dataset.bridgeBound !== '1') {
+          submitBtn.dataset.bridgeBound = '1';
+          submitBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            handleCustomCakeOrder();
+          });
+        }
+      });
+    })();
+  </script>
+  <script id="scSpaTabsScript">
+    (function initSpaTabsNavigation() {
+      const ACTIVE_TAB_CLS = 'py-2 px-3 rounded-xl gold-grad text-[#100c04] font-black text-xs sm:text-sm shadow-[0_4px_14px_rgba(212,175,55,0.35)] flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 cursor-pointer transition active:scale-[0.97]';
+      const INACTIVE_TAB_CLS = 'py-2 px-3 rounded-xl bg-[#14110c] text-[#f3d266] border border-[#d4af37]/35 hover:border-[#d4af37] font-bold text-xs sm:text-sm flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 cursor-pointer transition active:scale-[0.97]';
+
+      window.switchMainTab = function (tabName, skipScroll) {
+        const isCakeTab = tabName === 'cake';
+        const menuPanel = document.getElementById('menuTabPanel');
+        const cakeSection = document.getElementById('cakeDesignerSection');
+        const searchWrap = document.getElementById('menuSearchWrap');
+        const categoriesBar = document.getElementById('categoriesBar');
+        const btnMenu = document.getElementById('tabBtnMenu');
+        const btnCake = document.getElementById('tabBtnCake');
+
+        if (menuPanel) {
+          menuPanel.classList.toggle('hidden', isCakeTab);
+          menuPanel.style.display = isCakeTab ? 'none' : 'block';
+        }
+        if (searchWrap) {
+          searchWrap.classList.toggle('hidden', isCakeTab);
+          searchWrap.style.display = isCakeTab ? 'none' : 'block';
+        }
+        if (categoriesBar) {
+          categoriesBar.classList.toggle('hidden', isCakeTab);
+          categoriesBar.style.display = isCakeTab ? 'none' : 'flex';
+        }
+        if (cakeSection) {
+          cakeSection.classList.toggle('hidden', !isCakeTab);
+          cakeSection.style.display = isCakeTab ? 'block' : 'none';
+        }
+
+        if (btnMenu) {
+          btnMenu.className = isCakeTab ? INACTIVE_TAB_CLS : ACTIVE_TAB_CLS;
+          btnMenu.setAttribute('aria-selected', isCakeTab ? 'false' : 'true');
+        }
+        if (btnCake) {
+          btnCake.className = isCakeTab ? ACTIVE_TAB_CLS : INACTIVE_TAB_CLS;
+          btnCake.setAttribute('aria-selected', isCakeTab ? 'true' : 'false');
+        }
+
+        if (!skipScroll) {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }
+      };
+
+      function syncTabFromHash() {
+        if (window.location.hash === '#cakeDesignerSection') {
+          window.switchMainTab('cake', true);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        if (window.location.hash === '#cakeDesignerSection') {
+          window.switchMainTab('cake', true);
+        } else {
+          window.switchMainTab('menu', true);
+        }
+      });
+
+      window.addEventListener('hashchange', syncTabFromHash);
+    })();
   </script>
 </body>
 </html>
