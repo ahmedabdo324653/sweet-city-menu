@@ -33,8 +33,7 @@
       background-color: #0b0a08;
       background-image: radial-gradient(circle at 50% 0%, #1d170c 0%, #0b0a08 42%, #070604 100%);
       color: #f5f0e6;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
+      overflow-x: clip;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -194,8 +193,6 @@
       box-shadow: 0 8px 20px rgba(212, 175, 55, 0.26);
     }
     #productsGrid {
-      overscroll-behavior-y: contain;
-      -webkit-overflow-scrolling: touch;
       margin-top: 0 !important;
       padding-top: 0 !important;
       overflow: visible;
@@ -321,6 +318,11 @@
       border-top: 1px solid rgba(212, 175, 55, 0.48);
       box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.88);
       padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px)) 12px;
+      transform: translate3d(0, 0, 0);
+      -webkit-transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      will-change: transform;
     }
     #floatingCartBar {
       bottom: calc(78px + env(safe-area-inset-bottom, 0px)) !important;
@@ -1613,6 +1615,7 @@
           }
 
           if (data) {
+            let hasChanges = false;
             if (Array.isArray(data.items)) {
               if (data.items.length === 0) {
                 if (showNotification) {
@@ -1621,28 +1624,45 @@
                   alert(emptyMsg);
                 }
               } else {
-                RAW = data.items;
-                sortRawById();
-                saveMenuCacheToLocal();
+                const prevRawSnapshot = JSON.stringify(RAW);
+                const incomingItems = data.items.map(item => ({
+                  ...item,
+                  unitType: normalizeUnitType(item.unitType, item.category, item.id, item.name),
+                  available: isItemAvailable(item),
+                  popular: isItemPopular(item)
+                })).sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
+                if (JSON.stringify(incomingItems) !== prevRawSnapshot) {
+                  RAW = incomingItems;
+                  sortRawById();
+                  saveMenuCacheToLocal();
+                  hasChanges = true;
+                }
               }
             }
 
             if (data.settings && typeof data.settings === 'object') {
+              const prevSettingsSnapshot = JSON.stringify(STORE_SETTINGS);
               const incomingSettings = { ...data.settings };
               delete incomingSettings.adminPin;
               delete incomingSettings.admin_pin;
-              STORE_SETTINGS = {
+              const nextSettings = {
                 ...STORE_SETTINGS,
                 ...incomingSettings,
                 webhookUrl: incomingSettings.webhookUrl || activeScriptUrl
               };
               if (Array.isArray(incomingSettings.deliveryZones) && incomingSettings.deliveryZones.length > 0) {
-                STORE_SETTINGS.deliveryZones = incomingSettings.deliveryZones;
+                nextSettings.deliveryZones = incomingSettings.deliveryZones;
               }
-              saveMenuCacheToLocal();
+              if (JSON.stringify(nextSettings) !== prevSettingsSnapshot) {
+                STORE_SETTINGS = nextSettings;
+                saveMenuCacheToLocal();
+                hasChanges = true;
+              }
             }
 
-            initApp();
+            if (hasChanges || showNotification) {
+              initApp();
+            }
             if (showNotification && Array.isArray(data.items) && data.items.length > 0) {
               showToast('✅ تم سحب أحدث الأصناف والأسعار والإعدادات من Google Sheets بنجاح!', false);
             }
@@ -1700,10 +1720,23 @@
                 alert(emptyMsg);
               }
             } else {
-              RAW = pulledItems;
-              sortRawById();
-              saveMenuCacheToLocal();
-              initApp();
+              let hasChanges = false;
+              const prevRawSnapshot = JSON.stringify(RAW);
+              const normalizedPulled = pulledItems.map(item => ({
+                ...item,
+                unitType: normalizeUnitType(item.unitType, item.category, item.id, item.name),
+                available: isItemAvailable(item),
+                popular: isItemPopular(item)
+              })).sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
+              if (JSON.stringify(normalizedPulled) !== prevRawSnapshot) {
+                RAW = normalizedPulled;
+                sortRawById();
+                saveMenuCacheToLocal();
+                hasChanges = true;
+              }
+              if (hasChanges || showNotification) {
+                initApp();
+              }
               if (showNotification) showToast('✅ تم تحديث قائمة الأصناف والأسعار مباشرة من جدول Google Sheet!', false);
             }
           }
@@ -1888,14 +1921,7 @@
       if (!item) return { primary: '', candidates: [] };
       const cleanName = String(item.name || '').trim();
       const id = item.id;
-      const autoCandidates = [
-        `images/${id}.jpg`,
-        `images/${id}.png`,
-        cleanName ? `images/${cleanName}.jpg` : '',
-        cleanName ? `images/${cleanName}.png` : '',
-        `${id}.jpg`,
-        `${id}.png`
-      ].filter(Boolean);
+      const autoCandidates = [`images/${id}.jpg`];
       const manualImg = String(item.img || '').trim();
       const all = manualImg ? [manualImg, ...autoCandidates] : autoCandidates;
       return {
@@ -1994,7 +2020,7 @@
                 ${badgeIcon} ${basePriceTitle}: ${item.price} ج.م
               </span>
               ${promoBadgeHtml}
-              ${resolvedImg.primary ? `<img src="${resolvedImg.primary}" loading="lazy" data-item-id="${item.id}" data-try-idx="0" alt="${item.name}" onerror="handleProductImgError(this)" class="w-full h-full object-cover" />` : ''}
+              ${resolvedImg.primary ? `<img src="${resolvedImg.primary}" loading="lazy" decoding="async" data-item-id="${item.id}" data-try-idx="0" alt="${item.name}" onerror="handleProductImgError(this)" class="w-full h-full object-cover" />` : ''}
               <div id="prodFallback_${item.id}" class="${resolvedImg.primary ? 'hidden' : 'flex'} flex-col items-center justify-center">
                 <div class="text-4xl mb-2">${item.emoji || '🍩'}</div>
                 <span class="font-en text-[11px] tracking-[0.2em] text-[#d4af37] font-bold">SWEET CITY 1999</span>
@@ -3291,7 +3317,9 @@
         }
 
         if (!skipScroll) {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
         }
       };
 
