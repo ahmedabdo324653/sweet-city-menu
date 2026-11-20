@@ -1,0 +1,27 @@
+{
+  "name": "سويت سيتي 1999 | SWEET CITY",
+  "short_name": "سويت سيتي",
+  "description": "المنيو الإلكتروني الرسمي ومصمم التورت لمخبز وحلواني سويت سيتي 1999 - العاشر من رمضان",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0a08",
+  "theme_color": "#d4af37",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
