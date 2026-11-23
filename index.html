@@ -111,49 +111,6 @@
       padding-bottom: 0 !important;
       gap: 6px !important;
     }
-    .sc-cake-banner {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      gap: 8px !important;
-      height: 44px !important;
-      max-height: 48px !important;
-      padding: 6px 12px !important;
-      margin-top: 6px !important;
-      margin-bottom: 6px !important;
-      border-radius: 12px !important;
-      background: linear-gradient(135deg, #2b2110 0%, #17130c 60%, #241b0d 100%) !important;
-      border: 1px solid rgba(212, 175, 55, 0.55) !important;
-      text-decoration: none !important;
-      overflow: hidden !important;
-      transition: transform 0.16s ease, border-color 0.2s ease !important;
-    }
-    .sc-cake-banner:hover {
-      border-color: #f3d266 !important;
-    }
-    .sc-cake-banner:active {
-      transform: scale(0.985) !important;
-    }
-    .sc-cake-banner-title {
-      font-size: 13px !important;
-      font-weight: 800 !important;
-      color: #ffe28a !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      line-height: 1.2 !important;
-    }
-    .sc-cake-banner-cta {
-      flex-shrink: 0 !important;
-      background: linear-gradient(135deg, #f4d365 0%, #d4af37 52%, #b78a1e 100%) !important;
-      color: #100c04 !important;
-      font-size: 11px !important;
-      font-weight: 900 !important;
-      padding: 4px 12px !important;
-      border-radius: 999px !important;
-      line-height: 1.3 !important;
-      white-space: nowrap !important;
-    }
     .sc-action-btn {
       border-radius: 10px !important;
       background: linear-gradient(160deg, #1e1a12 0%, #14110b 100%);
@@ -231,7 +188,7 @@
       border: 1px solid rgba(212, 175, 55, 0.28);
       box-shadow: none;
     }
-    #productsGrid > .card-surface > div:first-child > span {
+    #productsGrid > .card-surface > div:first-child > span:not([class*="bg-"]) {
       background-color: #15120c;
     }
     #productsGrid > .card-surface img {
@@ -534,24 +491,24 @@
           </label>
           <label for="cakeSize_40x30" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
             <span class="flex items-center gap-1.5 font-bold text-white">
-              <input id="cakeSize_40x30" type="radio" name="cakeSize" value="تورتة 40/30" data-name="تورتة 40/30" data-price="850" class="accent-[#e3b938]" />
+              <input id="cakeSize_40x30" type="radio" name="cakeSize" value="تورتة 40/30" data-name="تورتة 40/30" data-price="750" class="accent-[#e3b938]" />
               <span>تورتة 40/30</span>
             </span>
-            <span class="font-black text-[#f3d266] shrink-0">850 ج.م</span>
+            <span class="font-black text-[#f3d266] shrink-0">750 ج.م</span>
           </label>
           <label for="cakeSize_40x40" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
             <span class="flex items-center gap-1.5 font-bold text-white">
-              <input id="cakeSize_40x40" type="radio" name="cakeSize" value="تورتة 40/40" data-name="تورتة 40/40" data-price="1100" class="accent-[#e3b938]" />
+              <input id="cakeSize_40x40" type="radio" name="cakeSize" value="تورتة 40/40" data-name="تورتة 40/40" data-price="1000" class="accent-[#e3b938]" />
               <span>تورتة 40/40</span>
             </span>
-            <span class="font-black text-[#f3d266] shrink-0">1100 ج.م</span>
+            <span class="font-black text-[#f3d266] shrink-0">1000 ج.م</span>
           </label>
           <label for="cakeSize_60x40" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
             <span class="flex items-center gap-1.5 font-bold text-white">
-              <input id="cakeSize_60x40" type="radio" name="cakeSize" value="تورتة 60/40" data-name="تورتة 60/40" data-price="1600" class="accent-[#e3b938]" />
+              <input id="cakeSize_60x40" type="radio" name="cakeSize" value="تورتة 60/40" data-name="تورتة 60/40" data-price="1300" class="accent-[#e3b938]" />
               <span>تورتة 60/40</span>
             </span>
-            <span class="font-black text-[#f3d266] shrink-0">1600 ج.م</span>
+            <span class="font-black text-[#f3d266] shrink-0">1300 ج.م</span>
           </label>
           <label for="cakeSize_r22" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
             <span class="flex items-center gap-1.5 font-bold text-white">
@@ -576,17 +533,17 @@
           </label>
           <label for="cakeSize_r28" class="flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
             <span class="flex items-center gap-1.5 font-bold text-white">
-              <input id="cakeSize_r28" type="radio" name="cakeSize" value="تورتة مدورة مقاس 28" data-name="تورتة مدورة مقاس 28" data-price="525" class="accent-[#e3b938]" />
+              <input id="cakeSize_r28" type="radio" name="cakeSize" value="تورتة مدورة مقاس 28" data-name="تورتة مدورة مقاس 28" data-price="500" class="accent-[#e3b938]" />
               <span>مدورة مقاس 28</span>
             </span>
-            <span class="font-black text-[#f3d266] shrink-0">525 ج.م</span>
+            <span class="font-black text-[#f3d266] shrink-0">500 ج.م</span>
           </label>
           <label for="cakeSize_r30" class="col-span-2 flex items-center justify-between gap-1.5 p-2.5 rounded-xl bg-[#110f0a] border border-[#d4af37]/35 cursor-pointer hover:border-[#e3b938]">
             <span class="flex items-center gap-1.5 font-bold text-white">
-              <input id="cakeSize_r30" type="radio" name="cakeSize" value="تورتة مدورة مقاس 30" data-name="تورتة مدورة مقاس 30" data-price="600" class="accent-[#e3b938]" />
+              <input id="cakeSize_r30" type="radio" name="cakeSize" value="تورتة مدورة مقاس 30" data-name="تورتة مدورة مقاس 30" data-price="550" class="accent-[#e3b938]" />
               <span>تورتة مدورة مقاس 30</span>
             </span>
-            <span class="font-black text-[#f3d266] shrink-0">600 ج.م</span>
+            <span class="font-black text-[#f3d266] shrink-0">550 ج.م</span>
           </label>
         </div>
       </div>
@@ -820,11 +777,11 @@
       <p class="font-semibold text-stone-200">جميع الحقوق محفوظة © SWEET CITY - Bakery & Pastry - العاشر من رمضان</p>
       <p>العاشر من رمضان - المجاورة 18 - مول تن بوينت | واتساب وخدمة العملاء: <span id="uiFooterPhone" class="text-[#f3d266] font-bold" dir="ltr">01040224226</span></p>
       <div class="flex flex-wrap items-center justify-center gap-2 pt-1 text-[11px]">
-        <button type="button" onclick="copyPaymentNum('01040224226', 'فودافون كاش')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-100 hover:border-[#d4af37] transition cursor-pointer">
-          🔴 فودافون كاش: <span class="text-[#e3b938] font-black" dir="ltr">01040224226</span>
+        <button type="button" onclick="copyPaymentNum(STORE_SETTINGS.vodafoneCash || '01040224226', 'فودافون كاش')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-100 hover:border-[#d4af37] transition cursor-pointer">
+          🔴 فودافون كاش: <span id="uiFooterVodafoneNum" class="text-[#e3b938] font-black" dir="ltr">01040224226</span>
         </button>
-        <button type="button" onclick="copyPaymentNum('01060809671', 'إنستا باي InstaPay')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-100 hover:border-[#d4af37] transition cursor-pointer">
-          🟣 إنستا باي: <span class="text-[#e3b938] font-black" dir="ltr">01060809671</span>
+        <button type="button" onclick="copyPaymentNum(normalizeInstaPayNumber(STORE_SETTINGS.instaPay), 'إنستا باي InstaPay')" class="px-2.5 py-1 rounded-full bg-[#17140d] border border-[#d4af37]/30 text-stone-100 hover:border-[#d4af37] transition cursor-pointer">
+          🟣 إنستا باي: <span id="uiFooterInstapayNum" class="text-[#e3b938] font-black" dir="ltr">01060809671</span>
         </button>
       </div>
       <div class="flex flex-wrap items-center justify-center gap-2 pt-1.5 text-[11px]">
@@ -870,7 +827,7 @@
   </div>
 
   <!-- نافذة سلة الطلبات وتأكيد الفاتورة - هيكل مرن مع هيدر وفوتر ثابتين وتمرير سلس -->
-  <div id="cartModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-1.5 sm:p-3 overflow-y-auto">
+  <div id="cartModal" onclick="if(event.target===this) closeCartModal()" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-1.5 sm:p-3 overflow-y-auto">
     <div class="card-surface w-full max-w-md max-h-[92vh] max-h-[92dvh] rounded-[22px] p-2.5 sm:p-3.5 border-2 border-[#d4af37] flex flex-col gap-1.5 shadow-2xl">
       <div class="shrink-0 space-y-1.5">
         <div class="flex items-center justify-between pb-1.5 border-b border-[#d4af37]/25">
@@ -971,7 +928,7 @@
   </div>
 
   <!-- نافذة الطلبات السابقة -->
-  <div id="ordersModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="ordersModal" onclick="if(event.target===this) closeOrdersModal()" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="card-surface w-full max-w-md rounded-3xl p-5 max-h-[85vh] overflow-y-auto border-2 border-[#d4af37]">
       <div class="flex items-center justify-between pb-3 border-b border-[#d4af37]/25">
         <h3 class="text-base font-black text-[#d4af37]">🕒 طلباتي السابقة</h3>
@@ -982,7 +939,7 @@
   </div>
 
   <!-- نافذة المساعد الذكي AI -->
-  <div id="aiModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3">
+  <div id="aiModal" onclick="if(event.target===this) closeAiModal()" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3">
     <div class="card-surface w-full max-w-md max-h-[90vh] rounded-3xl p-4 border-2 border-[#d4af37] flex flex-col justify-between gap-3 shadow-2xl overflow-hidden">
       <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-[#d4af37]/25 shrink-0">
         <div>
@@ -1015,7 +972,7 @@
   </div>
 
   <!-- نافذة رسالة الشكر والتأكيد الذكية الفورية بعد إتمام الطلب -->
-  <div id="thankYouModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3">
+  <div id="thankYouModal" onclick="if(event.target===this) closeThankYouModal()" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3">
     <div class="card-surface w-full max-w-md max-h-[92vh] rounded-3xl p-4 sm:p-5 border-2 border-[#d4af37] flex flex-col justify-between gap-3 shadow-2xl overflow-y-auto">
       <div class="text-center space-y-1.5">
         <div class="w-12 h-12 rounded-full bg-[#262012] border-2 border-[#d4af37] mx-auto flex items-center justify-center text-2xl shadow-md">🎉</div>
@@ -1108,41 +1065,8 @@
 
   <script id="scMainScript">
     // ============================================================================
-    // 1. هيكل البيانات الثابت (GALLERY_IMGS & RAW)
+    // 1. هيكل البيانات الثابت (FACTORY_RAW & RAW)
     // ============================================================================
-    const GALLERY_IMGS = [
-      {
-        id: 'gal-1',
-        title: 'مخبوزات وكرواسون طازج يومياً',
-        category: 'مخبوزات وفطائر',
-        url: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=80'
-      },
-      {
-        id: 'gal-2',
-        title: 'تورت وجاتوهات المناسبات الفاخرة',
-        category: 'التورت والجاتوه',
-        url: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80'
-      },
-      {
-        id: 'gal-3',
-        title: 'دوناتس وسينابون وكوكيز',
-        category: 'الحلو',
-        url: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=900&q=80'
-      },
-      {
-        id: 'gal-4',
-        title: 'كعك وبسكويت وبيتي فور بالسمن البلدي',
-        category: 'نواعم وكعك وبسكويت',
-        url: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=900&q=80'
-      },
-      {
-        id: 'gal-5',
-        title: 'ركن القهوة المختصة والمشروبات الباردة',
-        category: 'ركن القهوة والمشروبات',
-        url: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80'
-      }
-    ];
-
     const FACTORY_RAW = [
       { id: 1, name: "دوناتس كبير غني بالشوكولاتة", category: "الحلو", price: 30, unitType: "piece", desc: "دوناتس طازج هش ومغطى بطبقة غنية من الشوكولاتة الفاخرة (يباع بالقطعة)", emoji: "🍩", available: true },
       { id: 2, name: "دوناتس", category: "الحلو", price: 25, unitType: "piece", desc: "دوناتس طازج هش محضر يومياً (يباع بالقطعة)", emoji: "🍩", available: true },
@@ -1160,7 +1084,7 @@
 
       { id: 14, name: "باتيه", category: "مخبوزات وفطائر", price: 160, unitType: "weight", desc: "مخبوز طازج يومياً", emoji: "🥐", available: true },
       { id: 15, name: "ميني ساندوتش", category: "مخبوزات وفطائر", price: 180, unitType: "weight", desc: "مخبوز طازج يومياً", emoji: "🥖", available: true },
-      { id: 16, name: "بورييك", category: "مخبوزات وفطائر", price: 180, unitType: "weight", desc: "مخبوز طازج يومياً", emoji: "🥐", available: true },
+      { id: 16, name: "بوريك", category: "مخبوزات وفطائر", price: 180, unitType: "weight", desc: "مخبوز طازج يومياً", emoji: "🥐", available: true },
       { id: 17, name: "كرواسون", category: "مخبوزات وفطائر", price: 180, unitType: "weight", desc: "مخبوز طازج يومياً", emoji: "🥐", available: true },
       { id: 18, name: "كيزر ميني", category: "مخبوزات وفطائر", price: 100, unitType: "weight", desc: "مخبوز طازج يومياً", emoji: "🍔", available: true },
       { id: 19, name: "فطيرة سادة صغير", category: "مخبوزات وفطائر", price: 10, unitType: "piece", desc: "مخبوز طازج يومياً", emoji: "🫓", available: true },
@@ -1309,18 +1233,19 @@
       { id: 142, name: "إضافة شوت إسبريسو - Extra Espresso", category: "شاي ومشروبات وإضافات", price: 20, unitType: "piece", desc: "شوت إسبريسو إضافي لتركيز أعلى", emoji: "☕", available: true },
       { id: 143, name: "مياه معدنية - Water", category: "شاي ومشروبات وإضافات", price: 10, unitType: "piece", desc: "زجاجة مياه معدنية باردة", emoji: "💧", available: true },
 
-      { id: 144, name: "بوكس السعادة", category: "الحلو", price: 350, unitType: "piece", desc: "بوكس السعادة المشكل من أشهى حلويات ومخبوزات سويت سيتي الطازجة", emoji: "🎁", available: true },
+      { id: 144, name: "بوكس السعادة", category: "الحلو", price: 350, unitType: "box", desc: "بوكس السعادة المشكل من أشهى حلويات ومخبوزات سويت سيتي الطازجة", emoji: "🎁", available: true },
 
       { id: 151, name: "عرض العائلة التوفيري (تورتة 25/25 + كيلو سواريه + بيبسي)", category: "عروض وخصومات 🎁", price: 650, oldPrice: 750, unitType: "piece", desc: "وفر 100 ج.م! تورتة مقاس 25×25 طازجة + كيلو سواريه مشكل + لتر بيبسي هدية", emoji: "🎁", available: true },
-      { id: 152, name: "بوكس فطار الصحاب والعيلة (10 كرواسون وباتيه + 4 دوناتس)", category: "عروض وخصومات 🎁", price: 250, oldPrice: 300, unitType: "piece", desc: "وفر 50 ج.م! تشكيلة مخبوزات ساخنة طازجة من الفرن مع 4 دوناتس شوكولاتة", emoji: "🥐", available: true },
-      { id: 153, name: "كومبو القهوة والحلو (2 سبانيش لاتيه + 2 مولتو كيك)", category: "عروض وخصومات 🎁", price: 275, oldPrice: 330, unitType: "piece", desc: "وفر 55 ج.م! 2 كوب سبانيش لاتيه (ساخن أو بارد) + 2 مولتو كيك غني بالشوكولاتة", emoji: "☕", available: true },
+      { id: 152, name: "بوكس فطار الصحاب والعيلة (10 كرواسون وباتيه + 4 دوناتس)", category: "عروض وخصومات 🎁", price: 250, oldPrice: 300, unitType: "box", desc: "وفر 50 ج.م! تشكيلة مخبوزات ساخنة طازجة من الفرن مع 4 دوناتس شوكولاتة", emoji: "🥐", available: true },
+      { id: 153, name: "كومبو القهوة والحلو (2 سبانش لاتيه + 2 مولتو كيك)", category: "عروض وخصومات 🎁", price: 275, oldPrice: 330, unitType: "piece", desc: "وفر 55 ج.م! 2 كوب سبانش لاتيه (ساخن أو بارد) + 2 مولتو كيك غني بالشوكولاتة", emoji: "☕", available: true },
       { id: 154, name: "عرض الحفلات وأعياد الميلاد (تورتة مدورة مقاس 26 + دستة جاتوه لوكس)", category: "عروض وخصومات 🎁", price: 660, oldPrice: 740, unitType: "piece", desc: "وفر 80 ج.م! تورتة مدورة مقاس 26 فاخرة + 12 قطعة جاتوه لوكس طازج", emoji: "🎂", available: true },
-      { id: 155, name: "بوكس نواعم سويت سيتي (2 كيلو مشكل: كعك + بيتي فور + بسكويت + غريبة)", category: "عروض وخصومات 🎁", price: 420, oldPrice: 480, unitType: "piece", desc: "وفر 60 ج.م! تشكيلة 2 كيلو من أفخر نواعم سويت سيتي بالسمن البلدي", emoji: "🍪", available: true },
+      { id: 155, name: "بوكس نواعم سويت سيتي (2 كيلو مشكل: كعك + بيتي فور + بسكويت + غريبة)", category: "عروض وخصومات 🎁", price: 420, oldPrice: 480, unitType: "box", desc: "وفر 60 ج.م! تشكيلة 2 كيلو من أفخر نواعم سويت سيتي بالسمن البلدي", emoji: "🍪", available: true },
       { id: 156, name: "عرض السهرة الحلوة (4 قطع جاتوه سوبر لوكس + 2 ميلك شيك)", category: "عروض وخصومات 🎁", price: 260, oldPrice: 310, unitType: "piece", desc: "وفر 50 ج.م! 4 قطع جاتوه سوبر لوكس + 2 ميلك شيك من اختيارك", emoji: "🍰", available: true }
     ];
 
     let RAW = JSON.parse(JSON.stringify(FACTORY_RAW));
 
+    // Note: SCRIPT_URL and FALLBACK_SCRIPT_URL differ only by I/l characters; owner should verify the active deployment URL manually.
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzAR7fB4jN7xH3o1_x-OllJLkzBO30Fwso-I6QwXzaoOk8E8aBs8lfQhqv-QRhI8tOenA/exec";
     const FALLBACK_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzAR7fB4jN7xH3o1_x-OllJLkzBO30Fwso-l6QwXzaoOk8E8aBs8IfQhqv-QRhI8tOenA/exec";
 
@@ -1371,10 +1296,8 @@
 
     function saveMenuCacheToLocal() {
       try {
-        localStorage.setItem('SC_RAW_ITEMS_V1', JSON.stringify(RAW));
         const settingsForCache = { ...STORE_SETTINGS };
         delete settingsForCache.adminPin;
-        localStorage.setItem('SC_STORE_SETTINGS_V1', JSON.stringify(settingsForCache));
         localStorage.setItem(MENU_CACHE_KEY, JSON.stringify({
           ts: Date.now(),
           items: RAW,
@@ -1392,22 +1315,26 @@
         }
         if (parsedCache && parsedCache.settings && typeof parsedCache.settings === 'object') {
           delete parsedCache.settings.adminPin;
+          if (!parsedCache.settings.webhookUrl || !String(parsedCache.settings.webhookUrl).trim()) {
+            parsedCache.settings.webhookUrl = SCRIPT_URL;
+          }
           STORE_SETTINGS = { ...STORE_SETTINGS, ...parsedCache.settings };
         }
-      }
-      const savedRaw = localStorage.getItem('SC_RAW_ITEMS_V1');
-      if (savedRaw) {
-        const parsed = JSON.parse(savedRaw);
-        if (Array.isArray(parsed) && parsed.length > 0) RAW = parsed;
-      }
-      const savedSet = localStorage.getItem('SC_STORE_SETTINGS_V1');
-      if (savedSet) {
-        const parsedSet = JSON.parse(savedSet);
-        delete parsedSet.adminPin;
-        if (!parsedSet.webhookUrl || !String(parsedSet.webhookUrl).trim()) {
-          parsedSet.webhookUrl = SCRIPT_URL;
+      } else {
+        const savedRaw = localStorage.getItem('SC_RAW_ITEMS_V1');
+        if (savedRaw) {
+          const parsed = JSON.parse(savedRaw);
+          if (Array.isArray(parsed) && parsed.length > 0) RAW = parsed;
         }
-        STORE_SETTINGS = { ...STORE_SETTINGS, ...parsedSet };
+        const savedSet = localStorage.getItem('SC_STORE_SETTINGS_V1');
+        if (savedSet) {
+          const parsedSet = JSON.parse(savedSet);
+          delete parsedSet.adminPin;
+          if (!parsedSet.webhookUrl || !String(parsedSet.webhookUrl).trim()) {
+            parsedSet.webhookUrl = SCRIPT_URL;
+          }
+          STORE_SETTINGS = { ...STORE_SETTINGS, ...parsedSet };
+        }
       }
       STORE_SETTINGS.instaPay = normalizeInstaPayNumber(STORE_SETTINGS.instaPay);
     } catch (e) {}
@@ -1481,6 +1408,58 @@
       }
     }
 
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function isSafeHttpUrl(url) {
+      return /^https?:\/\//i.test(String(url || '').trim());
+    }
+
+    function copyTextSafely(text, onSuccess, onFail) {
+      const val = String(text || '');
+      const runFallback = () => {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = val;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.top = '-9999px';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.focus();
+          ta.select();
+          const ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+          if (ok) {
+            if (typeof onSuccess === 'function') onSuccess();
+          } else if (typeof onFail === 'function') {
+            onFail();
+          }
+        } catch (err) {
+          if (typeof onFail === 'function') onFail();
+        }
+      };
+      try {
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+          navigator.clipboard.writeText(val).then(() => {
+            if (typeof onSuccess === 'function') onSuccess();
+          }).catch(runFallback);
+        } else {
+          runFallback();
+        }
+      } catch (e) {
+        runFallback();
+      }
+    }
+    window.copyTextSafely = copyTextSafely;
+
     function sanitizeText(val) {
       if (val === null || val === undefined) return '';
       return String(val)
@@ -1505,24 +1484,54 @@
           : 'w-2 h-2 rounded-full bg-red-500 inline-block shadow-[0_0_8px_#ef4444]';
       }
 
+      const storeNameEnEl = document.getElementById('uiStoreNameEn');
+      if (storeNameEnEl && STORE_SETTINGS.storeNameEn && String(STORE_SETTINGS.storeNameEn).trim()) {
+        storeNameEnEl.textContent = String(STORE_SETTINGS.storeNameEn).trim();
+      }
+
+      const subtitleEnEl = document.getElementById('uiSubtitleEn');
+      if (subtitleEnEl && STORE_SETTINGS.subtitleEn && String(STORE_SETTINGS.subtitleEn).trim()) {
+        subtitleEnEl.textContent = String(STORE_SETTINGS.subtitleEn).trim();
+      }
+
+      const mapLinkEl = document.getElementById('uiMapLink');
+      if (mapLinkEl && isSafeHttpUrl(STORE_SETTINGS.mapUrl)) {
+        mapLinkEl.href = String(STORE_SETTINGS.mapUrl).trim();
+      }
+
+      const fbLinkEl = document.getElementById('uiFacebookLink');
+      if (fbLinkEl && isSafeHttpUrl(STORE_SETTINGS.facebookUrl)) {
+        fbLinkEl.href = String(STORE_SETTINGS.facebookUrl).trim();
+      }
+
+      const igLinkEl = document.getElementById('uiInstagramLink');
+      if (igLinkEl && isSafeHttpUrl(STORE_SETTINGS.instagramUrl)) {
+        igLinkEl.href = String(STORE_SETTINGS.instagramUrl).trim();
+      }
+
       const addrEl = document.getElementById('uiAddress');
       if (addrEl && STORE_SETTINGS.branchAddress) addrEl.textContent = STORE_SETTINGS.branchAddress;
 
       const footerPhoneEl = document.getElementById('uiFooterPhone');
       if (footerPhoneEl && STORE_SETTINGS.phone) footerPhoneEl.textContent = STORE_SETTINGS.phone;
 
+      const vfNum = STORE_SETTINGS.vodafoneCash || '01040224226';
       const vfNumEl = document.getElementById('uiCartVodafoneNum');
-      if (vfNumEl && STORE_SETTINGS.vodafoneCash) vfNumEl.textContent = STORE_SETTINGS.vodafoneCash;
+      if (vfNumEl) vfNumEl.textContent = vfNum;
+      const footerVfEl = document.getElementById('uiFooterVodafoneNum');
+      if (footerVfEl) footerVfEl.textContent = vfNum;
 
       STORE_SETTINGS.instaPay = normalizeInstaPayNumber(STORE_SETTINGS.instaPay);
       const instaNumEl = document.getElementById('uiCartInstapayNum');
       if (instaNumEl) instaNumEl.textContent = STORE_SETTINGS.instaPay;
+      const footerInstaEl = document.getElementById('uiFooterInstapayNum');
+      if (footerInstaEl) footerInstaEl.textContent = STORE_SETTINGS.instaPay;
 
       const logoImgEl = document.getElementById('uiHeaderLogoImg');
       const logoFallbackEl = document.getElementById('uiHeaderLogoFallback');
       if (logoImgEl) {
         const customLogo = (STORE_SETTINGS.logoUrl || '').trim();
-        if (customLogo && logoImgEl.getAttribute('src') !== customLogo) {
+        if (customLogo && !/^javascript:/i.test(customLogo) && logoImgEl.getAttribute('src') !== customLogo) {
           delete logoImgEl.dataset.triedPng;
           delete logoImgEl.dataset.triedJpg;
           logoImgEl.style.display = '';
@@ -1549,14 +1558,11 @@
     }
 
     function copyPaymentNum(num, label) {
-      try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(num).catch(() => {});
-        }
-        showToast('📋 تم نسخ رقم ' + label + ': ' + num, false);
-      } catch (e) {
-        showToast('📋 رقم ' + label + ': ' + num, false);
-      }
+      copyTextSafely(
+        num,
+        () => showToast('📋 تم نسخ رقم ' + label + ': ' + num, false),
+        () => showToast('⚠️ تعذر النسخ تلقائياً — الرقم: ' + num, true)
+      );
     }
 
     function toggleBranchesPanel() {
@@ -1743,7 +1749,9 @@
 
             if (hasChanges || showNotification) {
               const savedScrollY = window.scrollY;
-              initApp();
+              const prevRendered = !showNotification ? scRenderedCount : 0;
+              reconcileCartWithMenu();
+              initApp(prevRendered);
               if (!showNotification && savedScrollY > 0) {
                 window.scrollTo(0, savedScrollY);
               }
@@ -1819,7 +1827,9 @@
               }
               if (hasChanges || showNotification) {
                 const savedScrollY = window.scrollY;
-                initApp();
+                const prevRendered = !showNotification ? scRenderedCount : 0;
+                reconcileCartWithMenu();
+                initApp(prevRendered);
                 if (!showNotification && savedScrollY > 0) {
                   window.scrollTo(0, savedScrollY);
                 }
@@ -1914,7 +1924,7 @@
             : (active
                 ? 'bg-[#e3b938] text-black shadow-md'
                 : 'bg-[#17140d] text-white border border-[#d4af37]/30 hover:border-[#d4af37]');
-          return `<button type="button" onclick="selectCategory('${c.replace(/'/g, "\\'")}')" class="px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-black whitespace-nowrap shrink-0 transition cursor-pointer ${btnCls}">${c}</button>`;
+          return `<button type="button" data-cat="${escapeHtml(c)}" onclick="selectCategory(this.dataset.cat)" class="px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-black whitespace-nowrap shrink-0 transition cursor-pointer ${btnCls}">${escapeHtml(c)}</button>`;
         }).join('');
       }
     }
@@ -1925,20 +1935,32 @@
       renderProducts();
     }
 
-    function handleSearch(val) {
-      const clean = val.trim();
+    let searchDebounceTimer = null;
+
+    function handleSearch(val, immediate) {
+      const clean = String(val || '').trim();
       searchQuery = clean;
-      document.getElementById('clearSearchBtn').classList.toggle('hidden', !searchQuery);
-      renderProducts();
+      const clearBtn = document.getElementById('clearSearchBtn');
+      if (clearBtn) clearBtn.classList.toggle('hidden', !searchQuery);
+      clearTimeout(searchDebounceTimer);
+      if (immediate) {
+        renderProducts();
+      } else {
+        searchDebounceTimer = setTimeout(() => {
+          renderProducts();
+        }, 180);
+      }
     }
 
     function clearSearch() {
-      document.getElementById('searchInput').value = '';
-      handleSearch('');
+      const inp = document.getElementById('searchInput');
+      if (inp) inp.value = '';
+      handleSearch('', true);
     }
 
     function getItemUnitMode(item) {
       if (!item) return 'piece';
+      if (isAiBoxItem(item)) return 'box';
       const u = String(item.unitType || '').trim().toLowerCase();
       if (u === 'weight' || u === 'بالكيلو') return 'weight';
       if (u === 'cup' || u === 'بالكوب') return 'cup';
@@ -2018,12 +2040,20 @@
       updateSingleProductCard(itemId);
     }
 
+    function isSafeImageUrl(url) {
+      const s = String(url || '').trim();
+      if (!s) return false;
+      if (isSafeHttpUrl(s)) return true;
+      if (/^[a-z][a-z0-9+.-]*:/i.test(s) || s.startsWith('//')) return false;
+      return true;
+    }
+
     function resolveProductImage(item) {
       if (!item) return { primary: '', candidates: [] };
-      const cleanName = String(item.name || '').trim();
       const id = item.id;
       const autoCandidates = [`images/${id}.jpg`];
-      const manualImg = String(item.img || '').trim();
+      const rawManualImg = String(item.img || '').trim();
+      const manualImg = isSafeImageUrl(rawManualImg) ? rawManualImg : '';
       const all = manualImg ? [manualImg, ...autoCandidates] : autoCandidates;
       return {
         primary: all[0] || '',
@@ -2086,6 +2116,70 @@
     let scRenderedCount = 0;
     const SC_BATCH_SIZE = 16;
 
+    function buildProductControlsInnerHtml(item, w, mode, totalAutoPrice, unavailable) {
+      const isWeight = mode === 'weight';
+      const isCup = mode === 'cup';
+      const isBox = mode === 'box';
+      const qtyTitleLabel = isWeight
+        ? 'الوزن المختار (بالكيلو):'
+        : (isCup ? 'الكمية المختارة (بالكوب):' : (isBox ? 'الكمية المختارة (بالبوكس):' : 'الكمية المختارة (بالقطعة):'));
+      const addOneLabel = isCup ? '+ أضف كوب (+1)' : (isBox ? '+ أضف بوكس (+1)' : '+ أضف قطعة (+1)');
+      const subOneLabel = isCup ? '− إنقاص كوب (-1)' : (isBox ? '− إنقاص بوكس (-1)' : '− إنقاص قطعة (-1)');
+
+      return `
+        <div class="flex items-center justify-between text-[11px]">
+          <span class="font-bold text-stone-300">${qtyTitleLabel}</span>
+          <span class="font-black text-[#f3d266]">${formatQuantityArabic(w, mode)}</span>
+        </div>
+
+        ${isWeight ? `
+          <div class="grid grid-cols-5 gap-1.5 items-center">
+            <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 0.5)"`} class="py-2 rounded-xl bg-[#262012] hover:bg-[#342b18] border border-[#d4af37]/50 text-[#f3d266] font-black text-xs cursor-pointer disabled:opacity-40">+0.5</button>
+            <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 0.25)"`} class="py-2 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-xs cursor-pointer disabled:opacity-40">+0.25</button>
+            <input type="number" min="0" step="0.25" value="${w}" ${unavailable ? 'disabled' : `onchange="setItemWeight(${item.id}, this.value)"`} class="w-full py-1.5 px-1 rounded-xl bg-black border-2 border-[#d4af37] text-center font-black text-xs sm:text-sm text-white outline-none" />
+            <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -0.25)"`} class="py-2 rounded-xl bg-[#251f14] hover:bg-[#332b1c] border border-[#d4af37]/45 text-[#e3b938] font-black text-xs cursor-pointer disabled:opacity-35">-0.25</button>
+            <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -0.5)"`} class="py-2 rounded-xl bg-[#1b170f] hover:bg-[#282216] border border-stone-700 text-stone-300 font-black text-xs cursor-pointer disabled:opacity-35">-0.5</button>
+          </div>
+        ` : `
+          <div class="grid grid-cols-[1fr_58px_1fr] gap-1.5 items-center">
+            <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 1)"`} class="min-w-0 whitespace-nowrap py-2 px-1.5 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-[10.5px] sm:text-xs cursor-pointer disabled:opacity-40">${addOneLabel}</button>
+            <input type="number" min="0" step="1" value="${Math.round(w)}" ${unavailable ? 'disabled' : `onchange="setItemWeight(${item.id}, this.value)"`} class="min-w-0 w-full py-1.5 px-1 rounded-xl bg-black border-2 border-[#d4af37] text-center font-black text-xs sm:text-sm text-white outline-none" />
+            <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -1)"`} class="min-w-0 whitespace-nowrap py-2 px-1.5 rounded-xl bg-[#251f14] hover:bg-[#332b1c] border border-[#d4af37]/45 text-[#e3b938] font-black text-[10.5px] sm:text-xs cursor-pointer disabled:opacity-35">${subOneLabel}</button>
+          </div>
+        `}
+
+        ${w > 0 ? `
+          <div class="flex items-center justify-between pt-1 text-[10px] text-stone-400">
+            <span>حساب السعر: ${formatQuantityArabic(w, mode)} × ${item.price} ج.م = <b class="text-[#f3d266]">${totalAutoPrice} ج.م</b></span>
+            <button type="button" onclick="setItemWeight(${item.id}, 0)" class="text-red-400 hover:underline font-bold cursor-pointer">تصفير (0)</button>
+          </div>
+        ` : ''}
+      `;
+    }
+
+    function buildProductFooterInnerHtml(item, w, mode, totalAutoPrice, unavailable) {
+      const isWeight = mode === 'weight';
+      const isCup = mode === 'cup';
+      const isBox = mode === 'box';
+      const chooseZeroLabel = isWeight
+        ? '+ اختر الوزن أولاً'
+        : (isCup ? '+ اختر عدد الأكواب' : (isBox ? '+ اختر عدد البوكسات' : '+ اختر عدد القطع'));
+
+      return `
+        <div class="text-right">
+          <span class="text-lg sm:text-xl font-black text-[#e3b938]">${totalAutoPrice} ج.م</span>
+          <span class="block text-[10px] text-stone-400">${w > 0 ? ('الإجمالي لـ ' + formatQuantityArabic(w, mode)) : 'اختر الكمية لحساب الإجمالي'}</span>
+        </div>
+        <button
+          type="button"
+          ${unavailable ? 'disabled' : `onclick="addToCart(${item.id})"`}
+          class="${w > 0 ? 'bg-[#e3b938] hover:bg-[#f3c846] text-black' : 'bg-[#251f14] text-[#f3d266] border border-[#d4af37]/50'} font-black py-2 px-4 rounded-xl text-xs sm:text-sm transition active:scale-95 disabled:opacity-40 cursor-pointer"
+        >
+          ${unavailable ? 'غير متاح' : (w > 0 ? `+ أضف للسلة (${totalAutoPrice} ج.م)` : chooseZeroLabel)}
+        </button>
+      `;
+    }
+
     function buildProductCardHtml(item, eagerLoad) {
       const mode = getItemUnitMode(item);
       const isWeight = mode === 'weight';
@@ -2095,14 +2189,6 @@
       const totalAutoPrice = Number((item.price * w).toFixed(2));
       const unavailable = !isItemAvailable(item);
       const basePriceTitle = isWeight ? 'سعر الكيلو' : (isCup ? 'سعر الكوب' : (isBox ? 'سعر البوكس' : 'سعر القطعة'));
-      const qtyTitleLabel = isWeight
-        ? 'الوزن المختار (بالكيلو):'
-        : (isCup ? 'الكمية المختارة (بالكوب):' : (isBox ? 'الكمية المختارة (بالبوكس):' : 'الكمية المختارة (بالقطعة):'));
-      const addOneLabel = isCup ? '+ أضف كوب (+1)' : (isBox ? '+ أضف بوكس (+1)' : '+ أضف قطعة (+1)');
-      const subOneLabel = isCup ? '− إنقاص كوب (-1)' : (isBox ? '− إنقاص بوكس (-1)' : '− إنقاص قطعة (-1)');
-      const chooseZeroLabel = isWeight
-        ? '+ اختر الوزن أولاً'
-        : (isCup ? '+ اختر عدد الأكواب' : (isBox ? '+ اختر عدد البوكسات' : '+ اختر عدد القطع'));
 
       const hasDiscount = Number(item.oldPrice) > Number(item.price) && Number(item.oldPrice) > 0;
       const discountPct = hasDiscount ? Math.round(((Number(item.oldPrice) - Number(item.price)) / Number(item.oldPrice)) * 100) : 0;
@@ -2121,22 +2207,26 @@
       }
 
       const resolvedImg = resolveProductImage(item);
+      const safeName = escapeHtml(item.name);
+      const safeDesc = escapeHtml(item.desc || 'مخبوز طازج يومياً');
+      const safeEmoji = escapeHtml(item.emoji || '🍩');
+      const safeImgPrimary = escapeHtml(resolvedImg.primary);
 
       return `
         <div id="productCard_${item.id}" class="card-surface rounded-[20px] p-3 flex flex-col justify-between relative overflow-hidden ${unavailable ? 'opacity-60 grayscale' : ''}">
           <div class="relative rounded-xl bg-gradient-to-b from-[#251f13] via-[#18140d] to-[#110e09] border border-[#d4af37]/20 h-36 flex flex-col items-center justify-center overflow-hidden">
             ${promoBadgeHtml}
-            ${resolvedImg.primary ? `<img src="${eagerLoad ? resolvedImg.primary : SC_BLANK_IMG}" data-src="${resolvedImg.primary}" data-unloaded="${eagerLoad ? '0' : '1'}" width="400" height="300" decoding="async" data-item-id="${item.id}" data-try-idx="0" alt="${item.name}" onerror="handleProductImgError(this)" class="w-full h-full object-cover" />` : ''}
-            <div id="prodFallback_${item.id}" class="flex flex-col items-center justify-center" style="${resolvedImg.primary ? 'display:none;' : 'display:flex;'}">
-              <div class="text-4xl mb-2">${item.emoji || '🍩'}</div>
+            ${safeImgPrimary ? `<img src="${eagerLoad ? safeImgPrimary : SC_BLANK_IMG}" data-src="${safeImgPrimary}" data-unloaded="${eagerLoad ? '0' : '1'}" width="400" height="300" decoding="async" data-item-id="${item.id}" data-try-idx="0" alt="${safeName}" onerror="handleProductImgError(this)" class="w-full h-full object-cover" />` : ''}
+            <div id="prodFallback_${item.id}" class="flex flex-col items-center justify-center" style="${safeImgPrimary ? 'display:none;' : 'display:flex;'}">
+              <div class="text-4xl mb-2">${safeEmoji}</div>
               <span class="font-en text-[11px] tracking-[0.2em] text-[#d4af37] font-bold">SWEET CITY 1999</span>
             </div>
           </div>
 
           <div class="mt-2.5 flex items-start justify-between gap-2 text-right">
             <div>
-              <h3 class="text-base sm:text-lg font-black text-white">${item.name}</h3>
-              <p class="text-[11px] sm:text-xs text-stone-400 mt-0.5">${item.desc || 'مخبوز طازج يومياً'}</p>
+              <h3 class="text-base sm:text-lg font-black text-white">${safeName}</h3>
+              <p class="text-[11px] sm:text-xs text-stone-400 mt-0.5">${safeDesc}</p>
             </div>
             <div class="shrink-0 px-2 py-1 rounded-xl bg-[#16130c] border border-[#d4af37]/35 text-center">
               <span class="block text-[9px] text-stone-400">${basePriceTitle}</span>
@@ -2146,56 +2236,21 @@
           </div>
 
           <div class="mt-2.5 p-2.5 rounded-2xl bg-[#13100a] border border-[#d4af37]/30 space-y-2">
-            <div class="flex items-center justify-between text-[11px]">
-              <span class="font-bold text-stone-300">${qtyTitleLabel}</span>
-              <span class="font-black text-[#f3d266]">${formatQuantityArabic(w, mode)}</span>
-            </div>
-
-            ${isWeight ? `
-              <div class="grid grid-cols-5 gap-1.5 items-center">
-                <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 0.5)"`} class="py-2 rounded-xl bg-[#262012] hover:bg-[#342b18] border border-[#d4af37]/50 text-[#f3d266] font-black text-xs cursor-pointer disabled:opacity-40">+0.5</button>
-                <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 0.25)"`} class="py-2 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-xs cursor-pointer disabled:opacity-40">+0.25</button>
-                <input type="number" min="0" step="0.25" value="${w}" ${unavailable ? 'disabled' : `onchange="setItemWeight(${item.id}, this.value)"`} class="w-full py-1.5 px-1 rounded-xl bg-black border-2 border-[#d4af37] text-center font-black text-xs sm:text-sm text-white outline-none" />
-                <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -0.25)"`} class="py-2 rounded-xl bg-[#251f14] hover:bg-[#332b1c] border border-[#d4af37]/45 text-[#e3b938] font-black text-xs cursor-pointer disabled:opacity-35">-0.25</button>
-                <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -0.5)"`} class="py-2 rounded-xl bg-[#1b170f] hover:bg-[#282216] border border-stone-700 text-stone-300 font-black text-xs cursor-pointer disabled:opacity-35">-0.5</button>
-              </div>
-            ` : `
-              <div class="grid grid-cols-[1fr_58px_1fr] gap-1.5 items-center">
-                <button type="button" ${unavailable ? 'disabled' : `onclick="adjustItemWeight(${item.id}, 1)"`} class="min-w-0 whitespace-nowrap py-2 px-1.5 rounded-xl bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-[10.5px] sm:text-xs cursor-pointer disabled:opacity-40">${addOneLabel}</button>
-                <input type="number" min="0" step="1" value="${Math.round(w)}" ${unavailable ? 'disabled' : `onchange="setItemWeight(${item.id}, this.value)"`} class="min-w-0 w-full py-1.5 px-1 rounded-xl bg-black border-2 border-[#d4af37] text-center font-black text-xs sm:text-sm text-white outline-none" />
-                <button type="button" ${unavailable || w <= 0 ? 'disabled' : `onclick="adjustItemWeight(${item.id}, -1)"`} class="min-w-0 whitespace-nowrap py-2 px-1.5 rounded-xl bg-[#251f14] hover:bg-[#332b1c] border border-[#d4af37]/45 text-[#e3b938] font-black text-[10.5px] sm:text-xs cursor-pointer disabled:opacity-35">${subOneLabel}</button>
-              </div>
-            `}
-
-            ${w > 0 ? `
-              <div class="flex items-center justify-between pt-1 text-[10px] text-stone-400">
-                <span>حساب السعر: ${formatQuantityArabic(w, mode)} × ${item.price} ج.م = <b class="text-[#f3d266]">${totalAutoPrice} ج.م</b></span>
-                <button type="button" onclick="setItemWeight(${item.id}, 0)" class="text-red-400 hover:underline font-bold cursor-pointer">تصفير (0)</button>
-              </div>
-            ` : ''}
+            ${buildProductControlsInnerHtml(item, w, mode, totalAutoPrice, unavailable)}
           </div>
 
           <div class="mt-2.5 pt-2.5 border-t border-dashed border-[#d4af37]/25 flex items-center justify-between gap-2">
-            <div class="text-right">
-              <span class="text-lg sm:text-xl font-black text-[#e3b938]">${totalAutoPrice} ج.م</span>
-              <span class="block text-[10px] text-stone-400">${w > 0 ? ('الإجمالي لـ ' + formatQuantityArabic(w, mode)) : 'اختر الكمية لحساب الإجمالي'}</span>
-            </div>
-            <button
-              type="button"
-              ${unavailable ? 'disabled' : `onclick="addToCart(${item.id})"`}
-              class="${w > 0 ? 'bg-[#e3b938] hover:bg-[#f3c846] text-black' : 'bg-[#251f14] text-[#f3d266] border border-[#d4af37]/50'} font-black py-2 px-4 rounded-xl text-xs sm:text-sm transition active:scale-95 disabled:opacity-40 cursor-pointer"
-            >
-              ${unavailable ? 'غير متاح' : (w > 0 ? `+ أضف للسلة (${totalAutoPrice} ج.م)` : chooseZeroLabel)}
-            </button>
+            ${buildProductFooterInnerHtml(item, w, mode, totalAutoPrice, unavailable)}
           </div>
         </div>
       `;
     }
 
-    function appendNextProductsBatch() {
+    function appendNextProductsBatch(customBatchSize) {
       const grid = document.getElementById('productsGrid');
       if (!grid || scRenderedCount >= scFilteredItems.length) return;
-      const batch = scFilteredItems.slice(scRenderedCount, scRenderedCount + SC_BATCH_SIZE);
+      const step = (Number(customBatchSize) > 0) ? Number(customBatchSize) : SC_BATCH_SIZE;
+      const batch = scFilteredItems.slice(scRenderedCount, scRenderedCount + step);
       scRenderedCount += batch.length;
       grid.insertAdjacentHTML('beforeend', batch.map(item => buildProductCardHtml(item, false)).join(''));
       observeProductImages(grid);
@@ -2204,12 +2259,13 @@
     function updateSingleProductCard(itemId) {
       const item = RAW.find(i => i.id === itemId);
       const cardEl = document.getElementById('productCard_' + itemId);
-      if (!item || !cardEl) return;
-      cardEl.outerHTML = buildProductCardHtml(item, true);
-      const newCardEl = document.getElementById('productCard_' + itemId);
-      if (newCardEl) {
-        observeProductImages(newCardEl);
-      }
+      if (!item || !cardEl || cardEl.children.length < 4) return;
+      const mode = getItemUnitMode(item);
+      const w = selectedWeights[item.id] !== undefined ? selectedWeights[item.id] : 0;
+      const totalAutoPrice = Number((item.price * w).toFixed(2));
+      const unavailable = !isItemAvailable(item);
+      cardEl.children[2].innerHTML = buildProductControlsInnerHtml(item, w, mode, totalAutoPrice, unavailable);
+      cardEl.children[3].innerHTML = buildProductFooterInnerHtml(item, w, mode, totalAutoPrice, unavailable);
     }
 
     const scSentinelObserver = (typeof IntersectionObserver !== 'undefined') ? new IntersectionObserver((entries) => {
@@ -2227,7 +2283,7 @@
       }
     })();
 
-    function renderProducts() {
+    function renderProducts(preserveCount) {
       sortRawById();
       const grid = document.getElementById('productsGrid');
       const availableTotal = RAW.filter(i => isItemAvailable(i)).length;
@@ -2261,7 +2317,8 @@
       }
 
       grid.innerHTML = '';
-      appendNextProductsBatch();
+      const initialBatchCount = Math.max(SC_BATCH_SIZE, Number(preserveCount) || 0);
+      appendNextProductsBatch(initialBatchCount);
       if (scSentinelObserver) {
         const sentinel = document.getElementById('scInfiniteSentinel');
         if (sentinel) {
@@ -2354,7 +2411,7 @@
     }
 
     function getCartSubtotal() {
-      return cart.reduce((sum, c) => sum + c.unitPrice * c.qty, 0);
+      return Number(cart.reduce((sum, c) => sum + c.unitPrice * c.qty, 0).toFixed(2));
     }
 
     function updateCartBadge() {
@@ -2383,6 +2440,57 @@
           localStorage.setItem('SC_CART_V1', JSON.stringify(cart));
         }
       } catch (e) {}
+    }
+
+    function reconcileCartWithMenu() {
+      if (!Array.isArray(cart) || cart.length === 0 || !Array.isArray(RAW) || RAW.length === 0) return;
+      const removedNames = [];
+      let pricesUpdated = false;
+      const kept = [];
+
+      cart.forEach(c => {
+        if (!c) return;
+        const keyStr = String(c.key || '');
+        const idStr = String(c.itemId || '');
+        if (keyStr.startsWith('CUSTOM_CAKE_') || idStr.startsWith('BOX-')) {
+          kept.push(c);
+          return;
+        }
+        const liveItem = RAW.find(i => i.id === c.itemId);
+        if (!liveItem) {
+          kept.push(c);
+          return;
+        }
+        if (!isItemAvailable(liveItem)) {
+          removedNames.push(c.name || liveItem.name);
+          return;
+        }
+        const livePrice = Number(liveItem.price);
+        if (livePrice > 0 && livePrice !== Number(c.baseKiloPrice)) {
+          c.baseKiloPrice = livePrice;
+          c.unitPrice = c.unitMode === 'weight'
+            ? Number((livePrice * (Number(c.weightFactor) || 1)).toFixed(2))
+            : livePrice;
+          pricesUpdated = true;
+        }
+        kept.push(c);
+      });
+
+      if (removedNames.length > 0 || pricesUpdated) {
+        cart.length = 0;
+        kept.forEach(item => cart.push(item));
+        updateCartBadge();
+        persistCartToStorage();
+        const cartModalEl = document.getElementById('cartModal');
+        if (cartModalEl && !cartModalEl.classList.contains('hidden')) {
+          renderCart();
+        }
+        if (removedNames.length > 0) {
+          showToast('⚠️ تم حذف أصناف غير متوفرة حالياً من السلة: ' + removedNames.join('، '), true);
+        } else if (pricesUpdated) {
+          showToast('🔄 تم تحديث أسعار بعض الأصناف في السلة وفق أحدث أسعار المنيو', false);
+        }
+      }
     }
 
     let _scClearCartTimer = null;
@@ -2479,7 +2587,11 @@
     function renderZonesDropdown() {
       const sel = document.getElementById('custZone');
       if (!sel) return;
-      sel.innerHTML = STORE_SETTINGS.deliveryZones.map((z, idx) => `<option value="${z.fee}" data-name="${z.name}" ${idx === selectedZoneIndex ? 'selected' : ''}>${z.name} - ${z.fee} ج.م</option>`).join('');
+      sel.innerHTML = STORE_SETTINGS.deliveryZones.map((z, idx) => {
+        const safeZoneName = escapeHtml(z.name);
+        const safeFee = Number(z.fee) || 0;
+        return `<option value="${safeFee}" data-name="${safeZoneName}" ${idx === selectedZoneIndex ? 'selected' : ''}>${safeZoneName} - ${safeFee} ج.م</option>`;
+      }).join('');
       if (selectedZoneIndex >= 0 && selectedZoneIndex < sel.options.length) {
         sel.selectedIndex = selectedZoneIndex;
       }
@@ -2521,7 +2633,8 @@
       if (subtotal >= threshold) {
         document.getElementById('freeDelivText').textContent = '🎉 مبروك! حصلت على توصيل مجاني لطلبك!';
       } else {
-        document.getElementById('freeDelivText').textContent = `🎁 أضف بـ ${threshold - subtotal} ج.م لتوصيل مجاني!`;
+        const remainingForFree = Math.max(0, Number((threshold - subtotal).toFixed(2)));
+        document.getElementById('freeDelivText').textContent = `🎁 أضف بـ ${remainingForFree} ج.م لتوصيل مجاني!`;
       }
 
       if (cart.length === 0) {
@@ -2529,18 +2642,21 @@
       } else {
         container.innerHTML = cart.map(c => {
           const unitWord = getUnitArabicWord(c.unitMode);
+          const safeName = escapeHtml(c.name);
+          const safeWeightLabel = escapeHtml(c.weightLabel);
+          const safeKey = escapeHtml(c.key);
           return `
           <div class="px-2.5 py-1.5 rounded-xl bg-[#181510] border border-[#d4af37]/25 flex items-center justify-between gap-2">
             <div class="text-right flex-1 min-w-0">
-              <div class="text-xs font-black text-white truncate">${c.name}</div>
+              <div class="text-xs font-black text-white truncate">${safeName}</div>
               <div class="text-[10px] font-bold text-[#d4af37] truncate">
-                ${c.unitMode === 'weight' ? `${c.weightLabel} = ${Number((c.unitPrice * c.qty).toFixed(2))} ج.م` : `${c.qty} ${unitWord} × ${c.unitPrice} ج.م = ${Number((c.unitPrice * c.qty).toFixed(2))} ج.م`}
+                ${c.unitMode === 'weight' ? `${safeWeightLabel} = ${Number((c.unitPrice * c.qty).toFixed(2))} ج.م` : `${c.qty} ${unitWord} × ${c.unitPrice} ج.م = ${Number((c.unitPrice * c.qty).toFixed(2))} ج.م`}
               </div>
             </div>
             <div class="flex items-center gap-1 shrink-0">
-              <button type="button" onclick="changeCartQty('${c.key}', -1)" class="w-6 h-6 rounded-lg border border-[#d4af37] text-[#e3b938] text-xs font-black cursor-pointer">−</button>
+              <button type="button" data-key="${safeKey}" onclick="changeCartQty(this.dataset.key, -1)" class="w-6 h-6 rounded-lg border border-[#d4af37] text-[#e3b938] text-xs font-black cursor-pointer">−</button>
               <span class="text-[11px] font-black text-white px-1">${c.unitMode === 'weight' ? Number((c.weightFactor * c.qty).toFixed(2)) + ' كجم' : c.qty + ' ' + unitWord}</span>
-              <button type="button" onclick="changeCartQty('${c.key}', 1)" class="w-6 h-6 rounded-lg border border-[#d4af37] text-[#e3b938] text-xs font-black cursor-pointer">+</button>
+              <button type="button" data-key="${safeKey}" onclick="changeCartQty(this.dataset.key, 1)" class="w-6 h-6 rounded-lg border border-[#d4af37] text-[#e3b938] text-xs font-black cursor-pointer">+</button>
             </div>
           </div>
         `;
@@ -2552,7 +2668,7 @@
       const finalDelivery = deliveryMethod === 'pickup' ? 0 : (subtotal >= threshold ? 0 : selectedFee);
       document.getElementById('summarySubtotal').textContent = subtotal;
       document.getElementById('summaryDelivery').textContent = finalDelivery === 0 ? 'مجاني 🎁' : finalDelivery + ' ج.م';
-      document.getElementById('summaryTotal').textContent = subtotal + finalDelivery;
+      document.getElementById('summaryTotal').textContent = Number((subtotal + finalDelivery).toFixed(2));
       const clearBtn = document.getElementById('clearCartBtn');
       if (clearBtn) {
         clearBtn.style.display = (Array.isArray(cart) && cart.length > 0) ? 'inline-flex' : 'none';
@@ -2577,7 +2693,8 @@
         },
         () => {
           document.getElementById('gpsBtnText').textContent = 'تعذر تحديد الموقع، يرجى كتابة العنوان';
-        }
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
       );
     }
 
@@ -2628,7 +2745,7 @@
         const zoneFee = zoneSel ? Number(zoneSel.value) : 15;
         const zoneName = zoneSel && zoneSel.options[zoneSel.selectedIndex] ? zoneSel.options[zoneSel.selectedIndex].getAttribute('data-name') : '';
         const deliveryFee = deliveryMethod === 'pickup' ? 0 : (subtotal >= threshold ? 0 : zoneFee);
-        const total = subtotal + deliveryFee;
+        const total = Number((subtotal + deliveryFee).toFixed(2));
 
         const itemsLines = cart.map(c => {
           const unitWord = getUnitArabicWord(c.unitMode);
@@ -2648,7 +2765,7 @@
         const notesEl = document.getElementById('custNotes');
         const notes = notesEl ? sanitizeText(notesEl.value) : '';
 
-        const newOrderId = 'SC-' + Date.now().toString().slice(-5);
+        const newOrderId = 'SC-' + Date.now().toString(36).slice(-4).toUpperCase() + Math.floor(10 + Math.random() * 90);
         const nowObj = new Date();
         const orderDateStr = nowObj.toLocaleDateString('ar-EG');
         const orderTimeStr = nowObj.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
@@ -2751,14 +2868,11 @@
 
     function copyLastInvoiceText() {
       if (!lastInvoiceText) return;
-      try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(lastInvoiceText).catch(() => {});
-        }
-        showToast('📋 تم نسخ تفاصيل الفاتورة بنجاح!', false);
-      } catch (e) {
-        showToast('⚠️ تعذر نسخ الفاتورة تلقائياً', true);
-      }
+      copyTextSafely(
+        lastInvoiceText,
+        () => showToast('📋 تم نسخ تفاصيل الفاتورة بنجاح!', false),
+        () => showToast('⚠️ تعذر نسخ الفاتورة تلقائياً', true)
+      );
     }
 
     // ============================================================================
@@ -2800,7 +2914,6 @@
     }
 
     function closeAiModal() {
-      resetAiChat();
       document.getElementById('aiModal').classList.add('hidden');
     }
 
@@ -2842,8 +2955,7 @@
     function quickAddFromAi(itemId) {
       const item = RAW.find(i => i.id === itemId);
       if (!item || !isItemAvailable(item)) return;
-      const isBox = isAiBoxItem(item);
-      const mode = isBox ? 'box' : getItemUnitMode(item);
+      const mode = getItemUnitMode(item);
 
       if (mode === 'box' || mode === 'cup' || mode === 'piece') {
         const key = `${item.id}_${mode}`;
@@ -2890,16 +3002,18 @@
       if (!box) return;
       box.innerHTML = aiChatHistory.map((m) => {
         const isUser = m.role === 'user';
+        const safeMsgText = escapeHtml(m.text);
         const customBoxHtml = m.customBoxKey && aiCustomBoxesMap[m.customBoxKey]
           ? (() => {
               const cb = aiCustomBoxesMap[m.customBoxKey];
+              const safeBoxKey = escapeHtml(m.customBoxKey);
               return `<div class="mt-2.5 pt-2 border-t border-[#d4af37]/30">
                 <div class="flex items-center justify-between gap-2 p-2 rounded-xl bg-[#1a160f] border border-[#e3b938]">
                   <div class="text-right">
-                    <span class="font-black text-[#e3b938] text-[11px]">🎁 ${cb.name}</span>
+                    <span class="font-black text-[#e3b938] text-[11px]">🎁 ${escapeHtml(cb.name)}</span>
                     <span class="block text-[10px] text-[#f3d266] font-bold">سعر البوكس: ${cb.price} ج.م</span>
                   </div>
-                  <button type="button" onclick="quickAddCustomBoxFromAi('${m.customBoxKey}')" class="px-3 py-1.5 rounded-lg bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-[10px] shrink-0 cursor-pointer">+ أضف للسلة</button>
+                  <button type="button" data-box-key="${safeBoxKey}" onclick="quickAddCustomBoxFromAi(this.dataset.boxKey)" class="px-3 py-1.5 rounded-lg bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-[10px] shrink-0 cursor-pointer">+ أضف للسلة</button>
                 </div>
               </div>`;
             })()
@@ -2910,14 +3024,14 @@
               ${m.suggestedIds.map(sid => {
                 const sItem = RAW.find(i => i.id === sid);
                 if (!sItem || !isItemAvailable(sItem)) return '';
-                const sMode = isAiBoxItem(sItem) ? 'box' : getItemUnitMode(sItem);
+                const sMode = getItemUnitMode(sItem);
                 const pricePrefix = sMode === 'box'
                   ? 'سعر البوكس'
                   : (sMode === 'cup' ? 'سعر الكوب' : (sMode === 'weight' ? 'سعر الكيلو' : 'سعر القطعة'));
                 return `
                   <div class="flex items-center justify-between gap-2 p-1.5 rounded-xl bg-[#1a160f] border border-[#d4af37]/30">
                     <div class="text-right truncate">
-                      <span class="font-black text-white text-[11px]">${sItem.emoji || '🎂'} ${sItem.name}</span>
+                      <span class="font-black text-white text-[11px]">${escapeHtml(sItem.emoji || '🎂')} ${escapeHtml(sItem.name)}</span>
                       <span class="block text-[10px] text-[#f3d266] font-bold">${pricePrefix}: ${sItem.price} ج.م</span>
                     </div>
                     <button type="button" onclick="quickAddFromAi(${sItem.id})" class="px-2.5 py-1 rounded-lg bg-[#e3b938] hover:bg-[#f3c846] text-black font-black text-[10px] shrink-0 cursor-pointer">+ أضف للسلة</button>
@@ -2928,7 +3042,7 @@
           : '';
         return `
           <div class="p-3 rounded-2xl text-xs leading-relaxed ${isUser ? 'bg-[#2c2211] border border-[#d4af37]/50 text-white mr-6' : 'bg-[#110f0a] border border-[#d4af37]/30 text-stone-200 ml-4'}">
-            <div class="whitespace-pre-wrap">${m.text}</div>
+            <div class="whitespace-pre-wrap">${safeMsgText}</div>
             ${customBoxHtml}
             ${cardsHtml}
           </div>
@@ -2938,7 +3052,7 @@
     }
 
     function formatAiItemLine(item) {
-      const m = isAiBoxItem(item) ? 'box' : getItemUnitMode(item);
+      const m = getItemUnitMode(item);
       const uText = m === 'box' ? 'سعر البوكس' : (m === 'cup' ? 'سعر الكوب' : (m === 'weight' ? 'سعر الكيلو' : 'سعر القطعة'));
       const hasD = item.oldPrice && Number(item.oldPrice) > Number(item.price);
       return `• ${item.name}: ${item.price} ج.م${hasD ? ` (بدلاً من ${item.oldPrice} ج.م 🔥)` : ''} — (${uText})`;
@@ -2968,13 +3082,13 @@
       }
 
       const finalPrice = runningTotal > 0 ? runningTotal : targetBudget;
-      const boxKey = 'hbox_' + Date.now();
+      const boxKey = 'hbox_' + Date.now() + '_' + Math.floor(100 + Math.random() * 900);
       const contentsSummary = picks.length > 0
         ? picks.map(p => `${p.qtyText} ${p.item.name}`).join(' + ')
         : 'تشكيلة فاخرة من حلويات ومخبوزات سويت سيتي الطازجة';
 
       aiCustomBoxesMap[boxKey] = {
-        id: 'BOX-' + finalPrice,
+        id: 'BOX-' + boxKey,
         name: `بوكس السعادة (${contentsSummary})`,
         price: finalPrice,
         unitType: 'box'
@@ -3108,13 +3222,13 @@
         list.innerHTML = past.map(o => `
           <div class="p-3 rounded-2xl bg-[#14120d] border border-[#d4af37]/25 space-y-1.5">
             <div class="flex justify-between font-bold text-[#d4af37]">
-              <span>طلب #${o.id}</span>
-              <span>${o.total} ج.م</span>
+              <span>طلب #${escapeHtml(o.id)}</span>
+              <span>${escapeHtml(o.total)} ج.م</span>
             </div>
             <div class="flex items-center justify-between text-stone-400 text-[11px]">
-              <span>${o.date} ${o.time ? '— ' + o.time : ''}</span>
+              <span>${escapeHtml(o.date)} ${o.time ? '— ' + escapeHtml(o.time) : ''}</span>
             </div>
-            <pre class="text-stone-200 whitespace-pre-wrap font-sans text-xs pt-1 border-t border-stone-800">${o.summary || o.itemsSummary || ''}</pre>
+            <pre class="text-stone-200 whitespace-pre-wrap font-sans text-xs pt-1 border-t border-stone-800">${escapeHtml(o.summary || o.itemsSummary || '')}</pre>
           </div>
         `).join('');
       }
@@ -3129,14 +3243,11 @@
       if (navigator.share) {
         navigator.share({ title: 'منيو سويت سيتي 1999', url: window.location.href }).catch(() => {});
       } else {
-        try {
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(window.location.href).catch(() => {});
-          }
-          showToast('📋 تم نسخ رابط المنيو بنجاح!', false);
-        } catch (e) {
-          showToast('⚠️ تعذر نسخ رابط المنيو تلقائياً', true);
-        }
+        copyTextSafely(
+          window.location.href,
+          () => showToast('📋 تم نسخ رابط المنيو بنجاح!', false),
+          () => showToast('⚠️ تعذر نسخ رابط المنيو تلقائياً', true)
+        );
       }
     }
 
@@ -3173,23 +3284,27 @@
       }
     }
 
-    function initApp() {
+    function initApp(preserveRenderedCount) {
       sortRawById();
       loadCustomerInfoFromLocal();
       updatePastOrdersCountUI();
       applyStoreSettingsToUI();
       renderZonesDropdown();
       renderCategories();
-      renderProducts();
+      renderProducts(preserveRenderedCount);
       syncCakeDesignerPricesFromRaw();
     }
 
-    window.addEventListener('beforeunload', function (e) {
-      if (cart && cart.length > 0) {
-        e.preventDefault();
-        e.returnValue = 'لديك أصناف في السلة لم يتم تأكيدها بعد. هل أنت متأكد من مغادرة الصفحة؟';
-        return e.returnValue;
-      }
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      const thankYouModal = document.getElementById('thankYouModal');
+      const cartModal = document.getElementById('cartModal');
+      const ordersModal = document.getElementById('ordersModal');
+      const aiModal = document.getElementById('aiModal');
+      if (thankYouModal && !thankYouModal.classList.contains('hidden')) closeThankYouModal();
+      if (cartModal && !cartModal.classList.contains('hidden')) closeCartModal();
+      if (ordersModal && !ordersModal.classList.contains('hidden')) closeOrdersModal();
+      if (aiModal && !aiModal.classList.contains('hidden')) closeAiModal();
     });
 
     initApp();
@@ -3280,6 +3395,7 @@
               if (Array.isArray(parsed) && parsed.length > 0) {
                 cart.push(...parsed);
                 if (typeof updateCartBadge === 'function') updateCartBadge();
+                if (typeof window.reconcileCartWithMenu === 'function') window.reconcileCartWithMenu();
               }
             }
           }
@@ -3366,6 +3482,17 @@
           `تورتة عمولة: ${sizeName} - الشكل: ${shapeName} - الكيك: ${spongeName} - الحشوات: ${fillingsFormatted} - التغليف: ${frostingName} - تاريخ الاستلام: ${dateFormatted} - العبارة: ${greetingFormatted}${photoMarker}`;
 
         injectCustomCakeIntoCart(formattedProductDescription, finalTotal);
+        localCakePreviewBase64 = '';
+        localCakePreviewName = '';
+        const photoInputEl = document.querySelector(SELECTORS.photoInput);
+        if (photoInputEl) photoInputEl.value = '';
+        const previewWrapEl = document.querySelector(SELECTORS.photoPreviewWrap);
+        if (previewWrapEl) previewWrapEl.classList.add('hidden');
+        const previewImgEl = document.querySelector(SELECTORS.photoPreviewImg);
+        if (previewImgEl) {
+          previewImgEl.removeAttribute('src');
+          previewImgEl.classList.add('hidden');
+        }
         return true;
       }
 
@@ -3396,10 +3523,9 @@
           });
         }
 
-        syncCartToLocalStorage();
-
         if (typeof updateCartBadge === 'function') updateCartBadge();
         if (typeof persistCartToStorage === 'function') persistCartToStorage();
+        else syncCartToLocalStorage();
         if (typeof renderCart === 'function') renderCart();
         if (typeof showToast === 'function') {
           showToast('🎂 تمت إضافة التورتة المصممة إلى السلة بنجاح!', false);
@@ -3523,6 +3649,15 @@
       document.addEventListener('DOMContentLoaded', function () {
         restoreCartFromLocalStorage();
         bindCustomPhotoPreview();
+
+        const eventDateEl = document.getElementById('cakeEventDate');
+        if (eventDateEl) {
+          const now = new Date();
+          const yyyy = now.getFullYear();
+          const mm = String(now.getMonth() + 1).padStart(2, '0');
+          const dd = String(now.getDate()).padStart(2, '0');
+          eventDateEl.setAttribute('min', `${yyyy}-${mm}-${dd}`);
+        }
 
         const cakeSection = document.getElementById('cakeDesignerSection');
         if (cakeSection && cakeSection.dataset.livePriceBound !== '1') {
@@ -3696,32 +3831,15 @@
             showToast('تم النسخ ✅ — افتح متصفح Safari والصق الرابط للتثبيت', false);
           }
         };
-        try {
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(onCopied).catch(function () {
-              const ta = document.createElement('textarea');
-              ta.value = url;
-              ta.style.position = 'fixed';
-              ta.style.opacity = '0';
-              document.body.appendChild(ta);
-              ta.select();
-              document.execCommand('copy');
-              document.body.removeChild(ta);
-              onCopied();
-            });
-          } else {
-            const ta = document.createElement('textarea');
-            ta.value = url;
-            ta.style.position = 'fixed';
-            ta.style.opacity = '0';
-            document.body.appendChild(ta);
-            ta.select();
-            document.execCommand('copy');
-            document.body.removeChild(ta);
-            onCopied();
+        const onCopyFail = function () {
+          if (typeof showToast === 'function') {
+            showToast('⚠️ تعذر نسخ الرابط تلقائياً، يرجى نسخه يدوياً من شريط العنوان', true);
           }
-        } catch (err) {
-          onCopied();
+        };
+        if (typeof window.copyTextSafely === 'function') {
+          window.copyTextSafely(url, onCopied, onCopyFail);
+        } else {
+          onCopyFail();
         }
       };
 
