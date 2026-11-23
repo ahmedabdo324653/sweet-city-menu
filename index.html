@@ -1711,13 +1711,31 @@
                   showToast('⚠️ ' + emptyMsg, true);
                 }
               } else {
-                const incomingItems = data.items.map(item => ({
-                  ...item,
-                  unitType: normalizeUnitType(item.unitType, item.category, item.id, item.name),
-                  available: isItemAvailable(item),
-                  popular: isItemPopular(item)
-                })).sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
-                if (getItemsSignature(incomingItems) !== getItemsSignature(RAW)) {
+                const incomingItems = data.items
+                  .map(item => {
+                    const idNum = Number(item && item.id) || 0;
+                    const priceNum = Number(item && item.price) || 0;
+                    const oldPriceNum = Number(item && item.oldPrice) || 0;
+                    const nameStr = String((item && item.name) || '').trim();
+                    const normalized = {
+                      ...item,
+                      id: idNum,
+                      name: nameStr,
+                      price: priceNum,
+                      unitType: normalizeUnitType(item && item.unitType, item && item.category, idNum, nameStr),
+                      available: isItemAvailable(item),
+                      popular: isItemPopular(item)
+                    };
+                    if (oldPriceNum > priceNum) {
+                      normalized.oldPrice = oldPriceNum;
+                    } else {
+                      delete normalized.oldPrice;
+                    }
+                    return normalized;
+                  })
+                  .filter(item => item.id > 0 && item.name.length > 0 && item.name.toLowerCase() !== 'name')
+                  .sort((a, b) => a.id - b.id);
+                if (incomingItems.length > 0 && getItemsSignature(incomingItems) !== getItemsSignature(RAW)) {
                   RAW = incomingItems;
                   sortRawById();
                   saveMenuCacheToLocal();
@@ -2458,7 +2476,7 @@
         }
         const liveItem = RAW.find(i => i.id === c.itemId);
         if (!liveItem) {
-          kept.push(c);
+          removedNames.push(c.name || ('صنف #' + c.itemId));
           return;
         }
         if (!isItemAvailable(liveItem)) {
