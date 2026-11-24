@@ -92,7 +92,7 @@
               </div>
               <div>
                 <label class="block text-[11px] font-bold text-[#f3d266] mb-1">🔐 الرقم السري:</label>
-                <input id="admPinCode" type="text" dir="ltr" placeholder="••••" oninput="syncPinInputs(this.value); markAdminDirty(true)" class="w-full py-2 px-2.5 rounded-xl bg-black border border-stone-700 text-xs text-[#f3d266] font-bold text-center outline-none focus:border-[#d4af37]" />
+                <input id="admPinCode" type="password" autocomplete="new-password" dir="ltr" placeholder="رقم سري جديد..." oninput="syncPinInputs(this.value); markAdminDirty(true)" class="w-full py-2 px-2.5 rounded-xl bg-black border border-stone-700 text-xs text-[#f3d266] font-bold text-center outline-none focus:border-[#d4af37]" />
               </div> </div>
             <button type="button" id="btnPullSheetNow" onclick="handleManualPullSheet(this)" class="py-2 px-3 rounded-xl bg-[#262012] border border-[#d4af37]/50 text-[#f3d266] font-black text-xs cursor-pointer">
               🔄 سحب الأصناف والأسعار من الشيت الآن </button> </div> </div>
@@ -196,7 +196,7 @@
             </div>
             <div>
               <label class="block text-xs font-bold text-[#f3d266] mb-1">🔐 الرقم السري للوحة التحكم (PIN):</label>
-              <input id="admPinCodeTab2" type="text" dir="ltr" oninput="syncPinInputs(this.value); markAdminDirty(true)" placeholder="••••" class="w-full py-2 px-3 rounded-xl bg-black border border-stone-700 text-xs text-[#f3d266] font-black text-center outline-none focus:border-[#d4af37]" />
+              <input id="admPinCodeTab2" type="password" autocomplete="new-password" dir="ltr" oninput="syncPinInputs(this.value); markAdminDirty(true)" placeholder="رقم سري جديد..." class="w-full py-2 px-3 rounded-xl bg-black border border-stone-700 text-xs text-[#f3d266] font-black text-center outline-none focus:border-[#d4af37]" />
             </div>
             <div>
               <label class="block text-xs font-bold text-red-400 mb-1">🔴 رقم فودافون كاش للدفع:</label>
@@ -450,7 +450,7 @@
       vodafoneCash: "01040224226", instaPay: "01060809671", mapUrl: "https://maps.google.com/?q=العاشر+من+رمضان+المجاورة+18+مول+تن+بوينت",
       facebookUrl: "https://www.facebook.com/share/1c9jj4wD3R/",
       instagramUrl: "https://www.instagram.com/sweetcity_18?obrf=dnFuNGdlZXF1Ymhy", openStatusText: "مفتوح الآن 24 ساعة", isStoreOpen: true,
-      closureMessage: "نعتذر، المحل مزدحم حالياً وسنعاود استقبال الطلبات قريباً", freeDeliveryThreshold: 250, adminPin: "26",
+      closureMessage: "نعتذر، المحل مزدحم حالياً وسنعاود استقبال الطلبات قريباً", freeDeliveryThreshold: 250,
       webhookUrl: SCRIPT_URL, sheetId: "", logoUrl: "logo.png", deliveryZones: [
         { id: "zone-1", name: "نطاق فرع مجاورة 18 والمجاورات القريبة (14 إلى 25)", fee: 15 },
         { id: "zone-2", name: "نطاق فرع مجاورة 26 والمجاورات (26 إلى 30)", fee: 15 },
@@ -488,19 +488,21 @@
     function scFormatEgyptPhone(phone) { const raw = scNormalizeArabicDigits(phone).trim(); if (!raw) return '';
       const cleaned = raw.replace(/[\s\-().]+/g, ''); if (/^(10|11|12|15)\d{8}$/.test(cleaned)) { return '0' + cleaned; }
       if (/^\+?20(10|11|12|15)\d{8}$/.test(cleaned)) { return '0' + cleaned.replace(/^\+?20/, ''); } return raw; }
-    const MENU_CACHE_KEY = 'sweet_city_menu_cache_v1'; let SERVER_ADMIN_PIN = '26'; let ADMIN_CLOUD_ORDERS = [];
-    let scPinSyncPromise = null; let hasUnsavedAdminChanges = false;
+    const MENU_CACHE_KEY = 'sweet_city_menu_cache_v1';
+    let ACTIVE_ADMIN_PIN = ''; let ADMIN_CLOUD_ORDERS = []; let hasUnsavedAdminChanges = false;
+    function getSafeFreeDeliveryThreshold() { const v = STORE_SETTINGS.freeDeliveryThreshold;
+      return (v !== undefined && v !== null && v !== '' && !isNaN(Number(v)) && Number(v) >= 0) ? Number(v) : 250; }
     function saveMenuCacheToLocal() { try { STORE_SETTINGS.instaPay = scNormalizeInstaPay(STORE_SETTINGS.instaPay);
         STORE_SETTINGS.vodafoneCash = scNormalizeVodafoneCash(STORE_SETTINGS.vodafoneCash); const settingsForCache = { ...STORE_SETTINGS };
-        delete settingsForCache.adminPin; localStorage.setItem(MENU_CACHE_KEY, JSON.stringify({ ts: Date.now(), items: RAW,
+        delete settingsForCache.adminPin; delete settingsForCache.admin_pin; localStorage.setItem(MENU_CACHE_KEY, JSON.stringify({ ts: Date.now(), items: RAW,
           settings: settingsForCache })); } catch (e) {} } try { const swrCache = localStorage.getItem(MENU_CACHE_KEY); if (swrCache) {
         const parsedCache = JSON.parse(swrCache); if (parsedCache && Array.isArray(parsedCache.items) && parsedCache.items.length > 0) {
           RAW = parsedCache.items; } if (parsedCache && parsedCache.settings && typeof parsedCache.settings === 'object') {
-          delete parsedCache.settings.adminPin; if (!parsedCache.settings.webhookUrl || !String(parsedCache.settings.webhookUrl).trim()) {
+          delete parsedCache.settings.adminPin; delete parsedCache.settings.admin_pin; if (!parsedCache.settings.webhookUrl || !String(parsedCache.settings.webhookUrl).trim()) {
             parsedCache.settings.webhookUrl = SCRIPT_URL; } STORE_SETTINGS = { ...STORE_SETTINGS, ...parsedCache.settings }; } } else {
         const savedRaw = localStorage.getItem('SC_RAW_ITEMS_V1'); if (savedRaw) { const parsed = JSON.parse(savedRaw);
           if (Array.isArray(parsed) && parsed.length > 0) RAW = parsed; } const savedSet = localStorage.getItem('SC_STORE_SETTINGS_V1');
-        if (savedSet) { const parsedSet = JSON.parse(savedSet); delete parsedSet.adminPin;
+        if (savedSet) { const parsedSet = JSON.parse(savedSet); delete parsedSet.adminPin; delete parsedSet.admin_pin;
           if (!parsedSet.webhookUrl || !String(parsedSet.webhookUrl).trim()) { parsedSet.webhookUrl = SCRIPT_URL; }
           STORE_SETTINGS = { ...STORE_SETTINGS, ...parsedSet }; } } STORE_SETTINGS.instaPay = scNormalizeInstaPay(STORE_SETTINGS.instaPay);
       STORE_SETTINGS.vodafoneCash = scNormalizeVodafoneCash(STORE_SETTINGS.vodafoneCash); } catch (e) {} let toastTimer = null;
@@ -515,6 +517,7 @@
       if (btn1 && !isSavingCloud) { btn1.textContent = '🚀 حفظ ونشر التعديلات فوراً لجميع الزبائن' + suffix; } if (btn2 && !isSavingCloud) {
         btn2.textContent = '🚀 حفظ ومزامنة مع الشيت الآن' + suffix; } }
     function markAdminDirty(isDirty) { hasUnsavedAdminChanges = Boolean(isDirty); updateSaveButtonsText(); }
+    window.addEventListener('beforeunload', function (e) { if (!hasUnsavedAdminChanges) return; e.preventDefault(); e.returnValue = ''; });
     function handleManualPullSheet(btnEl) { if (hasUnsavedAdminChanges && !scConfirmButtonAction(btnEl)) return; syncFromGoogleSheet(true);
     }
     function syncWebhookInputs(val) { const clean = (val || '').trim(); const el1 = document.getElementById('admWebhookUrl');
@@ -522,31 +525,38 @@
       if (el2 && el2.value !== clean) el2.value = clean; STORE_SETTINGS.webhookUrl = clean || SCRIPT_URL; }
     function syncFreeThresholdInputs(val) { const el1 = document.getElementById('admFreeThreshold');
       const el2 = document.getElementById('admFreeThresholdTab2'); if (el1 && el1.value !== String(val)) el1.value = val;
-      if (el2 && el2.value !== String(val)) el2.value = val; }
+      if (el2 && el2.value !== String(val)) el2.value = val;
+      STORE_SETTINGS.freeDeliveryThreshold = (!isNaN(Number(val)) && val !== '' && Number(val) >= 0) ? Number(val) : 250; }
     function syncPinInputs(val) { const el1 = document.getElementById('admPinCode'); const el2 = document.getElementById('admPinCodeTab2');
       if (el1 && el1.value !== String(val)) el1.value = val; if (el2 && el2.value !== String(val)) el2.value = val; }
     let isSavingCloud = false; let isSavingPin = false;
-    async function saveNewAdminPin(newPinValue) { if (isSavingPin) return false; const cleanPin = String(newPinValue || '').trim();
-      if (!cleanPin) { showToast('⚠️ يرجى إدخال رقم سري صحيح أولاً', true); return false; }
+    function handleAdminUnauthorized() { ACTIVE_ADMIN_PIN = ''; scCashierStopPolling();
+      const adminModalEl = document.getElementById('adminModal'); if (adminModalEl) adminModalEl.classList.add('hidden');
+      showToast('🔒 انتهت الجلسة أو تم تغيير الرقم السري — يرجى تسجيل الدخول مجدداً', true); requestAdminAccess(); }
+    async function saveNewAdminPin(newPinValue) { if (isSavingPin) return false;
+      if (!ACTIVE_ADMIN_PIN) { handleAdminUnauthorized(); return false; }
+      const cleanPin = String(newPinValue || '').trim();
+      if (cleanPin.length < 2 || cleanPin.length > 32) { showToast('⚠️ يجب أن يكون الرقم السري بين 2 و 32 حرفاً/رقماً', true); return false; }
       const activeScriptUrl = (STORE_SETTINGS.webhookUrl || GOOGLE_SHEETS_CONFIG.scriptUrl || SCRIPT_URL).trim();
-      if (!activeScriptUrl) return false; const payload = { action: 'updatePin', newPin: cleanPin,
-        currentPin: String(SERVER_ADMIN_PIN || '').trim() }; isSavingPin = true; try { let res = null; try {
-          res = await fetchAppsScriptPost(activeScriptUrl, payload); if (!res || res.ok === false || res.error) {
-            throw new Error((res && res.error) || 'PIN_UPDATE_FAILED'); } } catch (firstErr) {
-          const altUrl = activeScriptUrl === SCRIPT_URL ? FALLBACK_SCRIPT_URL : SCRIPT_URL;
-          res = await fetchAppsScriptPost(altUrl, payload); if (!res || res.ok === false || res.error) {
-            throw new Error((res && res.error) || 'PIN_UPDATE_FAILED'); } } SERVER_ADMIN_PIN = cleanPin; STORE_SETTINGS.adminPin = cleanPin;
-        syncPinInputs(cleanPin); showToast('✅ تم حفظ الرقم السري الجديد على السيرفر لجميع الأجهزة!', false); return true; } catch (err) {
-        showToast('⚠️ تعذر تأكيد حفظ الرقم السري الجديد على السيرفر، تأكد من الاتصال.', true); return false; } finally {
-        isSavingPin = false; } }
+      if (!activeScriptUrl) return false;
+      const payload = { action: 'updatePin', newPin: cleanPin, currentPin: ACTIVE_ADMIN_PIN, adminPin: ACTIVE_ADMIN_PIN };
+      const altUrl = activeScriptUrl === SCRIPT_URL ? FALLBACK_SCRIPT_URL : SCRIPT_URL;
+      isSavingPin = true; try { let res = null; let usedAltUrl = false;
+        try { res = await fetchAppsScriptPost(activeScriptUrl, payload);
+          if (!res || res.error === 'NON_JSON_RESPONSE') throw new Error('NON_JSON_RESPONSE');
+        } catch (firstErr) { res = await fetchAppsScriptPost(altUrl, payload); if (res && res.ok === true) usedAltUrl = true; }
+        if (res && res.error === 'UNAUTHORIZED') { handleAdminUnauthorized(); return false; }
+        if (!res || res.ok !== true) { throw new Error((res && res.error) || 'PIN_UPDATE_FAILED'); }
+        if (usedAltUrl) { STORE_SETTINGS.webhookUrl = altUrl; GOOGLE_SHEETS_CONFIG.scriptUrl = altUrl; syncWebhookInputs(altUrl); saveMenuCacheToLocal(); }
+        ACTIVE_ADMIN_PIN = cleanPin; syncPinInputs('');
+        showToast('✅ تم حفظ الرقم السري الجديد على السيرفر لجميع الأجهزة!', false); return true;
+      } catch (err) {
+        showToast('⚠️ تعذر تأكيد حفظ الرقم السري الجديد على السيرفر، تأكد من الاتصال.', true); return false;
+      } finally { isSavingPin = false; } }
     // ============================================================================
     // 2. المحرك السحابي المقاوم لـ CORS للربط الفوري مع Google Sheets (Products, Settings & Orders)
     // ============================================================================
     const GOOGLE_SHEETS_CONFIG = { scriptUrl: STORE_SETTINGS.webhookUrl || SCRIPT_URL, sheetId: STORE_SETTINGS.sheetId || '' };
-    async function fetchAppsScriptGet(targetUrl) { const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000); try { const sep = targetUrl.includes('?') ? '&' : '?';
-        const res = await fetch(targetUrl + sep + 't=' + Date.now(), { method: 'GET', redirect: 'follow', signal: controller.signal });
-        const raw = await res.text(); return JSON.parse(raw); } finally { clearTimeout(timeoutId); } }
     async function fetchAppsScriptPost(targetUrl, payload) { const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000); try { const res = await fetch(targetUrl, { method: 'POST',
           redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload),
@@ -566,44 +576,66 @@
       if (item.category === 'الأكثر طلباً 🔥') return true; return false; }
     function sortRawById() { if (!Array.isArray(RAW)) return; RAW.sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
       RAW.forEach(item => { item.id = Number(item.id) || 0; item.price = Number(item.price) || 0; if (item.oldPrice !== undefined) {
-          const op = Number(item.oldPrice) || 0; if (op > item.price) item.oldPrice = op; else delete item.oldPrice; }
+          const op = Number(item.oldPrice) || 0; if (op > 0) item.oldPrice = op; else delete item.oldPrice; }
         item.unitType = normalizeUnitType(item.unitType, item.category, item.id, item.name); item.available = isItemAvailable(item);
         item.popular = isItemPopular(item); }); }
     async function syncFromGoogleSheet(showNotification, ordersOnlyMode) {
+      if (!ACTIVE_ADMIN_PIN) { requestAdminAccess(); return; }
       const activeScriptUrl = (STORE_SETTINGS.webhookUrl || GOOGLE_SHEETS_CONFIG.scriptUrl || SCRIPT_URL).trim();
       const activeSheetId = (STORE_SETTINGS.sheetId || GOOGLE_SHEETS_CONFIG.sheetId || '').trim();
       const pullBtn = document.getElementById('btnPullSheetNow');
       if (showNotification && !ordersOnlyMode && pullBtn) pullBtn.textContent = '⏳ جاري السحب من الشيت...';
-      if (activeScriptUrl && activeScriptUrl.startsWith('https://script.google.com/')) { try { let data = null; try {
-            data = await fetchAppsScriptGet(activeScriptUrl); } catch (firstErr) {
-            const altUrl = activeScriptUrl === SCRIPT_URL ? FALLBACK_SCRIPT_URL : SCRIPT_URL; data = await fetchAppsScriptGet(altUrl); }
-          if (data) { if (ordersOnlyMode === true) { if (Array.isArray(data.orders)) { scCashierCheckNewOrdersOnSync(data.orders);
-                ADMIN_CLOUD_ORDERS = data.orders; renderAdminOrdersTab(); if (showNotification) {
-                  showToast('✅ تم تحديث سجل الطلبات بنجاح (مع الحفاظ على تعديلات الأصناف غير المنشورة)', false); }
-              } else if (showNotification) { showToast('⚠️ تعذر تحديث سجل الطلبات، تحقق من الاتصال', true); } return; }
-            if (Array.isArray(data.items)) { if (data.items.length === 0) { if (showNotification) {
-                  const emptyMsg = 'الجدول فارغ حالياً — اضغط على (حفظ ونشر التعديلات) لرفع الأصناف للجدول أولاً';
-                  showToast('⚠️ ' + emptyMsg, true); } } else { RAW = data.items; sortRawById(); saveMenuCacheToLocal();
-                markAdminDirty(false); } } const remotePin = data.admin_pin !== undefined
-              ? data.admin_pin
-              : (data.adminPin !== undefined
-                ? data.adminPin
-                : (data.settings && (data.settings.admin_pin || data.settings.adminPin)));
-            if (remotePin !== undefined && remotePin !== null && String(remotePin).trim() !== '') {
-              SERVER_ADMIN_PIN = String(remotePin).trim(); STORE_SETTINGS.adminPin = SERVER_ADMIN_PIN; syncPinInputs(SERVER_ADMIN_PIN); }
-            if (data.settings && typeof data.settings === 'object') { STORE_SETTINGS = { ...STORE_SETTINGS, ...data.settings,
-                adminPin: SERVER_ADMIN_PIN, webhookUrl: data.settings.webhookUrl || activeScriptUrl };
+      if (activeScriptUrl && activeScriptUrl.startsWith('https://script.google.com/')) {
+        const reqPayload = { action: ordersOnlyMode === true ? 'adminOrders' : 'adminSync', adminPin: ACTIVE_ADMIN_PIN };
+        const altUrl = activeScriptUrl === SCRIPT_URL ? FALLBACK_SCRIPT_URL : SCRIPT_URL;
+        try { let data = null; let usedAltUrl = false;
+          try { data = await fetchAppsScriptPost(activeScriptUrl, reqPayload);
+            if (!data || data.error === 'NON_JSON_RESPONSE') throw new Error('NON_JSON_RESPONSE');
+          } catch (firstErr) { data = await fetchAppsScriptPost(altUrl, reqPayload); if (data && data.ok === true) usedAltUrl = true; }
+          if (data && data.error === 'UNAUTHORIZED') {
+            if (showNotification && pullBtn) pullBtn.textContent = '🔄 سحب الأصناف والأسعار من الشيت الآن';
+            handleAdminUnauthorized(); return;
+          }
+          if (data && data.ok === true) {
+            const workingUrl = usedAltUrl ? altUrl : activeScriptUrl;
+            if (usedAltUrl) { STORE_SETTINGS.webhookUrl = workingUrl; GOOGLE_SHEETS_CONFIG.scriptUrl = workingUrl; syncWebhookInputs(workingUrl); saveMenuCacheToLocal(); }
+            if (ordersOnlyMode === true) {
+              if (Array.isArray(data.orders)) { scCashierCheckNewOrdersOnSync(data.orders); ADMIN_CLOUD_ORDERS = data.orders; renderAdminOrdersTab();
+                if (showNotification) showToast('✅ تم تحديث سجل الطلبات بنجاح (مع الحفاظ على تعديلات الأصناف غير المنشورة)', false);
+              } else if (showNotification) { showToast('⚠️ تعذر تحديث سجل الطلبات، تحقق من الاتصال', true); }
+              return;
+            }
+            if (Array.isArray(data.items)) {
+              if (data.items.length === 0) {
+                if (showNotification) showToast('⚠️ الجدول فارغ حالياً — اضغط على (حفظ ونشر التعديلات) لرفع الأصناف للجدول أولاً', true);
+              } else { RAW = data.items; sortRawById(); saveMenuCacheToLocal(); markAdminDirty(false); }
+            }
+            if (data.settings && typeof data.settings === 'object') {
+              const incomingSettings = { ...data.settings }; delete incomingSettings.adminPin; delete incomingSettings.admin_pin;
+              const resolvedUrl = usedAltUrl ? altUrl : (incomingSettings.webhookUrl || STORE_SETTINGS.webhookUrl || activeScriptUrl);
+              STORE_SETTINGS = { ...STORE_SETTINGS, ...incomingSettings, webhookUrl: resolvedUrl };
+              GOOGLE_SHEETS_CONFIG.scriptUrl = resolvedUrl; syncWebhookInputs(resolvedUrl);
               STORE_SETTINGS.instaPay = scNormalizeInstaPay(STORE_SETTINGS.instaPay);
               STORE_SETTINGS.vodafoneCash = scNormalizeVodafoneCash(STORE_SETTINGS.vodafoneCash);
-              if (Array.isArray(data.settings.deliveryZones) && data.settings.deliveryZones.length > 0) {
-                STORE_SETTINGS.deliveryZones = data.settings.deliveryZones; } saveMenuCacheToLocal(); } if (Array.isArray(data.orders)) {
-              scCashierCheckNewOrdersOnSync(data.orders); ADMIN_CLOUD_ORDERS = data.orders; } initApp(); renderAdminOrdersTab();
+              if (Array.isArray(incomingSettings.deliveryZones) && incomingSettings.deliveryZones.length > 0) {
+                STORE_SETTINGS.deliveryZones = incomingSettings.deliveryZones;
+              }
+              saveMenuCacheToLocal();
+            }
+            if (Array.isArray(data.orders)) { scCashierCheckNewOrdersOnSync(data.orders); ADMIN_CLOUD_ORDERS = data.orders; }
+            initApp(); renderAdminOrdersTab();
             if (showNotification && Array.isArray(data.items) && data.items.length > 0) {
-              showToast('✅ تم سحب أحدث الأصناف والأسعار والإعدادات من Google Sheets بنجاح!', false); }
-            if (showNotification && pullBtn) pullBtn.textContent = '🔄 سحب الأصناف والأسعار من الشيت الآن'; return; } } catch (err) {
-          if (ordersOnlyMode === true) { if (showNotification) { showToast('⚠️ تعذر تحديث سجل الطلبات، تحقق من الاتصال', true); } return; }
-          if (showNotification) { showToast('⚠️ تعذر الاتصال برابط Apps Script، تأكد من نشر السكربت بصلاحية Anyone.', true); } } }
-      if (ordersOnlyMode === true) { if (showNotification) { showToast('⚠️ تعذر تحديث سجل الطلبات، تحقق من الاتصال', true); } return; }
+              showToast('✅ تم سحب أحدث الأصناف والأسعار والإعدادات من Google Sheets بنجاح!', false);
+            }
+            if (showNotification && pullBtn) pullBtn.textContent = '🔄 سحب الأصناف والأسعار من الشيت الآن';
+            return;
+          }
+        } catch (err) {
+          if (ordersOnlyMode === true) { if (showNotification) showToast('⚠️ تعذر تحديث سجل الطلبات، تحقق من الاتصال', true); return; }
+          if (showNotification) showToast('⚠️ تعذر الاتصال برابط Apps Script، تأكد من نشر السكربت بصلاحية Anyone.', true);
+        }
+      }
+      if (ordersOnlyMode === true) { if (showNotification) showToast('⚠️ تعذر تحديث سجل الطلبات، تحقق من الاتصال', true); return; }
       if (activeSheetId && activeSheetId.length > 10) { const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 12000); try { const match = activeSheetId.match(/\/d\/([a-zA-Z0-9-_]+)/);
           const cleanId = match ? match[1] : activeSheetId;
@@ -629,20 +661,35 @@
               if (showNotification) showToast('✅ تم تحديث قائمة الأصناف والأسعار مباشرة من جدول Google Sheet!', false); } } } catch (err) {
           if (showNotification) showToast('⚠️ تعذر قراءة الجدول، تأكد أن إعداد مشاركة الشيت (Anyone with the link).', true); } finally {
           clearTimeout(timeoutId); } } if (showNotification && pullBtn) pullBtn.textContent = '🔄 سحب الأصناف والأسعار من الشيت الآن'; }
-    function requestAdminAccess() { const p = syncFromGoogleSheet(false);
-      scPinSyncPromise = Promise.resolve(p).catch(() => {}).finally(() => { scPinSyncPromise = null; });
-      document.getElementById('adminPinInput').value = ''; const statusEl = document.getElementById('pinStatusMsg');
-      if (statusEl) statusEl.classList.add('hidden'); document.getElementById('pinErrorMsg').classList.add('hidden');
-      document.getElementById('pinModal').classList.remove('hidden');
-      setTimeout(() => document.getElementById('adminPinInput').focus(), 60); }
+    function requestAdminAccess() { const pinEl = document.getElementById('adminPinInput'); if (pinEl) pinEl.value = '';
+      const statusEl = document.getElementById('pinStatusMsg'); if (statusEl) statusEl.classList.add('hidden');
+      const errEl = document.getElementById('pinErrorMsg'); if (errEl) errEl.classList.add('hidden');
+      document.getElementById('pinModal').classList.remove('hidden'); setTimeout(() => { if (pinEl) pinEl.focus(); }, 60); }
     function closePinModal() { document.getElementById('pinModal').classList.add('hidden'); }
     async function verifyAdminPin() { const inputEl = document.getElementById('adminPinInput');
       const errEl = document.getElementById('pinErrorMsg'); const statusEl = document.getElementById('pinStatusMsg');
       const btnEl = document.getElementById('pinVerifyBtn'); const val = (inputEl ? inputEl.value : '').trim();
-      if (errEl) errEl.classList.add('hidden'); if (scPinSyncPromise) { if (statusEl) statusEl.classList.remove('hidden');
-        if (btnEl) btnEl.disabled = true; try { await scPinSyncPromise; } catch (e) {} if (statusEl) statusEl.classList.add('hidden');
-        if (btnEl) btnEl.disabled = false; } const serverPin = String(SERVER_ADMIN_PIN || '26').trim();
-      if (val !== '' && val === serverPin) { closePinModal(); openAdminModal(); } else { if (errEl) errEl.classList.remove('hidden'); } }
+      if (!val) { if (errEl) { errEl.textContent = '❌ كلمة المرور غير صحيحة!'; errEl.classList.remove('hidden'); } return; }
+      if (errEl) errEl.classList.add('hidden'); if (statusEl) { statusEl.textContent = '⏳ جاري التحقق من الخادم...'; statusEl.classList.remove('hidden'); }
+      if (btnEl) btnEl.disabled = true; const activeScriptUrl = (STORE_SETTINGS.webhookUrl || GOOGLE_SHEETS_CONFIG.scriptUrl || SCRIPT_URL).trim();
+      const altUrl = activeScriptUrl === SCRIPT_URL ? FALLBACK_SCRIPT_URL : SCRIPT_URL; const authPayload = { action: 'adminSync', adminPin: val };
+      try { let data = null; let usedAltUrl = false;
+        try { data = await fetchAppsScriptPost(activeScriptUrl, authPayload); if (!data || data.error === 'NON_JSON_RESPONSE') throw new Error('NON_JSON_RESPONSE');
+        } catch (firstErr) { data = await fetchAppsScriptPost(altUrl, authPayload); if (data && data.ok === true) usedAltUrl = true; }
+        if (data && data.ok === true) { ACTIVE_ADMIN_PIN = val; const workingUrl = usedAltUrl ? altUrl : activeScriptUrl;
+          if (usedAltUrl) { STORE_SETTINGS.webhookUrl = workingUrl; GOOGLE_SHEETS_CONFIG.scriptUrl = workingUrl; syncWebhookInputs(workingUrl); }
+          if (Array.isArray(data.items) && data.items.length > 0) { RAW = data.items; sortRawById(); }
+          if (data.settings && typeof data.settings === 'object') { const incomingSettings = { ...data.settings }; delete incomingSettings.adminPin; delete incomingSettings.admin_pin;
+            const resolvedUrl = usedAltUrl ? altUrl : (incomingSettings.webhookUrl || STORE_SETTINGS.webhookUrl || activeScriptUrl);
+            STORE_SETTINGS = { ...STORE_SETTINGS, ...incomingSettings, webhookUrl: resolvedUrl }; GOOGLE_SHEETS_CONFIG.scriptUrl = resolvedUrl; syncWebhookInputs(resolvedUrl);
+            STORE_SETTINGS.instaPay = scNormalizeInstaPay(STORE_SETTINGS.instaPay); STORE_SETTINGS.vodafoneCash = scNormalizeVodafoneCash(STORE_SETTINGS.vodafoneCash);
+            if (Array.isArray(incomingSettings.deliveryZones) && incomingSettings.deliveryZones.length > 0) STORE_SETTINGS.deliveryZones = incomingSettings.deliveryZones; }
+          if (Array.isArray(data.orders)) { scCashierCheckNewOrdersOnSync(data.orders); ADMIN_CLOUD_ORDERS = data.orders; }
+          saveMenuCacheToLocal(); markAdminDirty(false); closePinModal(); openAdminModal();
+        } else if (data && data.error === 'UNAUTHORIZED') { if (errEl) { errEl.textContent = '❌ كلمة المرور غير صحيحة!'; errEl.classList.remove('hidden'); }
+        } else { if (errEl) { errEl.textContent = '⚠️ تعذر الاتصال بالخادم، تأكد من الإنترنت ونشر السكربت.'; errEl.classList.remove('hidden'); } }
+      } catch (err) { if (errEl) { errEl.textContent = '⚠️ تعذر الاتصال بالخادم، تأكد من الإنترنت ونشر السكربت.'; errEl.classList.remove('hidden'); }
+      } finally { if (statusEl) statusEl.classList.add('hidden'); if (btnEl) btnEl.disabled = false; } }
     const DRINK_CATEGORIES = [ 'ركن القهوة الساخنة', 'القهوة المثلجة', 'فرابيه ومخفوقات', 'ميلك شيك', 'شوكولاتة ساخنة', 'سموذي وعصائر فريش',
       'ماتشا وشاي بارد', 'صودا وموهيتو', 'شاي ومشروبات وإضافات' ];
     function getCategories() { sortRawById(); const cats = ['الكل', 'الأكثر طلباً 🔥', 'عروض وخصومات 🎁']; RAW.forEach(item => {
@@ -662,12 +709,35 @@
     // ============================================================================
     // 5. دوال لوحة التحكم السحابية (4 تبويبات كاملة: أصناف / توصيل وفرع / طلبات / شيت)
     // ============================================================================
+    function captureDeliveryInputsToMemory() {
+      const statusInput = document.getElementById('admOpenStatusText');
+      if (statusInput && statusInput.value.trim()) STORE_SETTINGS.openStatusText = statusInput.value.trim();
+      const closureInput = document.getElementById('admClosureMessage');
+      if (closureInput && closureInput.value.trim()) STORE_SETTINGS.closureMessage = closureInput.value.trim();
+      const waInput = document.getElementById('admWhatsapp');
+      if (waInput && waInput.value.trim()) STORE_SETTINGS.whatsapp = scNormalizeArabicDigits(waInput.value.trim()).replace(/[^0-9]/g, '');
+      const phoneInput = document.getElementById('admPhone');
+      if (phoneInput && phoneInput.value.trim()) STORE_SETTINGS.phone = scFormatEgyptPhone(phoneInput.value.trim());
+      const vfInput = document.getElementById('admVodafoneCash');
+      if (vfInput && vfInput.value.trim()) STORE_SETTINGS.vodafoneCash = scNormalizeVodafoneCash(vfInput.value.trim());
+      const instaInput = document.getElementById('admInstaPay');
+      if (instaInput && instaInput.value.trim()) STORE_SETTINGS.instaPay = scNormalizeInstaPay(instaInput.value.trim());
+      const addrInput = document.getElementById('admBranchAddress');
+      if (addrInput && addrInput.value.trim()) STORE_SETTINGS.branchAddress = addrInput.value.trim();
+      const freeInput2 = document.getElementById('admFreeThresholdTab2');
+      if (freeInput2 && freeInput2.value !== '') {
+        const freeVal = Number(freeInput2.value);
+        if (!isNaN(freeVal) && freeVal >= 0) { STORE_SETTINGS.freeDeliveryThreshold = freeVal; syncFreeThresholdInputs(freeVal); }
+      }
+      const logoInput = document.getElementById('admLogoUrl');
+      if (logoInput && logoInput.value.trim()) STORE_SETTINGS.logoUrl = logoInput.value.trim(); }
     function switchAdminTab(tab) { const itemsContent = document.getElementById('admTabItemsContent');
       const deliveryContent = document.getElementById('admTabDeliveryContent');
       const ordersContent = document.getElementById('admTabOrdersContent');
       const cloudContent = document.getElementById('admTabCloudContent'); const btnItems = document.getElementById('admTabBtnItems');
       const btnDelivery = document.getElementById('admTabBtnDelivery'); const btnOrders = document.getElementById('admTabBtnOrders');
       const btnCloud = document.getElementById('admTabBtnCloud');
+      if (deliveryContent && !deliveryContent.classList.contains('hidden') && tab !== 'delivery') { captureDeliveryInputsToMemory(); }
       const activeCls = 'px-4 py-2 rounded-xl bg-[#e3b938] text-black font-black text-xs cursor-pointer';
       const inactiveCls = 'px-4 py-2 rounded-xl bg-[#18150e] border border-[#d4af37]/35 text-[#f3d266] font-black text-xs cursor-pointer';
       if (itemsContent) itemsContent.classList.add('hidden'); if (deliveryContent) deliveryContent.classList.add('hidden');
@@ -704,9 +774,10 @@
       const addrInput = document.getElementById('admBranchAddress');
       if (addrInput) addrInput.value = STORE_SETTINGS.branchAddress || 'العاشر من رمضان - المجاورة 18 - مول تن بوينت';
       const freeInput2 = document.getElementById('admFreeThresholdTab2');
-      if (freeInput2) freeInput2.value = STORE_SETTINGS.freeDeliveryThreshold || 250;
+      if (freeInput2) freeInput2.value = getSafeFreeDeliveryThreshold();
+      const pinInput1 = document.getElementById('admPinCode');
       const pinInput2 = document.getElementById('admPinCodeTab2');
-      if (pinInput2) pinInput2.value = SERVER_ADMIN_PIN || STORE_SETTINGS.adminPin || '26';
+      if (pinInput2) pinInput2.value = (pinInput1 && pinInput1.value) ? pinInput1.value : '';
       const logoInput = document.getElementById('admLogoUrl'); if (logoInput) logoInput.value = STORE_SETTINGS.logoUrl || 'logo.png';
       renderAdminZonesList(); }
     function adminUpdateLogoUrl(newLogoUrl) { STORE_SETTINGS.logoUrl = (newLogoUrl || '').trim() || 'logo.png'; markAdminDirty(true);
@@ -792,18 +863,21 @@
     function scCashierStopPolling() { if (scCashierPollTimer) { clearInterval(scCashierPollTimer); scCashierPollTimer = null; } }
     function scShiftToggleCardBody() { const bodyEl = document.getElementById('scShiftSummaryBody'); if (!bodyEl) return;
       bodyEl.classList.toggle('hidden'); }
-    function scDetectOrdersDateFormat(orders) { const list = Array.isArray(orders) ? orders : []; let sawMdy = false;
-      for (let i = 0; i < list.length; i++) { const o = list[i]; if (!o) continue; const candidates = [o.date, o.timestamp, o.createdAt];
-        for (let j = 0; j < candidates.length; j++) { const clean = scNormalizeArabicDigits(candidates[j]).trim();
-          if (!clean || /(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/.test(clean)) continue;
-          const m = clean.match(/(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/); if (m) { const p1 = Number(m[1]); const p2 = Number(m[2]);
-            if (p1 > 12) return 'DMY'; if (p2 > 12) sawMdy = true; } } } return sawMdy ? 'MDY' : 'DMY'; }
+    function scDetectOrdersDateFormat(orders) { const list = Array.isArray(orders) ? orders : [];
+      for (let i = 0; i < list.length; i++) { const o = list[i]; if (!o) continue;
+        const clean = scNormalizeArabicDigits(o.date || o.timestamp || o.createdAt || '').trim();
+        if (!clean || /^\d{4}[\/\-.]/.test(clean)) continue;
+        const m = clean.match(/(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/); if (!m) continue;
+        const p1 = Number(m[1]); const p2 = Number(m[2]); if (p1 > 12) return 'DMY'; if (p2 > 12) return 'MDY'; }
+      return 'DMY'; }
     function scParseOrderDateParts(dateStr, preferredOrder) { const clean = scNormalizeArabicDigits(dateStr).trim();
       if (!clean) return null; let m = clean.match(/(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/); if (m) {
         return { y: Number(m[1]), m: Number(m[2]), d: Number(m[3]) }; } m = clean.match(/(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/); if (m) {
         const p1 = Number(m[1]); const p2 = Number(m[2]); const y = Number(m[3]); if (p1 > 12) return { y, m: p2, d: p1 };
-        if (p2 > 12) return { y, m: p1, d: p2 }; return preferredOrder === 'MDY' ? { y, m: p1, d: p2 } : { y, m: p2, d: p1 }; } return null;
-    }
+        if (p2 > 12) return { y, m: p1, d: p2 }; return preferredOrder === 'MDY' ? { y, m: p1, d: p2 } : { y, m: p2, d: p1 }; }
+      if (/[a-zA-Z]{3}/.test(clean)) { const parsed = new Date(clean);
+        if (!isNaN(parsed.getTime())) return { y: parsed.getFullYear(), m: parsed.getMonth() + 1, d: parsed.getDate() }; }
+      return null; }
     function scIsOrderFromToday(order, todayY, todayM, todayD, preferredOrder) { if (!order) return false;
       const candidates = [order.date, order.timestamp, order.createdAt]; for (let i = 0; i < candidates.length; i++) {
         const parts = scParseOrderDateParts(candidates[i], preferredOrder);
@@ -811,8 +885,13 @@
     function scIsOrderCancelled(order) { if (!order) return false;
       const st = scNormalizeArabicDigits(order.status || order.orderStatus || '').trim().toLowerCase(); if (!st) return false;
       return st.includes('cancel') || st.includes('ملغ'); }
-    function scDetectPaymentBucket(order) { const raw = scNormalizeArabicDigits(
-        (order && (order.paymentMethod || order.payment || order.itemsSummary || order.summary || '')) || '' ).toLowerCase();
+    function scDetectPaymentBucket(order) { if (!order) return 'cash';
+      const primaryPay = scNormalizeArabicDigits(order.paymentMethod || order.payment || '').trim().toLowerCase();
+      let raw = primaryPay;
+      if (!raw && order.thankYouMessage) {
+        const payLineMatch = String(order.thankYouMessage).match(/(?:💳\s*الدفع|طريقة\s*الدفع)\s*[:：]\s*([^\r\n]+)/i);
+        if (payLineMatch && payLineMatch[1]) raw = scNormalizeArabicDigits(payLineMatch[1]).trim().toLowerCase();
+      }
       if (raw.includes('vodafone') || raw.includes('فودافون')) return 'vodafone';
       if (raw.includes('instapay') || raw.includes('انستا') || raw.includes('إنستا')) return 'instapay'; return 'cash'; }
     function scShiftUpdateSummaryCard(orders) { const now = new Date(); const todayY = now.getFullYear(); const todayM = now.getMonth() + 1;
@@ -821,8 +900,8 @@
       let cashTotal = 0; let vodafoneTotal = 0; let instapayTotal = 0; const list = Array.isArray(orders) ? orders : [];
       const detectedFormat = scDetectOrdersDateFormat(list); list.forEach(o => {
         if (!scIsOrderFromToday(o, todayY, todayM, todayD, detectedFormat)) return; if (scIsOrderCancelled(o)) return;
-        const rawTotal = scNormalizeArabicDigits(o.total !== undefined ? o.total : 0).replace(/[^0-9.]/g, '');
-        const amt = Number(rawTotal) || 0; count += 1; const bucket = scDetectPaymentBucket(o);
+        const rawTotal = scNormalizeArabicDigits(o.total !== undefined ? o.total : 0).replace(/[^0-9.-]/g, '');
+        const amt = Math.max(0, Number(rawTotal) || 0); count += 1; const bucket = scDetectPaymentBucket(o);
         if (bucket === 'vodafone') vodafoneTotal += amt; else if (bucket === 'instapay') instapayTotal += amt; else cashTotal += amt; });
       cashTotal = Number(cashTotal.toFixed(2)); vodafoneTotal = Number(vodafoneTotal.toFixed(2));
       instapayTotal = Number(instapayTotal.toFixed(2)); const netTotal = Number((cashTotal + vodafoneTotal + instapayTotal).toFixed(2));
@@ -859,6 +938,10 @@
         const safeCustomerName = escapeHtml(o.customerName || '-'); const safePhone = escapeHtml(formattedPhone || '-');
         const safeAddress = o.address ? '| 📍 ' + escapeHtml(o.address) : '';
         const safeSummary = escapeHtml(o.itemsSummary || o.summary || '');
+        const rawGps = String(o.gpsUrl || '').trim();
+        const safeGpsLink = /^https?:\/\//i.test(rawGps)
+          ? ` <a href="${escapeHtml(rawGps)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-1.5 py-0.5 rounded bg-[#262012] border border-[#d4af37]/50 text-[#f3d266] hover:underline font-bold">🗺️ GPS</a>`
+          : '';
         return `
         <div class="p-3.5 rounded-2xl bg-[#12100b] border border-[#d4af37]/30 space-y-1.5 text-xs">
           <div class="flex flex-wrap items-center justify-between gap-2 pb-1.5 border-b border-stone-800">
@@ -869,34 +952,47 @@
               <button type="button" onclick="printAdminOrderReceipt(${idx})" class="px-2.5 py-1 rounded-lg bg-[#262012] hover:bg-[#342b18] border border-[#d4af37]/50 text-[#f3d266] text-[11px] font-black cursor-pointer">🖨️ طباعة الفاتورة</button>
             </div>
           </div>
-          ${o.customerName || formattedPhone ? `<div class="text-stone-300 text-[11px]">👤 العميل: <b>${safeCustomerName}</b> | 📱 الموبايل: <b dir="ltr">${safePhone}</b> ${safeAddress}</div>` : ''}
+          ${o.customerName || formattedPhone || safeGpsLink ? `<div class="text-stone-300 text-[11px]">👤 العميل: <b>${safeCustomerName}</b> | 📱 الموبايل: <b dir="ltr">${safePhone}</b> ${safeAddress}${safeGpsLink}</div>` : ''}
           <pre class="whitespace-pre-wrap font-sans text-[11px] text-stone-200 bg-black/60 p-2 rounded-xl border border-stone-800">${safeSummary}</pre>
         </div>
       `; }).join(''); }
-    function compressImageClientSide(file) { return new Promise((resolve, reject) => { const reader = new FileReader();
+    function compressImageClientSide(file, preserveAlpha) { return new Promise((resolve, reject) => { const reader = new FileReader();
         reader.onload = function(ev) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas');
             const maxDim = 800; let w = img.width; let h = img.height; if (w > h && w > maxDim) { h = Math.round((h * maxDim) / w);
               w = maxDim; } else if (h > maxDim) { w = Math.round((w * maxDim) / h); h = maxDim; } canvas.width = w; canvas.height = h;
-            const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, w, h); resolve(canvas.toDataURL('image/jpeg', 0.72)); };
+            const ctx = canvas.getContext('2d'); const keepPng = Boolean(preserveAlpha && file && file.type === 'image/png');
+            if (!keepPng) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h); }
+            ctx.drawImage(img, 0, 0, w, h);
+            if (keepPng) { resolve({ dataUrl: canvas.toDataURL('image/png'), mimeType: 'image/png', ext: 'png' }); }
+            else { resolve({ dataUrl: canvas.toDataURL('image/jpeg', 0.72), mimeType: 'image/jpeg', ext: 'jpg' }); } };
           img.onerror = reject; img.src = ev.target.result; }; reader.onerror = reject; reader.readAsDataURL(file); }); }
     async function adminUploadImageFile(inputEl, targetId) { const file = inputEl && inputEl.files ? inputEl.files[0] : null;
-      if (!file) return; const statusEl = targetId === 'new'
+      if (!file) return;
+      if (!ACTIVE_ADMIN_PIN) { if (inputEl) inputEl.value = ''; handleAdminUnauthorized(); return; }
+      const statusEl = targetId === 'new'
         ? document.getElementById('newItemUploadStatus')
         : (targetId === 'logo' ? document.getElementById('logoUploadStatus') : document.getElementById('uploadBtnLabel_' + targetId));
       const origLabel = statusEl ? statusEl.textContent : (targetId === 'logo' ? '📱 رفع شعار من الهاتف' : '📱 رفع صورة');
-      if (statusEl) statusEl.textContent = '⏳ جاري الضغط والرفع...'; try { const compressedDataUrl = await compressImageClientSide(file);
-        const base64Raw = compressedDataUrl.split(',')[1] || '';
+      if (statusEl) statusEl.textContent = '⏳ جاري الضغط والرفع...'; try {
+        const preserveAlpha = (targetId === 'logo');
+        const compressed = await compressImageClientSide(file, preserveAlpha);
+        const base64Raw = (compressed.dataUrl || '').split(',')[1] || '';
         const activeScriptUrl = (document.getElementById('admWebhookUrl') ? document.getElementById('admWebhookUrl').value.trim() : '') || STORE_SETTINGS.webhookUrl || SCRIPT_URL;
+        const altUrl = activeScriptUrl === SCRIPT_URL ? FALLBACK_SCRIPT_URL : SCRIPT_URL;
         let finalUrl = ''; if (activeScriptUrl && activeScriptUrl.startsWith('https://script.google.com/')) { const uploadPayload = {
-            action: 'uploadImage', adminPin: String(SERVER_ADMIN_PIN || '').trim(),
-            fileName: 'sweet_city_' + targetId + '_' + Date.now() + '.jpg', mimeType: 'image/jpeg', base64: base64Raw }; let data = null;
+            action: 'uploadImage', adminPin: ACTIVE_ADMIN_PIN,
+            fileName: 'sweet_city_' + targetId + '_' + Date.now() + '.' + compressed.ext, mimeType: compressed.mimeType, base64: base64Raw };
+          let data = null; let usedAltUrl = false;
           try { data = await fetchAppsScriptPost(activeScriptUrl, uploadPayload);
-            if (!data || typeof data.imageUrl !== 'string' || !/^https?:\/\//i.test(data.imageUrl.trim())) {
-              throw new Error('INVALID_IMAGE_URL'); } } catch (firstErr) {
-            const altUrl = activeScriptUrl === SCRIPT_URL ? FALLBACK_SCRIPT_URL : SCRIPT_URL;
-            data = await fetchAppsScriptPost(altUrl, uploadPayload); }
-          if (data && typeof data.imageUrl === 'string' && /^https?:\/\//i.test(data.imageUrl.trim())) { finalUrl = data.imageUrl.trim(); }
-        } if (!finalUrl) { if (statusEl) statusEl.textContent = origLabel; if (inputEl) inputEl.value = '';
+            if (!data || data.error === 'NON_JSON_RESPONSE') throw new Error('NON_JSON_RESPONSE');
+          } catch (firstErr) { data = await fetchAppsScriptPost(altUrl, uploadPayload);
+            if (data && typeof data.imageUrl === 'string' && /^https?:\/\//i.test(data.imageUrl.trim())) usedAltUrl = true; }
+          if (data && data.error === 'UNAUTHORIZED') { if (statusEl) statusEl.textContent = origLabel; handleAdminUnauthorized(); return; }
+          if (data && typeof data.imageUrl === 'string' && /^https?:\/\//i.test(data.imageUrl.trim())) {
+            finalUrl = data.imageUrl.trim();
+            if (usedAltUrl) { STORE_SETTINGS.webhookUrl = altUrl; GOOGLE_SHEETS_CONFIG.scriptUrl = altUrl; syncWebhookInputs(altUrl); saveMenuCacheToLocal(); }
+          }
+        } if (!finalUrl) { if (statusEl) statusEl.textContent = origLabel;
           showToast('⚠️ تعذر رفع الصورة إلى Google Drive — لم يتم حفظها لتجنب تعطل الشيت. أعد المحاولة أو الصق رابط صورة مباشر.', true);
           return; } showToast('✅ تم ضغط ورفع الصورة إلى Google Drive بنجاح!', false); if (targetId === 'new') {
           const imgInput = document.getElementById('newItemImg'); if (imgInput) imgInput.value = finalUrl;
@@ -904,13 +1000,14 @@
           const logoInput = document.getElementById('admLogoUrl'); if (logoInput) logoInput.value = finalUrl;
           if (statusEl) statusEl.textContent = '✅ تم رفع الشعار!'; markAdminDirty(true); saveMenuCacheToLocal(); } else {
           const item = RAW.find(i => i.id === Number(targetId)); if (item) { item.img = finalUrl; markAdminDirty(true); renderAdminItems();
-          } } } catch (err) { if (statusEl) statusEl.textContent = origLabel; if (inputEl) inputEl.value = '';
-        showToast('⚠️ تعذر رفع الصورة إلى Google Drive — لم يتم حفظها لتجنب تعطل الشيت. أعد المحاولة أو الصق رابط صورة مباشر.', true); } }
+          } } } catch (err) { if (statusEl) statusEl.textContent = origLabel;
+        showToast('⚠️ تعذر رفع الصورة إلى Google Drive — لم يتم حفظها لتجنب تعطل الشيت. أعد المحاولة أو الصق رابط صورة مباشر.', true);
+      } finally { if (inputEl) inputEl.value = ''; } }
     function openAdminModal() { const wh = STORE_SETTINGS.webhookUrl || SCRIPT_URL; const wh1 = document.getElementById('admWebhookUrl');
       const wh2 = document.getElementById('admWebhookUrlTab'); if (wh1) wh1.value = wh; if (wh2) wh2.value = wh;
       const sheetInput = document.getElementById('admSheetId'); if (sheetInput) sheetInput.value = STORE_SETTINGS.sheetId || '';
-      syncFreeThresholdInputs(STORE_SETTINGS.freeDeliveryThreshold || 250);
-      syncPinInputs(SERVER_ADMIN_PIN || STORE_SETTINGS.adminPin || '26'); renderAdminDiscountCategories(); renderAdminDeliveryTab();
+      syncFreeThresholdInputs(getSafeFreeDeliveryThreshold());
+      syncPinInputs(''); renderAdminDiscountCategories(); renderAdminDeliveryTab();
       switchAdminTab('items'); renderAdminItems(); renderAdminOrdersTab(); updateSaveButtonsText();
       document.getElementById('adminModal').classList.remove('hidden'); scCashierStartPolling(); }
     function closeAdminModal(btnEl) { if (hasUnsavedAdminChanges && btnEl && !scConfirmButtonAction(btnEl)) return; scCashierStopPolling();
@@ -1019,7 +1116,9 @@
       const raw = String(oldVal === undefined || oldVal === null ? '' : oldVal).trim(); if (raw === '' || Number(raw) === 0) {
         delete item.oldPrice; markAdminDirty(true); renderAdminItems(); return; } const num = Number(raw); if (isNaN(num) || num < 0) {
         showToast('⚠️ لا يمكن إدخال سعر سالب قبل الخصم', true); renderAdminItems(); return; } item.oldPrice = num; markAdminDirty(true);
-      renderAdminItems(); }
+      renderAdminItems();
+      if (num <= Number(item.price)) {
+        showToast('💡 تذكير: السعر قبل الخصم أصغر من أو يساوي السعر الحالي — خفّض السعر الحالي لتفعيل شارة الخصم.', false); } }
     function adminApplyItemDiscount(id, pct) { const item = RAW.find(i => i.id === id); if (!item) return;
       const base = (item.oldPrice && Number(item.oldPrice) > Number(item.price)) ? Number(item.oldPrice) : Number(item.price);
       if (base <= 0) return; item.oldPrice = base; item.price = Math.max(1, Math.round(base * (1 - pct / 100))); markAdminDirty(true);
@@ -1067,63 +1166,68 @@
       const upStatus = document.getElementById('newItemUploadStatus'); if (upStatus) upStatus.textContent = '📱 رفع صورة';
       markAdminDirty(true); renderAdminItems(); renderCategories(); renderAdminDiscountCategories();
       showToast('✅ تمت إضافة الصنف "' + name + '" بنجاح!', false); }
-    function syncAdminSettingsInputsToMemory() { sortRawById(); const wh1 = document.getElementById('admWebhookUrl');
+    function syncAdminSettingsInputsToMemory() { sortRawById();
+      RAW.forEach(item => { if (item && item.oldPrice !== undefined) {
+          const op = Number(item.oldPrice) || 0; if (op <= (Number(item.price) || 0)) delete item.oldPrice; } });
+      const wh1 = document.getElementById('admWebhookUrl');
       const wh2 = document.getElementById('admWebhookUrlTab');
       const whVal = (wh2 && wh2.value.trim()) ? wh2.value.trim() : ((wh1 && wh1.value.trim()) ? wh1.value.trim() : (STORE_SETTINGS.webhookUrl || SCRIPT_URL));
       STORE_SETTINGS.webhookUrl = whVal || SCRIPT_URL; GOOGLE_SHEETS_CONFIG.scriptUrl = STORE_SETTINGS.webhookUrl;
       const sheetInput = document.getElementById('admSheetId'); if (sheetInput) { STORE_SETTINGS.sheetId = sheetInput.value.trim();
-        GOOGLE_SHEETS_CONFIG.sheetId = STORE_SETTINGS.sheetId; } const freeInput2 = document.getElementById('admFreeThresholdTab2');
+        GOOGLE_SHEETS_CONFIG.sheetId = STORE_SETTINGS.sheetId; }
+      const freeInput2 = document.getElementById('admFreeThresholdTab2');
       const freeInput1 = document.getElementById('admFreeThreshold');
       const freeVal = (freeInput2 && freeInput2.value !== '') ? Number(freeInput2.value) : (freeInput1 && freeInput1.value !== '' ? Number(freeInput1.value) : 250);
-      STORE_SETTINGS.freeDeliveryThreshold = freeVal > 0 ? freeVal : 250; const pinEl2 = document.getElementById('admPinCodeTab2');
-      const pinEl1 = document.getElementById('admPinCode');
-      const pinVal = (pinEl2 && pinEl2.value.trim()) ? pinEl2.value.trim() : ((pinEl1 && pinEl1.value.trim()) ? pinEl1.value.trim() : (SERVER_ADMIN_PIN || STORE_SETTINGS.adminPin || '26'));
-      STORE_SETTINGS.adminPin = pinVal; const statusInput = document.getElementById('admOpenStatusText');
-      if (statusInput && statusInput.value.trim()) STORE_SETTINGS.openStatusText = statusInput.value.trim();
-      const closureInput = document.getElementById('admClosureMessage');
-      if (closureInput && closureInput.value.trim()) STORE_SETTINGS.closureMessage = closureInput.value.trim();
-      const waInput = document.getElementById('admWhatsapp');
-      if (waInput && waInput.value.trim()) STORE_SETTINGS.whatsapp = scNormalizeArabicDigits(waInput.value.trim()).replace(/[^0-9]/g, '');
-      const phoneInput = document.getElementById('admPhone');
-      if (phoneInput && phoneInput.value.trim()) STORE_SETTINGS.phone = scFormatEgyptPhone(phoneInput.value.trim());
-      const vfInput = document.getElementById('admVodafoneCash');
-      STORE_SETTINGS.vodafoneCash = scNormalizeVodafoneCash((vfInput && vfInput.value.trim()) ? vfInput.value.trim() : STORE_SETTINGS.vodafoneCash);
-      const instaInput = document.getElementById('admInstaPay');
-      STORE_SETTINGS.instaPay = scNormalizeInstaPay((instaInput && instaInput.value.trim()) ? instaInput.value.trim() : STORE_SETTINGS.instaPay);
-      const addrInput = document.getElementById('admBranchAddress');
-      if (addrInput && addrInput.value.trim()) STORE_SETTINGS.branchAddress = addrInput.value.trim();
-      const logoInput = document.getElementById('admLogoUrl');
-      if (logoInput && logoInput.value.trim()) STORE_SETTINGS.logoUrl = logoInput.value.trim(); saveMenuCacheToLocal(); }
-    async function saveAndPublishAll() { if (isSavingCloud) return; const waEl = document.getElementById('admWhatsapp');
+      STORE_SETTINGS.freeDeliveryThreshold = (!isNaN(freeVal) && freeVal >= 0) ? freeVal : 250;
+      delete STORE_SETTINGS.adminPin; delete STORE_SETTINGS.admin_pin;
+      captureDeliveryInputsToMemory();
+      STORE_SETTINGS.vodafoneCash = scNormalizeVodafoneCash(STORE_SETTINGS.vodafoneCash);
+      STORE_SETTINGS.instaPay = scNormalizeInstaPay(STORE_SETTINGS.instaPay);
+      saveMenuCacheToLocal(); }
+    async function saveAndPublishAll() { if (isSavingCloud) return;
+      if (!ACTIVE_ADMIN_PIN) { handleAdminUnauthorized(); return; }
+      const waEl = document.getElementById('admWhatsapp');
       const waRaw = scNormalizeArabicDigits(waEl && waEl.value.trim() ? waEl.value : STORE_SETTINGS.whatsapp).replace(/\s+/g, '').trim();
-      const waDigits = waRaw.replace(/[^0-9]/g, ''); if (!/^\d{10,15}$/.test(waDigits)) {
+      let waDigits = waRaw.replace(/[^0-9]/g, '');
+      if (/^01\d{9}$/.test(waDigits)) { waDigits = '20' + waDigits.slice(1); }
+      if (!/^\d{10,15}$/.test(waDigits)) {
         showToast('⚠️ رقم واتساب استقبال الطلبات غير صحيح (يجب أن يتكون من 10 إلى 15 رقماً بكود الدولة)', true); return; }
+      if (waEl) waEl.value = waDigits; STORE_SETTINGS.whatsapp = waDigits;
       const phoneEl = document.getElementById('admPhone');
       const phoneRaw = scNormalizeArabicDigits(phoneEl ? phoneEl.value : STORE_SETTINGS.phone).trim(); if (phoneRaw) {
         const cleanPhone = scFormatEgyptPhone(phoneRaw).replace(/[\s\-().]+/g, '');
         const isEgyptMobile = /^01[0125]\d{8}$/.test(cleanPhone);
-        const isLandline = /^0\d{7,10}$/.test(cleanPhone) || /^\d{8,11}$/.test(cleanPhone); if (!isEgyptMobile && !isLandline) {
+        const isLandline = !cleanPhone.startsWith('01') && (/^0[2-9]\d{7,8}$/.test(cleanPhone) || /^\d{7,8}$/.test(cleanPhone));
+        if (!isEgyptMobile && !isLandline) {
           showToast('⚠️ رقم خدمة العملاء غير صحيح (أدخل رقم موبايل مصري يبدأ بـ 01 من 11 رقماً أو رقم أرضي صحيح)', true); return; } }
       isSavingCloud = true; const btn1 = document.getElementById('btnSaveCloud'); const btn2 = document.getElementById('btnSaveCloudTab4');
       if (btn1) { btn1.disabled = true; btn1.textContent = '⏳ جاري الحفظ والنشر للسحابة...'; } if (btn2) { btn2.disabled = true;
         btn2.textContent = '⏳ جاري الحفظ والنشر للسحابة...'; } try { syncAdminSettingsInputsToMemory();
         STORE_SETTINGS.instaPay = scNormalizeInstaPay(STORE_SETTINGS.instaPay);
         STORE_SETTINGS.vodafoneCash = scNormalizeVodafoneCash(STORE_SETTINGS.vodafoneCash);
-        const newPinValue = String(STORE_SETTINGS.adminPin || '').trim();
+        const pinEl2 = document.getElementById('admPinCodeTab2'); const pinEl1 = document.getElementById('admPinCode');
+        const newPinValue = (pinEl2 && pinEl2.value.trim()) ? pinEl2.value.trim() : ((pinEl1 && pinEl1.value.trim()) ? pinEl1.value.trim() : '');
         const activeScriptUrl = (STORE_SETTINGS.webhookUrl || SCRIPT_URL).trim(); if (activeScriptUrl) {
-          if (newPinValue && newPinValue !== String(SERVER_ADMIN_PIN || '').trim()) { await saveNewAdminPin(newPinValue); }
-          const payload = { action: 'syncAll', adminPin: String(SERVER_ADMIN_PIN || '').trim(), items: RAW, settings: STORE_SETTINGS };
-          try { let res = null; try { res = await fetchAppsScriptPost(activeScriptUrl, payload);
-              if (!res || res.ok === false || res.error) { throw new Error((res && res.error) || 'SYNC_FAILED'); } } catch (firstErr) {
-              const altUrl = activeScriptUrl === SCRIPT_URL ? FALLBACK_SCRIPT_URL : SCRIPT_URL;
-              res = await fetchAppsScriptPost(altUrl, payload); if (!res || res.ok === false || res.error) {
-                throw new Error((res && res.error) || 'SYNC_FAILED'); } } markAdminDirty(false);
-            showToast('✅ تم حفظ ونشر الأصناف والإعدادات وسياسة التوصيل فوراً على Google Sheets!', false); } catch (err) {
-            showToast('⚠️ تعذر تأكيد الحفظ على السيرفر — التعديلات محفوظة محلياً، حاول النشر مرة أخرى', true); } } else {
-          markAdminDirty(false); showToast('✅ تم حفظ التعديلات وتحديث المنيو بنجاح!', false); } } finally { isSavingCloud = false;
+          if (newPinValue && newPinValue !== ACTIVE_ADMIN_PIN) { const pinOk = await saveNewAdminPin(newPinValue); if (!pinOk) return; }
+          const cleanSettings = { ...STORE_SETTINGS }; delete cleanSettings.adminPin; delete cleanSettings.admin_pin;
+          const payload = { action: 'syncAll', adminPin: ACTIVE_ADMIN_PIN, items: RAW, settings: cleanSettings };
+          const altUrl = activeScriptUrl === SCRIPT_URL ? FALLBACK_SCRIPT_URL : SCRIPT_URL;
+          try { let res = null; let usedAltUrl = false;
+            try { res = await fetchAppsScriptPost(activeScriptUrl, payload);
+              if (!res || res.error === 'NON_JSON_RESPONSE') throw new Error('NON_JSON_RESPONSE');
+            } catch (firstErr) { res = await fetchAppsScriptPost(altUrl, payload); if (res && res.ok === true) usedAltUrl = true; }
+            if (res && res.error === 'UNAUTHORIZED') { handleAdminUnauthorized(); return; }
+            if (!res || res.ok !== true) { throw new Error((res && res.error) || 'SYNC_FAILED'); }
+            if (usedAltUrl) { STORE_SETTINGS.webhookUrl = altUrl; GOOGLE_SHEETS_CONFIG.scriptUrl = altUrl; syncWebhookInputs(altUrl); saveMenuCacheToLocal(); }
+            markAdminDirty(false);
+            showToast('✅ تم حفظ ونشر الأصناف والإعدادات وسياسة التوصيل فوراً على Google Sheets!', false);
+          } catch (err) {
+            showToast('⚠️ تعذر تأكيد الحفظ على السيرفر — التعديلات محفوظة محلياً، حاول النشر مرة أخرى', true); }
+        } else { markAdminDirty(false); showToast('✅ تم حفظ التعديلات وتحديث المنيو بنجاح!', false); }
+      } finally { isSavingCloud = false;
         if (btn1) btn1.disabled = false; if (btn2) btn2.disabled = false; updateSaveButtonsText(); } }
     function scExportBackupJson() { syncAdminSettingsInputsToMemory(); const safeSettings = { ...STORE_SETTINGS };
-      delete safeSettings.adminPin; const backupPayload = { app: 'SWEET_CITY_1999_ADMIN_BACKUP', exportedAt: new Date().toISOString(),
+      delete safeSettings.adminPin; delete safeSettings.admin_pin; const backupPayload = { app: 'SWEET_CITY_1999_ADMIN_BACKUP', exportedAt: new Date().toISOString(),
         itemsCount: Array.isArray(RAW) ? RAW.length : 0, settings: safeSettings, items: RAW };
       const dateTag = new Date().toISOString().slice(0, 10);
       const blob = new Blob([JSON.stringify(backupPayload, null, 2)], { type: 'application/json;charset=utf-8' });
@@ -1132,8 +1236,8 @@
       showToast('📥 تم تصدير نسخة احتياطية JSON للأصناف والإعدادات بنجاح!', false); }
     function initApp() { sortRawById(); renderCategories(); renderAdminDiscountCategories();
       const adminModalEl = document.getElementById('adminModal'); if (adminModalEl && !adminModalEl.classList.contains('hidden')) {
-        syncFreeThresholdInputs(STORE_SETTINGS.freeDeliveryThreshold || 250);
-        syncPinInputs(SERVER_ADMIN_PIN || STORE_SETTINGS.adminPin || '26'); renderAdminDeliveryTab(); renderAdminItems();
+        syncFreeThresholdInputs(getSafeFreeDeliveryThreshold());
+        syncPinInputs(''); renderAdminDeliveryTab(); renderAdminItems();
         renderAdminOrdersTab(); } }
     function printAdminOrderReceipt(idx) { const orders = Array.isArray(ADMIN_CLOUD_ORDERS) ? ADMIN_CLOUD_ORDERS : [];
       const o = orders[idx]; if (!o) return; const formattedPhone = scFormatEgyptPhone(o.phone);
@@ -1166,8 +1270,7 @@
         `الإجمالي المطلوب: ${totalNum} ج.م` ].filter(Boolean).join('\n'); printCashierReceipt(lines); }
     function printCashierReceipt(invoiceText) { const rawText = String(invoiceText || '').trim(); if (!rawText) {
         if (typeof showToast === 'function') { showToast('⚠️ لا توجد بيانات فاتورة للطباعة', true); } return; }
-      const escapeHtml = function (str) { return String(str) .replace(/&/g, '&amp;') .replace(/</g, '&lt;') .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;') .replace(/'/g, '&#39;'); }; const storeTitle = 'سويت سيتي 1999 | SWEET CITY';
+      const storeTitle = 'سويت سيتي 1999 | SWEET CITY';
       const branchAddr = (typeof STORE_SETTINGS !== 'undefined' && STORE_SETTINGS.branchAddress)
         ? STORE_SETTINGS.branchAddress
         : 'العاشر من رمضان - المجاورة 18 - مول تن بوينت'; const storePhone = (typeof STORE_SETTINGS !== 'undefined' && STORE_SETTINGS.phone)
@@ -1193,6 +1296,27 @@
         '<h1 class="title">' + escapeHtml(storeTitle) + '</h1>' + '<p class="subtitle">' + escapeHtml(branchAddr) + '</p>' +
         '<p class="subtitle">ت: ' + escapeHtml(storePhone) + '</p>' + '</div>' + '<div class="body">' + formattedLinesHtml + '</div>' +
         '<div class="footer">شكراً لزيارتكم — مخبز وحلواني سويت سيتي 1999</div>' + '</div>' + '</body>' + '</html>';
+      const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+      if (isMobileDevice) {
+        const mobileBtnCss = '.no-print-bar { text-align: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1.5px solid #d4af37; background: #ffffff !important; }' +
+          '.mobile-print-btn { width: 100%; padding: 10px 14px; border: 1px solid #b88919; border-radius: 10px; background: linear-gradient(135deg, #f3d266 0%, #d4af37 100%) !important; color: #000000 !important; font-family: "Cairo", Tahoma, Arial, sans-serif; font-size: 14px; font-weight: 900; cursor: pointer; }' +
+          '@media print { .no-print-bar { display: none !important; } }';
+        const mobileBtnMarkup = '<div class="no-print-bar"><button type="button" class="mobile-print-btn" onclick="window.print()">🖨️ اضغط للطباعة</button></div>';
+        const mobileAutoPrint = '<script>window.addEventListener("load", function () { try { window.focus(); window.print(); } catch (e) {} });<\/script>';
+        const mobileReceiptHtml = receiptHtml
+          .replace('</style>', mobileBtnCss + '</style>')
+          .replace('<div class="receipt-wrap">', mobileBtnMarkup + '<div class="receipt-wrap">')
+          .replace('</body>', mobileAutoPrint + '</body>');
+        try {
+          const mobileWin = window.open('', '_blank');
+          if (mobileWin && mobileWin.document) {
+            mobileWin.document.open();
+            mobileWin.document.write(mobileReceiptHtml);
+            mobileWin.document.close();
+            return;
+          }
+        } catch (e) {}
+      }
       const oldFrame = document.getElementById('scHiddenPrintFrame'); if (oldFrame && oldFrame.parentNode) {
         oldFrame.parentNode.removeChild(oldFrame); } const iframe = document.createElement('iframe'); iframe.id = 'scHiddenPrintFrame';
       iframe.style.display = 'none'; iframe.style.width = '0'; iframe.style.height = '0'; iframe.style.border = '0';
@@ -1202,13 +1326,13 @@
       const doc = iframe.contentWindow ? iframe.contentWindow.document : iframe.contentDocument; if (!doc) { cleanupIframe(); return; }
       let printTriggered = false; const triggerPrint = function () { if (printTriggered) return; printTriggered = true;
         const win = iframe.contentWindow; if (!win) { cleanupIframe(); return; }
-        const fontsReady = (win.document && win.document.fonts && win.document.fonts.ready)
-          ? win.document.fonts.ready.catch(function () {})
-          : Promise.resolve(); const timeoutPromise = new Promise(function (resolve) { setTimeout(resolve, 600); });
-        Promise.race([fontsReady, timeoutPromise]).then(function () { try {
-            win.onafterprint = function () { setTimeout(cleanupIframe, 300); }; win.focus(); win.print(); setTimeout(cleanupIframe, 60000);
-          } catch (err) { cleanupIframe(); } }); }; iframe.onload = function () { setTimeout(triggerPrint, 120); }; doc.open();
-      doc.write(receiptHtml); doc.close(); setTimeout(triggerPrint, 300); } initApp(); requestAdminAccess();
+        const doPrint = function () { try { win.onafterprint = function () { setTimeout(cleanupIframe, 300); };
+            win.focus(); win.print(); setTimeout(cleanupIframe, 60000); } catch (err) { cleanupIframe(); } };
+        try { if (win.document && win.document.fonts && win.document.fonts.ready) {
+            Promise.race([win.document.fonts.ready, new Promise(function (resolve) { setTimeout(resolve, 600); })]).then(doPrint, doPrint);
+          } else { setTimeout(doPrint, 120); } } catch (e) { doPrint(); } };
+      iframe.onload = function () { setTimeout(triggerPrint, 120); };
+      doc.open(); doc.write(receiptHtml); doc.close(); setTimeout(triggerPrint, 300); } initApp(); requestAdminAccess();
   </script>
 </body>
 </html>

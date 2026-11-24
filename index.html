@@ -245,7 +245,7 @@
     }
     #productsGrid button[onclick^="adjustItemWeight("][onclick*=", 1)"]:not(:disabled),
     #productsGrid button[onclick^="adjustItemWeight("][onclick*=", 0.25)"]:not(:disabled),
-    #productsGrid button[onclick^="addToCart("]:not(:disabled) {
+    #productsGrid button[onclick^="addToCart("]:not(:disabled):not([class*="bg-[#251f14]"]) {
       background: linear-gradient(135deg, #f4d365 0%, #d4af37 52%, #b88919 100%);
       color: #100c04;
       border: 1px solid rgba(255, 240, 185, 0.72);
@@ -255,17 +255,18 @@
     }
     #productsGrid button[onclick^="adjustItemWeight("][onclick*=", 1)"]:not(:disabled):hover,
     #productsGrid button[onclick^="adjustItemWeight("][onclick*=", 0.25)"]:not(:disabled):hover,
-    #productsGrid button[onclick^="addToCart("]:not(:disabled):hover {
+    #productsGrid button[onclick^="addToCart("]:not(:disabled):not([class*="bg-[#251f14]"]):hover {
       background: linear-gradient(135deg, #fae084 0%, #e3be45 52%, #c79822 100%);
       box-shadow: 0 8px 24px rgba(227, 185, 56, 0.48), inset 0 1px 0 rgba(255, 252, 232, 0.6);
       transform: translateY(-1px);
     }
     #productsGrid button[onclick^="adjustItemWeight("][onclick*=", 1)"]:not(:disabled):active,
     #productsGrid button[onclick^="adjustItemWeight("][onclick*=", 0.25)"]:not(:disabled):active,
-    #productsGrid button[onclick^="addToCart("]:not(:disabled):active {
+    #productsGrid button[onclick^="addToCart("]:not(:disabled):not([class*="bg-[#251f14]"]):active {
       transform: scale(0.96);
       box-shadow: 0 3px 10px rgba(212, 175, 55, 0.28);
     }
+    #productsGrid > .card-surface [id^="prodFallback_"] { width: 100%; height: 100%; }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     body.sc-has-bottom-nav {
@@ -1009,7 +1010,7 @@
       <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-[#d4af37]/30">
         <div class="flex items-center gap-2">
           <div class="w-9 h-9 rounded-full border border-[#d4af37] bg-[#14110b] flex items-center justify-center overflow-hidden shrink-0">
-            <img src="./logo.png" alt="سويت سيتي" class="w-full h-full object-cover" />
+            <img src="./logo.png" alt="سويت سيتي" onerror="this.style.display='none'" class="w-full h-full object-cover" />
           </div>
           <div>
             <h3 class="text-sm sm:text-base font-black text-[#e3b938]">📲 تثبيت تطبيق سويت سيتي على الآيفون</h3>
@@ -1606,8 +1607,15 @@
           redirect: 'follow',
           signal: controller.signal
         });
+        if (!res.ok) {
+          throw new Error('HTTP_' + res.status);
+        }
         const raw = await res.text();
-        return JSON.parse(raw);
+        const parsed = JSON.parse(raw);
+        if (!parsed || parsed.ok !== true) {
+          throw new Error('INVALID_RESPONSE');
+        }
+        return parsed;
       } finally {
         clearTimeout(timeoutId);
       }
@@ -1695,11 +1703,18 @@
       if (activeScriptUrl && activeScriptUrl.startsWith('https://script.google.com/')) {
         try {
           let data = null;
+          let usedAltUrl = false;
+          const altUrl = activeScriptUrl === SCRIPT_URL ? FALLBACK_SCRIPT_URL : SCRIPT_URL;
           try {
             data = await fetchAppsScriptGet(activeScriptUrl);
           } catch (firstErr) {
-            const altUrl = activeScriptUrl === SCRIPT_URL ? FALLBACK_SCRIPT_URL : SCRIPT_URL;
             data = await fetchAppsScriptGet(altUrl);
+            if (data) {
+              usedAltUrl = true;
+              STORE_SETTINGS.webhookUrl = altUrl;
+              GOOGLE_SHEETS_CONFIG.scriptUrl = altUrl;
+              saveMenuCacheToLocal();
+            }
           }
 
           if (data) {
@@ -1752,7 +1767,7 @@
               const nextSettings = {
                 ...STORE_SETTINGS,
                 ...incomingSettings,
-                webhookUrl: incomingSettings.webhookUrl || activeScriptUrl
+                webhookUrl: usedAltUrl ? altUrl : (incomingSettings.webhookUrl || STORE_SETTINGS.webhookUrl || activeScriptUrl)
               };
               if (Array.isArray(incomingSettings.deliveryZones) && incomingSettings.deliveryZones.length > 0) {
                 nextSettings.deliveryZones = incomingSettings.deliveryZones;
@@ -1760,6 +1775,7 @@
               nextSettings.instaPay = normalizeInstaPayNumber(nextSettings.instaPay);
               if (JSON.stringify(nextSettings) !== prevSettingsSnapshot) {
                 STORE_SETTINGS = nextSettings;
+                GOOGLE_SHEETS_CONFIG.scriptUrl = nextSettings.webhookUrl;
                 saveMenuCacheToLocal();
                 hasChanges = true;
               }
@@ -1884,6 +1900,9 @@
             const altUrl = activeScriptUrl === SCRIPT_URL ? FALLBACK_SCRIPT_URL : SCRIPT_URL;
             const resFallback = await fetchAppsScriptPost(altUrl, payload, controller.signal);
             if (resFallback && resFallback.ok === true && !resFallback.error) {
+              STORE_SETTINGS.webhookUrl = altUrl;
+              GOOGLE_SHEETS_CONFIG.scriptUrl = altUrl;
+              saveMenuCacheToLocal();
               return { synced: true };
             }
             return { synced: false };
@@ -2474,7 +2493,7 @@
           kept.push(c);
           return;
         }
-        const liveItem = RAW.find(i => i.id === c.itemId);
+        const liveItem = RAW.find(i => Number(i.id) === Number(c.itemId));
         if (!liveItem) {
           removedNames.push(c.name || ('صنف #' + c.itemId));
           return;
@@ -2643,8 +2662,9 @@
     function renderCart() {
       const container = document.getElementById('cartItemsContainer');
       const subtotal = getCartSubtotal();
-      const threshold = Number(STORE_SETTINGS.freeDeliveryThreshold) || 250;
-      const pct = Math.min(100, Math.round((subtotal / threshold) * 100));
+      const rawThresh = STORE_SETTINGS.freeDeliveryThreshold;
+      const threshold = (rawThresh !== undefined && rawThresh !== null && rawThresh !== '' && !isNaN(Number(rawThresh)) && Number(rawThresh) >= 0) ? Number(rawThresh) : 250;
+      const pct = threshold <= 0 ? 100 : Math.min(100, Math.round((subtotal / threshold) * 100));
       document.getElementById('freeDelivPct').textContent = pct + '%';
       document.getElementById('freeDelivBar').style.width = pct + '%';
 
@@ -2661,7 +2681,7 @@
         container.innerHTML = cart.map(c => {
           const unitWord = getUnitArabicWord(c.unitMode);
           const safeName = escapeHtml(c.name);
-          const safeWeightLabel = escapeHtml(c.weightLabel);
+          const safeWeightLabel = escapeHtml(formatQuantityArabic(c.weightFactor * c.qty, 'weight'));
           const safeKey = escapeHtml(c.key);
           return `
           <div class="px-2.5 py-1.5 rounded-xl bg-[#181510] border border-[#d4af37]/25 flex items-center justify-between gap-2">
@@ -2738,10 +2758,11 @@
         let phone = normalizeDigits(sanitizeText(document.getElementById('custPhone').value)).replace(/[^0-9]/g, '');
         if (phone.startsWith('0020') && phone.length === 14) phone = '0' + phone.slice(4);
         else if (phone.startsWith('20') && phone.length === 12) phone = '0' + phone.slice(2);
+        else if (/^(10|11|12|15)\d{8}$/.test(phone)) phone = '0' + phone;
         const neigh = sanitizeText(document.getElementById('custNeighborhood').value);
         const addr = sanitizeText(document.getElementById('custAddress').value);
 
-        if (!name || phone.length !== 11 || !phone.startsWith('01')) {
+        if (!name || !/^01[0125]\d{8}$/.test(phone)) {
           showToast('⚠️ يرجى إدخال الاسم ورقم موبايل مصري صحيح (11 رقم يبدأ بـ 01)', true);
           return;
         }
@@ -2758,7 +2779,8 @@
         saveCustomerInfoToLocal();
 
         const subtotal = getCartSubtotal();
-        const threshold = Number(STORE_SETTINGS.freeDeliveryThreshold) || 250;
+        const rawThresh = STORE_SETTINGS.freeDeliveryThreshold;
+        const threshold = (rawThresh !== undefined && rawThresh !== null && rawThresh !== '' && !isNaN(Number(rawThresh)) && Number(rawThresh) >= 0) ? Number(rawThresh) : 250;
         const zoneSel = document.getElementById('custZone');
         const zoneFee = zoneSel ? Number(zoneSel.value) : 15;
         const zoneName = zoneSel && zoneSel.options[zoneSel.selectedIndex] ? zoneSel.options[zoneSel.selectedIndex].getAttribute('data-name') : '';
@@ -2818,6 +2840,7 @@
             itemsCount: cart.length,
             summary: itemsLines,
             itemsSummary: itemsLines,
+            invoiceText: msg,
             status: 'Preparing'
           });
           localStorage.setItem(PERSONAL_ORDERS_KEY, JSON.stringify(personalOrders.slice(0, 50)));
@@ -2844,7 +2867,10 @@
           thankYouMessage: msg
         });
 
-        const waUrl = `https://wa.me/${STORE_SETTINGS.whatsapp}?text=${encodeURIComponent(msg)}`;
+        let cleanWa = normalizeDigits(STORE_SETTINGS.whatsapp || '201040224226').replace(/[^0-9]/g, '');
+        if (/^01[0125]\d{8}$/.test(cleanWa)) cleanWa = '20' + cleanWa.slice(1);
+        if (!cleanWa) cleanWa = '201040224226';
+        const waUrl = `https://wa.me/${cleanWa}?text=${encodeURIComponent(msg)}`;
         lastInvoiceText = msg;
 
         const isSynced = Boolean(syncResult && syncResult.synced === true);
@@ -3152,7 +3178,8 @@
 
       if (isBranch) {
         const branchAddr = STORE_SETTINGS.branchAddress || 'العاشر من رمضان - المجاورة 18 - مول تن بوينت';
-        const freeThresh = STORE_SETTINGS.freeDeliveryThreshold || 250;
+        const rawThresh = STORE_SETTINGS.freeDeliveryThreshold;
+        const freeThresh = (rawThresh !== undefined && rawThresh !== null && rawThresh !== '' && !isNaN(Number(rawThresh)) && Number(rawThresh) >= 0) ? Number(rawThresh) : 250;
         const zonesSummary = (STORE_SETTINGS.deliveryZones || []).map(z => `• ${z.name}: ${z.fee} ج.م`).join('\n');
         return {
           replyText: `📍 *عنوان الفرع الرئيسي وتفاصيل التوصيل — سويت سيتي 1999:*\n🏠 *العنوان:* ${branchAddr}\n📞 *خدمة العملاء وواتساب:* ${STORE_SETTINGS.phone || '01040224226'}\n🏪 *فروعنا بالعاشر من رمضان:*\n• فرع مجاورة 18 (مول تن بوينت): 01040224226\n• فرع مجاورة 31: 01070822875\n• فرع مجاورة 26: 01070822845\n🛵 *سياسة التوصيل:*\n• توصيل مجاني للطلبات بقيمة ${freeThresh} ج.م أو أكثر 🎁\n${zonesSummary}`,
@@ -3237,7 +3264,19 @@
       if (past.length === 0) {
         list.innerHTML = '<p class="text-center text-stone-400 py-6">لا توجد طلبات سابقة مسجلة على هذا الجهاز.</p>';
       } else {
-        list.innerHTML = past.map(o => `
+        let waNumber = normalizeDigits(STORE_SETTINGS.whatsapp || '201040224226').replace(/[^0-9]/g, '');
+        if (/^01[0125]\d{8}$/.test(waNumber)) waNumber = '20' + waNumber.slice(1);
+        if (!waNumber) waNumber = '201040224226';
+        list.innerHTML = past.map(o => {
+          const orderMsg = (o.invoiceText && String(o.invoiceText).trim())
+            ? String(o.invoiceText).trim()
+            : [
+                `🧾 *طلب — سويت سيتي* (#${o.id || ''})`,
+                o.summary || o.itemsSummary || '',
+                `💰 *الإجمالي المطلوب: ${o.total || 0} ج.م*`
+              ].filter(Boolean).join('\n');
+          const resendWaUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(orderMsg)}`;
+          return `
           <div class="p-3 rounded-2xl bg-[#14120d] border border-[#d4af37]/25 space-y-1.5">
             <div class="flex justify-between font-bold text-[#d4af37]">
               <span>طلب #${escapeHtml(o.id)}</span>
@@ -3247,8 +3286,12 @@
               <span>${escapeHtml(o.date)} ${o.time ? '— ' + escapeHtml(o.time) : ''}</span>
             </div>
             <pre class="text-stone-200 whitespace-pre-wrap font-sans text-xs pt-1 border-t border-stone-800">${escapeHtml(o.summary || o.itemsSummary || '')}</pre>
+            <div class="pt-1.5 flex justify-end">
+              <a href="${escapeHtml(resendWaUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/90 hover:bg-emerald-900 border border-emerald-500/60 text-emerald-200 text-[11px] font-black transition">📲 إعادة إرسال للواتساب</a>
+            </div>
           </div>
-        `).join('');
+        `;
+        }).join('');
       }
       document.getElementById('ordersModal').classList.remove('hidden');
     }
@@ -3677,10 +3720,27 @@
           eventDateEl.setAttribute('min', `${yyyy}-${mm}-${dd}`);
         }
 
+        function syncShapeWithCakeSize() {
+          const selectedSize = document.querySelector('#cakeDesignerSection input[name="cakeSize"]:checked');
+          const heartRadio = document.getElementById('cakeShape_heart');
+          if (!selectedSize || (heartRadio && heartRadio.checked)) return;
+          const sizeText = (selectedSize.getAttribute('data-name') || selectedSize.value || '').trim();
+          const squareRadio = document.getElementById('cakeShape_square');
+          const roundRadio = document.getElementById('cakeShape_round');
+          if (sizeText.includes('/') && squareRadio) {
+            squareRadio.checked = true;
+          } else if (sizeText.includes('مدورة') && roundRadio) {
+            roundRadio.checked = true;
+          }
+        }
+
         const cakeSection = document.getElementById('cakeDesignerSection');
         if (cakeSection && cakeSection.dataset.livePriceBound !== '1') {
           cakeSection.dataset.livePriceBound = '1';
-          cakeSection.addEventListener('change', function () {
+          cakeSection.addEventListener('change', function (e) {
+            if (e && e.target && e.target.name === 'cakeSize') {
+              syncShapeWithCakeSize();
+            }
             updateCakeLivePrice();
           });
         }
@@ -3688,6 +3748,7 @@
         if (typeof window.syncCakeDesignerPricesFromRaw === 'function') {
           window.syncCakeDesignerPricesFromRaw();
         }
+        syncShapeWithCakeSize();
         updateCakeLivePrice();
 
         const submitBtn = document.querySelector(SELECTORS.submitBtn);
