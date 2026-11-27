@@ -1270,12 +1270,15 @@
     }
     .sc-chef-badge-btn {
       position: relative;
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       border-radius: 9999px;
+      background: #12100E;
+      border: 1.5px solid #D4AF37;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      line-height: 1;
       flex-shrink: 0;
       filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
     }
@@ -1292,24 +1295,101 @@
     }
     .sc-chef-modal-avatar {
       position: relative;
-      width: 46px;
-      height: 46px;
+      width: 38px;
+      height: 38px;
       border-radius: 9999px;
+      background: #12100E;
+      border: 2px solid #D4AF37;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      line-height: 1;
       flex-shrink: 0;
       box-shadow: 0 0 14px rgba(212, 175, 55, 0.4);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    @keyframes scChefSpeakingRing {
+      0% { transform: scale(1); opacity: 0.85; }
+      75% { transform: scale(1.38); opacity: 0; }
+      100% { transform: scale(1.38); opacity: 0; }
+    }
+    .sc-chef-modal-avatar.chef-speaking-pulse {
+      border-color: #ffe58f;
+      box-shadow: 0 0 18px rgba(243, 210, 102, 0.72);
+    }
+    .sc-chef-modal-avatar.chef-speaking-pulse::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 9999px;
+      border: 2px solid rgba(243, 210, 102, 0.9);
+      pointer-events: none;
+      will-change: transform, opacity;
+      animation: scChefSpeakingRing 1.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+    }
+    @media (min-width: 420px) {
+      .sc-chef-modal-avatar {
+        width: 44px;
+        height: 44px;
+      }
     }
     .sc-chef-msg-avatar {
       width: 28px;
       height: 28px;
       border-radius: 9999px;
+      background: #12100E;
+      border: 1.5px solid #D4AF37;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      line-height: 1;
       flex-shrink: 0;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+    .sc-ai-modal-dialog {
+      height: min(92dvh, 760px);
+      max-height: 92dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sc-ai-messages-wrap {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    #aiMessagesBox {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      scroll-behavior: smooth;
+      padding-bottom: 18px;
+    }
+    .sc-ai-jump-btn {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 25;
+      padding: 6px 13px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #f3d266 0%, #d4af37 100%);
+      color: #0d0a04;
+      border: 1px solid rgba(255, 245, 200, 0.85);
+      font-size: 11px;
+      font-weight: 900;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.72), 0 0 12px rgba(212, 175, 55, 0.38);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .sc-ai-jump-btn:active {
+      transform: translateX(-50%) scale(0.95);
     }
   </style>
   <script>
@@ -1535,15 +1615,7 @@
         <div class="sc-primary-actions-grid">
           <button type="button" id="scHeroChefBtn" onclick="openAiModal()" class="sc-primary-cta-btn sc-chef-hero-btn">
             <span class="sc-chef-badge-btn" aria-hidden="true">
-              <svg viewBox="0 0 64 64" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="32" cy="32" r="30" fill="#12100E" stroke="#D4AF37" stroke-width="2.5"/>
-                <circle cx="32" cy="32" r="26.5" stroke="#F5D061" stroke-width="0.9" stroke-opacity="0.55"/>
-                <path d="M20 38 C14 37 13 27 21 25 C22 15 42 15 43 25 C51 27 50 37 44 38 L43 42 L21 42 Z" fill="#FFF8E7" stroke="#D4AF37" stroke-width="1.5" stroke-linejoin="round"/>
-                <path d="M27 29 V38 M32 27 V38 M37 29 V38" stroke="#D4AF37" stroke-width="1.4" stroke-linecap="round" stroke-opacity="0.8"/>
-                <rect x="20" y="40" width="24" height="8" rx="2.5" fill="#D4AF37" stroke="#FEF08A" stroke-width="1"/>
-                <path d="M32 41.8 L34.2 44 L32 46.2 L29.8 44 Z" fill="#FFFBEB"/>
-                <path d="M47 12.5 L48.3 15.7 L51.5 17 L48.3 18.3 L47 21.5 L45.7 18.3 L42.5 17 L45.7 15.7 Z" fill="#FEF08A"/>
-              </svg>
+              <span style="font-size: 22px; display: inline-flex; align-items: center; justify-content: center; line-height: 1;">👨‍🍳</span>
               <span class="sc-chef-online-dot"></span>
             </span>
             <span class="assistant-title truncate">اسأل شيف سويت سيتي</span>
@@ -2246,50 +2318,49 @@
   </div>
 
   <!-- نافذة شيف سويت الذكي (مستشار المبيعات والحلويات التفاعلي) -->
-  <div id="aiModal" onclick="if(event.target===this) closeAiModal()" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-2.5 sm:p-3">
-    <div class="card-surface w-full max-w-md max-h-[91vh] max-h-[91dvh] rounded-3xl p-3.5 sm:p-4 border-2 border-[#d4af37] flex flex-col justify-between gap-2.5 shadow-2xl overflow-hidden">
+  <div id="aiModal" onclick="if(event.target===this) closeAiModal()" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-2 sm:p-3">
+    <div id="aiModalDialog" class="card-surface sc-ai-modal-dialog w-full max-w-md rounded-3xl p-3 sm:p-4 border-2 border-[#d4af37] justify-between gap-2 shadow-2xl">
       <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-[#d4af37]/30 shrink-0">
-        <div class="flex items-center gap-2.5 min-w-0">
-          <div class="sc-chef-modal-avatar" aria-hidden="true">
-            <svg viewBox="0 0 64 64" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="32" cy="32" r="30" fill="#12100E" stroke="#D4AF37" stroke-width="2.5"/>
-              <circle cx="32" cy="32" r="26.5" stroke="#F5D061" stroke-width="0.9" stroke-opacity="0.55"/>
-              <path d="M20 38 C14 37 13 27 21 25 C22 15 42 15 43 25 C51 27 50 37 44 38 L43 42 L21 42 Z" fill="#FFF8E7" stroke="#D4AF37" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M27 29 V38 M32 27 V38 M37 29 V38" stroke="#D4AF37" stroke-width="1.4" stroke-linecap="round" stroke-opacity="0.8"/>
-              <rect x="20" y="40" width="24" height="8" rx="2.5" fill="#D4AF37" stroke="#FEF08A" stroke-width="1"/>
-              <path d="M32 41.8 L34.2 44 L32 46.2 L29.8 44 Z" fill="#FFFBEB"/>
-              <path d="M47 12.5 L48.3 15.7 L51.5 17 L48.3 18.3 L47 21.5 L45.7 18.3 L42.5 17 L45.7 15.7 Z" fill="#FEF08A"/>
-            </svg>
+        <div class="flex items-center gap-2 min-w-0 flex-1">
+          <div id="aiModalChefAvatar" class="sc-chef-modal-avatar" aria-hidden="true">
+            <span style="font-size: 22px; display: inline-flex; align-items: center; justify-content: center; line-height: 1;">👨‍🍳</span>
             <span class="sc-chef-online-dot"></span>
           </div>
-          <div class="min-w-0">
-            <h3 class="text-sm sm:text-base font-black text-[#f3d266] truncate assistant-title">شيف سويت سيتي الذكي</h3>
-            <p class="text-[10px] text-emerald-300 font-bold mt-0.5 flex items-center gap-1.5 truncate">
+          <div class="min-w-0 flex-1">
+            <h3 class="font-black text-[#f3d266] leading-tight assistant-title" style="font-size: clamp(13.5px, 3.8vw, 16px); white-space: nowrap; overflow: visible;">شيف سويت سيتي</h3>
+            <p id="aiModalStatusLine" class="text-[10.5px] text-emerald-300 font-bold mt-0.5 flex items-center gap-1.5 leading-tight" style="white-space: nowrap;">
               <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
-              <span class="truncate">متصل الآن • يرشح لك من قائمة الفرع</span>
+              <span>متصل الآن</span>
             </p>
           </div>
         </div>
-        <div class="flex items-center gap-1.5 shrink-0">
-          <button type="button" id="aiAutoSpeakBtn" onclick="toggleAiAutoSpeak()" title="تفعيل أو إيقاف القراءة الصوتية لردود الشيف" class="px-2 py-1.5 rounded-xl bg-[#1c170d] hover:bg-[#2b2312] border border-[#d4af37]/40 text-stone-300 text-[10px] font-black cursor-pointer transition">🔇 صوت</button>
-          <button type="button" onclick="resetAiChat()" class="px-2.5 py-1.5 rounded-xl bg-[#262012] hover:bg-[#332b18] border border-[#d4af37]/50 text-[#f3d266] text-[10px] font-black cursor-pointer transition">جديدة 🔄</button>
-          <button type="button" onclick="closeAiModal()" class="w-8 h-8 rounded-full bg-stone-800 hover:bg-stone-700 text-white font-bold cursor-pointer">×</button>
+        <div class="flex items-center gap-[5px] shrink-0">
+          <button type="button" id="aiAutoSpeakBtn" onclick="toggleAiAutoSpeak()" title="تفعيل أو إيقاف القراءة الصوتية لردود الشيف" class="px-2 py-1 rounded-xl bg-[#1c170d] hover:bg-[#2b2312] border border-[#d4af37]/40 text-stone-300 text-[11px] font-black cursor-pointer transition shrink-0">🔇 صوت</button>
+          <button type="button" onclick="resetAiChat()" class="px-2 py-1 rounded-xl bg-[#262012] hover:bg-[#332b18] border border-[#d4af37]/50 text-[#f3d266] text-[11px] font-black cursor-pointer transition shrink-0">جديدة 🔄</button>
+          <button type="button" onclick="closeAiModal()" aria-label="إغلاق نافذة الشيف" class="w-[30px] h-[30px] rounded-full bg-stone-800 hover:bg-stone-700 text-white text-[15px] font-bold flex items-center justify-center cursor-pointer shrink-0">×</button>
         </div>
       </div>
 
-      <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar shrink-0 py-0.5">
-        <button type="button" onclick="sendAiPrompt('🎂 تورتة لعيد ميلاد')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🎂 تورتة لعيد ميلاد</button>
-        <button type="button" onclick="sendAiPrompt('🥖 مخبوزات للدايت')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">🥖 مخبوزات للدايت</button>
-        <button type="button" onclick="sendAiPrompt('🎉 عزومة بـ 500 جنيه')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🎉 عزومة بـ 500 جنيه</button>
-        <button type="button" onclick="sendAiPrompt('🍪 أحلى حاجة مع الشاي')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">🍪 أحلى حاجة مع الشاي</button>
+      <div id="aiQuickPromptsBar" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar shrink-0 py-0.5" style="-webkit-overflow-scrolling: touch;">
+        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🥐 فطار سخن على الرايق')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🥐 فطار سخن على الرايق</button>
+        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('☕ حاجة تظبط مع القهوة')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">☕ حاجة تظبط مع القهوة</button>
+        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🎂 تورتة لعيد ميلاد')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🎂 تورتة لعيد ميلاد</button>
+        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🎉 عزومة بـ 500 جنيه')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">🎉 عزومة بـ 500 جنيه</button>
+        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🎁 بوكس هدية يشرف')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🎁 بوكس هدية يشرف</button>
+        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🍪 ربع ونص مشكل')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">🍪 ربع ونص مشكل</button>
+        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🍫 عشاق الشوكولاتة')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🍫 عشاق الشوكولاتة</button>
+        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🥖 مخبوزات للدايت')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">🥖 مخبوزات للدايت</button>
       </div>
 
-      <div id="aiMessagesBox" class="flex-1 overflow-y-auto space-y-2.5 pr-1 max-h-[54vh]"></div>
+      <div id="aiMessagesWrap" class="sc-ai-messages-wrap">
+        <div id="aiMessagesBox" class="space-y-2.5 pr-1"></div>
+        <button type="button" id="aiNewReplyJumpBtn" onclick="jumpToLatestChefReply()" class="sc-ai-jump-btn hidden">↓ رد جديد</button>
+      </div>
 
       <div class="flex items-center gap-1.5 shrink-0 pt-1.5 border-t border-[#d4af37]/25">
         <button type="button" id="aiVoiceMicBtn" onclick="toggleAiVoiceInput()" title="تحدث بصوتك مع شيف سويت" class="w-10 h-10 rounded-xl bg-[#1c170d] hover:bg-[#2c2312] border border-[#d4af37]/50 text-[#f3d266] text-base flex items-center justify-center cursor-pointer shrink-0 transition active:scale-95">🎤</button>
-        <input id="aiQuestionInput" type="text" onkeydown="if(event.key==='Enter') sendAiPrompt()" placeholder="اكتب أو اتكلم بالمايك: معايا 200 جنيه، عزومة 10 أفراد..." class="flex-1 min-w-0 py-2.5 px-3 rounded-xl bg-[#0d0d0d] border border-[#d4af37]/45 focus:border-[#f3d266] text-xs text-white outline-none" />
-        <button type="button" onclick="sendAiPrompt()" class="py-2.5 px-3.5 rounded-xl gold-grad text-black font-black text-xs cursor-pointer shrink-0 shadow-md active:scale-95 transition">إرسال</button>
+        <input id="aiQuestionInput" type="text" onfocus="stopChefSpeaking()" oninput="stopChefSpeaking()" onkeydown="if(event.key==='Enter'){ unlockChefAudio(); sendAiPrompt(); }" placeholder="اكتب أو اتكلم بالمايك: معايا 200 جنيه، عزومة 10 أفراد..." class="flex-1 min-w-0 py-2.5 px-3 rounded-xl bg-[#0d0d0d] border border-[#d4af37]/45 focus:border-[#f3d266] text-xs text-white outline-none" />
+        <button type="button" onclick="unlockChefAudio(); sendAiPrompt()" class="py-2.5 px-3.5 rounded-xl gold-grad text-black font-black text-xs cursor-pointer shrink-0 shadow-md active:scale-95 transition">إرسال</button>
       </div>
     </div>
   </div>
@@ -3612,6 +3683,9 @@
         if (cartModalEl && !cartModalEl.classList.contains('hidden')) {
           renderCartUpsell();
         }
+      }
+      if (typeof renderAiQuickPromptsBar === 'function') {
+        renderAiQuickPromptsBar();
       }
 
       if (!opts.silent) {
@@ -6233,23 +6307,79 @@
       }
     }
 
+    function getActiveChefBranchShortLabel() {
+      const bKey = typeof resolveBranchKey === 'function' ? resolveBranchKey(window.CURRENT_BRANCH) : 'b26';
+      if (bKey === 'b18') return 'فرع\u00A018\u00A0(تن\u00A0بوينت)';
+      if (bKey === 'b31') return 'فرع\u00A0الـ\u00A031';
+      return 'فرع\u00A0الـ\u00A026';
+    }
+
+    function pickFiveBranchRecommendations(preferredIds, targetCount) {
+      const maxCount = Math.max(1, Number(targetCount) || 5);
+      const branchItems = (typeof getActiveBranchItems === 'function' ? getActiveBranchItems() : RAW)
+        .filter(item => item && isItemAvailable(item) && (isDrinksAllowedForBranch() || !isDrinkItem(item)));
+      const itemById = new Map(branchItems.map(it => [Number(it.id), it]));
+      const chosen = [];
+      const seen = new Set();
+      const pushId = (rawId) => {
+        const num = Number(rawId);
+        if (!num || seen.has(num) || !itemById.has(num) || chosen.length >= maxCount) return;
+        seen.add(num);
+        chosen.push(num);
+      };
+
+      if (Array.isArray(preferredIds)) preferredIds.forEach(pushId);
+      if (typeof getPopularItemsIds === 'function') {
+        getPopularItemsIds().forEach(pushId);
+      }
+      branchItems.forEach(it => pushId(it.id));
+      return chosen;
+    }
+
+    function renderAiQuickPromptsBar() {
+      const bar = document.getElementById('aiQuickPromptsBar');
+      if (!bar) return;
+      const drinksAllowed = typeof isDrinksAllowedForBranch === 'function' ? isDrinksAllowedForBranch() : false;
+      const chips = [
+        '🥐 فطار سخن على الرايق',
+        '☕ حاجة تظبط مع القهوة',
+        '🎂 تورتة لعيد ميلاد',
+        '🎉 عزومة بـ 500 جنيه',
+        '🎁 بوكس هدية يشرف',
+        '🍪 ربع ونص مشكل',
+        '🍫 عشاق الشوكولاتة',
+        '🥖 مخبوزات للدايت'
+      ];
+      if (drinksAllowed) {
+        chips.push('🥤 مشروبات الكافيه');
+      }
+      bar.innerHTML = chips.map((label, idx) => {
+        const accentCls = idx % 2 === 0
+          ? 'bg-[#2c2211] border-[#d4af37]/85 text-[#f7df91] hover:bg-[#3a2d15]'
+          : 'bg-[#1f1a11] border-[#d4af37]/55 text-[#f3d266] hover:border-[#f3d266]';
+        return `<button type="button" data-prompt="${escapeHtml(label)}" onclick="unlockChefAudio(); sendAiPrompt(this.dataset.prompt)" class="px-3 py-1.5 rounded-full border text-[10px] font-black whitespace-nowrap shrink-0 cursor-pointer transition ${accentCls}">${escapeHtml(label)}</button>`;
+      }).join('');
+    }
+    window.renderAiQuickPromptsBar = renderAiQuickPromptsBar;
+
     function getEgyptianTimeGreeting() {
       const hr = new Date().getHours();
+      const branchLabel = getActiveChefBranchShortLabel();
       if (hr >= 5 && hr < 12) {
         return pickRandomChef([
-          'صباح الفل والكرواسون الطازج اللي لسه طالع من الفرن ☀️',
-          'صباح الجمال والباتيه والمخبوزات الدافية من فرن فرع الـ 26 ☀️'
+          `صباح الفل والكرواسون السخن اللي لسه طالع من فرن ${branchLabel} ☀️`,
+          `صباح الجمال والباتيه الطازج من ${branchLabel}.. الريحة جايبة آخر الشارع! ☀️`
         ]);
       }
       if (hr >= 12 && hr < 18) {
         return pickRandomChef([
-          'مساء الورد والحلويات الفريش في سويت سيتي فرع الـ 26 ✨',
-          'أهلاً بيك ومنور حلواني ومخبز سويت سيتي فرع الـ 26 ✨'
+          `يا أهلاً بالذوق العالي في ${branchLabel}! ✨`,
+          `منورنا في ${branchLabel}.. الفاترينة النهاردة بتنده على أصحاب المزاج الرايق! ✨`
         ]);
       }
       return pickRandomChef([
-        'مساء الخير والروقان والحلويات الدافية 🌙✨',
-        'مساء الجمال والسهرة الحلوة مع مخبوزات وحلويات سويت سيتي 🌙'
+        `مساء الروقان والحلويات الدافية في ${branchLabel} 🌙✨`,
+        `أهلاً بيك في ${branchLabel}.. سهرة حلوة ومخبوزات طازجة على مزاجك! 🌙`
       ]);
     }
 
@@ -6257,20 +6387,20 @@
       const firstName = getCustomerFirstName();
       const nameTag = firstName ? ` يا ${firstName}` : ' يا فندم';
       const timeGreet = getEgyptianTimeGreeting();
-      const activeBranch = (typeof getActiveBranchProfile === 'function') ? getActiveBranchProfile() : { name: 'فرع الـ 26' };
-      const branchCount = (typeof getActiveBranchItems === 'function') ? getActiveBranchItems().length : 58;
-      const defaultSugIds = (typeof getPopularItemsIds === 'function')
-        ? getPopularItemsIds().slice(0, 4)
-        : [1, 28, 43, 56];
+      const branchLabel = getActiveChefBranchShortLabel();
+      const defaultSugIds = pickFiveBranchRecommendations(
+        typeof getPopularItemsIds === 'function' ? getPopularItemsIds() : [1, 13, 16, 17, 50],
+        5
+      );
       const intros = [
-        `${timeGreet}!\nأهلاً بيك${nameTag}، أنا «شيف ${activeBranch.name}» 💛\nقولّي نفسك في إيه النهاردة؟ معايا 500 جنيه، تورتة عيد ميلاد، أو مخبوزات خفيفة.. واكتبلي أو اتكلم بالمايك 🎤 وأنا أظبطلك أحلى ترشيح من قائمة الفرع (${branchCount} صنف) بضغطة واحدة!`,
-        `${timeGreet}!\nمنورنا${nameTag} في ${activeBranch.name} ✨\nأنا شيف سويت وواقفلك في المخبز وجاهز أرشحلك على مزاجك! قولي ميزانيتك أو مناسبتك أو الصنف اللي بتحبه وهختارلك أحلى المخبوزات والحلويات والتورت الطازجة دلوقتي حالاً.`
+        `${timeGreet}\nأهلاً بيك${nameTag}، أنا شيف ${branchLabel} 💛 قولي نفسك في إيه النهاردة؟ فطار سخن، تورتة، ولا عزومة تشرف؟ واكتبلي أو اتكلم بالمايك 🎤 وهظبطلك أحلى ترشيحات طازجة بضغطة واحدة!`,
+        `يا أهلاً بالذوق العالي${nameTag} منورنا في ${branchLabel} ✨\nقولي ميزانيتك أو المود بتاعك النهاردة شوكولاتة غرقانة ولا نواعم مع الشاي، وخدها مني على ضمانتي هختارلك حاجات تخطف القلب من أول قطمة!`
       ];
       return {
         role: 'assistant',
         text: pickRandomChef(intros),
         suggestedIds: defaultSugIds,
-        followUpSuggestions: ['🎂 تورتة لعيد ميلاد', '🥖 مخبوزات للدايت', '🎉 عزومة بـ 500 جنيه', '🍪 أحلى حاجة مع الشاي']
+        followUpSuggestions: ['🥐 فطار سخن على الرايق', '🎂 تورتة لعيد ميلاد', '🎉 عزومة بـ 500 جنيه', '🍪 ربع ونص مشكل']
       };
     }
 
@@ -6291,52 +6421,322 @@
 
     clearAiStorageMemory();
 
+    const chefAudioPlayer = new Audio();
+    chefAudioPlayer.preload = 'auto';
+    const CHEF_SILENT_WAV_URI = 'data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQIAAAAAAA==';
+    const chefAudioUrlCache = new Map();
+    const CHEF_AUDIO_CACHE_LIMIT = 20;
+    let chefAudioAbortController = null;
+    let chefAudioSessionId = 0;
+    let chefAudioState = { status: 'idle', msgIndex: null, textKey: '' };
+
+    function normalizeChefSpeechCacheKey(rawText) {
+      return String(rawText || '')
+        .replace(/[*_`#•↳—]/g, ' ')
+        .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, ' ')
+        .replace(/[\u2600-\u27BF\uFE0E\uFE0F\u200D]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 650);
+    }
+
+    function unlockChefAudio() {
+      try {
+        if (chefAudioState.status === 'playing' && chefAudioPlayer && !chefAudioPlayer.paused) {
+          return;
+        }
+        chefAudioPlayer.muted = true;
+        chefAudioPlayer.src = CHEF_SILENT_WAV_URI;
+        const p = chefAudioPlayer.play();
+        if (p && typeof p.then === 'function') {
+          p.then(() => {
+            if (chefAudioPlayer.src === CHEF_SILENT_WAV_URI) {
+              chefAudioPlayer.pause();
+              chefAudioPlayer.currentTime = 0;
+            }
+            chefAudioPlayer.muted = false;
+          }).catch(() => {
+            chefAudioPlayer.muted = false;
+          });
+        } else {
+          chefAudioPlayer.pause();
+          chefAudioPlayer.currentTime = 0;
+          chefAudioPlayer.muted = false;
+        }
+      } catch (e) {
+        try { chefAudioPlayer.muted = false; } catch (err) {}
+      }
+    }
+
+    function buildPlayableAudioUrl(base64, mimeType) {
+      const cleanB64 = String(base64 || '').replace(/^data:[^;]+;base64,/i, '').replace(/\s+/g, '');
+      if (!cleanB64) throw new Error('EMPTY_AUDIO_BASE64');
+      const binStr = atob(cleanB64);
+      const len = binStr.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binStr.charCodeAt(i);
+      }
+
+      const rawMime = String(mimeType || 'audio/pcm;rate=24000').trim();
+      const baseMime = rawMime.split(';')[0].trim().toLowerCase();
+      if (/^audio\/(wav|wave|x-wav|mpeg|mp3|ogg|webm)$/i.test(baseMime)) {
+        const blob = new Blob([bytes], { type: baseMime === 'audio/mp3' ? 'audio/mpeg' : baseMime });
+        return URL.createObjectURL(blob);
+      }
+
+      const rateMatch = rawMime.match(/rate=(\d+)/i);
+      const sampleRate = rateMatch ? Math.max(8000, Math.min(96000, parseInt(rateMatch[1], 10) || 24000)) : 24000;
+      const numChannels = 1;
+      const bitsPerSample = 16;
+      const blockAlign = (numChannels * bitsPerSample) / 8;
+      const byteRate = sampleRate * blockAlign;
+      const dataSize = bytes.byteLength;
+
+      const wavBuffer = new ArrayBuffer(44 + dataSize);
+      const view = new DataView(wavBuffer);
+      const writeAscii = (offset, str) => {
+        for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+      };
+      writeAscii(0, 'RIFF');
+      view.setUint32(4, 36 + dataSize, true);
+      writeAscii(8, 'WAVE');
+      writeAscii(12, 'fmt ');
+      view.setUint32(16, 16, true);
+      view.setUint16(20, 1, true);
+      view.setUint16(22, numChannels, true);
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, byteRate, true);
+      view.setUint16(32, blockAlign, true);
+      view.setUint16(34, bitsPerSample, true);
+      writeAscii(36, 'data');
+      view.setUint32(40, dataSize, true);
+      new Uint8Array(wavBuffer, 44).set(bytes);
+
+      const wavBlob = new Blob([wavBuffer], { type: 'audio/wav' });
+      return URL.createObjectURL(wavBlob);
+    }
+
+    function cacheChefAudioUrl(cacheKey, url) {
+      if (!cacheKey || !url) return;
+      if (chefAudioUrlCache.has(cacheKey)) {
+        const prevUrl = chefAudioUrlCache.get(cacheKey);
+        chefAudioUrlCache.delete(cacheKey);
+        if (prevUrl && prevUrl !== url && prevUrl !== chefAudioPlayer.src) {
+          try { URL.revokeObjectURL(prevUrl); } catch (e) {}
+        }
+      }
+      while (chefAudioUrlCache.size >= CHEF_AUDIO_CACHE_LIMIT) {
+        const oldestKey = chefAudioUrlCache.keys().next().value;
+        const oldestUrl = chefAudioUrlCache.get(oldestKey);
+        chefAudioUrlCache.delete(oldestKey);
+        if (oldestUrl && oldestUrl !== chefAudioPlayer.src) {
+          try { URL.revokeObjectURL(oldestUrl); } catch (e) {}
+        }
+      }
+      chefAudioUrlCache.set(cacheKey, url);
+    }
+
+    function getSpeakButtonLabel(idx) {
+      if (chefAudioState.msgIndex === Number(idx)) {
+        if (chefAudioState.status === 'loading') return '🎙️ الشيف بيجهز صوته...';
+        if (chefAudioState.status === 'playing') return '⏹ إيقاف';
+      }
+      return '🔊 اسمع الرد';
+    }
+
+    function setChefAudioUiState(status, msgIndex = null, textKey = '') {
+      chefAudioState = { status: status || 'idle', msgIndex: msgIndex === null ? null : Number(msgIndex), textKey: textKey || '' };
+      const avatarEl = document.getElementById('aiModalChefAvatar');
+      if (avatarEl) {
+        avatarEl.classList.toggle('chef-speaking-pulse', chefAudioState.status === 'playing');
+      }
+      const statusEl = document.getElementById('aiModalStatusLine');
+      if (statusEl) {
+        if (chefAudioState.status === 'loading') {
+          statusEl.className = 'text-[10.5px] text-[#f3d266] font-bold mt-0.5 flex items-center gap-1.5 leading-tight';
+          statusEl.innerHTML = '<span class="inline-block w-1.5 h-1.5 rounded-full bg-[#f3d266] animate-pulse shrink-0"></span><span>🎙️ الشيف بيجهز صوته...</span>';
+        } else if (chefAudioState.status === 'playing') {
+          statusEl.className = 'text-[10.5px] text-emerald-300 font-bold mt-0.5 flex items-center gap-1.5 leading-tight';
+          statusEl.innerHTML = '<span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping shrink-0"></span><span>🔊 الشيف بيتكلم...</span>';
+        } else {
+          statusEl.className = 'text-[10.5px] text-emerald-300 font-bold mt-0.5 flex items-center gap-1.5 leading-tight';
+          statusEl.innerHTML = '<span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span><span>متصل الآن</span>';
+        }
+      }
+      const box = document.getElementById('aiMessagesBox');
+      if (box) {
+        box.querySelectorAll('[data-ai-speak-btn]').forEach(btn => {
+          const bIdx = Number(btn.getAttribute('data-ai-speak-btn'));
+          const isActive = chefAudioState.msgIndex === bIdx && chefAudioState.status !== 'idle';
+          btn.textContent = getSpeakButtonLabel(bIdx);
+          btn.className = isActive
+            ? 'px-2.5 py-0.5 rounded-full bg-[#382b12] border border-[#f3d266] text-[#ffe89e] text-[9.5px] font-bold cursor-pointer transition shrink-0'
+            : 'px-2.5 py-0.5 rounded-full bg-[#1e180d] hover:bg-[#2e2412] border border-[#d4af37]/35 text-[#f3d266] text-[9.5px] font-bold cursor-pointer transition shrink-0';
+        });
+      }
+    }
+
     function stopChefSpeaking() {
+      chefAudioSessionId += 1;
+      if (chefAudioAbortController) {
+        try { chefAudioAbortController.abort(); } catch (e) {}
+        chefAudioAbortController = null;
+      }
+      try {
+        chefAudioPlayer.onended = null;
+        chefAudioPlayer.onerror = null;
+        chefAudioPlayer.onpause = null;
+        chefAudioPlayer.pause();
+        chefAudioPlayer.currentTime = 0;
+        chefAudioPlayer.muted = false;
+      } catch (e) {}
       try {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       } catch (e) {}
+      setChefAudioUiState('idle', null, '');
     }
 
-    function speakChefText(rawText) {
-      if (!('speechSynthesis' in window)) {
-        showToast('⚠️ متصفحك لا يدعم القراءة الصوتية حالياً', true);
+    async function fetchChefSpeechAudioWithRetry(cleanText, apiUrl, sessionId) {
+      const attemptOnce = async () => {
+        const controller = new AbortController();
+        chefAudioAbortController = controller;
+        const timeoutId = setTimeout(() => {
+          try { controller.abort(); } catch (e) {}
+        }, 16000);
+        try {
+          const res = await fetchAppsScriptPost(
+            apiUrl,
+            { action: 'speakChef', text: cleanText },
+            controller.signal
+          );
+          if (res && res.ok === true && res.audioBase64) {
+            return res;
+          }
+          throw new Error((res && res.error) ? String(res.error) : 'SPEAK_CHEF_FAILED');
+        } finally {
+          clearTimeout(timeoutId);
+          if (chefAudioAbortController === controller) chefAudioAbortController = null;
+        }
+      };
+
+      try {
+        return await attemptOnce();
+      } catch (firstErr) {
+        if (sessionId !== chefAudioSessionId || (firstErr && firstErr.name === 'AbortError' && sessionId !== chefAudioSessionId)) {
+          throw firstErr;
+        }
+        return await attemptOnce();
+      }
+    }
+
+    async function speakChefText(rawText, msgIndex = null) {
+      const cleanSpoken = normalizeChefSpeechCacheKey(rawText);
+      if (!cleanSpoken) return;
+
+      stopChefSpeaking();
+      const sessionId = chefAudioSessionId;
+
+      if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+        if (!('speechSynthesis' in window)) {
+          showToast('⚠️ غير متصل بالإنترنت والمتصفح لا يدعم الصوت حالياً', true);
+          return;
+        }
+        try {
+          const utter = new SpeechSynthesisUtterance(cleanSpoken);
+          utter.lang = 'ar-EG';
+          utter.rate = 0.95;
+          utter.pitch = 1.02;
+          const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+          const arVoice = voices.find(v => /ar-EG/i.test(v.lang)) || voices.find(v => /^ar/i.test(v.lang));
+          if (arVoice) utter.voice = arVoice;
+          utter.onstart = () => { if (sessionId === chefAudioSessionId) setChefAudioUiState('playing', msgIndex, cleanSpoken); };
+          utter.onend = () => { if (sessionId === chefAudioSessionId) setChefAudioUiState('idle', null, ''); };
+          utter.onerror = () => { if (sessionId === chefAudioSessionId) setChefAudioUiState('idle', null, ''); };
+          window.speechSynthesis.speak(utter);
+        } catch (e) {
+          setChefAudioUiState('idle', null, '');
+        }
         return;
       }
+
+      const playAudioUrl = async (audioUrl) => {
+        if (sessionId !== chefAudioSessionId) return;
+        chefAudioPlayer.onended = () => {
+          if (sessionId === chefAudioSessionId) setChefAudioUiState('idle', null, '');
+        };
+        chefAudioPlayer.onerror = () => {
+          if (sessionId === chefAudioSessionId) {
+            setChefAudioUiState('idle', null, '');
+            showToast('تعذر تحميل صوت الشيف، اضغط 🔊 للمحاولة مجدداً', true);
+          }
+        };
+        chefAudioPlayer.muted = false;
+        chefAudioPlayer.src = audioUrl;
+        setChefAudioUiState('playing', msgIndex, cleanSpoken);
+        await chefAudioPlayer.play();
+      };
+
+      const cachedUrl = chefAudioUrlCache.get(cleanSpoken);
+      if (cachedUrl) {
+        try {
+          await playAudioUrl(cachedUrl);
+          return;
+        } catch (cachePlayErr) {
+          chefAudioUrlCache.delete(cleanSpoken);
+        }
+      }
+
+      const apiUrl = (typeof getCloudApiUrl === 'function') ? getCloudApiUrl() : '';
+      if (!apiUrl || !/^https:\/\//i.test(apiUrl)) {
+        setChefAudioUiState('idle', null, '');
+        showToast('تعذر تحميل صوت الشيف، اضغط 🔊 للمحاولة مجدداً', true);
+        return;
+      }
+
+      setChefAudioUiState('loading', msgIndex, cleanSpoken);
       try {
-        stopChefSpeaking();
-        const cleanSpoken = String(rawText || '')
-          .replace(/[*_`#•↳]/g, ' ')
-          .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, ' ')
-          .replace(/\s+/g, ' ')
-          .trim();
-        if (!cleanSpoken) return;
-        const utter = new SpeechSynthesisUtterance(cleanSpoken);
-        utter.lang = 'ar-EG';
-        utter.rate = 0.95;
-        utter.pitch = 1.02;
-        const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
-        const arVoice = voices.find(v => /ar-EG/i.test(v.lang)) || voices.find(v => /^ar/i.test(v.lang));
-        if (arVoice) utter.voice = arVoice;
-        window.speechSynthesis.speak(utter);
-      } catch (e) {}
+        const res = await fetchChefSpeechAudioWithRetry(cleanSpoken, apiUrl, sessionId);
+        if (sessionId !== chefAudioSessionId) return;
+        const audioUrl = buildPlayableAudioUrl(res.audioBase64, res.mimeType);
+        cacheChefAudioUrl(cleanSpoken, audioUrl);
+        await playAudioUrl(audioUrl);
+      } catch (err) {
+        if (sessionId !== chefAudioSessionId) return;
+        setChefAudioUiState('idle', null, '');
+        showToast('تعذر تحميل صوت الشيف، اضغط 🔊 للمحاولة مجدداً', true);
+      }
     }
 
     function speakAiMessageByIndex(idx) {
-      const m = aiChatHistory[Number(idx)];
-      if (m && m.text) speakChefText(m.text);
+      const numIdx = Number(idx);
+      const isCurrentlyActive = chefAudioState.msgIndex === numIdx && (chefAudioState.status === 'loading' || chefAudioState.status === 'playing');
+      if (isCurrentlyActive) {
+        stopChefSpeaking();
+        return;
+      }
+      const m = aiChatHistory[numIdx];
+      if (m && m.text) {
+        unlockChefAudio();
+        speakChefText(m.text, numIdx);
+      }
     }
 
     function toggleAiAutoSpeak() {
       aiAutoSpeakEnabled = !aiAutoSpeakEnabled;
-      if (!aiAutoSpeakEnabled) stopChefSpeaking();
+      if (aiAutoSpeakEnabled) {
+        unlockChefAudio();
+      } else {
+        stopChefSpeaking();
+      }
       const btn = document.getElementById('aiAutoSpeakBtn');
       if (btn) {
         btn.textContent = aiAutoSpeakEnabled ? '🔊 صوت' : '🔇 صوت';
         btn.className = aiAutoSpeakEnabled
-          ? 'px-2 py-1.5 rounded-xl bg-[#382b12] border border-[#f3d266] text-[#ffe89e] text-[10px] font-black cursor-pointer transition'
-          : 'px-2 py-1.5 rounded-xl bg-[#1c170d] hover:bg-[#2b2312] border border-[#d4af37]/40 text-stone-300 text-[10px] font-black cursor-pointer transition';
+          ? 'px-2 py-1 rounded-xl bg-[#382b12] border border-[#f3d266] text-[#ffe89e] text-[11px] font-black cursor-pointer transition shrink-0'
+          : 'px-2 py-1 rounded-xl bg-[#1c170d] hover:bg-[#2b2312] border border-[#d4af37]/40 text-stone-300 text-[11px] font-black cursor-pointer transition shrink-0';
       }
-      showToast(aiAutoSpeakEnabled ? '🔊 تم تفعيل قراءة ردود شيف سويت بصوت هادئ' : '🔇 تم إيقاف القراءة الصوتية التلقائية', false);
+      showToast(aiAutoSpeakEnabled ? '🔊 تم تفعيل قراءة ردود شيف سويت بالصوت الطبيعي' : '🔇 تم إيقاف القراءة الصوتية التلقائية', false);
     }
 
     function updateVoiceMicUI(listening) {
@@ -6360,13 +6760,15 @@
         showToast('🎙️ الميكروفون الصوتي غير مدعوم في هذا المتصفح — تقدر تكتب للشيف عادي 💛', true);
         return;
       }
+      stopChefSpeaking();
       if (aiIsListening && aiSpeechRecognition) {
+        unlockChefAudio();
         try { aiSpeechRecognition.stop(); } catch (e) {}
         updateVoiceMicUI(false);
         return;
       }
       try {
-        stopChefSpeaking();
+        unlockChefAudio();
         const rec = new SR();
         rec.lang = 'ar-EG';
         rec.interimResults = false;
@@ -6396,27 +6798,133 @@
       }
     }
 
+    let aiVisualViewportHandler = null;
+
+    function scrollChefChat(targetEl = null, alignToTop = false) {
+      const container = document.getElementById('aiMessagesBox');
+      if (!container) return;
+      const runScroll = () => {
+        if (!container) return;
+        if (alignToTop && targetEl) {
+          const topOffset = Math.max(0, targetEl.offsetTop - 10);
+          if (typeof container.scrollTo === 'function') {
+            container.scrollTo({ top: topOffset, behavior: 'smooth' });
+          } else {
+            container.scrollTop = topOffset;
+          }
+        } else {
+          const bottomPos = container.scrollHeight;
+          if (typeof container.scrollTo === 'function') {
+            container.scrollTo({ top: bottomPos, behavior: 'smooth' });
+          } else {
+            container.scrollTop = bottomPos;
+          }
+        }
+      };
+      if (typeof window.requestAnimationFrame === 'function') {
+        window.requestAnimationFrame(() => window.requestAnimationFrame(runScroll));
+      } else {
+        runScroll();
+      }
+      setTimeout(runScroll, 90);
+    }
+    window.scrollChefChat = scrollChefChat;
+
+    function setChefJumpPillVisible(visible) {
+      const pill = document.getElementById('aiNewReplyJumpBtn');
+      if (!pill) return;
+      pill.classList.toggle('hidden', !visible);
+    }
+
+    function jumpToLatestChefReply() {
+      const box = document.getElementById('aiMessagesBox');
+      setChefJumpPillVisible(false);
+      if (!box) return;
+      const latestReplyEl = box.querySelector('[data-ai-latest-reply="1"]');
+      if (latestReplyEl) {
+        scrollChefChat(latestReplyEl, true);
+      } else {
+        scrollChefChat(null, false);
+      }
+    }
+    window.jumpToLatestChefReply = jumpToLatestChefReply;
+
+    function initAiChatScrollTracking() {
+      const box = document.getElementById('aiMessagesBox');
+      if (!box || box.dataset.scrollTracked === '1') return;
+      box.dataset.scrollTracked = '1';
+      box.addEventListener('scroll', () => {
+        const distFromBottom = box.scrollHeight - box.scrollTop - box.clientHeight;
+        if (distFromBottom <= 72) {
+          setChefJumpPillVisible(false);
+        }
+      }, { passive: true });
+    }
+
+    function attachChefVisualViewportListener() {
+      if (!window.visualViewport || aiVisualViewportHandler) return;
+      aiVisualViewportHandler = () => {
+        const modal = document.getElementById('aiModal');
+        const dialog = document.getElementById('aiModalDialog');
+        const box = document.getElementById('aiMessagesBox');
+        if (!modal || modal.classList.contains('hidden')) return;
+        const vvHeight = Math.round(window.visualViewport.height || window.innerHeight || 0);
+        if (dialog && vvHeight > 220) {
+          const isKeyboardOpen = vvHeight < ((window.innerHeight || vvHeight) - 70);
+          dialog.style.maxHeight = isKeyboardOpen ? `${Math.max(300, vvHeight - 14)}px` : '';
+          dialog.style.height = isKeyboardOpen ? `${Math.max(300, vvHeight - 14)}px` : '';
+        }
+        if (box) {
+          const distFromBottom = box.scrollHeight - box.scrollTop - box.clientHeight;
+          if (distFromBottom <= 140) {
+            scrollChefChat(null, false);
+          }
+        }
+      };
+      window.visualViewport.addEventListener('resize', aiVisualViewportHandler);
+    }
+
+    function detachChefVisualViewportListener() {
+      if (window.visualViewport && aiVisualViewportHandler) {
+        window.visualViewport.removeEventListener('resize', aiVisualViewportHandler);
+        aiVisualViewportHandler = null;
+      }
+      const dialog = document.getElementById('aiModalDialog');
+      if (dialog) {
+        dialog.style.maxHeight = '';
+        dialog.style.height = '';
+      }
+    }
+
     function resetAiChat() {
       clearAiStorageMemory();
       stopChefSpeaking();
       if (aiTypingTimer) { clearTimeout(aiTypingTimer); aiTypingTimer = null; }
       aiIsTyping = false;
+      setChefJumpPillVisible(false);
       aiChatHistory = [getDefaultAiWelcomeMessage()];
       const inputEl = document.getElementById('aiQuestionInput');
       if (inputEl) inputEl.value = '';
-      renderAiMessages();
+      renderAiQuickPromptsBar();
+      renderAiMessages('bottom');
     }
 
     function openAiModal() {
       if (aiChatHistory.length === 1 && aiChatHistory[0].role === 'assistant') {
         aiChatHistory[0] = getDefaultAiWelcomeMessage();
       }
-      renderAiMessages();
+      renderAiQuickPromptsBar();
+      initAiChatScrollTracking();
+      setChefJumpPillVisible(false);
       document.getElementById('aiModal')?.classList.remove('hidden');
+      renderAiMessages('bottom');
+      attachChefVisualViewportListener();
     }
 
     function closeAiModal() {
       stopChefSpeaking();
+      detachChefVisualViewportListener();
+      setChefJumpPillVisible(false);
       if (aiIsListening && aiSpeechRecognition) {
         try { aiSpeechRecognition.stop(); } catch (e) {}
         updateVoiceMicUI(false);
@@ -6460,17 +6968,7 @@
     }
 
     function buildChefBubbleAvatarHtml() {
-      return `<span class="sc-chef-msg-avatar" aria-hidden="true">
-        <svg viewBox="0 0 64 64" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="32" cy="32" r="30" fill="#12100E" stroke="#D4AF37" stroke-width="2.5"/>
-          <circle cx="32" cy="32" r="26.5" stroke="#F5D061" stroke-width="0.9" stroke-opacity="0.55"/>
-          <path d="M20 38 C14 37 13 27 21 25 C22 15 42 15 43 25 C51 27 50 37 44 38 L43 42 L21 42 Z" fill="#FFF8E7" stroke="#D4AF37" stroke-width="1.5" stroke-linejoin="round"/>
-          <path d="M27 29 V38 M32 27 V38 M37 29 V38" stroke="#D4AF37" stroke-width="1.4" stroke-linecap="round" stroke-opacity="0.8"/>
-          <rect x="20" y="40" width="24" height="8" rx="2.5" fill="#D4AF37" stroke="#FEF08A" stroke-width="1"/>
-          <path d="M32 41.8 L34.2 44 L32 46.2 L29.8 44 Z" fill="#FFFBEB"/>
-          <path d="M47 12.5 L48.3 15.7 L51.5 17 L48.3 18.3 L47 21.5 L45.7 18.3 L42.5 17 L45.7 15.7 Z" fill="#FEF08A"/>
-        </svg>
-      </span>`;
+      return `<span class="sc-chef-msg-avatar" aria-hidden="true"><span style="font-size: 16px; display: inline-flex; align-items: center; justify-content: center; line-height: 1;">👨‍🍳</span></span>`;
     }
 
     function quickAddFromAi(itemId) {
@@ -6504,19 +7002,38 @@
       showToast('🛒 بالهنا والشفا! "' + item.name + '" اتضاف لسلتك بنجاح', false);
     }
 
-    function renderAiMessages() {
+    function renderAiMessages(scrollMode = 'bottom') {
       const box = document.getElementById('aiMessagesBox');
       if (!box) return;
+      const prevDistFromBottom = box.scrollHeight - box.scrollTop - box.clientHeight;
+      const userHadScrolledFarUp = box.scrollHeight > box.clientHeight + 24 && prevDistFromBottom > 140;
+
+      let latestAssistantIdx = -1;
+      for (let k = aiChatHistory.length - 1; k >= 0; k--) {
+        if (aiChatHistory[k] && aiChatHistory[k].role !== 'user') {
+          latestAssistantIdx = k;
+          break;
+        }
+      }
+
       const msgsHtml = aiChatHistory.map((m, idx) => {
         const isUser = m.role === 'user';
-        const safeMsgText = escapeHtml(m.text);
+        const isLatestAssistant = !isUser && idx === latestAssistantIdx;
+        const safeMsgHtml = escapeHtml(m.text)
+          .replace(/فرع(?:\s|&nbsp;)*الـ(?:\s|&nbsp;)*26/g, '<span class="whitespace-nowrap">فرع\u00A0الـ\u00A026</span>')
+          .replace(/فرع(?:\s|&nbsp;)*الـ(?:\s|&nbsp;)*31/g, '<span class="whitespace-nowrap">فرع\u00A0الـ\u00A031</span>')
+          .replace(/فرع(?:\s|&nbsp;)*18(?:\s|&nbsp;)*\(تن(?:\s|&nbsp;)*بوينت\)/g, '<span class="whitespace-nowrap">فرع\u00A018\u00A0(تن\u00A0بوينت)</span>');
+        const speakBtnActive = chefAudioState.msgIndex === idx && chefAudioState.status !== 'idle';
+        const speakBtnClass = speakBtnActive
+          ? 'px-2.5 py-0.5 rounded-full bg-[#382b12] border border-[#f3d266] text-[#ffe89e] text-[9.5px] font-bold cursor-pointer transition shrink-0'
+          : 'px-2.5 py-0.5 rounded-full bg-[#1e180d] hover:bg-[#2e2412] border border-[#d4af37]/35 text-[#f3d266] text-[9.5px] font-bold cursor-pointer transition shrink-0';
         const speakBtnHtml = !isUser
           ? `<div class="mt-1.5 flex items-center justify-between gap-2">
               <div class="flex items-center gap-1.5 min-w-0">
                 ${buildChefBubbleAvatarHtml('b' + idx)}
                 <span class="text-[9.5px] font-bold text-[#d4af37]/90 truncate">شيف سويت سيتي</span>
               </div>
-              <button type="button" onclick="speakAiMessageByIndex(${idx})" class="px-2 py-0.5 rounded-full bg-[#1e180d] hover:bg-[#2e2412] border border-[#d4af37]/35 text-[#f3d266] text-[9.5px] font-bold cursor-pointer transition shrink-0">🔊 استماع</button>
+              <button type="button" data-ai-speak-btn="${idx}" onclick="speakAiMessageByIndex(${idx})" class="${speakBtnClass}">${getSpeakButtonLabel(idx)}</button>
             </div>`
           : '';
         const customBoxHtml = m.customBoxKey && aiCustomBoxesMap[m.customBoxKey]
@@ -6524,7 +7041,7 @@
               const cb = aiCustomBoxesMap[m.customBoxKey];
               const safeBoxKey = escapeHtml(m.customBoxKey);
               return `<div class="mt-2.5 pt-2 border-t border-[#d4af37]/30">
-                <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-gradient-to-l from-[#261e0f] to-[#16120c] border border-[#e3b938]">
+                <div class="flex items-center justify-between gap-2 py-2 px-2.5 rounded-xl bg-gradient-to-l from-[#261e0f] to-[#16120c] border border-[#e3b938]">
                   <div class="text-right min-w-0">
                     <span class="font-black text-[#f5df9c] text-[11px] block truncate">🎁 ${escapeHtml(cb.name)}</span>
                     <span class="block text-[10px] text-[#f3d266] font-bold">الإجمالي: ${cb.price} ج.م</span>
@@ -6541,7 +7058,7 @@
               </button>
             </div>`
           : '';
-        const validSuggestedItems = (Array.isArray(m.suggestedIds) ? m.suggestedIds : [])
+        const validSuggestedItems = pickFiveBranchRecommendations(m.suggestedIds, 5)
           .map(sid => RAW.find(i => Number(i.id) === Number(sid)))
           .filter(sItem => sItem && isItemAvailable(sItem) && getItemBranchFlag(sItem, window.CURRENT_BRANCH));
         const cardsHtml = validSuggestedItems.length > 0
@@ -6556,7 +7073,7 @@
                   ? `<span class="line-through text-stone-400 mr-1">${sItem.oldPrice} ج</span>`
                   : '';
                 return `
-                  <div class="flex items-center justify-between gap-2 p-2 rounded-xl bg-[#18140e] border border-[#d4af37]/30 hover:border-[#f3d266]/70 transition">
+                  <div class="flex items-center justify-between gap-2 rounded-xl bg-[#18140e] border border-[#d4af37]/30 hover:border-[#f3d266]/70 transition" style="padding: 8px 10px;">
                     <div class="text-right min-w-0 flex-1">
                       <span class="font-black text-white text-[11px] block truncate">${escapeHtml(sItem.emoji || '🎂')} ${escapeHtml(sItem.name)}</span>
                       <span class="block text-[10px] text-[#f3d266] font-bold">${pricePrefix}: ${sItem.price} ج.م ${oldPBadge}</span>
@@ -6569,12 +7086,12 @@
           : '';
         const followUpsHtml = (!isUser && Array.isArray(m.followUpSuggestions) && m.followUpSuggestions.length > 0)
           ? `<div class="mt-2 pt-2 border-t border-[#d4af37]/15 flex flex-wrap items-center gap-1.5">
-              ${m.followUpSuggestions.slice(0, 4).map(sug => `<button type="button" data-prompt="${escapeHtml(sug)}" onclick="sendAiPrompt(this.dataset.prompt)" class="px-2.5 py-1 rounded-full bg-[#1e180d] hover:bg-[#2d2312] border border-[#d4af37]/45 text-[#f7df91] text-[9.5px] font-bold cursor-pointer transition active:scale-95">${escapeHtml(sug)}</button>`).join('')}
+              ${m.followUpSuggestions.slice(0, 4).map(sug => `<button type="button" data-prompt="${escapeHtml(sug)}" onclick="unlockChefAudio(); sendAiPrompt(this.dataset.prompt)" class="px-2.5 py-1 rounded-full bg-[#1e180d] hover:bg-[#2d2312] border border-[#d4af37]/45 text-[#f7df91] text-[9.5px] font-bold cursor-pointer transition active:scale-95">${escapeHtml(sug)}</button>`).join('')}
             </div>`
           : '';
         return `
-          <div class="p-3 rounded-2xl text-xs leading-relaxed ${isUser ? 'bg-[#2c2211] border border-[#d4af37]/55 text-white mr-6' : 'bg-[#12100c] border border-[#d4af37]/30 text-stone-100 ml-2'}">
-            <div class="whitespace-pre-wrap">${safeMsgText}</div>
+          <div ${isLatestAssistant ? 'data-ai-latest-reply="1"' : ''} class="p-3 rounded-2xl text-xs leading-relaxed ${isUser ? 'bg-[#2c2211] border border-[#d4af37]/55 text-white mr-6' : 'bg-[#12100c] border border-[#d4af37]/30 text-stone-100 ml-2'}">
+            <div class="whitespace-pre-wrap">${safeMsgHtml}</div>
             ${customBoxHtml}
             ${cardsHtml}
             ${studioCtaHtml}
@@ -6585,9 +7102,9 @@
       }).join('');
 
       const typingHtml = aiIsTyping
-        ? `<div class="p-3 rounded-2xl text-xs bg-[#15120c] border border-[#d4af37]/40 text-[#f3d266] ml-2 flex items-center gap-2">
+        ? `<div data-ai-typing="1" class="p-3 rounded-2xl text-xs bg-[#15120c] border border-[#d4af37]/40 text-[#f3d266] ml-2 flex items-center gap-2">
             ${buildChefBubbleAvatarHtml('typing')}
-            <span class="font-bold">شيف سويت سيتي يكتب لك الآن</span>
+            <span class="font-bold">الشيف بيفكر...</span>
             <span class="inline-flex items-center gap-1 pt-0.5">
               <span class="sc-typing-dot"></span>
               <span class="sc-typing-dot"></span>
@@ -6597,19 +7114,31 @@
         : '';
 
       box.innerHTML = msgsHtml + typingHtml;
-      box.scrollTop = box.scrollHeight;
+
+      const latestReplyEl = box.querySelector('[data-ai-latest-reply="1"]');
+      if (scrollMode === 'replyTop' && latestReplyEl) {
+        if (userHadScrolledFarUp) {
+          setChefJumpPillVisible(true);
+        } else {
+          setChefJumpPillVisible(false);
+          scrollChefChat(latestReplyEl, true);
+        }
+      } else {
+        setChefJumpPillVisible(false);
+        scrollChefChat(null, false);
+      }
     }
 
     function formatAiItemLine(item) {
       const m = getItemUnitMode(item);
       const uText = m === 'box' ? 'البوكس' : (m === 'cup' ? 'الكوب' : (m === 'weight' ? 'الكيلو' : 'القطعة'));
       const hasD = item.oldPrice && Number(item.oldPrice) > Number(item.price);
-      return `• ${item.name}: ${item.price} ج.م${hasD ? ` (بدل ${item.oldPrice} ج.م 🔥)` : ''} — (${uText})`;
+      return `${item.name} (${item.price} ج.م${hasD ? ` بدل ${item.oldPrice} ج.م` : ''} لـ ${uText})`;
     }
 
     function buildHappinessBoxSuggestion(budgetNum) {
       const avail = getActiveBranchItems().filter(i => isItemAvailable(i));
-      const activeBranch = getActiveBranchProfile();
+      const branchLabel = getActiveChefBranchShortLabel();
       const targetBudget = (budgetNum && budgetNum >= 60) ? budgetNum : 300;
 
       const picks = [];
@@ -6625,14 +7154,14 @@
       for (let i = 0; i < candidates.length; i++) {
         const it = candidates[i];
         const mode = getItemUnitMode(it);
-        const unitCost = mode === 'weight' ? Math.round(it.price * 0.5) : it.price;
-        if (unitCost > 0 && runningTotal + unitCost <= targetBudget && picks.length < 4) {
+        const unitCost = mode === 'weight' ? roundMoney(it.price * 0.5) : it.price;
+        if (unitCost > 0 && runningTotal + unitCost <= targetBudget && picks.length < 5) {
           picks.push({
             item: it,
             qtyText: mode === 'weight' ? 'نص كيلو' : '1 ' + getUnitArabicWord(mode),
             cost: unitCost
           });
-          runningTotal += unitCost;
+          runningTotal = roundMoney(runningTotal + unitCost);
         }
       }
 
@@ -6640,7 +7169,7 @@
       const boxKey = 'hbox_' + Date.now() + '_' + Math.floor(100 + Math.random() * 900);
       const contentsSummary = picks.length > 0
         ? picks.map(p => `${p.qtyText} ${p.item.name}`).join(' + ')
-        : 'تشكيلة طازجة من حلويات ومخبوزات ' + activeBranch.name;
+        : 'تشكيلة طازجة من حلويات ومخبوزات ' + branchLabel;
 
       aiCustomBoxesMap[boxKey] = {
         id: 'BOX-' + boxKey,
@@ -6649,25 +7178,24 @@
         unitType: 'box'
       };
 
-      const detailsLines = picks.length > 0
-        ? picks.map(p => `• ${p.qtyText} ${p.item.name} (${p.cost} ج.م)`).join('\n')
-        : '• تشكيلة مشكلة من الحلو والمخبوزات الطازجة';
+      const spokenList = picks.length > 0
+        ? picks.map(p => `${p.qtyText} ${p.item.name} بـ ${p.cost} ج.م`).join('، ومعاهم ')
+        : 'تشكيلة مشكلة طازجة من المخبز';
 
-      const suggestedIds = picks.map(p => p.item.id).slice(0, 4);
-
-      const remain = Math.max(0, Number((targetBudget - finalPrice).toFixed(2)));
+      const suggestedIds = pickFiveBranchRecommendations(picks.map(p => p.item.id), 5);
+      const remain = Math.max(0, roundMoney(targetBudget - finalPrice));
       const firstName = getCustomerFirstName();
       const nameTag = firstName ? ` يا ${firstName}` : ' يا غالي';
       const opener = pickRandomChef([
-        `عنيا ليك${nameTag}! 💛 ظبطتلك تشكيلة تحفة من ${activeBranch.name} على قد الميزانية وتفتح النفس:`,
-        `ولا يهمك${nameTag}، بص التشكيلة الحلوة دي اللي جمعتهالك مخصوص من ${activeBranch.name}:`
+        `يا أهلاً بالذوق العالي${nameTag}! بص يا سيدي خدها مني على ضمانتي، جمعتلك من ${branchLabel} تشكيلة تفتح النفس: ${spokenList}.`,
+        `عنيا ليك${nameTag}! في ${branchLabel} ظبطتلك قعدة على المزاج فيها ${spokenList}.. الريحة لوحدها تجيب آخر الشارع!`
       ]);
       const budgetNote = budgetNum
-        ? `\n💰 ميزانيتك: ${targetBudget} ج.م | الإجمالي: ${finalPrice} ج.م${remain > 0 ? ` وهيتبقالك كمان ${remain} ج.م في جيبك 😉` : ' بالمظبوط!'}`
-        : `\n💎 إجمالي التشكيلة كلها: ${finalPrice} ج.م بس!`;
+        ? `\nإجمالي التشكيلة ${finalPrice} ج.م من أصل ${targetBudget} ج.م${remain > 0 ? ` وهيتبقالك كمان ${remain} ج.م 😉` : ' بالمظبوط!'}`
+        : `\nسعر التشكيلة كلها ${finalPrice} ج.م بس!`;
 
       return {
-        replyText: `${opener}\n${detailsLines}${budgetNote}\nتقدر تضيف التشكيلة كلها أو أي صنف لوحده للسلة فوراً:`,
+        replyText: `${opener}${budgetNote}\nتحب تضيف التشكيلة كلها بضغطة تحت، ولا نزوّد صنف تاني على ذوقك؟`,
         customBoxKey: boxKey,
         suggestedIds: suggestedIds
       };
@@ -6675,20 +7203,20 @@
 
     function buildOccasionRecommendation(guestCount) {
       const avail = getActiveBranchItems().filter(i => isItemAvailable(i));
-      const activeBranch = getActiveBranchProfile();
+      const branchLabel = getActiveChefBranchShortLabel();
       const cakes = avail.filter(i => normalizeSearchText(i.category).includes('تورت') || normalizeSearchText(i.name).includes('تورت'));
       const gateaux = avail.filter(i => normalizeSearchText(i.category).includes('جاتو') || normalizeSearchText(i.name).includes('جاتو'));
       const sweets = avail.filter(i => normalizeSearchText(i.category).includes('الحلو') || normalizeSearchText(i.category).includes('مخبوزات') || normalizeSearchText(i.category).includes('نواعم'));
 
       const picks = [];
-      let sizeAdvice = 'تورتة مقاس 25/25 أو مدورة مقاس 24 ومعاها جاتوه لوكس أو كيلو سواريه يشرفك قدام ضيوفك';
+      let sizeAdvice = 'تورتة 25/25 أو مدورة مقاس 24 ومعاها جاتوه أو نص كيلو بيتي فور وكوكيز تشرفك قدام ضيوفك';
       if (guestCount > 0) {
         if (guestCount <= 8) {
-          sizeAdvice = `تورتة 20/20 أو تورتة مدورة مقاس 22 هتكفي الـ ${guestCount} أفراد وزيادة، ومعاها بيتي فور أو كوكيز لذيذ`;
+          sizeAdvice = `تورتة 20/20 أو مدورة مقاس 22 هتكفي الـ ${guestCount} أفراد بالراحة ومعاها ربع أو نص بيتي فور لذيذ`;
         } else if (guestCount <= 15) {
-          sizeAdvice = `تورتة 25/25 أو 30/30 هتشرفك قدام الـ ${guestCount} ضيف، وزود جنبها كيلو سواريه أو قطع جاتوه سوبر لوكس للضيافة`;
+          sizeAdvice = `تورتة 25/25 أو 30/30 هتشرفك قدام الـ ${guestCount} ضيف، وزود جنبها نص أو كيلو سابلية وكوكيز للضيافة`;
         } else {
-          sizeAdvice = `تورتة 40/30 أو 40/40 أو دورين من استوديو التورت الملكي عشان تكفي الـ ${guestCount} فرد بالراحة ومعاها كيلو سواريه`;
+          sizeAdvice = `تورتة 40/30 أو 40/40 أو دورين من استوديو التورت الملكي عشان تكفي الـ ${guestCount} فرد وزيادة`;
         }
       }
 
@@ -6696,18 +7224,18 @@
       if (cakes.length > 1) picks.push(cakes[1]);
       if (gateaux.length > 0) picks.push(gateaux[0]);
       if (sweets.length > 0) picks.push(sweets[0]);
-      const uniq = Array.from(new Map(picks.filter(Boolean).map(x => [x.id, x])).values()).slice(0, 5);
-      const lines = uniq.map(i => formatAiItemLine(i)).join('\n');
+      if (sweets.length > 1) picks.push(sweets[1]);
+      const finalIds = pickFiveBranchRecommendations(picks.filter(Boolean).map(x => x.id), 5);
       const firstName = getCustomerFirstName();
       const nameTag = firstName ? ` يا ${firstName}` : '';
       const header = pickRandomChef([
-        `ألف مبروك مقدماً${nameTag} وعقبال كل مناسبة حلوة! 🎉💛`,
-        `يا سيدي على المناسبات السعيدة${nameTag}! 🎉 خلي التجهيز علينا في ${activeBranch.name} وهنشرفك قدام ضيوفك:`
+        `ألف مبروك مقدماً${nameTag} وعقبال كل فرحة حلوة! 🎉💛`,
+        `يا سيدي على المناسبات السعيدة${nameTag}! في ${branchLabel} هنبيض وشك قدام كل الضيوف:`
       ]);
 
       return {
-        replyText: `${header}\n👑 نصيحة الشيف${guestCount > 0 ? ` لـ ${guestCount} أفراد` : ''}: ${sizeAdvice}.\n\nودي أصناف جاهزة وطازجة تقدر تطلبها دلوقتي:\n${lines}\n\nولو حابب تورتة مكتوب عليها الاسم ومصممة على ذوقك افتح «استوديو التورت الملكي» من هنا 👇`,
-        suggestedIds: uniq.map(i => i.id),
+        replyText: `${header} أنصحك تبدأ بـ ${sizeAdvice}، ولأصناف الوزن تقدر تختار ربع أو نص أو كيلو براحتك. قولي بقى ده لعيد ميلاد شوكولاتة غرقانة ولا فاكهة وفانيليا رايقة؟`,
+        suggestedIds: finalIds,
         showRoyalStudioCta: true
       };
     }
@@ -6715,7 +7243,7 @@
     function getInstantAiReply(q) {
       sortRawById();
       const branchItems = getActiveBranchItems();
-      const activeBranch = getActiveBranchProfile();
+      const branchLabel = getActiveChefBranchShortLabel();
       const drinksEnabled = isDrinksAllowedForBranch();
       const rawText = String(q || '').trim();
       const normalizedDigitsText = normalizeDigits(rawText);
@@ -6723,34 +7251,64 @@
       const firstName = getCustomerFirstName();
       const nameTag = firstName ? ` يا ${firstName}` : '';
 
-      // 0-أ. مقترحات خفيفة للدايت أو جنب الشاي (مخبوزات ونواعم وبسكويت من قائمة الفرع النشط فقط)
-      const isTeaTimeSnack = norm.includes('مع الشاي') || norm.includes('جنب الشاي') || norm.includes('للشاي');
-      if (isTeaTimeSnack) {
-        const teaItems = branchItems.filter(item => {
-          if (!isItemAvailable(item)) return false;
+      // 0-أ. فطار سخن على الرايق
+      const isBreakfastAsk = norm.includes('فطار') || norm.includes('سخن') || norm.includes('رايق') || norm.includes('صباح');
+      if (isBreakfastAsk) {
+        const bItems = branchItems.filter(item => {
+          if (!isItemAvailable(item) || isDrinkItem(item)) return false;
           const hay = normalizeSearchText(`${item.name} ${item.desc} ${item.category}`);
-          return hay.includes('بسكويت') || hay.includes('بيتي فور') || hay.includes('كوكيز') || hay.includes('كعك') || hay.includes('بقسماط') || hay.includes('قرص') || hay.includes('قراقيش') || hay.includes('غريب') || hay.includes('سابلي');
-        }).slice(0, 6);
-        const picks = teaItems.length > 0 ? teaItems : branchItems.filter(i => isItemAvailable(i) && !isDrinkItem(i)).slice(0, 5);
+          return hay.includes('كرواسون') || hay.includes('باتيه') || hay.includes('بوريك') || hay.includes('قرص') || hay.includes('فطير') || hay.includes('دانش') || hay.includes('سميط');
+        });
+        const picks = pickFiveBranchRecommendations(bItems.map(i => i.id), 5);
         return {
-          replyText: `أحلى قعدة شاي مع نواعم ومخبوزات ${activeBranch.name}${nameTag}! 🍪☕\nجمعنالك أشهى الأصناف المقرمشة والطازجة اللي تظبط مع الشاي:`,
-          suggestedIds: picks.map(i => i.id),
-          followUpSuggestions: ['🥖 مخبوزات للدايت', '🎁 عرض أو بوكس', '🔥 الأكثر مبيعاً']
+          replyText: `يا صباح الروقان${nameTag}! 🥐☀️ الفرن في ${branchLabel} لسه مطلّع كرواسون وباتيه وبوريك وقرص دافية ريحتها تجيب آخر الشارع، وتقدر تطلب ربع أو نص أو كيلو براحتك. تحب الفطار حلو مع مربى وعجوة ولا حادق بالجبنة والبوريك؟`,
+          suggestedIds: picks,
+          followUpSuggestions: ['☕ حاجة تظبط مع القهوة', '🍪 ربع ونص مشكل', '🥖 مخبوزات للدايت']
         };
       }
 
+      // 0-ب. حاجة تظبط مع القهوة أو الشاي
+      const isCoffeeOrTeaSnack = norm.includes('مع القهو') || norm.includes('القهوه') || norm.includes('مع الشاي') || norm.includes('جنب الشاي') || norm.includes('للشاي');
+      if (isCoffeeOrTeaSnack) {
+        const snackItems = branchItems.filter(item => {
+          if (!isItemAvailable(item)) return false;
+          if (!drinksEnabled && isDrinkItem(item)) return false;
+          const hay = normalizeSearchText(`${item.name} ${item.desc} ${item.category}`);
+          return hay.includes('كوكيز') || hay.includes('بيتي فور') || hay.includes('سابلي') || hay.includes('سينابون') || hay.includes('دونات') || hay.includes('بسكويت') || hay.includes('كرواسون') || (drinksEnabled && hay.includes('لاتيه'));
+        });
+        const picks = pickFiveBranchRecommendations(snackItems.map(i => i.id), 5);
+        return {
+          replyText: `يا سلام عليك${nameTag}، مزاج القهوة عايز صحبة تشرف! ☕🍪 نقيتلك من ${branchLabel} كوكيز وبيتي فور ودوناتس وسينابون ده اللي بيخطف القلب من أول قطمة، وطبعاً متاح ربع أو نص أو كيلو في النواعم. تحب مع القهوة حاجة بالشوكولاتة الغرقانة ولا بسكويت زبدة هادي؟`,
+          suggestedIds: picks,
+          followUpSuggestions: ['🍫 عشاق الشوكولاتة', '🍪 ربع ونص مشكل', '🎁 بوكس هدية يشرف']
+        };
+      }
+
+      // 0-ج. ربع ونص مشكل (أصناف الوزن)
+      const isMixedWeightAsk = norm.includes('ربع ونص') || norm.includes('مشكل') || norm.includes('بالوزن') || (norm.includes('ربع') && norm.includes('نص'));
+      if (isMixedWeightAsk) {
+        const weightItems = branchItems.filter(item => isItemAvailable(item) && !isDrinkItem(item) && getItemUnitMode(item) === 'weight');
+        const picks = pickFiveBranchRecommendations(weightItems.map(i => i.id), 5);
+        return {
+          replyText: `يا أهلاً بأصحاب المزاج${nameTag}! بص يا سيدي خدها مني على ضمانتي، تشكيلة الربع والنص هي أذكى حاجة تدوق بيها كل الأنواع طازجة من ${branchLabel} 😋 تقدر تختار ربع أو نص أو كيلو من أي صنف تحت بضغطة واحدة. المود النهاردة نواعم وبسكويت ولا شرقي وفطاير؟`,
+          suggestedIds: picks,
+          followUpSuggestions: ['🍪 حاجة تظبط مع القهوة', '🍫 عشاق الشوكولاتة', '🎉 عزومة بـ 500 جنيه']
+        };
+      }
+
+      // 0-د. مخبوزات للدايت
       const isDietAsk = norm.includes('دايت') || norm.includes('ريجيم') || norm.includes('لايت') || norm.includes('خفيف') || norm.includes('سعرات');
       if (isDietAsk) {
         const dietItems = branchItems.filter(item => {
           if (!isItemAvailable(item) || isDrinkItem(item)) return false;
           const hay = normalizeSearchText(`${item.name} ${item.desc} ${item.category}`);
-          return hay.includes('بقسماط') || hay.includes('شوفان') || hay.includes('سن') || hay.includes('كمون') || hay.includes('سمسم') || hay.includes('فطير') || hay.includes('مخبوزات') || hay.includes('قرص') || hay.includes('ميني');
-        }).slice(0, 6);
-        const picks = dietItems.length > 0 ? dietItems : branchItems.filter(i => isItemAvailable(i) && !isDrinkItem(i)).slice(0, 5);
+          return hay.includes('بقسماط') || hay.includes('سن') || hay.includes('كمون') || hay.includes('شابور') || hay.includes('برازيل') || hay.includes('قرص ساد') || hay.includes('فطير ساد');
+        });
+        const picks = pickFiveBranchRecommendations(dietItems.map(i => i.id), 5);
         return {
-          replyText: `أحلى اختيارات خفيفة ولطيفة من فرن ${activeBranch.name}${nameTag} 🥖✨\nمخبوزات خفيفة ومقرمشة تقدر تستمتع بيها باعتدال وتنور سفرتك:`,
-          suggestedIds: picks.map(i => i.id),
-          followUpSuggestions: ['🍪 أحلى حاجة مع الشاي', '🎂 تورتة لعيد ميلاد', '🎉 عزومة بـ 500 جنيه']
+          replyText: `مظبطينك حتى في الدايت${nameTag}! 🥖✨ في ${branchLabel} هتلاقي بقسماط سن مقرمش وكمون وشابورة وقرص خفيفة تاخد منها ربع أو نص كيلو براحتك من غير تأنيب ضمير. تحب معاه بقسماط سادة خفيف ولا قراقيش مقرمشة؟`,
+          suggestedIds: picks,
+          followUpSuggestions: ['🥐 فطار سخن على الرايق', '🍪 ربع ونص مشكل', '☕ حاجة تظبط مع القهوة']
         };
       }
 
@@ -6758,24 +7316,25 @@
       const isDrinkAsk = norm.includes('قهو') || norm.includes('مشروب') || norm.includes('كافيه') || norm.includes('عصير') || norm.includes('لاتيه') || norm.includes('شاي') || norm.includes('سموذي') || norm.includes('فرابيه') || norm.includes('موهيتو') || norm.includes('ميلك شيك') || norm.includes('ماتشا') || norm.includes('اسبريسو') || norm.includes('كابتشينو') || norm.includes('موكا') || norm.includes('هوت شوكليت');
       if (isDrinkAsk) {
         if (!drinksEnabled) {
-          const popIds = getPopularItemsIds().slice(0, 4);
-          const popItems = popIds.map(id => branchItems.find(i => i.id === id && isItemAvailable(i))).filter(Boolean);
+          const popPicks = pickFiveBranchRecommendations(getPopularItemsIds(), 5);
           return {
-            replyText: `منورنا${nameTag} في ${activeBranch.name} 💛\n☕ قسم المشروبات والكافيه متاح في فرع مجاورة 18 مول تن بوينت (تقدر تختار «فرع 18 (تن بوينت)» من أعلى الصفحة لتصفح قائمة الكافيه الكاملة).\nأما في ${activeBranch.name} فمتخصصين في أشهى المخبوزات والحلويات والتورت والجاتوه الطازجة يومياً! شوف أحلى اختياراتنا دلوقتي:\n${popItems.map(i => formatAiItemLine(i)).join('\n')}`,
-            suggestedIds: popItems.map(i => i.id)
+            replyText: `منورنا${nameTag} في ${branchLabel} 💛 ركن مشروبات الكافيه مخصوص لفرع\u00A018\u00A0(تن\u00A0بوينت) وتقدر تحوّل عليه من شريط الفروع فوق لو حابب تشرب قهوة، إنما هنا في ${branchLabel} مبدعين في المخبوزات السخنة والنواعم والتورت والحلويات الشرقية وبنقدملك اختيارات وزن مرنة ربع أو نص أو كيلو. قولي بقى نفسك في حاجة مسكرة ولا حادقة؟`,
+            suggestedIds: popPicks
           };
         }
         const matchedDrinks = branchItems.filter(item => {
           if (!isItemAvailable(item) || !isDrinkItem(item)) return false;
           const hay = normalizeSearchText(`${item.name} ${item.desc} ${item.category}`);
           return hay.includes(norm) || norm.split(/\s+/).some(w => w.length >= 3 && hay.includes(w));
-        }).slice(0, 6);
-        const topDrinks = matchedDrinks.length > 0
-          ? matchedDrinks
-          : branchItems.filter(i => isItemAvailable(i) && isDrinkItem(i)).slice(0, 6);
+        });
+        const allDrinks = branchItems.filter(i => isItemAvailable(i) && isDrinkItem(i));
+        const picks = pickFiveBranchRecommendations(
+          (matchedDrinks.length > 0 ? matchedDrinks : allDrinks).map(i => i.id),
+          5
+        );
         return {
-          replyText: `أحلى مزاج في كافيه فرع مول تن بوينت 18${nameTag} ☕✨ شوف ألذ مشروباتنا الطازجة دلوقتي:\n${topDrinks.map(i => formatAiItemLine(i)).join('\n')}\nاضغط (+ أضف للسلة) على أي مشروب وهنجهزهولك فوراً!`,
-          suggestedIds: topDrinks.map(i => i.id)
+          replyText: `أحلى مزاج في كافيه ${branchLabel}${nameTag} ☕✨ عندك سبانش لاتيه وآيس سبانش وميلك شيك وسموذي ينعش القلب، وضيفهم لسلتك بضغطة تحت! تحب المشروب ساخن يدفيك ولا بارد يروق عليك؟`,
+          suggestedIds: picks
         };
       }
 
@@ -6786,15 +7345,15 @@
           if (!isItemAvailable(item)) return false;
           const hay = normalizeSearchText(`${item.name} ${item.desc} ${item.category}`);
           return hay.includes('شوكولا') || hay.includes('شيكولا') || hay.includes('نوتيلا') || hay.includes('مولتن') || hay.includes('مولتو') || hay.includes('دونات') || hay.includes('كوكيز') || hay.includes('بيتي فور');
-        }).slice(0, 6);
-        const finalChoco = chocoItems.length > 0 ? chocoItems : branchItems.filter(i => isItemAvailable(i)).slice(0, 5);
+        });
+        const picks = pickFiveBranchRecommendations(chocoItems.map(i => i.id), 5);
         const intro = pickRandomChef([
-          `آه يا سلام على مزاج عشاق الشوكولاتة${nameTag}! 🍫✨ نقيتلك أحلى الأصناف الغرقانة شوكولاتة في ${activeBranch.name}:`,
-          `مفيش أحلى من الشوكولاتة تعدل المزاج${nameTag} 🍫💛 شوف القمر ده من فرن سويت سيتي:`
+          `آه يا سلام على مزاج عشاق الشوكولاتة${nameTag}! 🍫✨ نقيتلك من ${branchLabel} أحلى حاجات غرقانة شوكولاتة تخطف القلب من أول قطمة، والنواعم متاحة ربع أو نص أو كيلو براحتك.`,
+          `مفيش أحلى من الشوكولاتة تعدل المزاج${nameTag} 🍫💛 جهزتلك تشكيلة سعادة في ${branchLabel} كلها شوكولاتة وكوكيز وبيتي فور طازج!`
         ]);
         return {
-          replyText: `${intro}\n${finalChoco.map(i => formatAiItemLine(i)).join('\n')}\nاختار اللي يفتح نفسك واضغط (+ أضف للسلة) فوراً!`,
-          suggestedIds: finalChoco.map(i => i.id)
+          replyText: `${intro}\nقولي بقى ده ليك لوحدك تدلع نفسك ولا جايبين للبيت كله؟`,
+          suggestedIds: picks
         };
       }
 
@@ -6802,6 +7361,10 @@
       const guestMatch = normalizedDigitsText.match(/(\d{1,3})\s*(فرد|أفراد|افراد|شخص|أشخاص|اشخاص|ضيف|ضيوف|نفر)/i);
       const isOccasion = Boolean(guestMatch) || norm.includes('مناسبه') || norm.includes('عزومه') || norm.includes('عيد ميلاد') || norm.includes('خطوبه') || norm.includes('فرح') || norm.includes('حفله') || norm.includes('ضيوف');
       if (isOccasion) {
+        const budgetInOccasion = normalizedDigitsText.match(/(\d{2,4})\s*(?:جنيه|ج\.م|ج|مصري)/);
+        if (norm.includes('عزومه') && budgetInOccasion && Number(budgetInOccasion[1]) >= 80) {
+          return buildHappinessBoxSuggestion(Number(budgetInOccasion[1]));
+        }
         const guests = guestMatch ? Math.min(200, Math.max(2, Number(guestMatch[1]))) : 0;
         return buildOccasionRecommendation(guests);
       }
@@ -6816,7 +7379,7 @@
         }
         const b = buildHappinessBoxSuggestion(200);
         return {
-          replyText: `قولّي بس ميزانيتك كام${nameTag} (زي «معايا 150 جنيه» أو «معايا 250 جنيه») وأنا هفصّلك تشكيلة على مقاسها بالظبط! 💰✨\nوكبداية سريعة، بص التشكيلة اللطيفة دي في حدود 200 جنيه:`,
+          replyText: `قولّي بس ميزانيتك كام${nameTag} وأنا هفصّلك تشكيلة من ${branchLabel} على مقاسها بالظبط! 💰✨ كبداية عملتلك تشكيلة حلوة في حدود 200 جنيه تقدر تضيفها تحت. تحب نزوّد شرقي ولا مخبوزات؟`,
           customBoxKey: b.customBoxKey,
           suggestedIds: b.suggestedIds
         };
@@ -6825,32 +7388,30 @@
       // 4. الأكثر مبيعاً اليوم
       const isBestSellers = norm.includes('الاكثر') || norm.includes('مبيعا') || norm.includes('تريند') || norm.includes('اشهر') || norm.includes('مميز');
       if (isBestSellers) {
-        const popIds = getPopularItemsIds().slice(0, 6);
-        const popItems = popIds.map(id => branchItems.find(i => i.id === id && isItemAvailable(i))).filter(Boolean);
-        const finalPop = popItems.length > 0 ? popItems : branchItems.filter(i => isItemAvailable(i)).slice(0, 5);
+        const picks = pickFiveBranchRecommendations(getPopularItemsIds(), 5);
         const intro = pickRandomChef([
-          `دي أكتر حاجات زبايننا بيخطفوها النهاردة في ${activeBranch.name}${nameTag} 🔥👑:`,
-          `لو عايز المضمون اللي كل الناس بتشكر فيه${nameTag}.. بص التريندات بتاعتنا النهاردة 🔥✨:`
+          `دي أكتر حاجات زباين ${branchLabel} بيخطفوها أول ما تطلع من الفرن${nameTag} 🔥👑 وكل أصناف الوزن متاحة ربع أو نص أو كيلو.`,
+          `لو عايز المضمون اللي كل الناس بتشكر فيه في ${branchLabel}${nameTag}.. بص التريندات بتاعتنا تحت 🔥✨`
         ]);
         return {
-          replyText: `${intro}\n${finalPop.map(i => formatAiItemLine(i)).join('\n')}\nاضغط (+ أضف للسلة) على أي صنف وهيجيلك طازج فوراً!`,
-          suggestedIds: finalPop.map(i => i.id)
+          replyText: `${intro}\nأي صنف فيهم يفتح نفسك أكتر؟`,
+          suggestedIds: picks
         };
       }
 
-      // 5. العروض وأكواد الخصم الحية
+      // 5. العروض وأكواد الخصم الحية وبوكسات الهدايا
       const isOfferOrBox = norm.includes('عرض') || norm.includes('عروض') || norm.includes('خصم') || norm.includes('خصومات') || norm.includes('بوكس') || norm.includes('هدايا') || norm.includes('هديه');
       if (isOfferOrBox) {
-        const offerItems = branchItems.filter(i => isItemAvailable(i) && ((i.oldPrice && Number(i.oldPrice) > Number(i.price)) || String(i.category || '').includes('عروض') || isItemPopular(i))).slice(0, 5);
-        const listToUse = offerItems.length > 0 ? offerItems : branchItems.filter(i => isItemAvailable(i)).slice(0, 5);
-        const activePromoLines = (Array.isArray(LIVE_OFFERS) && LIVE_OFFERS.length > 0)
-          ? '\n🎟️ ومعانا كمان أكواد خصم شغالة دلوقتي تكتبها في السلة:\n' + LIVE_OFFERS.filter(o => o.active !== false).slice(0, 3).map(o => `• كود (${o.code}): خصم ${o.discountType === 'fixed' ? o.discountValue + ' ج.م' : o.discountValue + '%'}${o.minOrder > 0 ? ' للطلبات من ' + o.minOrder + ' ج.م' : ''}`).join('\n')
+        const offerItems = branchItems.filter(i => isItemAvailable(i) && ((i.oldPrice && Number(i.oldPrice) > Number(i.price)) || String(i.category || '').includes('عروض') || isItemPopular(i)));
+        const picks = pickFiveBranchRecommendations(offerItems.map(i => i.id), 5);
+        const activePromos = (Array.isArray(LIVE_OFFERS) && LIVE_OFFERS.length > 0)
+          ? LIVE_OFFERS.filter(o => o.active !== false).slice(0, 2).map(o => `كود ${o.code} لخصم ${o.discountType === 'fixed' ? o.discountValue + ' ج.م' : o.discountValue + '%'}`).join(' و')
           : '';
         const boxSuggestion = buildHappinessBoxSuggestion(0);
         return {
-          replyText: `أحلى تشكيلات وهدايا ${activeBranch.name} عشانك${nameTag} 🎁✨:\n${listToUse.map(i => formatAiItemLine(i)).join('\n')}${activePromoLines}\nضيف اللي يعجبك للسلة بضغطة واحدة!`,
+          replyText: `يا بخت اللي رايحله الهدية منك${nameTag}! 🎁✨ جهزتلك في ${branchLabel} بوكس هدية شيك ويشرف، ومعاك كمان تحت 5 أصناف طازجة ومطلوبة جداً${activePromos ? ` (ومتنساش تستفيد بـ ${activePromos} في السلة)` : ''}. تحبها هدية شرقي ونواعم ولا تورتة وجاتوه؟`,
           customBoxKey: boxSuggestion.customBoxKey,
-          suggestedIds: listToUse.map(i => i.id)
+          suggestedIds: picks
         };
       }
 
@@ -6863,8 +7424,8 @@
         const rawThresh = STORE_SETTINGS.freeDeliveryThreshold;
         const freeThresh = (rawThresh !== undefined && rawThresh !== null && rawThresh !== '' && !isNaN(Number(rawThresh)) && Number(rawThresh) >= 0) ? Number(rawThresh) : 250;
         return {
-          replyText: `تشرفنا في أي وقت في فروعنا الثلاثة بالعاشر من رمضان${nameTag}! 📍\n\n1️⃣ ${b26.name}:\n• ${b26.address}\n• 📞 ${b26.phones} | 📱 كاش: ${b26.cash} | 🏦 إنستا باي: ${b26.instapay}\n\n2️⃣ ${b18.name} (يشمل الكافيه والمشروبات ☕):\n• ${b18.address}\n• 📞 ${b18.phones} | 📱 كاش: ${b18.cash} | 🏦 إنستا باي: ${b18.instapay}\n\n3️⃣ ${b31.name}:\n• ${b31.address}\n• 📞 ${b31.phones} | 📱 كاش: ${b31.cash} | 🏦 إنستا باي: ${b31.instapay}\n\n🛵 التوصيل مجاني لأي طلب من ${freeThresh} ج.م وطالع 🎁`,
-          suggestedIds: getPopularItemsIds().slice(0, 4)
+          replyText: `تشرفنا في أي وقت في فروعنا بالعاشر من رمضان${nameTag}! 📍\nفرع\u00A0الـ\u00A026 الرئيسي: ${b26.address} (${b26.phones}). فرع\u00A018\u00A0(تن\u00A0بوينت) بالكافيه: ${b18.address} (${b18.phones}). فرع\u00A0الـ\u00A031: ${b31.address} (${b31.phones}).\nوالتوصيل مجاني لأي طلب من ${freeThresh} ج.م وطالع! تحب أوصلك إيه النهاردة من ${branchLabel}؟`,
+          suggestedIds: pickFiveBranchRecommendations(getPopularItemsIds(), 5)
         };
       }
 
@@ -6901,24 +7462,22 @@
 
       if (scored.length > 0) {
         scored.sort((a, b) => b.score - a.score);
-        const topItems = scored.slice(0, 6).map(s => s.item);
-        const lines = topItems.map(i => formatAiItemLine(i)).join('\n');
+        const finalPicks = pickFiveBranchRecommendations(scored.map(s => s.item.id), 5);
         const foundIntro = pickRandomChef([
-          `اختيارك ذوقه عالي أوي${nameTag}! ✨ بص أحلى حاجات عندنا في ${activeBranch.name} لطلبك دلوقتي:`,
-          `من عيوني الاتنين${nameTag} 👨‍🍳💛 جبتلك أحلى ترشيحات طازجة من ${activeBranch.name}:`
+          `اختيارك ذوقه عالي أوي${nameTag}! ✨ جبتلك من ${branchLabel} أحلى حاجات على طلبك دلوقتي وتقدر تضيف ربع أو نص أو كيلو في أصناف الوزن.`,
+          `من عيوني الاتنين${nameTag} 👨‍🍳💛 في ${branchLabel} جهزتلك أحلى 5 ترشيحات طازجة لسة طالعة من الفرن!`
         ]);
         return {
-          replyText: `${foundIntro}\n${lines}\nضيف اللي يفتح نفسك للسلة بضغطة واحدة!`,
-          suggestedIds: topItems.map(i => i.id),
+          replyText: `${foundIntro}\nتحب تبدأ بأي واحد فيهم ولا نظبط جنبه صنف تاني؟`,
+          suggestedIds: finalPicks,
           showRoyalStudioCta: isCakeQuery
         };
       }
 
-      const popularIds = getPopularItemsIds().slice(0, 5);
-      const popItems = popularIds.map(id => branchItems.find(i => i.id === id && isItemAvailable(i))).filter(Boolean);
+      const popIds = pickFiveBranchRecommendations(getPopularItemsIds(), 5);
       return {
-        replyText: `منورني${nameTag} 👨‍🍳✨ قولي بس إنت نفسك في إيه (مثلاً: «معايا 200 جنيه»، «عزومة 10 أفراد»، «حاجة بالشوكولاتة»، أو «كرواسون وفطير») وهظبطك فوراً!\nلحد ما تقرر، شوف أحلى أصناف طالعالنا طازجة دلوقتي في ${activeBranch.name}:`,
-        suggestedIds: popItems.map(i => i.id)
+        replyText: `منورني${nameTag} في ${branchLabel} 👨‍🍳✨ قولي المود النهاردة إيه (فطار سخن، شوكولاتة غرقانة، تورتة، ولا عزومة بميزانية معينة) وهظبطك فوراً! لحد ما تختار، بص على أحلى 5 ترشيحات طازجة دلوقتي تحت:`,
+        suggestedIds: popIds
       };
     }
 
@@ -6928,6 +7487,8 @@
       const inputEl = document.getElementById('aiQuestionInput');
       const q = String(presetText || (inputEl ? inputEl.value : '') || '').trim();
       if (!q) return;
+      stopChefSpeaking();
+      unlockChefAudio();
       if (inputEl) inputEl.value = '';
       if (aiTypingTimer) { clearTimeout(aiTypingTimer); aiTypingTimer = null; }
       if (aiActiveAbortController) {
@@ -6941,18 +7502,19 @@
 
       aiChatHistory.push({ role: 'user', text: q });
       aiIsTyping = true;
-      renderAiMessages();
+      renderAiMessages('bottom');
 
       const applyAssistantReply = (msgObj) => {
         aiIsTyping = false;
         if (msgObj && msgObj.text) {
           aiChatHistory.push(msgObj);
-          renderAiMessages();
+          const newMsgIdx = aiChatHistory.length - 1;
+          renderAiMessages('replyTop');
           if (aiAutoSpeakEnabled) {
-            speakChefText(msgObj.text);
+            speakChefText(msgObj.text, newMsgIdx);
           }
         } else {
-          renderAiMessages();
+          renderAiMessages('bottom');
         }
       };
 
@@ -6966,7 +7528,7 @@
           role: 'assistant',
           text: localReply.replyText,
           customBoxKey: localReply.customBoxKey || null,
-          suggestedIds: localReply.suggestedIds || [],
+          suggestedIds: pickFiveBranchRecommendations(localReply.suggestedIds || [], 5),
           followUpSuggestions: localReply.followUpSuggestions || [],
           showRoyalStudioCta: Boolean(localReply.showRoyalStudioCta)
         });
@@ -6981,8 +7543,6 @@
         }, 12000);
 
         try {
-          const activeBranchItems = getActiveBranchItems();
-          const validBranchIdSet = new Set(activeBranchItems.filter(isItemAvailable).map(i => Number(i.id)));
           const res = await fetchAppsScriptPost(
             apiUrl,
             {
@@ -6998,9 +7558,10 @@
           aiActiveAbortController = null;
 
           if (res && res.ok === true && res.fallback !== true && typeof res.reply === 'string' && res.reply.trim()) {
-            const safeIds = Array.isArray(res.recommendedIds)
-              ? res.recommendedIds.map(id => Number(id)).filter(id => validBranchIdSet.has(id)).slice(0, 6)
-              : [];
+            const safeIds = pickFiveBranchRecommendations(
+              Array.isArray(res.recommendedIds) ? res.recommendedIds : [],
+              5
+            );
             const safeFollowUps = Array.isArray(res.followUpSuggestions)
               ? res.followUpSuggestions.map(s => String(s || '').trim()).filter(Boolean).slice(0, 4)
               : [];
