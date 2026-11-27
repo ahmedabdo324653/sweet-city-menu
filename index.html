@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>حلواني ومخبز سويت سيتي — فرع الـ 26 | SWEET CITY 1999</title>
+  <title>Sweet City Bakery &amp; Pastry — فرع الـ 26 | SWEET CITY 1999</title>
   <meta name="description" content="اطلب الآن أشهى المخبوزات الطازجة، الفطائر، الحلو، التورت المستطيلة والمدورة، والجاتوه من حلواني ومخبز سويت سيتي — فرع الـ 26 (العاشر من رمضان - مجاورة 26 أمام مفارق المجاورة 19). تصفح المنيو واطلب الآن توصيل سريع لباب البيت." />
-  <meta property="og:title" content="حلواني ومخبز سويت سيتي — فرع الـ 26 | SWEET CITY 1999" />
+  <meta property="og:title" content="Sweet City Bakery &amp; Pastry — فرع الـ 26 | SWEET CITY 1999" />
   <meta property="og:description" content="اطلب الآن أشهى المخبوزات الطازجة، الفطائر، الحلو، التورت المستطيلة والمدورة، والجاتوه من حلواني ومخبز سويت سيتي — فرع الـ 26 (العاشر من رمضان - مجاورة 26 أمام مفارق المجاورة 19). تصفح المنيو واطلب الآن توصيل سريع لباب البيت." />
   <meta property="og:image" content="https://ahmedabdo324653.github.io/sweet-city-menu/logo.png" />
   <meta property="og:type" content="website" />
@@ -156,6 +156,41 @@
     .sc-hero-gold-title {
       color: #e5c158;
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95);
+    }
+    .sc-hero-brand-col {
+      min-width: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sc-hero-brand-title {
+      margin: 0;
+      unicode-bidi: isolate;
+      font-size: clamp(15px, 4.3vw, 21px);
+      line-height: 1.25;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      text-align: right;
+      letter-spacing: 0.01em;
+    }
+    .sc-hero-meta-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px 6px;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.35;
+      color: #e7e2d9;
+    }
+    .sc-hero-branch-badge {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #f3d266;
+      white-space: normal;
+      overflow: visible;
     }
     .sc-cinematic-hero h1,
     .sc-cinematic-hero p,
@@ -518,27 +553,108 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 4px;
-      margin-top: 7px;
+      margin-top: 6px;
     }
     .sc-weight-chip {
-      padding: 3px 2px;
-      border-radius: 8px;
-      font-size: 9.5px;
-      font-weight: 800;
+      min-height: 36px;
+      padding: 4px 2px;
+      border-radius: 9px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
       text-align: center;
-      background-color: #1e1e1e;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background-color: #1a1814;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: #cfcac0;
       cursor: pointer;
       transition: all 0.15s ease;
       white-space: nowrap;
+      line-height: 1.15;
       font-variant-numeric: tabular-nums;
     }
+    .sc-weight-chip:hover:not(:disabled) {
+      border-color: rgba(212, 175, 55, 0.45);
+    }
+    .sc-weight-chip:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
     .sc-weight-chip.active {
-      background-color: rgba(212, 175, 55, 0.2);
-      color: #f3d266;
-      border-color: rgba(212, 175, 55, 0.65);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.26) 0%, rgba(181, 137, 30, 0.16) 100%);
+      color: #f8de7e;
+      border-color: rgba(243, 210, 102, 0.85);
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
       font-weight: 900;
+    }
+    .sc-weight-lbl {
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+    .sc-weight-pr {
+      font-size: 9px;
+      font-weight: 700;
+      opacity: 0.9;
+      line-height: 1.1;
+    }
+    .sc-weighted-price-row {
+      margin-top: 7px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+    .sc-in-cart-weight-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 2px 6px;
+      border-radius: 7px;
+      background-color: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.48);
+      color: #f3d266;
+      font-size: 9.5px;
+      font-weight: 800;
+      line-height: 1.2;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+    .sc-weighted-add-btn {
+      width: 100%;
+      min-height: 36px;
+      margin-top: 6px;
+      padding: 6px 6px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #e5c158 0%, #d4af37 55%, #b5891e 100%);
+      color: #0a0a0a;
+      border: none;
+      font-size: clamp(9.5px, 2.7vw, 11.5px);
+      font-weight: 900;
+      line-height: 1.25;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+      transition: transform 0.14s ease, filter 0.15s ease;
+    }
+    .sc-weighted-add-btn:hover:not(:disabled) {
+      filter: brightness(1.08);
+    }
+    .sc-weighted-add-btn:active:not(:disabled) {
+      transform: scale(0.96);
+    }
+    .sc-weighted-add-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
     .sc-card-bottom-row {
       margin-top: 8px;
@@ -1251,18 +1367,17 @@
                 <span class="text-[9px] font-bold text-[#f5f0e6] mt-0.5 tracking-widest">1999</span>
               </div>
             </button>
-            <div class="min-w-0 flex-1 text-right">
-              <div class="flex items-baseline gap-2 min-w-0">
-                <h1 class="text-[19px] sm:text-[21px] font-black sc-hero-gold-title leading-tight truncate">حلواني ومخبز سويت سيتي</h1>
-                <span id="uiHeaderBranchBadge" class="text-[10px] font-bold text-[#f3d266] truncate">فرع الـ 26 • منذ 1999</span>
-              </div>
-              <p class="mt-0.5 flex items-center gap-1.5 text-[11px] font-bold text-stone-200 flex-wrap leading-snug">
+            <div class="sc-hero-brand-col text-right">
+              <h1 dir="ltr" style="unicode-bidi: isolate;" class="sc-hero-gold-title sc-hero-brand-title font-en font-black">Sweet City Bakery &amp; Pastry</h1>
+              <div class="sc-hero-meta-row">
+                <span id="uiHeaderBranchBadge" class="sc-hero-branch-badge">فرع الـ 26 • منذ 1999</span>
+                <span class="text-stone-500">•</span>
                 <span id="uiOpenStatus" class="text-emerald-300 font-bold">🟢 متاح للتحضير</span>
                 <span class="text-stone-500">•</span>
                 <span class="text-[#e5c158] font-extrabold">⭐ 4.9</span>
                 <span class="text-stone-500">•</span>
                 <span class="text-stone-200"><span id="uiTotalItemsCount" class="font-black text-white">81</span> صنف طازج</span>
-              </p>
+              </div>
             </div>
           </div>
 
@@ -4057,6 +4172,16 @@
       handleSearch('', true);
     }
 
+    function roundWeight(w) {
+      return Math.round((Number(w) || 0) * 100) / 100;
+    }
+    window.roundWeight = roundWeight;
+
+    function roundMoney(m) {
+      return Math.round((Number(m) || 0) * 100) / 100;
+    }
+    window.roundMoney = roundMoney;
+
     function getItemUnitMode(item) {
       if (!item) return 'piece';
       if (isAiBoxItem(item)) return 'box';
@@ -4076,7 +4201,7 @@
     }
 
     function formatQuantityArabic(w, mode) {
-      const cleanW = Math.max(0, Math.round((Number(w) || 0) * 100) / 100);
+      const cleanW = Math.max(0, roundWeight(w));
       if (mode === 'cup') {
         const count = Math.max(0, Math.round(cleanW));
         if (count === 0) return '0 (اختر عدد الأكواب)';
@@ -4102,26 +4227,18 @@
         return count + ' قطعة';
       }
       if (cleanW === 0) return '0 (اختر الوزن بالكيلو)';
-      const kilos = Math.floor(cleanW);
-      const rem = Math.round((cleanW - kilos) * 100) / 100;
-      if (kilos === 0) {
-        if (rem === 0.25) return 'ربع كيلو (0.25 كجم)';
-        if (rem === 0.5) return 'نص كيلو (0.5 كجم)';
-        if (rem === 0.75) return 'كيلو إلا ربع (0.75 كجم)';
-        return cleanW + ' كجم';
-      }
-      if (rem === 0) return kilos + ' كيلو (' + cleanW + ' كجم)';
-      if (rem === 0.25) return (kilos === 1 ? 'كيلو' : kilos + ' كيلو') + ' وربع (' + cleanW + ' كجم)';
-      if (rem === 0.5) return (kilos === 1 ? 'كيلو' : kilos + ' كيلو') + ' ونص (' + cleanW + ' كجم)';
-      if (rem === 0.75) return (kilos + 1) + ' كيلو إلا ربع (' + cleanW + ' كجم)';
-      return cleanW + ' كجم';
+      if (cleanW === 0.25) return 'ربع كيلو (0.25 كجم)';
+      if (cleanW === 0.5) return 'نص كيلو (0.5 كجم)';
+      if (cleanW === 0.75) return 'كيلو إلا ربع (0.75 كجم)';
+      if (cleanW === 1) return '1 كيلو (1 كجم)';
+      return cleanW + ' كيلو (' + cleanW + ' كجم)';
     }
 
     function setItemWeight(itemId, weight) {
       const item = RAW.find(i => i.id === itemId);
       const mode = item ? getItemUnitMode(item) : 'weight';
       const clean = mode === 'weight'
-        ? Math.max(0, Math.round((Number(weight) || 0) * 100) / 100)
+        ? Math.max(0, roundWeight(weight))
         : Math.max(0, Math.round(Number(weight) || 0));
       selectedWeights[itemId] = clean;
       updateSingleProductCard(itemId);
@@ -4132,7 +4249,7 @@
       const mode = item ? getItemUnitMode(item) : 'weight';
       const current = selectedWeights[itemId] !== undefined ? selectedWeights[itemId] : 0;
       const next = mode === 'weight'
-        ? Math.max(0, Math.round((current + delta) * 100) / 100)
+        ? Math.max(0, roundWeight(current + delta))
         : Math.max(0, Math.round(current + delta));
       selectedWeights[itemId] = next;
       updateSingleProductCard(itemId);
@@ -4215,15 +4332,25 @@
     const SC_BATCH_SIZE = 16;
 
     function getCardActiveWeight(item) {
-      const w = selectedWeights[item.id];
-      return (w && w > 0) ? w : 0.25;
+      const w = roundWeight(selectedWeights[item.id]);
+      return (w && w > 0) ? w : 1;
+    }
+
+    function getItemCartWeightTotal(itemId) {
+      if (!Array.isArray(cart)) return 0;
+      let total = 0;
+      cart.forEach(c => {
+        if (c && Number(c.itemId) === Number(itemId) && c.unitMode === 'weight') {
+          total = roundWeight(total + roundWeight((Number(c.weightFactor) || 0) * (Number(c.qty) || 1)));
+        }
+      });
+      return roundWeight(total);
     }
 
     function getItemCartKeyForCard(item) {
       const mode = getItemUnitMode(item);
       if (mode === 'weight') {
-        const w = getCardActiveWeight(item);
-        return `${item.id}_${w}`;
+        return `${item.id}_weight`;
       }
       return `${item.id}_${mode}`;
     }
@@ -4235,37 +4362,102 @@
     }
 
     function selectCardWeight(itemId, weight) {
-      selectedWeights[itemId] = Math.max(0.25, Math.round((Number(weight) || 0.25) * 100) / 100);
+      selectedWeights[itemId] = Math.max(0.25, roundWeight(weight || 1));
       updateSingleProductCard(itemId);
       updateSpotlightCardControl(itemId);
     }
     window.selectCardWeight = selectCardWeight;
 
+    function addWeightToCartUnified(item, weightKg) {
+      const cleanW = roundWeight(weightKg);
+      if (!item || cleanW <= 0) return null;
+      const kiloPrice = Number(item.price) || 0;
+      const key = `${item.id}_weight`;
+      const existing = cart.find(c => c.key === key || (Number(c.itemId) === Number(item.id) && c.unitMode === 'weight'));
+      if (existing) {
+        const currentW = roundWeight((Number(existing.weightFactor) || 0) * (Number(existing.qty) || 1));
+        const nextW = roundWeight(currentW + cleanW);
+        existing.key = key;
+        existing.weightFactor = nextW;
+        existing.qty = 1;
+        existing.baseKiloPrice = kiloPrice;
+        existing.unitPrice = roundMoney(kiloPrice * nextW);
+        existing.weightLabel = formatQuantityArabic(nextW, 'weight');
+        return existing;
+      }
+      const entry = {
+        key,
+        itemId: item.id,
+        name: item.name,
+        unitType: 'weight',
+        unitMode: 'weight',
+        weightFactor: cleanW,
+        weightLabel: formatQuantityArabic(cleanW, 'weight'),
+        baseKiloPrice: kiloPrice,
+        unitPrice: roundMoney(kiloPrice * cleanW),
+        qty: 1
+      };
+      cart.push(entry);
+      return entry;
+    }
+
+    function addWeightedCardToCart(itemId) {
+      const item = RAW.find(i => i.id === itemId);
+      if (!item || !isItemAvailable(item)) return;
+      const activeW = getCardActiveWeight(item);
+      addWeightToCartUnified(item, activeW);
+      updateCartBadge(true);
+      persistCartToStorage();
+      updateSingleProductCard(itemId);
+      updateSpotlightCardControl(itemId);
+      if (typeof showToast === 'function') {
+        showToast(`✨ تمت إضافة «${item.name}» — ${formatQuantityArabic(activeW, 'weight')} إلى السلة`, false);
+      }
+    }
+    window.addWeightedCardToCart = addWeightedCardToCart;
+
     function cardStepCartQty(itemId, delta) {
       const item = RAW.find(i => i.id === itemId);
       if (!item || !isItemAvailable(item)) return;
       const mode = getItemUnitMode(item);
+
+      if (mode === 'weight') {
+        const key = `${item.id}_weight`;
+        const idx = cart.findIndex(c => c.key === key || (Number(c.itemId) === Number(item.id) && c.unitMode === 'weight'));
+        if (delta > 0) {
+          const w = getCardActiveWeight(item);
+          addWeightToCartUnified(item, w);
+          if (typeof showToast === 'function') {
+            showToast(`✨ تمت إضافة «${item.name}» — ${formatQuantityArabic(w, 'weight')} إلى السلة`, false);
+          }
+        } else if (delta < 0 && idx !== -1) {
+          const currentW = roundWeight((Number(cart[idx].weightFactor) || 0) * (Number(cart[idx].qty) || 1));
+          const nextW = roundWeight(currentW - 0.25);
+          if (nextW <= 0) {
+            cart.splice(idx, 1);
+          } else {
+            const kiloPrice = Number(item.price) || Number(cart[idx].baseKiloPrice) || 0;
+            cart[idx].key = key;
+            cart[idx].weightFactor = nextW;
+            cart[idx].qty = 1;
+            cart[idx].baseKiloPrice = kiloPrice;
+            cart[idx].unitPrice = roundMoney(kiloPrice * nextW);
+            cart[idx].weightLabel = formatQuantityArabic(nextW, 'weight');
+          }
+        }
+        updateCartBadge(delta > 0);
+        persistCartToStorage();
+        updateSingleProductCard(itemId);
+        updateSpotlightCardControl(itemId);
+        return;
+      }
+
       const key = getItemCartKeyForCard(item);
       const idx = cart.findIndex(c => c.key === key);
 
       if (delta > 0) {
         if (idx !== -1) {
           cart[idx].qty += delta;
-        } else if (mode === 'weight') {
-          const w = getCardActiveWeight(item);
-          const exactPrice = Number((item.price * w).toFixed(2));
-          cart.push({
-            key,
-            itemId: item.id,
-            name: item.name,
-            unitType: 'weight',
-            unitMode: 'weight',
-            weightFactor: w,
-            weightLabel: formatQuantityArabic(w, 'weight'),
-            baseKiloPrice: item.price,
-            unitPrice: exactPrice,
-            qty: delta
-          });
         } else {
           cart.push({
             key,
@@ -4296,6 +4488,10 @@
       if (unavailable) {
         return `<button type="button" disabled class="sc-compact-add-btn">نفد</button>`;
       }
+      const mode = getItemUnitMode(item);
+      if (mode === 'weight') {
+        return `<button type="button" onclick="cardStepCartQty(${item.id}, 1)" class="sc-compact-add-btn">+ أضف</button>`;
+      }
       const qtyInCart = getItemCartQtyForCard(item);
       if (qtyInCart > 0) {
         return `
@@ -4309,22 +4505,58 @@
       return `<button type="button" onclick="cardStepCartQty(${item.id}, 1)" class="sc-compact-add-btn">+ أضف</button>`;
     }
 
+    function getWeightCtaLabel(weightVal, priceVal) {
+      const w = roundWeight(weightVal);
+      if (w === 0.25) return `+ أضف ربع كيلو (${priceVal} ج.م)`;
+      if (w === 0.5) return `+ أضف نص كيلو (${priceVal} ج.م)`;
+      if (w === 1) return `+ أضف كيلو (${priceVal} ج.م)`;
+      return `+ أضف ${w} كيلو (${priceVal} ج.م)`;
+    }
+
     function buildProductControlsInnerHtml(item, unavailable) {
       const mode = getItemUnitMode(item);
       const isWeight = mode === 'weight';
       const activeW = isWeight ? getCardActiveWeight(item) : 1;
-      const displayPrice = isWeight ? Number((item.price * activeW).toFixed(2)) : item.price;
+      const displayPrice = isWeight ? roundMoney(Number(item.price) * activeW) : item.price;
       const hasDiscount = Number(item.oldPrice) > Number(item.price) && Number(item.oldPrice) > 0;
-      const displayOldPrice = isWeight ? Number((Number(item.oldPrice) * activeW).toFixed(2)) : item.oldPrice;
+      const displayOldPrice = isWeight ? roundMoney(Number(item.oldPrice) * activeW) : item.oldPrice;
+
+      if (isWeight) {
+        const qPrice = Math.round(roundMoney(Number(item.price) * 0.25));
+        const hPrice = Math.round(roundMoney(Number(item.price) * 0.5));
+        const kPrice = Math.round(roundMoney(Number(item.price) * 1));
+        const inCartWeight = getItemCartWeightTotal(item.id);
+        const ctaText = unavailable ? 'نفد' : getWeightCtaLabel(activeW, displayPrice);
+
+        return `
+          <div class="sc-weighted-price-row">
+            <div class="sc-card-price-block">
+              ${hasDiscount ? `<del class="block text-[9.5px] text-stone-500 font-bold leading-none mb-0.5">${displayOldPrice} ج.م</del>` : ''}
+              <span class="text-[13px] font-black text-[#e5c158] leading-none">${displayPrice} <span class="text-[10px] font-extrabold">ج.م</span></span>
+            </div>
+            ${inCartWeight > 0 ? `<span class="sc-in-cart-weight-pill">في السلة: ${inCartWeight} كجم</span>` : ''}
+          </div>
+          <div class="sc-weight-row" role="group" aria-label="اختر الوزن">
+            <button type="button" ${unavailable ? 'disabled' : `onclick="selectCardWeight(${item.id}, 0.25)"`} class="sc-weight-chip ${Math.abs(activeW - 0.25) < 0.001 ? 'active' : ''}">
+              <span class="sc-weight-lbl">ربع</span>
+              <span class="sc-weight-pr">${qPrice} ج</span>
+            </button>
+            <button type="button" ${unavailable ? 'disabled' : `onclick="selectCardWeight(${item.id}, 0.5)"`} class="sc-weight-chip ${Math.abs(activeW - 0.5) < 0.001 ? 'active' : ''}">
+              <span class="sc-weight-lbl">نص</span>
+              <span class="sc-weight-pr">${hPrice} ج</span>
+            </button>
+            <button type="button" ${unavailable ? 'disabled' : `onclick="selectCardWeight(${item.id}, 1)"`} class="sc-weight-chip ${Math.abs(activeW - 1) < 0.001 ? 'active' : ''}">
+              <span class="sc-weight-lbl">كيلو</span>
+              <span class="sc-weight-pr">${kPrice} ج</span>
+            </button>
+          </div>
+          <button type="button" ${unavailable ? 'disabled' : `onclick="addWeightedCardToCart(${item.id})"`} class="sc-weighted-add-btn">
+            ${ctaText}
+          </button>
+        `;
+      }
 
       return `
-        ${isWeight ? `
-          <div class="sc-weight-row">
-            <button type="button" ${unavailable ? 'disabled' : `onclick="selectCardWeight(${item.id}, 0.25)"`} class="sc-weight-chip ${Math.abs(activeW - 0.25) < 0.001 ? 'active' : ''}">ربع</button>
-            <button type="button" ${unavailable ? 'disabled' : `onclick="selectCardWeight(${item.id}, 0.5)"`} class="sc-weight-chip ${Math.abs(activeW - 0.5) < 0.001 ? 'active' : ''}">نص</button>
-            <button type="button" ${unavailable ? 'disabled' : `onclick="selectCardWeight(${item.id}, 1)"`} class="sc-weight-chip ${Math.abs(activeW - 1) < 0.001 ? 'active' : ''}">كيلو</button>
-          </div>
-        ` : ''}
         <div class="sc-card-bottom-row">
           <div class="sc-card-price-block">
             ${hasDiscount ? `<del class="block text-[9.5px] text-stone-500 font-bold leading-none mb-0.5">${displayOldPrice} ج.م</del>` : ''}
@@ -4432,7 +4664,7 @@
         const isBox = getItemUnitMode(item) === 'box' || String(item.category || '').includes('عروض');
         const tagText = hasDiscount ? `خصم ${discountPct}%` : (isBox ? 'بوكس مميز' : 'الأكثر طلباً');
         const mode = getItemUnitMode(item);
-        const priceDisplay = mode === 'weight' ? Number((item.price * getCardActiveWeight(item)).toFixed(2)) : item.price;
+        const priceDisplay = mode === 'weight' ? roundMoney(Number(item.price) * getCardActiveWeight(item)) : item.price;
 
         return `
           <div class="sc-spotlight-card">
@@ -4459,7 +4691,7 @@
       const item = RAW.find(i => i.id === itemId);
       if (!ctrl || !item) return;
       const mode = getItemUnitMode(item);
-      const priceDisplay = mode === 'weight' ? Number((item.price * getCardActiveWeight(item)).toFixed(2)) : item.price;
+      const priceDisplay = mode === 'weight' ? roundMoney(Number(item.price) * getCardActiveWeight(item)) : item.price;
       ctrl.innerHTML = `<span class="text-[12.5px] font-black text-[#e5c158] shrink-0" style="font-variant-numeric:tabular-nums;">${priceDisplay} <span class="text-[9.5px]">ج.م</span></span>${buildCardActionControlHtml(item, !isItemAvailable(item))}`;
     }
 
@@ -4590,67 +4822,46 @@
       }
     }
 
-    function addToCart(itemId) {
+    function addToCart(itemId, overrideWeight) {
       const item = RAW.find(i => i.id === itemId);
       if (!item || !isItemAvailable(item)) return;
       const mode = getItemUnitMode(item);
-      const w = selectedWeights[item.id] !== undefined ? selectedWeights[item.id] : 0;
-      if (w <= 0) {
-        const msg = mode === 'weight'
-          ? 'يرجى تحديد الوزن بالكيلو أولاً باستخدام أزرار (+0.25 أو +0.5)'
-          : (mode === 'cup'
-              ? 'يرجى تحديد عدد الأكواب أولاً باستخدام زر (+1)'
-              : (mode === 'box' ? 'يرجى تحديد عدد البوكسات أولاً باستخدام زر (+1)' : 'يرجى تحديد عدد القطع أولاً باستخدام زر (+1)'));
-        showToast('⚠️ ' + msg, true);
-        return;
-      }
 
-      if (mode === 'cup' || mode === 'piece' || mode === 'box') {
-        const count = Math.max(1, Math.round(w));
-        const key = `${item.id}_${mode}`;
-        const existing = cart.find(c => c.key === key);
-        if (existing) {
-          existing.qty += count;
-        } else {
-          cart.push({
-            key,
-            itemId: item.id,
-            name: item.name,
-            unitType: mode,
-            unitMode: mode,
-            weightFactor: 1,
-            weightLabel: getUnitArabicWord(mode),
-            baseKiloPrice: item.price,
-            unitPrice: item.price,
-            qty: count
-          });
+      if (mode === 'weight') {
+        const w = roundWeight(overrideWeight !== undefined ? overrideWeight : getCardActiveWeight(item));
+        if (w <= 0) {
+          showToast('⚠️ يرجى تحديد الوزن بالكيلو أولاً', true);
+          return;
         }
-        selectedWeights[item.id] = 0;
+        addWeightToCartUnified(item, w);
         updateSingleProductCard(itemId);
         if (typeof updateSpotlightCardControl === 'function') updateSpotlightCardControl(itemId);
         updateCartBadge(true);
         persistCartToStorage();
+        if (typeof showToast === 'function') {
+          showToast(`✨ تمت إضافة «${item.name}» — ${formatQuantityArabic(w, 'weight')} إلى السلة`, false);
+        }
         return;
       }
 
-      const key = `${item.id}_${w}`;
-      const exactPrice = Number((item.price * w).toFixed(2));
+      const w = selectedWeights[item.id] !== undefined ? selectedWeights[item.id] : 1;
+      const count = Math.max(1, Math.round(w));
+      const key = `${item.id}_${mode}`;
       const existing = cart.find(c => c.key === key);
       if (existing) {
-        existing.qty += 1;
+        existing.qty += count;
       } else {
-        const weightLabel = formatQuantityArabic(w, 'weight');
         cart.push({
           key,
           itemId: item.id,
           name: item.name,
-          unitType: 'weight',
-          unitMode: 'weight',
-          weightFactor: w,
-          weightLabel,
+          unitType: mode,
+          unitMode: mode,
+          weightFactor: 1,
+          weightLabel: getUnitArabicWord(mode),
           baseKiloPrice: item.price,
-          unitPrice: exactPrice,
-          qty: 1
+          unitPrice: item.price,
+          qty: count
         });
       }
       selectedWeights[item.id] = 0;
@@ -4663,9 +4874,26 @@
     function changeCartQty(key, delta) {
       const idx = cart.findIndex(c => c.key === key);
       if (idx === -1) return;
-      const targetItemId = cart[idx].itemId;
-      cart[idx].qty += delta;
-      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      const entry = cart[idx];
+      const targetItemId = entry.itemId;
+      if (entry.unitMode === 'weight') {
+        const currentTotalW = roundWeight((Number(entry.weightFactor) || 1) * (Number(entry.qty) || 1));
+        const nextTotalW = roundWeight(currentTotalW + (Number(delta) * 0.25));
+        if (nextTotalW <= 0) {
+          cart.splice(idx, 1);
+        } else {
+          const liveItem = RAW.find(i => Number(i.id) === Number(entry.itemId));
+          const kiloPrice = Number(entry.baseKiloPrice) || Number(liveItem && liveItem.price) || Number(entry.unitPrice) || 0;
+          entry.weightFactor = nextTotalW;
+          entry.qty = 1;
+          entry.baseKiloPrice = kiloPrice;
+          entry.unitPrice = roundMoney(kiloPrice * nextTotalW);
+          entry.weightLabel = formatQuantityArabic(nextTotalW, 'weight');
+        }
+      } else {
+        entry.qty = Math.round((Number(entry.qty) || 0) + Number(delta));
+        if (entry.qty <= 0) cart.splice(idx, 1);
+      }
       updateCartBadge();
       persistCartToStorage();
       renderCart();
@@ -4686,16 +4914,16 @@
       if (Array.isArray(cart)) {
         cart.forEach(c => {
           if (!c) return;
-          const lineTotal = safeMoneyNum(c.unitPrice) * safeMoneyNum(c.qty);
+          const lineTotal = roundMoney(safeMoneyNum(c.unitPrice) * safeMoneyNum(c.qty));
           const keyStr = String(c.key || '');
           const isCustomCake = Boolean(c.isCustomCake || keyStr.startsWith('CUSTOM_CAKE_'));
-          if (isCustomCake) customCakeSubtotal += lineTotal;
-          else regularItemsSubtotal += lineTotal;
+          if (isCustomCake) customCakeSubtotal = roundMoney(customCakeSubtotal + lineTotal);
+          else regularItemsSubtotal = roundMoney(regularItemsSubtotal + lineTotal);
         });
       }
-      const reg = Number(regularItemsSubtotal.toFixed(2)) || 0;
-      const cake = Number(customCakeSubtotal.toFixed(2)) || 0;
-      const subtotal = Number((reg + cake).toFixed(2)) || 0;
+      const reg = roundMoney(regularItemsSubtotal) || 0;
+      const cake = roundMoney(customCakeSubtotal) || 0;
+      const subtotal = roundMoney(reg + cake) || 0;
       return { regularItemsSubtotal: reg, customCakeSubtotal: cake, subtotal };
     }
 
@@ -4771,8 +4999,13 @@
         if (livePrice > 0 && livePrice !== Number(c.baseKiloPrice)) {
           c.baseKiloPrice = livePrice;
           c.unitPrice = c.unitMode === 'weight'
-            ? Number((livePrice * (Number(c.weightFactor) || 1)).toFixed(2))
+            ? roundMoney(livePrice * roundWeight((Number(c.weightFactor) || 1) * (Number(c.qty) || 1)))
             : livePrice;
+          if (c.unitMode === 'weight') {
+            c.weightFactor = roundWeight((Number(c.weightFactor) || 1) * (Number(c.qty) || 1));
+            c.qty = 1;
+            c.weightLabel = formatQuantityArabic(c.weightFactor, 'weight');
+          }
           pricesUpdated = true;
         }
         kept.push(c);
@@ -5360,7 +5593,7 @@
         if (inCartIds.has(Number(item.id))) return false;
         const p = Number(item.price) || 0;
         const mode = getItemUnitMode(item);
-        const effectiveUnitPrice = mode === 'weight' ? Number((p * 0.25).toFixed(2)) : p;
+        const effectiveUnitPrice = mode === 'weight' ? roundMoney(p * 0.25) : p;
         return effectiveUnitPrice > 0 && effectiveUnitPrice <= 95;
       });
       const preferred = available.filter(i => preferredRegex.test(`${i.category || ''} ${i.name || ''}`));
@@ -5388,7 +5621,7 @@
       wrap.classList.remove('hidden');
       list.innerHTML = suggestions.map(item => {
         const mode = getItemUnitMode(item);
-        const unitPrice = mode === 'weight' ? Number((item.price * 0.25).toFixed(2)) : Number(item.price);
+        const unitPrice = mode === 'weight' ? roundMoney(Number(item.price) * 0.25) : Number(item.price);
         const unitHint = mode === 'weight' ? 'ربع كيلو' : getUnitArabicWord(mode);
         const safeName = escapeHtml(item.name);
         const safeEmoji = escapeHtml(item.emoji || '✨');
@@ -5433,30 +5666,13 @@
           });
         }
       } else {
-        const w = 0.25;
-        const key = `${item.id}_${w}`;
-        const exactPrice = Number((item.price * w).toFixed(2));
-        const existing = cart.find(c => c.key === key);
-        if (existing) {
-          existing.qty += 1;
-        } else {
-          cart.push({
-            key,
-            itemId: item.id,
-            name: item.name,
-            unitType: 'weight',
-            unitMode: 'weight',
-            weightFactor: w,
-            weightLabel: formatQuantityArabic(w, 'weight'),
-            baseKiloPrice: item.price,
-            unitPrice: exactPrice,
-            qty: 1
-          });
-        }
+        addWeightToCartUnified(item, 0.25);
       }
       updateCartBadge(true);
       persistCartToStorage();
       renderCart();
+      if (typeof updateSingleProductCard === 'function') updateSingleProductCard(item.id);
+      if (typeof updateSpotlightCardControl === 'function') updateSpotlightCardControl(item.id);
       showToast(`✨ تمت إضافة «${item.name}» لطلبك بنجاح`);
     }
     window.quickAddUpsellItem = quickAddUpsellItem;
@@ -5507,7 +5723,7 @@
         } else if (subtotal >= threshold) {
           freeTextEl.textContent = '🎉 مبروك! حصلت على توصيل مجاني لطلبك!';
         } else {
-          const remainingForFree = Math.max(0, Number((threshold - subtotal).toFixed(2)) || 0);
+          const remainingForFree = Math.max(0, roundMoney(threshold - subtotal) || 0);
           freeTextEl.textContent = `🎁 أضف بـ ${remainingForFree} ج.م لتوصيل مجاني!`;
         }
       }
@@ -5522,9 +5738,10 @@
             const safeQty = Math.max(0, Number(c.qty) || 0);
             const safeUnitPrice = Math.max(0, Number(c.unitPrice) || 0);
             const safeWeightFactor = Math.max(0, Number(c.weightFactor) || 1);
-            const safeWeightLabel = escapeHtml(formatQuantityArabic(safeWeightFactor * safeQty, 'weight'));
+            const totalItemWeight = roundWeight(safeWeightFactor * safeQty);
+            const safeWeightLabel = escapeHtml(formatQuantityArabic(totalItemWeight, 'weight'));
             const safeKey = escapeHtml(c.key);
-            const lineSum = Number((safeUnitPrice * safeQty).toFixed(2)) || 0;
+            const lineSum = roundMoney(safeUnitPrice * safeQty) || 0;
             const customDetailsHtml = c.customDetails
               ? `<div class="text-[9.5px] text-stone-300/90 mt-0.5 leading-snug whitespace-normal break-words">${escapeHtml(c.customDetails)}</div>`
               : '';
@@ -5539,7 +5756,7 @@
               </div>
               <div class="flex items-center gap-1 shrink-0">
                 <button type="button" data-key="${safeKey}" onclick="changeCartQty(this.dataset.key, -1)" class="w-6 h-6 rounded-lg border border-[#d4af37] text-[#e3b938] text-xs font-black cursor-pointer">−</button>
-                <span class="text-[11px] font-black text-white px-1">${c.unitMode === 'weight' ? (Number((safeWeightFactor * safeQty).toFixed(2)) || 0) + ' كجم' : safeQty + ' ' + unitWord}</span>
+                <span class="text-[11px] font-black text-white px-1">${c.unitMode === 'weight' ? totalItemWeight + ' كجم' : safeQty + ' ' + unitWord}</span>
                 <button type="button" data-key="${safeKey}" onclick="changeCartQty(this.dataset.key, 1)" class="w-6 h-6 rounded-lg border border-[#d4af37] text-[#e3b938] text-xs font-black cursor-pointer">+</button>
               </div>
             </div>
@@ -5554,13 +5771,13 @@
       const selectedFee = Math.max(0, Number(getEffectiveZoneFee(zoneSelect && zoneSelect.value ? Number(zoneSelect.value) : 15)) || 0);
       const finalDelivery = deliveryMethod === 'pickup' ? 0 : (threshold > 0 && subtotal >= threshold ? 0 : selectedFee);
 
-      const promoDiscount = Math.max(0, Number(computePromoDiscount(subtotal)) || 0);
-      const subtotalAfterPromo = Math.max(0, Number((subtotal - promoDiscount).toFixed(2)) || 0);
+      const promoDiscount = Math.max(0, roundMoney(computePromoDiscount(subtotal)) || 0);
+      const subtotalAfterPromo = Math.max(0, roundMoney(subtotal - promoDiscount) || 0);
       const loyaltyInfo = computeLoyaltyBreakdown(subtotalAfterPromo);
-      const loyaltyDiscount = Math.max(0, Number(loyaltyInfo?.redeemDiscount) || 0);
-      const totalDiscount = Math.max(0, Number((promoDiscount + loyaltyDiscount).toFixed(2)) || 0);
-      const grossTotal = (Number(parts.regularItemsSubtotal) || 0) + (Number(parts.customCakeSubtotal) || 0) + (Number(finalDelivery) || 0);
-      const grandTotal = Math.max(0, Number((grossTotal - totalDiscount).toFixed(2)) || 0);
+      const loyaltyDiscount = Math.max(0, roundMoney(loyaltyInfo?.redeemDiscount) || 0);
+      const totalDiscount = Math.max(0, roundMoney(promoDiscount + loyaltyDiscount) || 0);
+      const grossTotal = roundMoney((Number(parts.regularItemsSubtotal) || 0) + (Number(parts.customCakeSubtotal) || 0) + (Number(finalDelivery) || 0));
+      const grandTotal = Math.max(0, roundMoney(grossTotal - totalDiscount) || 0);
 
       const sumSubEl = document.getElementById('summarySubtotal');
       const sumDelEl = document.getElementById('summaryDelivery');
@@ -5800,24 +6017,25 @@
         const zoneFee = Math.max(0, Number(getEffectiveZoneFee(zoneSel ? Number(zoneSel.value) : 15)) || 0);
         const zoneName = zoneSel && zoneSel.options[zoneSel.selectedIndex] ? zoneSel.options[zoneSel.selectedIndex].getAttribute('data-name') : '';
         const deliveryFee = deliveryMethod === 'pickup' ? 0 : (threshold > 0 && subtotal >= threshold ? 0 : zoneFee);
-        const promoDiscount = Math.max(0, Number(computePromoDiscount(subtotal)) || 0);
+        const promoDiscount = Math.max(0, roundMoney(computePromoDiscount(subtotal)) || 0);
         const appliedPromoCode = (promoDiscount > 0 && APPLIED_PROMO) ? APPLIED_PROMO.code : '';
-        const subtotalAfterPromo = Math.max(0, Number((subtotal - promoDiscount).toFixed(2)) || 0);
+        const subtotalAfterPromo = Math.max(0, roundMoney(subtotal - promoDiscount) || 0);
         const loyaltyInfo = computeLoyaltyBreakdown(subtotalAfterPromo);
-        const loyaltyDiscount = Math.max(0, Number(loyaltyInfo?.redeemDiscount) || 0);
-        const totalDiscount = Math.max(0, Number((promoDiscount + loyaltyDiscount).toFixed(2)) || 0);
-        const grossOrderTotal = (Number(parts.regularItemsSubtotal) || 0) + (Number(parts.customCakeSubtotal) || 0) + (Number(deliveryFee) || 0);
-        const total = Math.max(0, Number((grossOrderTotal - totalDiscount).toFixed(2)) || 0);
+        const loyaltyDiscount = Math.max(0, roundMoney(loyaltyInfo?.redeemDiscount) || 0);
+        const totalDiscount = Math.max(0, roundMoney(promoDiscount + loyaltyDiscount) || 0);
+        const grossOrderTotal = roundMoney((Number(parts.regularItemsSubtotal) || 0) + (Number(parts.customCakeSubtotal) || 0) + (Number(deliveryFee) || 0));
+        const total = Math.max(0, roundMoney(grossOrderTotal - totalDiscount) || 0);
 
         const itemsLines = cart.map(c => {
           const unitWord = getUnitArabicWord(c.unitMode);
           const safeQty = Math.max(0, Number(c.qty) || 0);
           const safeUnitPrice = Math.max(0, Number(c.unitPrice) || 0);
           const safeWeightFactor = Math.max(0, Number(c.weightFactor) || 1);
+          const totalItemWeight = roundWeight(safeWeightFactor * safeQty);
           const qtyLabel = c.unitMode === 'weight'
-            ? `${Number((safeWeightFactor * safeQty).toFixed(2)) || 0} كجم`
+            ? formatQuantityArabic(totalItemWeight, 'weight')
             : `${safeQty} ${unitWord}`;
-          const itemSubtotal = Number((safeUnitPrice * safeQty).toFixed(2)) || 0;
+          const itemSubtotal = roundMoney(safeUnitPrice * safeQty) || 0;
           const detailLine = c.customDetails ? `\n   ↳ ${c.customDetails}` : '';
           return `• ${qtyLabel} ${c.name} = ${itemSubtotal} ج.م${detailLine}`;
         }).join('\n');
@@ -6277,23 +6495,7 @@
           qty: 1
         });
       } else {
-        const w = 0.5;
-        const key = `${item.id}_${w}`;
-        const exactPrice = Number((item.price * w).toFixed(2));
-        const existing = cart.find(c => c.key === key);
-        if (existing) existing.qty += 1;
-        else cart.push({
-          key,
-          itemId: item.id,
-          name: item.name,
-          unitType: 'weight',
-          unitMode: 'weight',
-          weightFactor: w,
-          weightLabel: 'نص كيلو (0.5 كجم)',
-          baseKiloPrice: item.price,
-          unitPrice: exactPrice,
-          qty: 1
-        });
+        addWeightToCartUnified(item, 0.5);
       }
       updateCartBadge(true);
       persistCartToStorage();
