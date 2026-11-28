@@ -2,16 +2,16 @@
 <html lang="ar" dir="rtl" class="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Sweet City Bakery &amp; Pastry — فرع الـ 26 | SWEET CITY 1999</title>
   <meta name="description" content="اطلب الآن أشهى المخبوزات الطازجة، الفطائر، الحلو، التورت المستطيلة والمدورة، والجاتوه من حلواني ومخبز سويت سيتي — فرع الـ 26 (العاشر من رمضان - مجاورة 26 أمام مفارق المجاورة 19). تصفح المنيو واطلب الآن توصيل سريع لباب البيت." />
   <meta property="og:title" content="Sweet City Bakery &amp; Pastry — فرع الـ 26 | SWEET CITY 1999" />
   <meta property="og:description" content="اطلب الآن أشهى المخبوزات الطازجة، الفطائر، الحلو، التورت المستطيلة والمدورة، والجاتوه من حلواني ومخبز سويت سيتي — فرع الـ 26 (العاشر من رمضان - مجاورة 26 أمام مفارق المجاورة 19). تصفح المنيو واطلب الآن توصيل سريع لباب البيت." />
-  <meta property="og:image" content="https://ahmedabdo324653.github.io/sweet-city-menu/logo.png" />
+  <meta property="og:image" content="https://sweetcity1999.github.io/sweet-city-menu/logo.png" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="logo.png" />
-  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="./logo.png" />
+  <link rel="manifest" href="./manifest.json" />
   <meta name="theme-color" content="#d4af37" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,12 +31,24 @@
       --bg-card: #15130f;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    html, body, button, a, input, select, textarea { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      -webkit-text-size-adjust: 100%;
+      touch-action: manipulation;
+    }
+    html, body, button, a, [role="button"], input, select, textarea {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    input, textarea, select {
+      font-size: 16px !important;
+      touch-action: manipulation;
+    }
+    button, a, [role="button"] { touch-action: manipulation; }
     button { user-select: none; -webkit-user-select: none; }
-    html { background-color: #0a0a0a; overflow-x: hidden; max-width: 100%; }
+    html { background-color: #0a0a0a; overflow-x: hidden; max-width: 100%; -webkit-text-size-adjust: 100%; }
     body {
       margin: 0;
-      padding: 0;
+      padding: env(safe-area-inset-top, 0px) 0 0 0;
       width: 100%;
       max-width: 100%;
       min-height: 100dvh;
@@ -47,6 +59,9 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
+    }
+    #cartModal, #ordersModal, #aiModal, #royalCakeStudioModal, #branchPhotoLightboxModal, #scIosInstallModal {
+      overscroll-behavior: contain;
     }
     img {
       image-rendering: auto;
@@ -218,7 +233,6 @@
     #searchInput {
       padding-top: 9px !important;
       padding-bottom: 9px !important;
-      font-size: 12px !important;
     }
     #categoriesBar {
       margin-top: 0 !important;
@@ -1395,16 +1409,17 @@
   <script>
     function handleHeaderLogoError(imgEl) {
       if (!imgEl) return;
-      if (!imgEl.dataset.triedPng && imgEl.getAttribute('src') !== 'logo.png') {
+      if (!imgEl.dataset.triedPng && imgEl.getAttribute('src') !== './logo.png') {
         imgEl.dataset.triedPng = '1';
-        imgEl.src = 'logo.png';
+        imgEl.src = './logo.png';
         return;
       }
       if (!imgEl.dataset.triedJpg) {
         imgEl.dataset.triedJpg = '1';
-        imgEl.src = 'logo.jpg';
+        imgEl.src = './logo.jpg';
         return;
       }
+      imgEl.onerror = null;
       imgEl.style.display = 'none';
       const fb = document.getElementById('uiHeaderLogoFallback');
       if (fb) {
@@ -1412,6 +1427,40 @@
         fb.classList.add('flex');
       }
     }
+    window.handleHeaderLogoError = handleHeaderLogoError;
+
+    function handleBranchHeroImgError(imgEl) {
+      if (!imgEl) return;
+      const fbEl = document.getElementById('uiHeaderPhotoFallback');
+      const currentSrc = imgEl.getAttribute('src') || '';
+      if (!imgEl.dataset.fbStep && currentSrc !== './branch-26.jpg') {
+        imgEl.dataset.fbStep = 'b26';
+        imgEl.style.objectPosition = 'center center';
+        imgEl.src = './branch-26.jpg';
+        return;
+      }
+      imgEl.onerror = null;
+      imgEl.style.display = 'none';
+      imgEl.style.opacity = '1';
+      if (fbEl) fbEl.classList.remove('hidden');
+    }
+    window.handleBranchHeroImgError = handleBranchHeroImgError;
+
+    function handleLightboxImgError(imgEl) {
+      if (!imgEl) return;
+      const fbEl = document.getElementById('lbBranchFallback');
+      const currentSrc = imgEl.getAttribute('src') || '';
+      if (!imgEl.dataset.fbStep && currentSrc !== './branch-26.jpg') {
+        imgEl.dataset.fbStep = 'b26';
+        imgEl.style.objectPosition = 'center center';
+        imgEl.src = './branch-26.jpg';
+        return;
+      }
+      imgEl.onerror = null;
+      imgEl.style.display = 'none';
+      if (fbEl) fbEl.classList.remove('hidden');
+    }
+    window.handleLightboxImgError = handleLightboxImgError;
   </script>
 </head>
 <body class="min-h-[100dvh] sc-has-bottom-nav text-[13px]">
@@ -1421,7 +1470,7 @@
     <header class="card-surface relative">
       <!-- 1. الواجهة السينمائية النقية (Clean Cinematic Header) -->
       <div class="sc-cinematic-hero">
-        <img id="uiHeaderBranchImg" src="branch-26.jpg" alt="حلواني ومخبز سويت سيتي — فرع الـ 26 (العاشر من رمضان - مجاورة 26 أمام مفارق المجاورة 19)" style="object-position: center center; opacity: 1;" onclick="openBranchPhotoLightbox()" onerror="handleBranchHeroImgError(this)" />
+        <img id="uiHeaderBranchImg" src="./branch-26.jpg" alt="حلواني ومخبز سويت سيتي — فرع الـ 26 (العاشر من رمضان - مجاورة 26 أمام مفارق المجاورة 19)" style="object-position: center center; opacity: 1;" onclick="openBranchPhotoLightbox()" onerror="handleBranchHeroImgError(this)" />
         <div id="uiHeaderPhotoFallback" class="sc-header-photo-fallback hidden" onclick="openBranchPhotoLightbox()">
           <span class="font-en text-2xl font-black text-[#e5c158] tracking-[0.18em]">SWEET CITY</span>
           <span class="text-[10px] font-black text-[#f7e7be] tracking-widest">SINCE 1999</span>
@@ -1441,7 +1490,7 @@
         <div class="relative z-10 px-3.5 pb-3.5 pt-16 flex flex-col gap-1.5">
           <div class="flex items-center gap-3 min-w-0">
             <button type="button" id="scLogoBtn" title="شعار سويت سيتي 1999" class="w-12 h-12 rounded-full border border-[#d4af37]/75 bg-[#151515] flex flex-col items-center justify-center shrink-0 shadow-lg cursor-pointer transition-transform active:scale-95 overflow-hidden relative">
-              <img id="uiHeaderLogoImg" src="logo.png" alt="سويت سيتي 1999" class="w-full h-full object-cover rounded-full" onerror="handleHeaderLogoError(this)" />
+              <img id="uiHeaderLogoImg" src="./logo.png" alt="سويت سيتي 1999" class="w-full h-full object-cover rounded-full" onerror="handleHeaderLogoError(this)" />
               <div id="uiHeaderLogoFallback" class="hidden flex-col items-center justify-center">
                 <span class="font-en text-lg font-black text-[#d4af37] leading-none tracking-wider">SC</span>
                 <span class="text-[9px] font-bold text-[#f5f0e6] mt-0.5 tracking-widest">1999</span>
@@ -1456,7 +1505,7 @@
                 <span class="text-stone-500">•</span>
                 <span class="text-[#e5c158] font-extrabold">⭐ 4.9</span>
                 <span class="text-stone-500">•</span>
-                <span class="text-stone-200"><span id="uiTotalItemsCount" class="font-black text-white">81</span> صنف طازج</span>
+                <span class="text-stone-200"><span id="uiTotalItemsCount" class="font-black text-white">0</span> صنف طازج</span>
               </div>
             </div>
           </div>
@@ -1482,6 +1531,31 @@
             <button type="button" data-branch-pill="b31" aria-pressed="false" onclick="setActiveBranch('b31', { animate: true })" class="sc-branch-pill">
               📍 فرع الـ 31
             </button>
+          </div>
+
+          <!-- بطاقة قسم المشروبات والكافيه الذكية أعلى الواجهة -->
+          <div id="scCafeBranchNotice" class="w-full px-3 py-2 rounded-xl bg-gradient-to-l from-[#21190b] via-[#17120a] to-[#120f09] border border-[#d4af37]/50 shadow-[0_6px_18px_rgba(0,0,0,0.45)] transition-all">
+            <div id="scCafeNoticeInactive" class="flex items-center justify-between gap-2">
+              <div class="text-right min-w-0 flex-1 text-[#f5df9c] font-bold text-[11px] leading-snug">
+                <span>☕ قسم المشروبات والكافيه متاح في فرع مجاورة 18 مول تن بوينت</span>
+              </div>
+              <button type="button" onclick="setActiveBranch('b18', { animate: true })" class="px-2.5 py-1.5 rounded-lg gold-grad text-[#0c0a04] font-black text-[10.5px] cursor-pointer shrink-0 shadow transition active:scale-95 whitespace-nowrap">
+                تفعيل فرع 18 الآن
+              </button>
+            </div>
+            <div id="scCafeNoticeActive" class="hidden flex items-center justify-between gap-2">
+              <div class="text-right min-w-0 flex-1 text-emerald-200 font-extrabold text-[11px] leading-snug">
+                <span>☕ أنت الآن في فرع 18 — قسم الكافيه والمشروبات مفعّل</span>
+              </div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button type="button" onclick="jumpToCafeCategory()" class="px-2.5 py-1.5 rounded-lg gold-grad text-[#0c0a04] font-black text-[10px] cursor-pointer shadow transition active:scale-95 whitespace-nowrap">
+                  أصناف الكافيه
+                </button>
+                <button type="button" onclick="setActiveBranch('b26', { animate: true })" class="px-2 py-1.5 rounded-lg bg-[#211b10] hover:bg-[#2d2515] border border-[#d4af37]/45 text-[#f3d266] font-extrabold text-[10px] cursor-pointer transition active:scale-95 whitespace-nowrap">
+                  فرع 26
+                </button>
+              </div>
+            </div>
           </div>
 
           <button type="button" onclick="toggleBranchesPanel()" class="sc-branches-pay-trigger">
@@ -1713,6 +1787,7 @@
     </div>
 
     <div id="menuTabPanel" class="mt-2" style="display: block;">
+      <div id="scSyncStatusBanner" class="hidden mb-2"></div>
       <!-- شريط عروض وبوكسات اليوم الأفقي (Horizontal Spotlight Carousel) -->
       <section id="scSpotlightSection" class="sc-spotlight-section" aria-label="عروض وبوكسات اليوم">
         <div class="flex items-center justify-between gap-2 mb-2 px-0.5">
@@ -2050,12 +2125,6 @@
     </section>
 
     <footer class="mt-8 pt-5 pb-6 border-t border-[#d4af37]/25 text-center text-[11px] sm:text-xs text-stone-300 space-y-2">
-      <div id="scCafeBranchNotice" class="mx-auto max-w-md px-3.5 py-2.5 rounded-xl bg-[#17130b] border border-[#d4af37]/45 text-[#f5df9c] font-bold text-[11px] leading-relaxed flex flex-col sm:flex-row items-center justify-center gap-2">
-        <span>☕ قسم المشروبات والكافيه متاح في فرع مجاورة 18 مول تن بوينت</span>
-        <button type="button" onclick="setActiveBranch('b18', { animate: true }); window.scrollTo({ top: 0, behavior: 'smooth' });" class="px-2.5 py-1 rounded-lg bg-[#e3b938] hover:bg-[#f3c846] text-[#0c0a04] font-black text-[10px] cursor-pointer shrink-0 transition active:scale-95">
-          تفعيل فرع 18 الآن
-        </button>
-      </div>
       <p class="font-semibold text-stone-200">جميع الحقوق محفوظة © حلواني ومخبز سويت سيتي | SWEET CITY 1999</p>
       <p><span id="uiFooterAddressText">العاشر من رمضان - مجاورة 26 أمام مفارق المجاورة 19</span> | واتساب وخدمة العملاء: <a id="uiFooterPhone" href="tel:+201070822845" class="text-[#f3d266] font-bold hover:underline" dir="ltr">01070822845 / 01155778001</a></p>
       <div class="flex flex-wrap items-center justify-center gap-2 pt-1 text-[11px]">
@@ -2308,7 +2377,7 @@
 
   <!-- نافذة الطلبات السابقة -->
   <div id="ordersModal" onclick="if(event.target===this) closeOrdersModal()" class="hidden fixed inset-0 z-50 bg-black/88 flex items-center justify-center p-4">
-    <div class="card-surface w-full max-w-md rounded-3xl p-5 max-h-[85vh] overflow-y-auto border-2 border-[#d4af37]">
+    <div class="card-surface w-full max-w-md rounded-3xl p-5 max-h-[92vh] max-h-[92dvh] overflow-y-auto border-2 border-[#d4af37]">
       <div class="flex items-center justify-between pb-3 border-b border-[#d4af37]/25">
         <h3 class="text-base font-black text-[#d4af37]">🕒 طلباتي السابقة</h3>
         <button type="button" onclick="closeOrdersModal()" class="w-8 h-8 rounded-full bg-stone-800 text-white font-bold cursor-pointer">×</button>
@@ -2342,14 +2411,14 @@
       </div>
 
       <div id="aiQuickPromptsBar" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar shrink-0 py-0.5" style="-webkit-overflow-scrolling: touch;">
-        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🥐 فطار سخن على الرايق')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🥐 فطار سخن على الرايق</button>
-        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('☕ حاجة تظبط مع القهوة')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">☕ حاجة تظبط مع القهوة</button>
-        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🎂 تورتة لعيد ميلاد')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🎂 تورتة لعيد ميلاد</button>
-        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🎉 عزومة بـ 500 جنيه')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">🎉 عزومة بـ 500 جنيه</button>
-        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🎁 بوكس هدية يشرف')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🎁 بوكس هدية يشرف</button>
-        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🍪 ربع ونص مشكل')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">🍪 ربع ونص مشكل</button>
-        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🍫 عشاق الشوكولاتة')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🍫 عشاق الشوكولاتة</button>
-        <button type="button" onclick="unlockChefAudio(); sendAiPrompt('🥖 مخبوزات للدايت')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">🥖 مخبوزات للدايت</button>
+        <button type="button" ontouchend="unlockAudioEngine()" onclick="unlockAudioEngine(); sendAiPrompt('🥐 فطار سخن على الرايق')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🥐 فطار سخن على الرايق</button>
+        <button type="button" ontouchend="unlockAudioEngine()" onclick="unlockAudioEngine(); sendAiPrompt('☕ حاجة تظبط مع القهوة')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">☕ حاجة تظبط مع القهوة</button>
+        <button type="button" ontouchend="unlockAudioEngine()" onclick="unlockAudioEngine(); sendAiPrompt('🎂 تورتة لعيد ميلاد')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🎂 تورتة لعيد ميلاد</button>
+        <button type="button" ontouchend="unlockAudioEngine()" onclick="unlockAudioEngine(); sendAiPrompt('🎉 عزومة بـ 500 جنيه')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">🎉 عزومة بـ 500 جنيه</button>
+        <button type="button" ontouchend="unlockAudioEngine()" onclick="unlockAudioEngine(); sendAiPrompt('🎁 بوكس هدية يشرف')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🎁 بوكس هدية يشرف</button>
+        <button type="button" ontouchend="unlockAudioEngine()" onclick="unlockAudioEngine(); sendAiPrompt('🍪 ربع ونص مشكل')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">🍪 ربع ونص مشكل</button>
+        <button type="button" ontouchend="unlockAudioEngine()" onclick="unlockAudioEngine(); sendAiPrompt('🍫 عشاق الشوكولاتة')" class="px-3 py-1.5 rounded-full bg-[#2c2211] border border-[#d4af37]/85 text-[#f7df91] text-[10px] font-black whitespace-nowrap shrink-0 hover:bg-[#3a2d15] cursor-pointer transition">🍫 عشاق الشوكولاتة</button>
+        <button type="button" ontouchend="unlockAudioEngine()" onclick="unlockAudioEngine(); sendAiPrompt('🥖 مخبوزات للدايت')" class="px-3 py-1.5 rounded-full bg-[#1f1a11] border border-[#d4af37]/55 text-[#f3d266] text-[10px] font-black whitespace-nowrap shrink-0 hover:border-[#f3d266] cursor-pointer transition">🥖 مخبوزات للدايت</button>
       </div>
 
       <div id="aiMessagesWrap" class="sc-ai-messages-wrap">
@@ -2358,9 +2427,9 @@
       </div>
 
       <div class="flex items-center gap-1.5 shrink-0 pt-1.5 border-t border-[#d4af37]/25">
-        <button type="button" id="aiVoiceMicBtn" onclick="toggleAiVoiceInput()" title="تحدث بصوتك مع شيف سويت" class="w-10 h-10 rounded-xl bg-[#1c170d] hover:bg-[#2c2312] border border-[#d4af37]/50 text-[#f3d266] text-base flex items-center justify-center cursor-pointer shrink-0 transition active:scale-95">🎤</button>
-        <input id="aiQuestionInput" type="text" onfocus="stopChefSpeaking()" oninput="stopChefSpeaking()" onkeydown="if(event.key==='Enter'){ unlockChefAudio(); sendAiPrompt(); }" placeholder="اكتب أو اتكلم بالمايك: معايا 200 جنيه، عزومة 10 أفراد..." class="flex-1 min-w-0 py-2.5 px-3 rounded-xl bg-[#0d0d0d] border border-[#d4af37]/45 focus:border-[#f3d266] text-xs text-white outline-none" />
-        <button type="button" onclick="unlockChefAudio(); sendAiPrompt()" class="py-2.5 px-3.5 rounded-xl gold-grad text-black font-black text-xs cursor-pointer shrink-0 shadow-md active:scale-95 transition">إرسال</button>
+        <button type="button" id="aiVoiceMicBtn" ontouchend="unlockAudioEngine()" onclick="unlockAudioEngine(); toggleAiVoiceInput()" title="تحدث بصوتك مع شيف سويت" class="w-10 h-10 rounded-xl bg-[#1c170d] hover:bg-[#2c2312] border border-[#d4af37]/50 text-[#f3d266] text-base flex items-center justify-center cursor-pointer shrink-0 transition active:scale-95">🎤</button>
+        <input id="aiQuestionInput" type="text" onfocus="stopChefSpeaking()" oninput="stopChefSpeaking()" onkeydown="if(event.key==='Enter'){ unlockAudioEngine(); sendAiPrompt(); }" placeholder="اكتب أو اتكلم بالمايك: معايا 200 جنيه، عزومة 10 أفراد..." class="flex-1 min-w-0 py-2.5 px-3 rounded-xl bg-[#0d0d0d] border border-[#d4af37]/45 focus:border-[#f3d266] text-xs text-white outline-none" />
+        <button type="button" id="aiSendBtn" ontouchend="unlockAudioEngine()" onclick="unlockAudioEngine(); sendAiPrompt()" class="py-2.5 px-3.5 rounded-xl gold-grad text-black font-black text-xs cursor-pointer shrink-0 shadow-md active:scale-95 transition">إرسال</button>
       </div>
     </div>
   </div>
@@ -2551,7 +2620,7 @@
 
   <!-- نافذة التوجيه الذكية لتثبيت تطبيق سويت سيتي على الآيفون (iOS Smart Install Modal) -->
   <div id="scIosInstallModal" onclick="if(event.target===this) scCloseIosInstallModal()" class="hidden fixed inset-0 z-50 bg-black/88 flex items-center justify-center p-3">
-    <div class="card-surface w-full max-w-md max-h-[90vh] rounded-3xl p-4 sm:p-5 border-2 border-[#d4af37] flex flex-col gap-3 shadow-2xl overflow-y-auto text-right">
+    <div class="card-surface w-full max-w-md max-h-[92vh] max-h-[92dvh] rounded-3xl p-4 sm:p-5 border-2 border-[#d4af37] flex flex-col gap-3 shadow-2xl overflow-y-auto text-right">
       <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-[#d4af37]/30">
         <div class="flex items-center gap-2">
           <div class="w-9 h-9 rounded-full border border-[#d4af37] bg-[#14110b] flex items-center justify-center overflow-hidden shrink-0">
@@ -2617,7 +2686,7 @@
       </div>
 
       <div class="relative w-full rounded-2xl overflow-hidden border border-[#d4af37]/50 bg-[#110e09] min-h-[220px] max-h-[52vh] flex items-center justify-center">
-        <img id="lbBranchImg" src="branch-26.jpg" alt="صورة الفرع" class="w-full max-h-[52vh] object-cover block transition-opacity duration-200" onerror="handleLightboxImgError(this)" />
+        <img id="lbBranchImg" src="./branch-26.jpg" alt="صورة الفرع" class="w-full max-h-[52vh] object-cover block transition-opacity duration-200" onerror="handleLightboxImgError(this)" />
         <div id="lbBranchFallback" class="sc-header-photo-fallback hidden min-h-[220px]">
           <span class="font-en text-2xl font-black text-[#f3d266] tracking-[0.18em]">SWEET CITY</span>
           <span class="text-xs font-extrabold text-[#f7e7be] tracking-widest">BAKERY &amp; PASTRY • 1999</span>
@@ -2654,211 +2723,25 @@
   <div id="scToast" class="hidden fixed top-4 inset-x-4 max-w-md mx-auto z-[70] px-4 py-3 rounded-2xl bg-[#16130d] border-2 border-[#d4af37] text-[#f3d266] text-xs font-black text-center shadow-[0_10px_30px_rgba(0,0,0,0.85)] transition-all"></div>
 
   <script id="scMainScript">
-    // رابط Google Apps Script السحابي (اتركه فارغاً لاستخدام البيانات المدمجة، أو الصق رابط Web App للنشر المباشر)
+    // رابط Google Apps Script السحابي الرسمي الافتراضي (ورقة Products في Google Sheets هي المصدر الوحيد الحصري للأصناف)
+    const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-WvTZGk__KuF65hKrPgx-uSjOrMXgpqHpUJawMlJ4wKohIun3xCLT41ZBTfAOFwbjoA/exec';
     const API_URL = "";
 
     // ============================================================================
-    // 1. هيكل البيانات الثابت (FACTORY_RAW & RAW)
+    // 1. مصدر الحقيقة الواحد (Single Source of Truth — بدون أصناف افتراضية شبحية)
     // ============================================================================
-    const FACTORY_RAW = [
-      // 1. الحلو
-      { id: 1, name: "دوناتس كبير غني بالشوكولاتة", category: "الحلو", price: 30, unitType: "piece", by_weight: false, desc: "دوناتس طازج هش ومغطى بطبقة غنية من الشوكولاتة الفاخرة (يباع بالقطعة)", emoji: "🍩", badge: "الأكثر طلباً", popular: true, available: true },
-      { id: 2, name: "دوناتس", category: "الحلو", price: 25, unitType: "piece", by_weight: false, desc: "دوناتس طازج هش محضر يومياً (يباع بالقطعة)", emoji: "🍩", available: true },
-      { id: 3, name: "أصابع زينب", category: "الحلو", price: 110, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍯", available: true },
-      { id: 4, name: "بلح الشام سادة", category: "الحلو", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍯", available: true },
-      { id: 5, name: "بلح الشام كريمة", category: "الحلو", price: 160, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍯", available: true },
-      { id: 6, name: "زلابيا", category: "الحلو", price: 120, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍯", available: true },
-      { id: 7, name: "ملبن سادة", category: "الحلو", price: 80, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍬", available: true },
-      { id: 8, name: "رموش الست", category: "الحلو", price: 180, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥮", available: true },
-      { id: 9, name: "لينزا", category: "الحلو", price: 180, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥧", available: true },
-      { id: 10, name: "سويسرول", category: "الحلو", price: 180, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍰", available: true },
-      { id: 11, name: "تارت", category: "الحلو", price: 180, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥧", available: true },
-      { id: 12, name: "إكلير", category: "الحلو", price: 180, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥖", available: true },
-      { id: 13, name: "سينابون", category: "الحلو", price: 200, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🌀", badge: "الأكثر طلباً", popular: true, available: true },
+    const FACTORY_RAW = [];
+    let RAW = [];
+    let MENU_SYNC_STATE = {
+      status: 'loading',
+      fromCache: false,
+      lastSyncedAt: 0,
+      errorMessage: ''
+    };
 
-      // 2. مخبوزات وفطائر
-      { id: 14, name: "باتيه", category: "مخبوزات وفطائر", price: 160, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥐", available: true },
-      { id: 15, name: "ميني ساندوتش", category: "مخبوزات وفطائر", price: 180, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥖", available: true },
-      { id: 16, name: "بوريك", category: "مخبوزات وفطائر", price: 180, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥐", badge: "الأكثر طلباً", popular: true, available: true },
-      { id: 17, name: "كرواسون", category: "مخبوزات وفطائر", price: 180, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥐", badge: "الأكثر طلباً", popular: true, available: true },
-      { id: 18, name: "كيزر ميني", category: "مخبوزات وفطائر", price: 100, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍔", available: true },
-      { id: 19, name: "فطيرة سادة صغير", category: "مخبوزات وفطائر", price: 10, unitType: "piece", by_weight: false, desc: "مخبوز طازج يومياً", emoji: "🫓", available: true },
-      { id: 20, name: "فطير سادة", category: "مخبوزات وفطائر", price: 160, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🫓", available: true },
-      { id: 21, name: "سميط", category: "مخبوزات وفطائر", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥨", available: true },
-      { id: 22, name: "ميني بيتزا", category: "مخبوزات وفطائر", price: 180, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍕", available: true },
-      { id: 23, name: "قرص سادة", category: "مخبوزات وفطائر", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥯", available: true },
-      { id: 24, name: "قرص عجوة", category: "مخبوزات وفطائر", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥯", available: true },
-      { id: 25, name: "قرص ملبن", category: "مخبوزات وفطائر", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥯", available: true },
-      { id: 26, name: "قرص كريمة", category: "مخبوزات وفطائر", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥯", available: true },
-      { id: 27, name: "قرص عسل", category: "مخبوزات وفطائر", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥯", available: true },
-      { id: 28, name: "قرص جبنة", category: "مخبوزات وفطائر", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥯", available: true },
-      { id: 29, name: "قرص مبسوسة", category: "مخبوزات وفطائر", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥯", available: true },
-      { id: 30, name: "قرص مطبق بالسكر", category: "مخبوزات وفطائر", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥯", available: true },
-      { id: 31, name: "بكاكين", category: "مخبوزات وفطائر", price: 120, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🫓", available: true },
-      { id: 32, name: "ترسة سادة", category: "مخبوزات وفطائر", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥨", available: true },
-      { id: 33, name: "ترسة عجوة", category: "مخبوزات وفطائر", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥨", available: true },
-      { id: 34, name: "دانش", category: "مخبوزات وفطائر", price: 180, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥐", available: true },
-
-      // 3. نواعم وكعك وبسكويت
-      { id: 35, name: "بسكويت زبدة", category: "نواعم وكعك وبسكويت", price: 200, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍪", available: true },
-      { id: 36, name: "بيتي فور", category: "نواعم وكعك وبسكويت", price: 240, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍪", badge: "الأكثر طلباً", popular: true, available: true },
-      { id: 37, name: "غريبة", category: "نواعم وكعك وبسكويت", price: 240, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍪", available: true },
-      { id: 38, name: "سابلية", category: "نواعم وكعك وبسكويت", price: 260, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍪", available: true },
-      { id: 39, name: "تارت سابلية", category: "نواعم وكعك وبسكويت", price: 260, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥧", available: true },
-      { id: 40, name: "بسكويت نشادر", category: "نواعم وكعك وبسكويت", price: 180, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍪", available: true },
-      { id: 41, name: "بسكويت برتقال", category: "نواعم وكعك وبسكويت", price: 200, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍊", available: true },
-      { id: 42, name: "بسكويت جوز هند", category: "نواعم وكعك وبسكويت", price: 200, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥥", available: true },
-      { id: 43, name: "بسكويت شوكولاتة", category: "نواعم وكعك وبسكويت", price: 200, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍫", available: true },
-      { id: 44, name: "بسكويت قرفة", category: "نواعم وكعك وبسكويت", price: 200, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍪", available: true },
-      { id: 45, name: "بسكويت لوتس", category: "نواعم وكعك وبسكويت", price: 200, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍪", available: true },
-      { id: 46, name: "بسكويت عجوة", category: "نواعم وكعك وبسكويت", price: 180, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍪", available: true },
-      { id: 47, name: "كعك سادة", category: "نواعم وكعك وبسكويت", price: 220, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥮", available: true },
-      { id: 48, name: "كعك ملبن", category: "نواعم وكعك وبسكويت", price: 200, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥮", available: true },
-      { id: 49, name: "كعك عجوة", category: "نواعم وكعك وبسكويت", price: 200, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥮", available: true },
-      { id: 50, name: "كوكيز", category: "نواعم وكعك وبسكويت", price: 200, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍪", badge: "الأكثر طلباً", popular: true, available: true },
-      { id: 51, name: "برازق", category: "نواعم وكعك وبسكويت", price: 220, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍪", available: true },
-
-      // 4. التورت
-      { id: 52, name: "تورتة 20/20", category: "التورت", price: 300, unitType: "piece", by_weight: false, desc: "تورتة مستطيلة مقاس 20×20 طازجة بتزيين فاخر", emoji: "🎂", badge: "الأكثر طلباً", popular: true, available: true },
-      { id: 53, name: "تورتة 25/25", category: "التورت", price: 400, unitType: "piece", by_weight: false, desc: "تورتة مستطيلة مقاس 25×25 طازجة للمناسبات", emoji: "🎂", available: true },
-      { id: 54, name: "تورتة 30/30", category: "التورت", price: 600, unitType: "piece", by_weight: false, desc: "تورتة مستطيلة مقاس 30×30 طازجة تكفي العائلة", emoji: "🎂", available: true },
-      { id: 55, name: "تورتة 40/30", category: "التورت", price: 750, unitType: "piece", by_weight: false, desc: "تورتة مستطيلة مقاس 40×30 طازجة للحفلات", emoji: "🎂", available: true },
-      { id: 56, name: "تورتة 40/40", category: "التورت", price: 1000, unitType: "piece", by_weight: false, desc: "تورتة مستطيلة كبيرة مقاس 40×40 طازجة", emoji: "🎂", available: true },
-      { id: 57, name: "تورتة 60/40", category: "التورت", price: 1300, unitType: "piece", by_weight: false, desc: "تورتة مناسبات كبرى مقاس 60×40 طازجة", emoji: "🎂", available: true },
-
-      // 5. التورت المدورة
-      { id: 58, name: "تورتة مدورة مقاس 22", category: "التورت المدورة", price: 350, unitType: "piece", by_weight: false, desc: "تورتة مدورة مقاس 22 طازجة غنية بالكريمة والشوكولاتة", emoji: "🎂", available: true },
-      { id: 59, name: "تورتة مدورة مقاس 24", category: "التورت المدورة", price: 400, unitType: "piece", by_weight: false, desc: "تورتة مدورة مقاس 24 طازجة بتزيين مميز", emoji: "🎂", badge: "الأكثر طلباً", popular: true, available: true },
-      { id: 60, name: "تورتة مدورة مقاس 26", category: "التورت المدورة", price: 450, unitType: "piece", by_weight: false, desc: "تورتة مدورة مقاس 26 طازجة للمناسبات", emoji: "🎂", available: true },
-      { id: 61, name: "تورتة مدورة مقاس 28", category: "التورت المدورة", price: 500, unitType: "piece", by_weight: false, desc: "تورتة مدورة مقاس 28 طازجة فاخرة", emoji: "🎂", available: true },
-      { id: 145, name: "تورتة مدورة مقاس 30", category: "التورت المدورة", price: 550, unitType: "piece", by_weight: false, desc: "تورتة مدورة كبيرة مقاس 30 طازجة", emoji: "🎂", available: true },
-
-      // 6. الجاتوه والمخبوزات الحلوة
-      { id: 146, name: "قطعة جاتوه", category: "الجاتوه والمخبوزات الحلوة", price: 22, unitType: "piece", by_weight: false, desc: "قطعة جاتوه طازجة محضرة يومياً", emoji: "🍰", available: true },
-      { id: 147, name: "قطعة جاتوه لوكس", category: "الجاتوه والمخبوزات الحلوة", price: 24, unitType: "piece", by_weight: false, desc: "قطعة جاتوه لوكس بحشوات مميزة", emoji: "🍰", available: true },
-      { id: 148, name: "قطعة جاتوه سوبر لوكس", category: "الجاتوه والمخبوزات الحلوة", price: 30, unitType: "piece", by_weight: false, desc: "قطعة جاتوه سوبر لوكس فاخرة", emoji: "🍰", badge: "الأكثر طلباً", popular: true, available: true },
-      { id: 149, name: "كيلو سواريه", category: "الجاتوه والمخبوزات الحلوة", price: 320, unitType: "weight", by_weight: true, desc: "تشكيلة سواريه فاخرة للمناسبات والضيافة", emoji: "🧁", badge: "الأكثر طلباً", popular: true, available: true },
-      { id: 150, name: "مولتو كيك", category: "الجاتوه والمخبوزات الحلوة", price: 70, unitType: "piece", by_weight: false, desc: "مولتو كيك هش وطازج غني بالشوكولاتة", emoji: "🥐", available: true },
-
-      // 7. بقسماط ومقرمشات
-      { id: 62, name: "بقسماط سادة", category: "بقسماط ومقرمشات", price: 110, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥖", available: true },
-      { id: 63, name: "بقسماط سن", category: "بقسماط ومقرمشات", price: 110, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥖", available: true },
-      { id: 64, name: "بقسماط كركم", category: "بقسماط ومقرمشات", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥖", available: true },
-      { id: 65, name: "كمون", category: "بقسماط ومقرمشات", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥖", available: true },
-      { id: 66, name: "برازيل", category: "بقسماط ومقرمشات", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥨", available: true },
-      { id: 67, name: "شابورة", category: "بقسماط ومقرمشات", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🍞", available: true },
-      { id: 68, name: "قراقيش سادة", category: "بقسماط ومقرمشات", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥖", available: true },
-      { id: 69, name: "قراقيش عجوة", category: "بقسماط ومقرمشات", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥖", available: true },
-      { id: 70, name: "قراقيش ملبن", category: "بقسماط ومقرمشات", price: 140, unitType: "weight", by_weight: true, desc: "مخبوز طازج يومياً", emoji: "🥖", available: true },
-
-      // 8. ركن القهوة الساخنة (فرع مول تن بوينت 18)
-      { id: 71, name: "سبانش لاتيه - Spanish Latte", category: "ركن القهوة الساخنة", price: 90, unitType: "cup", by_weight: false, desc: "قهوة إسبريسو غنية مع الحليب المكثف المحلى", emoji: "☕", badge: "الأكثر طلباً", popular: true, available: true },
-      { id: 72, name: "كراميل ميكياتو - Caramel Macchiato", category: "ركن القهوة الساخنة", price: 85, unitType: "cup", by_weight: false, desc: "إسبريسو مع الحليب المبخر وصوص الكراميل", emoji: "☕", available: true },
-      { id: 73, name: "دارك موكا - Dark Mocha", category: "ركن القهوة الساخنة", price: 95, unitType: "cup", by_weight: false, desc: "مزيج الإسبريسو مع الشوكولاتة الداكنة والحليب", emoji: "☕", available: true },
-      { id: 74, name: "وايت موكا - White Mocha", category: "ركن القهوة الساخنة", price: 95, unitType: "cup", by_weight: false, desc: "إسبريسو مع الشوكولاتة البيضاء الكريمية", emoji: "☕", available: true },
-      { id: 75, name: "فلات وايت - Flat White", category: "ركن القهوة الساخنة", price: 90, unitType: "cup", by_weight: false, desc: "دبل شوت إسبريسو مع رغوة حليب ناعمة", emoji: "☕", available: true },
-      { id: 76, name: "كابتشينو - Cappuccino", category: "ركن القهوة الساخنة", price: 85, unitType: "cup", by_weight: false, desc: "قهوة إيطالية كلاسيكية برغوة غنية", emoji: "☕", available: true },
-      { id: 77, name: "كافيه لاتيه - Cafe Latte", category: "ركن القهوة الساخنة", price: 75, unitType: "cup", by_weight: false, desc: "إسبريسو ناعم مع الحليب الساخن", emoji: "☕", available: true },
-      { id: 78, name: "كورتادو - Cortado", category: "ركن القهوة الساخنة", price: 75, unitType: "cup", by_weight: false, desc: "توازن مثالي بين الإسبريسو والحليب الدافئ", emoji: "☕", available: true },
-      { id: 79, name: "أمريكانو - Americano", category: "ركن القهوة الساخنة", price: 70, unitType: "cup", by_weight: false, desc: "قهوة سوداء كلاسيكية غنية المذاق", emoji: "☕", available: true },
-      { id: 80, name: "ميكياتو سينجل - Macchiato S", category: "ركن القهوة الساخنة", price: 50, unitType: "cup", by_weight: false, desc: "شوت إسبريسو مركز مع لمسة رغوة", emoji: "☕", available: true },
-      { id: 81, name: "ميكياتو دبل - Macchiato D", category: "ركن القهوة الساخنة", price: 65, unitType: "cup", by_weight: false, desc: "دبل شوت إسبريسو مع رغوة الحليب", emoji: "☕", available: true },
-      { id: 82, name: "إسبريسو سينجل - Espresso S", category: "ركن القهوة الساخنة", price: 45, unitType: "cup", by_weight: false, desc: "شوت إسبريسو إيطالي أصلي", emoji: "☕", available: true },
-      { id: 83, name: "إسبريسو دبل - Espresso D", category: "ركن القهوة الساخنة", price: 55, unitType: "cup", by_weight: false, desc: "دبل شوت إسبريسو قوي وغني", emoji: "☕", available: true },
-      { id: 84, name: "نسكافيه كلاسيك - Nescafe", category: "ركن القهوة الساخنة", price: 65, unitType: "cup", by_weight: false, desc: "نسكافيه بالحليب الساخن", emoji: "☕", available: true },
-
-      // 9. القهوة المثلجة (فرع مول تن بوينت 18)
-      { id: 85, name: "آيس سبانش لاتيه - Ice Spanish Latte", category: "القهوة المثلجة", price: 95, unitType: "cup", by_weight: false, desc: "قهوة مثلجة غنية بالحليب المكثف", emoji: "🧋", badge: "الأكثر طلباً", popular: true, available: true },
-      { id: 86, name: "آيس كراميل ميكياتو - Ice Caramel Macchiato", category: "القهوة المثلجة", price: 95, unitType: "cup", by_weight: false, desc: "إسبريسو مثلج مع الحليب وصوص الكراميل", emoji: "🧋", available: true },
-      { id: 87, name: "آيس وايت موكا - Ice White Mocha", category: "القهوة المثلجة", price: 100, unitType: "cup", by_weight: false, desc: "قهوة مثلجة بصوص الشوكولاتة البيضاء", emoji: "🧋", available: true },
-      { id: 88, name: "آيس دارك موكا - Ice Dark Mocha", category: "القهوة المثلجة", price: 100, unitType: "cup", by_weight: false, desc: "قهوة مثلجة بصوص الشوكولاتة الداكنة", emoji: "🧋", available: true },
-      { id: 89, name: "آيس لاتيه - Ice Latte", category: "القهوة المثلجة", price: 75, unitType: "cup", by_weight: false, desc: "إسبريسو بارد مع الحليب والثلج", emoji: "🧋", available: true },
-      { id: 90, name: "آيس كابتشينو - Ice Cappuccino", category: "القهوة المثلجة", price: 85, unitType: "cup", by_weight: false, desc: "كابتشينو بارد برغوة كريمية", emoji: "🧋", available: true },
-      { id: 91, name: "آيس أمريكانو - Ice Americano", category: "القهوة المثلجة", price: 70, unitType: "cup", by_weight: false, desc: "إسبريسو منعش مع الماء البارد والثلج", emoji: "🧋", available: true },
-
-      // 10. فرابيه ومخفوقات (فرع مول تن بوينت 18)
-      { id: 92, name: "كراميل فرابيه - Caramel Frappe", category: "فرابيه ومخفوقات", price: 90, unitType: "cup", by_weight: false, desc: "فرابيه مثلج غني بصوص الكراميل والكريمة", emoji: "🥤", available: true },
-      { id: 93, name: "فانيليا فرابيه - Vanilla Frappe", category: "فرابيه ومخفوقات", price: 90, unitType: "cup", by_weight: false, desc: "فرابيه مثلج بنكهة الفانيليا الغنية", emoji: "🥤", available: true },
-      { id: 94, name: "موكا فرابيه - Mocha Frappe", category: "فرابيه ومخفوقات", price: 90, unitType: "cup", by_weight: false, desc: "مزيج القهوة والشوكولاتة المثلجة", emoji: "🥤", available: true },
-      { id: 95, name: "وايت موكا فرابيه - White Mocha Frappe", category: "فرابيه ومخفوقات", price: 90, unitType: "cup", by_weight: false, desc: "فرابيه الشوكولاتة البيضاء والقهوة", emoji: "🥤", available: true },
-      { id: 96, name: "كوكيز فرابيه - Cookies Frappe", category: "فرابيه ومخفوقات", price: 90, unitType: "cup", by_weight: false, desc: "فرابيه مثلج بقطع الكوكيز المقرمشة", emoji: "🥤", available: true },
-      { id: 97, name: "فرابيه بندق - Hazelnut Frappe", category: "فرابيه ومخفوقات", price: 90, unitType: "cup", by_weight: false, desc: "فرابيه القهوة المثلج بنكهة البندق", emoji: "🥤", available: true },
-      { id: 98, name: "نسكافيه فرابيه - Nescafe Frappe", category: "فرابيه ومخفوقات", price: 75, unitType: "cup", by_weight: false, desc: "نسكافيه مخفوق بالثلج والكريمة", emoji: "🥤", available: true },
-      { id: 99, name: "قهوة فرابيه - Coffee Frappe", category: "فرابيه ومخفوقات", price: 80, unitType: "cup", by_weight: false, desc: "فرابيه قهوة كلاسيكي منعش", emoji: "🥤", available: true },
-
-      // 11. ميلك شيك (فرع مول تن بوينت 18)
-      { id: 100, name: "ميلك شيك فانيليا - Milk Shake Vanilla", category: "ميلك شيك", price: 80, unitType: "cup", by_weight: false, desc: "ميلك شيك آيس كريم فانيليا كريمي", emoji: "🍨", available: true },
-      { id: 101, name: "ميلك شيك شوكولاتة - Milk Shake Chocolate", category: "ميلك شيك", price: 85, unitType: "cup", by_weight: false, desc: "ميلك شيك غني بآيس كريم الشوكولاتة", emoji: "🍫", available: true },
-      { id: 102, name: "ميلك شيك كراميل - Milk Shake Caramel", category: "ميلك شيك", price: 85, unitType: "cup", by_weight: false, desc: "ميلك شيك بصوص الكراميل الفاخر", emoji: "🍨", available: true },
-      { id: 103, name: "ميلك شيك توت أزرق - Milk Shake Blueberry", category: "ميلك شيك", price: 85, unitType: "cup", by_weight: false, desc: "ميلك شيك بالتوت الأزرق المنعش", emoji: "🫐", available: true },
-      { id: 104, name: "ميلك شيك فراولة - Milk Shake Strawberry", category: "ميلك شيك", price: 90, unitType: "cup", by_weight: false, desc: "ميلك شيك بالفراولة الطبيعية والكريمة", emoji: "🍓", available: true },
-      { id: 105, name: "ميلك شيك باشون فروت - Milk Shake Passion", category: "ميلك شيك", price: 90, unitType: "cup", by_weight: false, desc: "ميلك شيك استوائي بنكهة الباشون فروت", emoji: "🍹", available: true },
-      { id: 106, name: "ميلك شيك خوخ - Milk Shake Peach", category: "ميلك شيك", price: 90, unitType: "cup", by_weight: false, desc: "ميلك شيك بنكهة الخوخ المنعشة", emoji: "🍑", available: true },
-      { id: 107, name: "ميلك شيك مانجو - Milk Shake Mango", category: "ميلك شيك", price: 100, unitType: "cup", by_weight: false, desc: "ميلك شيك مانجو طبيعي غني", emoji: "🥭", available: true },
-      { id: 108, name: "ميلك شيك لوتس - Milk Shake Lotus", category: "ميلك شيك", price: 120, unitType: "cup", by_weight: false, desc: "ميلك شيك بزبدة وبسكويت اللوتس الأصلي", emoji: "🍪", badge: "الأكثر طلباً", popular: true, available: true },
-      { id: 109, name: "ميلك شيك سنيكرز - Milk Shake Snickers", category: "ميلك شيك", price: 100, unitType: "cup", by_weight: false, desc: "ميلك شيك بالشوكولاتة والكراميل والفول السوداني", emoji: "🍫", available: true },
-      { id: 110, name: "ميلك شيك كيت كات - Milk Shake KitKat", category: "ميلك شيك", price: 100, unitType: "cup", by_weight: false, desc: "ميلك شيك بقطع شوكولاتة كيت كات", emoji: "🍫", available: true },
-
-      // 12. شوكولاتة ساخنة (فرع مول تن بوينت 18)
-      { id: 111, name: "هوت شوكليت أوريو - Hot Chocolate Oreo", category: "شوكولاتة ساخنة", price: 90, unitType: "cup", by_weight: false, desc: "شوكولاتة ساخنة غنية بقطع الأوريو", emoji: "🍫", available: true },
-      { id: 112, name: "هوت شوكليت كراميل - Hot Chocolate Caramel", category: "شوكولاتة ساخنة", price: 85, unitType: "cup", by_weight: false, desc: "شوكولاتة ساخنة مع صوص الكراميل", emoji: "🍫", available: true },
-      { id: 113, name: "هوت شوكليت مارشميلو - Hot Chocolate Marshmallow", category: "شوكولاتة ساخنة", price: 95, unitType: "cup", by_weight: false, desc: "شوكولاتة ساخنة مغطاة بالمارشميلو الذائب", emoji: "🍫", available: true },
-      { id: 114, name: "هوت شوكليت فانيليا - Hot Chocolate Vanilla", category: "شوكولاتة ساخنة", price: 80, unitType: "cup", by_weight: false, desc: "شوكولاتة ساخنة بنكهة الفانيليا الناعمة", emoji: "🍫", available: true },
-      { id: 115, name: "هوت شوكليت بندق - Hot Chocolate Hazelnut", category: "شوكولاتة ساخنة", price: 85, unitType: "cup", by_weight: false, desc: "شوكولاتة ساخنة بنكهة البندق الغنية", emoji: "🍫", available: true },
-      { id: 116, name: "وايت هوت شوكليت - White Hot Chocolate", category: "شوكولاتة ساخنة", price: 80, unitType: "cup", by_weight: false, desc: "مشروب الشوكولاتة البيضاء الساخن الكريمي", emoji: "🥛", available: true },
-
-      // 13. سموذي وعصائر فريش (فرع مول تن بوينت 18)
-      { id: 117, name: "سموذي مانجو - Mango Smoothie", category: "سموذي وعصائر فريش", price: 75, unitType: "cup", by_weight: false, desc: "سموذي مانجو مثلج ومنعش", emoji: "🥭", available: true },
-      { id: 118, name: "سموذي فراولة - Strawberry Smoothie", category: "سموذي وعصائر فريش", price: 75, unitType: "cup", by_weight: false, desc: "سموذي فراولة طبيعي مثلج", emoji: "🍓", available: true },
-      { id: 119, name: "سموذي خوخ - Peach Smoothie", category: "سموذي وعصائر فريش", price: 75, unitType: "cup", by_weight: false, desc: "سموذي خوخ بارد ومنعش", emoji: "🍑", available: true },
-      { id: 120, name: "سموذي توت أزرق - Blueberry Smoothie", category: "سموذي وعصائر فريش", price: 75, unitType: "cup", by_weight: false, desc: "سموذي بلوبيري مثلج", emoji: "🫐", available: true },
-      { id: 121, name: "سموذي باشون فروت - Passion Fruit Smoothie", category: "سموذي وعصائر فريش", price: 75, unitType: "cup", by_weight: false, desc: "سموذي باشون فروت استوائي منعش", emoji: "🍹", available: true },
-      { id: 122, name: "عصير مانجو فريش - Mango Fresh", category: "سموذي وعصائر فريش", price: 65, unitType: "cup", by_weight: false, desc: "عصير مانجو طبيعي 100% طازج", emoji: "🥭", available: true },
-      { id: 123, name: "عصير فراولة فريش - Strawberry Fresh", category: "سموذي وعصائر فريش", price: 65, unitType: "cup", by_weight: false, desc: "عصير فراولة طبيعي 100% طازج", emoji: "🍓", available: true },
-
-      // 14. ماتشا وشاي بارد (فرع مول تن بوينت 18)
-      { id: 124, name: "ماتشا لاتيه - Matcha Latte", category: "ماتشا وشاي بارد", price: 90, unitType: "cup", by_weight: false, desc: "شاي الماتشا الياباني الفاخر مع الحليب", emoji: "🍵", available: true },
-      { id: 125, name: "ماتشا فراولة - Matcha Strawberry", category: "ماتشا وشاي بارد", price: 110, unitType: "cup", by_weight: false, desc: "ماتشا لاتيه مثلجة مع طبقة الفراولة الطبيعية", emoji: "🍵", available: true },
-      { id: 126, name: "آيس تي خوخ - Ice Tea Peach", category: "ماتشا وشاي بارد", price: 60, unitType: "cup", by_weight: false, desc: "شاي مثلج منعش بنكهة الخوخ", emoji: "🍹", available: true },
-      { id: 127, name: "آيس تي باشون فروت - Ice Tea Passion Fruit", category: "ماتشا وشاي بارد", price: 60, unitType: "cup", by_weight: false, desc: "شاي مثلج بنكهة الباشون فروت", emoji: "🍹", available: true },
-      { id: 128, name: "آيس تي راسبيري - Ice Tea Raspberry", category: "ماتشا وشاي بارد", price: 60, unitType: "cup", by_weight: false, desc: "شاي مثلج بنكهة التوت الأحمر", emoji: "🍹", available: true },
-
-      // 15. صودا وموهيتو (فرع مول تن بوينت 18)
-      { id: 129, name: "موهيتو بلو سكاي - Blue Sky", category: "صودا وموهيتو", price: 75, unitType: "cup", by_weight: false, desc: "صودا منعشة بالليمون والنعناع والبلو كوراساو", emoji: "🧊", available: true },
-      { id: 130, name: "صن شاين صودا - Sun Shine", category: "صودا وموهيتو", price: 75, unitType: "cup", by_weight: false, desc: "مشروب صودا الفواكه الاستوائية المنعش", emoji: "🍹", available: true },
-      { id: 131, name: "موهيتو خوخ - Mojito Peach", category: "صودا وموهيتو", price: 75, unitType: "cup", by_weight: false, desc: "موهيتو الليمون والنعناع بنكهة الخوخ", emoji: "🍑", available: true },
-      { id: 132, name: "سفن أب سبيشيال - 7 UP Special", category: "صودا وموهيتو", price: 60, unitType: "cup", by_weight: false, desc: "سفن أب مثلج مع نكهات خاصة وليمون", emoji: "🥤", available: true },
-      { id: 133, name: "ريد بول - Red Bull", category: "صودا وموهيتو", price: 75, unitType: "cup", by_weight: false, desc: "مشروب الطاقة ريد بول بارد", emoji: "⚡", available: true },
-      { id: 134, name: "ريد بول نكهات - Red Bull Flavors", category: "صودا وموهيتو", price: 95, unitType: "cup", by_weight: false, desc: "ميكس ريد بول مثلج مع نكهات الفواكه", emoji: "⚡", available: true },
-
-      // 16. شاي ومشروبات وإضافات (فرع مول تن بوينت 18)
-      { id: 135, name: "شاي أحمر - Tea", category: "شاي ومشروبات وإضافات", price: 30, unitType: "cup", by_weight: false, desc: "شاي أحمر ساخن مضبوط", emoji: "🍵", available: true },
-      { id: 136, name: "شاي نكهات - Flavored Tea", category: "شاي ومشروبات وإضافات", price: 35, unitType: "cup", by_weight: false, desc: "شاي ساخن بنكهات مميزة", emoji: "🍵", available: true },
-      { id: 137, name: "شاي لاتيه بالحليب - Tea Latte", category: "شاي ومشروبات وإضافات", price: 45, unitType: "cup", by_weight: false, desc: "شاي غني بالحليب الساخن على الطريقة الإنجليزية", emoji: "☕", available: true },
-      { id: 138, name: "سحلب مكسرات - Sahlab", category: "شاي ومشروبات وإضافات", price: 70, unitType: "cup", by_weight: false, desc: "سحلب كريمي دافئ غني بالمكسرات", emoji: "🥛", available: true },
-      { id: 139, name: "سيدر تفاح ساخن - Hot Cider", category: "شاي ومشروبات وإضافات", price: 60, unitType: "cup", by_weight: false, desc: "مشروب التفاح الساخن بالقرفة", emoji: "🍎", available: true },
-      { id: 140, name: "إضافة نكهة - Add Flavor", category: "شاي ومشروبات وإضافات", price: 20, unitType: "piece", by_weight: false, desc: "إضافة صوص أو سيرب نكهة للمشروب", emoji: "✨", available: true },
-      { id: 141, name: "إضافة حليب - Extra Milk", category: "شاي ومشروبات وإضافات", price: 25, unitType: "piece", by_weight: false, desc: "إضافة حليب إضافي للمشروب", emoji: "🥛", available: true },
-      { id: 142, name: "إضافة شوت إسبريسو - Extra Espresso", category: "شاي ومشروبات وإضافات", price: 20, unitType: "piece", by_weight: false, desc: "شوت إسبريسو إضافي لتركيز أعلى", emoji: "☕", available: true },
-      { id: 143, name: "مياه معدنية - Water", category: "شاي ومشروبات وإضافات", price: 10, unitType: "piece", by_weight: false, desc: "زجاجة مياه معدنية باردة", emoji: "💧", available: true },
-
-      // بوكس السعادة
-      { id: 144, name: "بوكس السعادة", category: "الحلو", price: 350, unitType: "box", by_weight: false, desc: "بوكس السعادة المشكل من أشهى حلويات ومخبوزات سويت سيتي الطازجة", emoji: "🎁", badge: "الأكثر طلباً", popular: true, available: true },
-
-      // 17. عروض وخصومات 🎁
-      { id: 151, name: "عرض العائلة التوفيري (تورتة 25/25 + كيلو سواريه مشكل)", category: "عروض وخصومات 🎁", price: 650, oldPrice: 750, unitType: "piece", by_weight: false, desc: "وفر 100 ج.م! تورتة مقاس 25×25 طازجة + كيلو سواريه مشكل فاخر للمناسبات", emoji: "🎁", badge: "عرض", available: true },
-      { id: 152, name: "بوكس فطار الصحاب والعيلة (10 كرواسون وباتيه + 4 دوناتس)", category: "عروض وخصومات 🎁", price: 250, oldPrice: 300, unitType: "box", by_weight: false, desc: "وفر 50 ج.م! تشكيلة مخبوزات ساخنة طازجة من الفرن مع 4 دوناتس شوكولاتة", emoji: "🥐", badge: "عرض", available: true },
-      { id: 153, name: "كومبو القهوة والحلو (2 سبانش لاتيه + 2 مولتو كيك)", category: "عروض وخصومات 🎁", price: 275, oldPrice: 330, unitType: "piece", by_weight: false, desc: "وفر 55 ج.م! 2 كوب سبانش لاتيه (ساخن أو بارد) + 2 مولتو كيك غني بالشوكولاتة", emoji: "☕", badge: "عرض", available: true },
-      { id: 154, name: "عرض الحفلات وأعياد الميلاد (تورتة مدورة مقاس 26 + دستة جاتوه لوكس)", category: "عروض وخصومات 🎁", price: 660, oldPrice: 740, unitType: "piece", by_weight: false, desc: "وفر 80 ج.م! تورتة مدورة مقاس 26 فاخرة + 12 قطعة جاتوه لوكس طازج", emoji: "🎂", badge: "عرض", available: true },
-      { id: 155, name: "بوكس نواعم سويت سيتي (2 كيلو مشكل: كعك + بيتي فور + بسكويت + غريبة)", category: "عروض وخصومات 🎁", price: 420, oldPrice: 480, unitType: "box", by_weight: false, desc: "وفر 60 ج.م! تشكيلة 2 كيلو من أفخر نواعم سويت سيتي بالسمن البلدي", emoji: "🍪", badge: "عرض", available: true },
-      { id: 156, name: "عرض السهرة الحلوة (4 قطع جاتوه سوبر لوكس + 2 ميلك شيك)", category: "عروض وخصومات 🎁", price: 260, oldPrice: 310, unitType: "piece", by_weight: false, desc: "وفر 50 ج.م! 4 قطع جاتوه سوبر لوكس + 2 ميلك شيك من اختيارك", emoji: "🍰", badge: "عرض", available: true }
-    ];
-
-    let RAW = JSON.parse(JSON.stringify(FACTORY_RAW));
-
-    // رابط شيت فرع الـ 26 المستقل (يُقرأ تلقائياً من API_URL أو sc26_api_url بعد ربطه من لوحة تحكم فرع 26)
-    const SCRIPT_URL = "";
-    const FALLBACK_SCRIPT_URL = "";
+    // رابط شيت فرع الـ 26 المستقل (يُقرأ تلقائياً من localStorage إن وُجد، وإلا يستخدم DEFAULT_SCRIPT_URL تلقائياً)
+    const SCRIPT_URL = DEFAULT_SCRIPT_URL;
+    const FALLBACK_SCRIPT_URL = DEFAULT_SCRIPT_URL;
 
     // ============================================================================
     // الإعدادات الثابتة وبيانات المتجر المعتمدة
@@ -2889,9 +2772,9 @@
       loyaltyEgpPerPoint: 10,
       loyaltyRedeemPoints: 1,
       loyaltyRedeemEgp: 0.5,
-      webhookUrl: API_URL || SCRIPT_URL,
+      webhookUrl: API_URL || SCRIPT_URL || DEFAULT_SCRIPT_URL,
       sheetId: "",
-      logoUrl: "logo.png",
+      logoUrl: "./logo.png",
       deliveryZones: [
         { id: "zone-26", name: "نطاق مجاورة 26 والمجاورات (26 إلى 30)", fee: 15 },
         { id: "zone-14-25", name: "المجاورات القريبة (14 إلى 25)", fee: 15 },
@@ -2938,7 +2821,8 @@
         delete settingsForCache.instaPay;
         localStorage.setItem(MENU_CACHE_KEY, JSON.stringify({
           ts: Date.now(),
-          items: RAW,
+          source: 'google_sheets',
+          items: Array.isArray(RAW) ? RAW : [],
           settings: settingsForCache
         }));
       } catch (e) {}
@@ -2963,7 +2847,7 @@
         cashHolder: '',
         instapay: '01090000421',
         instapayHolder: '',
-        image: 'branch-26.jpg',
+        image: './branch-26.jpg',
         mapUrl: 'https://maps.google.com/?q=العاشر+من+رمضان+مجاورة+26+أمام+مفارق+المجاورة+19',
         imagePosition: 'center center',
         hasDrinks: false,
@@ -2982,7 +2866,7 @@
         cashHolder: '',
         instapay: '01060809671',
         instapayHolder: '',
-        image: 'branch-18.jpg',
+        image: './branch-18.jpg',
         mapUrl: 'https://maps.google.com/?q=العاشر+من+رمضان+المجاورة+18+مول+تن+بوينت',
         imagePosition: 'center center',
         hasDrinks: true,
@@ -3001,7 +2885,7 @@
         cashHolder: 'أحمد',
         instapay: '01060809671',
         instapayHolder: 'فارس',
-        image: 'branch-31.jpg',
+        image: './branch-31.jpg',
         mapUrl: 'https://maps.google.com/?q=العاشر+من+رمضان+المجاورة+31+سنتر+المجاورة',
         imagePosition: 'center center',
         hasDrinks: false,
@@ -3059,10 +2943,13 @@
       return Boolean(profile && profile.hasDrinks === true);
     }
 
+    const CAFE_COMBINED_CATEGORY = 'الكافيه والمشروبات ☕';
+
     function isDrinkItem(item) {
       if (!item) return false;
       const cat = String(item.category || '').trim();
       if (DRINK_CATEGORIES.includes(cat)) return true;
+      if (cat === CAFE_COMBINED_CATEGORY || cat.includes('كافيه') || cat.includes('مشروبات') || cat.includes('القهوة')) return true;
       const idNum = Number(item.id);
       if (idNum === 153 || idNum === 156) return true;
       return false;
@@ -3089,7 +2976,14 @@
     function getActiveBranchItems() {
       if (!Array.isArray(RAW)) return [];
       const activeKey = resolveBranchKey(window.CURRENT_BRANCH);
-      return RAW.filter(item => getItemBranchFlag(item, activeKey));
+      return RAW.filter(item => {
+        if (!item || typeof item !== 'object') return false;
+        const idNum = Number(item.id) || 0;
+        const nameStr = String(item.name || '').trim();
+        if (idNum <= 0 || !nameStr || nameStr.toLowerCase() === 'name') return false;
+        if (!isItemAvailable(item)) return false;
+        return getItemBranchFlag(item, activeKey);
+      });
     }
 
     function applyRemoteBranches(remoteBranches) {
@@ -3181,8 +3075,23 @@
       const swrCache = localStorage.getItem(MENU_CACHE_KEY);
       if (swrCache) {
         const parsedCache = JSON.parse(swrCache);
-        if (parsedCache && Array.isArray(parsedCache.items) && parsedCache.items.length > 0) {
-          RAW = parsedCache.items;
+        if (parsedCache && parsedCache.source === 'google_sheets' && Array.isArray(parsedCache.items)) {
+          const cleanCached = parsedCache.items.filter(item => {
+            if (!item || typeof item !== 'object') return false;
+            const idNum = Number(item.id) || 0;
+            const nameStr = String(item.name || '').trim();
+            if (idNum <= 0 || !nameStr || nameStr.toLowerCase() === 'name') return false;
+            return isItemAvailable(item);
+          });
+          if (cleanCached.length > 0) {
+            RAW = cleanCached;
+            MENU_SYNC_STATE = {
+              status: 'offline_cache',
+              fromCache: true,
+              lastSyncedAt: Number(parsedCache.ts) || 0,
+              errorMessage: ''
+            };
+          }
         }
         if (parsedCache && parsedCache.settings && typeof parsedCache.settings === 'object') {
           delete parsedCache.settings.adminPin;
@@ -3419,7 +3328,7 @@
       const fbBranchEl = document.getElementById('uiHeaderPhotoFallbackBranch');
       if (!imgEl || !branchProfile) return;
 
-      const targetSrc = branchProfile.image || 'branch-26.jpg';
+      const targetSrc = branchProfile.image || './branch-26.jpg';
       const targetPos = branchProfile.imagePosition || 'center center';
       const targetAlt = `سويت سيتي - ${branchProfile.name} (${branchProfile.address})`;
 
@@ -3441,6 +3350,7 @@
         imgEl.style.objectPosition = targetPos;
         imgEl.alt = targetAlt;
         imgEl.onload = () => { imgEl.style.opacity = '1'; };
+        imgEl.onerror = function () { handleBranchHeroImgError(this); };
         imgEl.src = targetSrc;
         if (imgEl.complete && imgEl.naturalWidth > 0) {
           imgEl.style.opacity = '1';
@@ -3458,37 +3368,6 @@
         applySwap();
       }
     }
-
-    function handleBranchHeroImgError(imgEl) {
-      if (!imgEl) return;
-      const fbEl = document.getElementById('uiHeaderPhotoFallback');
-      const currentSrc = imgEl.getAttribute('src') || '';
-      if (!imgEl.dataset.fbStep && currentSrc !== 'branch-26.jpg') {
-        imgEl.dataset.fbStep = 'b26';
-        imgEl.style.objectPosition = 'center center';
-        imgEl.src = 'branch-26.jpg';
-        return;
-      }
-      imgEl.style.display = 'none';
-      imgEl.style.opacity = '1';
-      if (fbEl) fbEl.classList.remove('hidden');
-    }
-    window.handleBranchHeroImgError = handleBranchHeroImgError;
-
-    function handleLightboxImgError(imgEl) {
-      if (!imgEl) return;
-      const fbEl = document.getElementById('lbBranchFallback');
-      const currentSrc = imgEl.getAttribute('src') || '';
-      if (!imgEl.dataset.fbStep && currentSrc !== 'branch-26.jpg') {
-        imgEl.dataset.fbStep = 'b26';
-        imgEl.style.objectPosition = 'center center';
-        imgEl.src = 'branch-26.jpg';
-        return;
-      }
-      imgEl.style.display = 'none';
-      if (fbEl) fbEl.classList.remove('hidden');
-    }
-    window.handleLightboxImgError = handleLightboxImgError;
 
     function syncLightboxWithBranch(branch) {
       if (!branch) return;
@@ -3520,7 +3399,8 @@
         imgEl.style.display = 'block';
         imgEl.style.objectPosition = branch.imagePosition || 'center center';
         imgEl.alt = `سويت سيتي - ${branch.name}`;
-        imgEl.src = branch.image || 'branch-26.jpg';
+        imgEl.onerror = function () { handleLightboxImgError(this); };
+        imgEl.src = branch.image || './branch-26.jpg';
       }
       if (fbEl) fbEl.classList.add('hidden');
     }
@@ -3658,9 +3538,16 @@
       if (footerInstaEl) footerInstaEl.textContent = pureInstapay;
 
       const cafeNoticeEl = document.getElementById('scCafeBranchNotice');
+      const cafeInactiveEl = document.getElementById('scCafeNoticeInactive');
+      const cafeActiveEl = document.getElementById('scCafeNoticeActive');
+      const drinksEnabled = isDrinksAllowedForBranch(branch.id);
       if (cafeNoticeEl) {
-        cafeNoticeEl.classList.toggle('hidden', isDrinksAllowedForBranch(branch.id));
+        cafeNoticeEl.classList.remove('hidden');
+        cafeNoticeEl.classList.toggle('border-emerald-400/50', drinksEnabled);
+        cafeNoticeEl.classList.toggle('border-[#d4af37]/50', !drinksEnabled);
       }
+      if (cafeInactiveEl) cafeInactiveEl.classList.toggle('hidden', drinksEnabled);
+      if (cafeActiveEl) cafeActiveEl.classList.toggle('hidden', !drinksEnabled);
 
       // 7. تحديث نافذة المعاينة المكبرة إذا كانت مفتوحة
       const lightboxModal = document.getElementById('branchPhotoLightboxModal');
@@ -3669,7 +3556,7 @@
       }
 
       // 8. تطبيق الفلترة الذكية لقسم المشروبات والكافيه لحظياً (بدون مسح السلة)
-      if (!isDrinksAllowedForBranch(branch.id) && DRINK_CATEGORIES.includes(activeCategory)) {
+      if (!drinksEnabled && (activeCategory === CAFE_COMBINED_CATEGORY || DRINK_CATEGORIES.includes(activeCategory))) {
         activeCategory = 'الكل';
       }
       if (typeof renderCategories === 'function' && document.getElementById('categoriesBar')) {
@@ -3789,7 +3676,7 @@
     // 2. المحرك السحابي المقاوم لـ CORS للربط الفوري مع Google Sheets (Products, Settings & Orders)
     // ============================================================================
     const GOOGLE_SHEETS_CONFIG = {
-      scriptUrl: API_URL || STORE_SETTINGS.webhookUrl || SCRIPT_URL,
+      scriptUrl: API_URL || STORE_SETTINGS.webhookUrl || SCRIPT_URL || DEFAULT_SCRIPT_URL,
       sheetId: STORE_SETTINGS.sheetId || ''
     };
 
@@ -3860,10 +3747,12 @@
     }
 
     function isItemAvailable(item) {
-      if (!item) return false;
-      if (item.available === false) return false;
-      const v = String(item.available).trim().toLowerCase();
-      if (v === 'false' || v === '0' || v === 'no') return false;
+      if (!item || typeof item !== 'object') return false;
+      const rawVal = item.available !== undefined ? item.available : item.Available;
+      if (rawVal === false || rawVal === 0) return false;
+      if (rawVal === undefined || rawVal === null || rawVal === '') return true;
+      const v = String(rawVal).trim().toLowerCase();
+      if (v === 'false' || v === '0' || v === 'no' || v === 'لا' || v === 'غير متاح' || v === 'نفد') return false;
       return true;
     }
 
@@ -3878,13 +3767,26 @@
     }
 
     function sortRawById() {
-      if (!Array.isArray(RAW)) return;
+      if (!Array.isArray(RAW)) {
+        RAW = [];
+        return;
+      }
+      RAW = RAW.filter(item => {
+        if (!item || typeof item !== 'object') return false;
+        const idNum = Number(item.id !== undefined ? item.id : item.ID) || 0;
+        const nameStr = String(item.name || item.Name || '').trim();
+        if (idNum <= 0 || !nameStr || nameStr.toLowerCase() === 'name') return false;
+        return isItemAvailable(item);
+      });
       RAW.sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
       RAW.forEach(item => {
+        item.id = Number(item.id !== undefined ? item.id : item.ID) || 0;
+        item.name = String(item.name || item.Name || '').trim();
         item.unitType = normalizeUnitType(item.unitType, item.category, item.id, item.name, item.by_weight);
         item.by_weight = item.unitType === 'weight';
         if (!item.desc && item.description) item.desc = String(item.description).trim();
-        if (!item.img && (item.image || item.ImageURL)) item.img = String(item.image || item.ImageURL).trim();
+        const rawImgField = item.ImageURL || item.image || item.img || item.photo || item.Photo || '';
+        item.img = normalizeImageUrl(rawImgField);
         if (!item.oldPrice && (item.old_price || item.OldPrice)) item.oldPrice = Number(item.old_price || item.OldPrice) || 0;
         const isDrink = isDrinkItem(item);
         const b26Raw = item.branch_26 !== undefined ? item.branch_26 : item.Branch_26;
@@ -3904,6 +3806,15 @@
     async function syncFromGoogleSheet(showNotification) {
       const activeScriptUrl = getCloudApiUrl();
       const activeSheetId = (STORE_SETTINGS.sheetId || GOOGLE_SHEETS_CONFIG.sheetId || '').trim();
+      const prevStatus = MENU_SYNC_STATE.status;
+      const hadCache = Array.isArray(RAW) && RAW.length > 0;
+      MENU_SYNC_STATE.status = 'loading';
+      MENU_SYNC_STATE.errorMessage = '';
+      if (typeof renderSyncStatusBanner === 'function') renderSyncStatusBanner();
+      if (!hadCache && typeof renderProducts === 'function' && document.getElementById('productsGrid')) {
+        renderProducts();
+      }
+
       const getItemsSignature = (list) => JSON.stringify(
         (Array.isArray(list) ? list : [])
           .map(i => [
@@ -3919,13 +3830,17 @@
             getItemBranchFlag(i, 'b26'),
             getItemBranchFlag(i, 'b18'),
             getItemBranchFlag(i, 'b31'),
-            String(i.img || i.image || i.ImageURL || '').trim(),
+            normalizeImageUrl(i.ImageURL || i.image || i.img || i.photo || i.Photo || ''),
             isItemPopular(i)
           ])
           .sort((a, b) => a[0] - b[0])
       );
 
+      let attemptedRemote = false;
+      let lastErrorText = '';
+
       if (activeScriptUrl && activeScriptUrl.startsWith('https://script.google.com/')) {
+        attemptedRemote = true;
         try {
           const data = await fetchAppsScriptGet(activeScriptUrl);
 
@@ -3940,64 +3855,87 @@
               LIVE_OFFERS = data.offers;
             }
             if (Array.isArray(data.items)) {
-              if (data.items.length === 0) {
+              const incomingItems = data.items
+                .map(item => {
+                  const idNum = Number(item && (item.id !== undefined ? item.id : item.ID)) || 0;
+                  const priceNum = Number(item && (item.price !== undefined ? item.price : item.Price)) || 0;
+                  const oldPriceNum = Number(item && (item.oldPrice !== undefined ? item.oldPrice : (item.old_price !== undefined ? item.old_price : item.OldPrice))) || 0;
+                  const nameStr = String((item && (item.name || item.Name)) || '').trim();
+                  const catStr = String((item && (item.category || item.Category)) || 'الحلو').trim();
+                  const descStr = String((item && (item.desc || item.description || item.Description)) || 'مخبوز طازج يومياً').trim();
+                  const imgStr = normalizeImageUrl((item && (item.ImageURL || item.image || item.img || item.photo || item.Photo)) || '');
+                  const uType = normalizeUnitType(item && (item.unitType || item.UnitType), catStr, idNum, nameStr, item && item.by_weight);
+                  const isDrink = isDrinkItem({ id: idNum, category: catStr });
+                  const b26Raw = item && (item.branch_26 !== undefined ? item.branch_26 : item.Branch_26);
+                  const b18Raw = item && (item.branch_18 !== undefined ? item.branch_18 : item.Branch_18);
+                  const b31Raw = item && (item.branch_31 !== undefined ? item.branch_31 : item.Branch_31);
+                  const b26 = b26Raw !== undefined && b26Raw !== '' ? parseSheetBoolClient(b26Raw, !isDrink) : !isDrink;
+                  const b18 = b18Raw !== undefined && b18Raw !== '' ? parseSheetBoolClient(b18Raw, true) : true;
+                  const b31 = b31Raw !== undefined && b31Raw !== '' ? parseSheetBoolClient(b31Raw, !isDrink) : !isDrink;
+                  const availFlag = isItemAvailable(item);
+                  const normalized = {
+                    ...item,
+                    id: idNum,
+                    name: nameStr,
+                    category: catStr,
+                    price: priceNum,
+                    desc: descStr,
+                    img: imgStr,
+                    unitType: uType,
+                    by_weight: uType === 'weight',
+                    available: availFlag,
+                    branch_26: b26,
+                    branch_18: b18,
+                    branch_31: b31,
+                    Branch_26: b26,
+                    Branch_18: b18,
+                    Branch_31: b31,
+                    popular: isItemPopular(item)
+                  };
+                  if (oldPriceNum > priceNum) {
+                    normalized.oldPrice = oldPriceNum;
+                  } else {
+                    delete normalized.oldPrice;
+                  }
+                  return normalized;
+                })
+                .filter(item => item.id > 0 && item.name.length > 0 && item.name.toLowerCase() !== 'name' && item.available === true)
+                .sort((a, b) => a.id - b.id);
+
+              if (incomingItems.length === 0) {
+                if (RAW.length > 0) hasChanges = true;
+                RAW = [];
+                saveMenuCacheToLocal();
+                MENU_SYNC_STATE = {
+                  status: 'empty',
+                  fromCache: false,
+                  lastSyncedAt: Date.now(),
+                  errorMessage: ''
+                };
                 if (showNotification) {
-                  const emptyMsg = 'الجدول فارغ حالياً — اضغط على تهيئة الشيت من لوحة التحكم';
-                  showToast('⚠️ ' + emptyMsg, true);
+                  showToast('⚠️ ورقة Products لا تحتوي حالياً على أصناف متاحة للعرض.', true);
                 }
               } else {
-                const incomingItems = data.items
-                  .map(item => {
-                    const idNum = Number(item && (item.id !== undefined ? item.id : item.ID)) || 0;
-                    const priceNum = Number(item && (item.price !== undefined ? item.price : item.Price)) || 0;
-                    const oldPriceNum = Number(item && (item.oldPrice !== undefined ? item.oldPrice : (item.old_price !== undefined ? item.old_price : item.OldPrice))) || 0;
-                    const nameStr = String((item && (item.name || item.Name)) || '').trim();
-                    const catStr = String((item && (item.category || item.Category)) || 'الحلو').trim();
-                    const descStr = String((item && (item.desc || item.description || item.Description)) || 'مخبوز طازج يومياً').trim();
-                    const imgStr = String((item && (item.img || item.image || item.ImageURL)) || '').trim();
-                    const uType = normalizeUnitType(item && (item.unitType || item.UnitType), catStr, idNum, nameStr, item && item.by_weight);
-                    const isDrink = isDrinkItem({ id: idNum, category: catStr });
-                    const b26Raw = item && (item.branch_26 !== undefined ? item.branch_26 : item.Branch_26);
-                    const b18Raw = item && (item.branch_18 !== undefined ? item.branch_18 : item.Branch_18);
-                    const b31Raw = item && (item.branch_31 !== undefined ? item.branch_31 : item.Branch_31);
-                    const b26 = b26Raw !== undefined && b26Raw !== '' ? parseSheetBoolClient(b26Raw, !isDrink) : !isDrink;
-                    const b18 = b18Raw !== undefined && b18Raw !== '' ? parseSheetBoolClient(b18Raw, true) : true;
-                    const b31 = b31Raw !== undefined && b31Raw !== '' ? parseSheetBoolClient(b31Raw, !isDrink) : !isDrink;
-                    const normalized = {
-                      ...item,
-                      id: idNum,
-                      name: nameStr,
-                      category: catStr,
-                      price: priceNum,
-                      desc: descStr,
-                      img: imgStr,
-                      unitType: uType,
-                      by_weight: uType === 'weight',
-                      available: isItemAvailable(item),
-                      branch_26: b26,
-                      branch_18: b18,
-                      branch_31: b31,
-                      Branch_26: b26,
-                      Branch_18: b18,
-                      Branch_31: b31,
-                      popular: isItemPopular(item)
-                    };
-                    if (oldPriceNum > priceNum) {
-                      normalized.oldPrice = oldPriceNum;
-                    } else {
-                      delete normalized.oldPrice;
-                    }
-                    return normalized;
-                  })
-                  .filter(item => item.id > 0 && item.name.length > 0 && item.name.toLowerCase() !== 'name')
-                  .sort((a, b) => a.id - b.id);
-                if (incomingItems.length > 0 && getItemsSignature(incomingItems) !== getItemsSignature(RAW)) {
+                if (getItemsSignature(incomingItems) !== getItemsSignature(RAW)) {
                   RAW = incomingItems;
                   sortRawById();
                   saveMenuCacheToLocal();
                   hasChanges = true;
                 }
+                MENU_SYNC_STATE = {
+                  status: 'ready',
+                  fromCache: false,
+                  lastSyncedAt: Date.now(),
+                  errorMessage: ''
+                };
               }
+            } else {
+              MENU_SYNC_STATE = {
+                status: RAW.length > 0 ? 'ready' : 'empty',
+                fromCache: false,
+                lastSyncedAt: Date.now(),
+                errorMessage: ''
+              };
             }
 
             if (data.settings && typeof data.settings === 'object') {
@@ -4022,7 +3960,7 @@
               }
             }
 
-            if (hasChanges || showNotification) {
+            if (hasChanges || showNotification || prevStatus !== 'ready') {
               const savedScrollY = window.scrollY;
               const prevRendered = !showNotification ? scRenderedCount : 0;
               reconcileCartWithMenu();
@@ -4031,20 +3969,24 @@
               if (!showNotification && savedScrollY > 0) {
                 window.scrollTo(0, savedScrollY);
               }
+            } else if (typeof renderSyncStatusBanner === 'function') {
+              renderSyncStatusBanner();
             }
-            if (showNotification && Array.isArray(data.items) && data.items.length > 0) {
+            if (showNotification && RAW.length > 0) {
               showToast('✅ تم سحب أحدث الأصناف والأسعار والفروع من Google Sheets بنجاح!', false);
             }
             return;
           }
         } catch (err) {
+          lastErrorText = 'تعذر الاتصال بالسيرفر لجلب المنيو الحالي. تأكد من اتصالك بالإنترنت ثم أعد المحاولة.';
           if (showNotification) {
-            showToast('⚠️ تعذر الاتصال برابط Apps Script، تأكد من نشر السكربت بصلاحية Anyone.', true);
+            showToast('⚠️ تعذر الاتصال برابط Apps Script، تأكد من الاتصال بالإنترنت وصلاحية النشر.', true);
           }
         }
       }
 
       if (activeSheetId && activeSheetId.length > 10) {
+        attemptedRemote = true;
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 8000);
         try {
@@ -4085,11 +4027,12 @@
               const emojiCol = String(cell('emoji', '', isNewGviz ? 6 : 11) || '🥐').trim();
               const availRaw = cell('available', '', isNewGviz ? 7 : 8);
               const availVal = availRaw === '' ? true : parseSheetBoolClient(availRaw, true);
+              if (!availVal) return;
               const isDrink = isDrinkItem({ id: idVal, category: catVal });
               const b26Raw = isNewGviz ? cell('branch_26', 'branch26', 8) : '';
               const b18Raw = isNewGviz ? cell('branch_18', 'branch18', 9) : '';
               const b31Raw = isNewGviz ? cell('branch_31', 'branch31', 10) : '';
-              const imgVal = String(cell('imageurl', 'image', isNewGviz ? 11 : 6) || '').trim();
+              const imgVal = normalizeImageUrl(cell('imageurl', 'image', isNewGviz ? 11 : 6) || cell('photo', 'img', -1) || '');
               const oldPriceVal = Number(cell('oldprice', 'old_price', isNewGviz ? 12 : 5)) || 0;
               const popRaw = isNewGviz ? cell('popular', '', 13) : cell('badge', '', 9);
               const isPop = parseSheetBoolClient(popRaw, false) || (typeof popRaw === 'string' && popRaw.trim().length > 0 && popRaw.trim().toLowerCase() !== 'false');
@@ -4117,49 +4060,94 @@
               if (oldPriceVal > itemObj.price) itemObj.oldPrice = oldPriceVal;
               pulledItems.push(itemObj);
             });
-            if (pulledItems.length > 0) {
-              let hasChanges = false;
-              const normalizedPulled = pulledItems.map(item => ({
+            let hasChanges = false;
+            const normalizedPulled = pulledItems
+              .map(item => ({
                 ...item,
                 unitType: normalizeUnitType(item.unitType, item.category, item.id, item.name, item.by_weight),
                 available: isItemAvailable(item),
                 popular: isItemPopular(item)
-              })).sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
-              if (getItemsSignature(normalizedPulled) !== getItemsSignature(RAW)) {
-                RAW = normalizedPulled;
-                sortRawById();
-                saveMenuCacheToLocal();
-                hasChanges = true;
-              }
-              if (hasChanges || showNotification) {
-                const savedScrollY = window.scrollY;
-                const prevRendered = !showNotification ? scRenderedCount : 0;
-                reconcileCartWithMenu();
-                initApp(prevRendered);
-                if (!showNotification && savedScrollY > 0) {
-                  window.scrollTo(0, savedScrollY);
-                }
-              }
-              if (showNotification) showToast('✅ تم تحديث القائمة مباشرة من Google Sheet!', false);
+              }))
+              .filter(item => item.id > 0 && item.name.length > 0 && item.available === true)
+              .sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
+
+            if (getItemsSignature(normalizedPulled) !== getItemsSignature(RAW)) {
+              RAW = normalizedPulled;
+              sortRawById();
+              saveMenuCacheToLocal();
+              hasChanges = true;
             }
+            MENU_SYNC_STATE = {
+              status: normalizedPulled.length > 0 ? 'ready' : 'empty',
+              fromCache: false,
+              lastSyncedAt: Date.now(),
+              errorMessage: ''
+            };
+            if (hasChanges || showNotification || prevStatus !== 'ready') {
+              const savedScrollY = window.scrollY;
+              const prevRendered = !showNotification ? scRenderedCount : 0;
+              reconcileCartWithMenu();
+              initApp(prevRendered);
+              if (!showNotification && savedScrollY > 0) {
+                window.scrollTo(0, savedScrollY);
+              }
+            } else if (typeof renderSyncStatusBanner === 'function') {
+              renderSyncStatusBanner();
+            }
+            if (showNotification && normalizedPulled.length > 0) showToast('✅ تم تحديث القائمة مباشرة من Google Sheet!', false);
+            return;
           }
         } catch (err) {
+          lastErrorText = 'تعذر قراءة جدول المنتجات من Google Sheets. تأكد من الاتصال بالإنترنت وصلاحية مشاركة الشيت.';
           if (showNotification) showToast('⚠️ تعذر قراءة الجدول، تأكد أن إعداد مشاركة الشيت (Anyone with the link).', true);
         } finally {
           clearTimeout(timeoutId);
         }
       }
+
+      if (RAW.length > 0) {
+        MENU_SYNC_STATE = {
+          status: 'offline_cache',
+          fromCache: true,
+          lastSyncedAt: MENU_SYNC_STATE.lastSyncedAt || 0,
+          errorMessage: attemptedRemote
+            ? (lastErrorText || 'تعذر الاتصال بالسيرفر — يتم عرض آخر نسخة مخزنة من المنيو.')
+            : 'يتم عرض آخر نسخة مخزنة من Google Sheets.'
+        };
+      } else if (!attemptedRemote) {
+        MENU_SYNC_STATE = {
+          status: 'unconfigured',
+          fromCache: false,
+          lastSyncedAt: 0,
+          errorMessage: 'لم يتم ربط رابط Google Apps Script بعد. قم بربط الشيت من لوحة التحكم لعرض المنيو المباشر.'
+        };
+      } else {
+        MENU_SYNC_STATE = {
+          status: 'error',
+          fromCache: false,
+          lastSyncedAt: 0,
+          errorMessage: lastErrorText || 'تعذر الاتصال بالسيرفر لجلب المنيو الحالي. تأكد من اتصالك بالإنترنت ثم أعد المحاولة.'
+        };
+      }
+
+      if (typeof renderCategories === 'function' && document.getElementById('categoriesBar')) renderCategories();
+      if (typeof renderProducts === 'function' && document.getElementById('productsGrid')) renderProducts();
     }
+
+    function retryMenuSync() {
+      return syncFromGoogleSheet(true);
+    }
+    window.retryMenuSync = retryMenuSync;
 
     async function logOrderToGoogleSheet(orderPayload) {
       const activeScriptUrl = getCloudApiUrl();
       if (!activeScriptUrl || !activeScriptUrl.startsWith('https://script.google.com/')) return { synced: false };
       const payload = { action: 'newOrder', order: orderPayload };
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 8000);
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
       try {
         const resPrimary = await fetchAppsScriptPost(activeScriptUrl, payload, controller.signal);
-        if (resPrimary && resPrimary.ok === true && !resPrimary.error) {
+        if (resPrimary && (resPrimary.ok === true || resPrimary.status === 'success') && !resPrimary.error) {
           return { synced: true };
         }
         return { synced: false };
@@ -4184,16 +4172,30 @@
       sortRawById();
       const visibleItems = getActiveBranchItems();
       const hasDiscountItems = visibleItems.some(i => i.category === 'عروض وخصومات 🎁' || (Number(i.oldPrice) > Number(i.price) && Number(i.oldPrice) > 0));
-      const cats = hasDiscountItems ? ['الكل', 'الأكثر طلباً 🔥', 'عروض وخصومات 🎁'] : ['الكل', 'الأكثر طلباً 🔥'];
+      const hasCafeItems = visibleItems.some(i => isDrinkItem(i));
+      const showCafeLead = isDrinksAllowedForBranch(window.CURRENT_BRANCH) || hasCafeItems;
+      const cats = [];
+      if (showCafeLead) {
+        cats.push(CAFE_COMBINED_CATEGORY);
+      }
+      cats.push('الكل', 'الأكثر طلباً 🔥');
+      if (hasDiscountItems) {
+        cats.push('عروض وخصومات 🎁');
+      }
       visibleItems.forEach(item => {
         const c = (item.category || '').trim();
-        if (c && !cats.includes(c)) cats.push(c);
+        if (!c) return;
+        if (showCafeLead && (c === CAFE_COMBINED_CATEGORY || c === 'الكافيه والمشروبات')) return;
+        if (!cats.includes(c)) cats.push(c);
       });
       return cats;
     }
 
     function getCategoryItemCount(cat) {
       const visibleItems = getActiveBranchItems();
+      if (cat === CAFE_COMBINED_CATEGORY) {
+        return visibleItems.filter(i => isDrinkItem(i)).length;
+      }
       if (cat === 'الكل') return visibleItems.length;
       if (cat === 'الأكثر طلباً 🔥') {
         const popIds = getPopularItemsIds();
@@ -4222,6 +4224,20 @@
       renderCategories();
       renderProducts();
     }
+
+    function jumpToCafeCategory() {
+      if (!isDrinksAllowedForBranch(window.CURRENT_BRANCH)) {
+        setActiveBranch('b18', { animate: true });
+      }
+      selectCategory(CAFE_COMBINED_CATEGORY);
+      const bar = document.getElementById('categoriesBar');
+      if (bar) bar.scrollLeft = 0;
+      const stickyBar = document.getElementById('scStickyCatBar');
+      if (stickyBar && typeof stickyBar.scrollIntoView === 'function') {
+        stickyBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    window.jumpToCafeCategory = jumpToCafeCategory;
 
     let searchDebounceTimer = null;
 
@@ -4337,13 +4353,41 @@
       return true;
     }
 
+    function normalizeImageUrl(rawUrl) {
+      const s = String(rawUrl || '').trim();
+      if (!s) return '';
+      if (!isSafeImageUrl(s)) return '';
+
+      const driveFileMatch = s.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]{10,})/i);
+      if (driveFileMatch && driveFileMatch[1]) {
+        return `https://lh3.googleusercontent.com/d/${driveFileMatch[1]}=w800`;
+      }
+
+      const driveQueryMatch = s.match(/(?:drive\.google\.com\/(?:open|uc|thumbnail)|docs\.google\.com\/uc|drive\.usercontent\.google\.com\/(?:download|u\/\d+\/uc))[^#]*[?&]id=([a-zA-Z0-9_-]{10,})/i);
+      if (driveQueryMatch && driveQueryMatch[1]) {
+        return `https://lh3.googleusercontent.com/d/${driveQueryMatch[1]}=w800`;
+      }
+
+      const lhMatch = s.match(/^https?:\/\/lh\d+\.googleusercontent\.com\/(?:u\/\d+\/)?d\/([a-zA-Z0-9_-]{10,})(?:=[^?#]*)?/i);
+      if (lhMatch && lhMatch[1]) {
+        return `https://lh3.googleusercontent.com/d/${lhMatch[1]}=w800`;
+      }
+
+      return s;
+    }
+    window.normalizeImageUrl = normalizeImageUrl;
+
     function resolveProductImage(item) {
       if (!item) return { primary: '', candidates: [] };
       const id = item.id;
-      const autoCandidates = [`images/${id}.jpg`];
-      const rawManualImg = String(item.img || '').trim();
-      const manualImg = isSafeImageUrl(rawManualImg) ? rawManualImg : '';
-      const all = manualImg ? [manualImg, ...autoCandidates] : autoCandidates;
+      const autoCandidates = id ? [`./images/${id}.jpg`] : [];
+      const rawManualImg = String(item.ImageURL || item.image || item.img || item.photo || item.Photo || '').trim();
+      const manualImg = normalizeImageUrl(rawManualImg);
+      const all = [];
+      if (manualImg) all.push(manualImg);
+      autoCandidates.forEach(c => {
+        if (c && !all.includes(c)) all.push(c);
+      });
       return {
         primary: all[0] || '',
         candidates: all
@@ -4352,29 +4396,13 @@
 
     const SC_BLANK_IMG = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
-    const scImgObserver = (typeof IntersectionObserver !== 'undefined') ? new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const img = entry.target;
-        if (!img || img.dataset.imgFailed === '1') return;
-        if (entry.isIntersecting) {
-          if (img.dataset.src && (img.dataset.unloaded === '1' || img.getAttribute('src') === SC_BLANK_IMG)) {
-            img.dataset.unloaded = '0';
-            img.src = img.dataset.src;
-          }
-          scImgObserver.unobserve(img);
-        }
-      });
-    }, { rootMargin: '1200px 0px' }) : null;
-
     function observeProductImages(rootEl) {
       const container = rootEl || document.getElementById('productsGrid');
       if (!container) return;
       const imgs = container.querySelectorAll('img[data-src]:not([data-observed="1"])');
       imgs.forEach((img) => {
         img.dataset.observed = '1';
-        if (scImgObserver) {
-          scImgObserver.observe(img);
-        } else {
+        if (img.dataset.src && img.getAttribute('src') === SC_BLANK_IMG) {
           img.dataset.unloaded = '0';
           img.src = img.dataset.src;
         }
@@ -4382,24 +4410,46 @@
     }
 
     function handleProductImgError(imgEl) {
-      if (!imgEl || imgEl.dataset.unloaded === '1' || imgEl.getAttribute('src') === SC_BLANK_IMG) return;
+      if (!imgEl || imgEl.dataset.imgFailed === '1') return;
       const itemId = Number(imgEl.getAttribute('data-item-id'));
-      const item = RAW.find(i => i.id === itemId);
+      const item = RAW.find(i => Number(i.id) === itemId);
       const resolved = resolveProductImage(item);
       const nextIdx = (Number(imgEl.getAttribute('data-try-idx')) || 0) + 1;
       if (nextIdx < resolved.candidates.length) {
         imgEl.setAttribute('data-try-idx', String(nextIdx));
-        imgEl.dataset.src = resolved.candidates[nextIdx];
         imgEl.src = resolved.candidates[nextIdx];
-      } else {
-        imgEl.dataset.imgFailed = '1';
-        imgEl.style.display = 'none';
-        const fallbackEl = document.getElementById('prodFallback_' + itemId);
-        if (fallbackEl) {
-          fallbackEl.style.display = 'flex';
-        }
+        return;
+      }
+      imgEl.onerror = null;
+      imgEl.dataset.imgFailed = '1';
+      imgEl.style.display = 'none';
+      const fallbackEl = document.getElementById('prodFallback_' + itemId);
+      if (fallbackEl) {
+        fallbackEl.style.display = 'flex';
       }
     }
+    window.handleProductImgError = handleProductImgError;
+
+    function handleSpotlightImgError(imgEl) {
+      if (!imgEl || imgEl.dataset.imgFailed === '1') return;
+      const itemId = Number(imgEl.getAttribute('data-item-id'));
+      const item = RAW.find(i => Number(i.id) === itemId);
+      const resolved = resolveProductImage(item);
+      const nextIdx = (Number(imgEl.getAttribute('data-try-idx')) || 0) + 1;
+      if (nextIdx < resolved.candidates.length) {
+        imgEl.setAttribute('data-try-idx', String(nextIdx));
+        imgEl.src = resolved.candidates[nextIdx];
+        return;
+      }
+      imgEl.onerror = null;
+      imgEl.dataset.imgFailed = '1';
+      imgEl.style.display = 'none';
+      const fallbackEl = imgEl.nextElementSibling;
+      if (fallbackEl) {
+        fallbackEl.style.display = 'flex';
+      }
+    }
+    window.handleSpotlightImgError = handleSpotlightImgError;
 
     let scFilteredItems = [];
     let scRenderedCount = 0;
@@ -4681,7 +4731,7 @@
             <button type="button" onclick="shareProductWhatsApp(${item.id})" aria-label="مشاركة ${safeName}" title="مشاركة الصنف" class="sc-card-share-btn">
               <span>📤</span>
             </button>
-            ${safeImgPrimary ? `<img src="${eagerLoad ? safeImgPrimary : SC_BLANK_IMG}" data-src="${safeImgPrimary}" data-unloaded="${eagerLoad ? '0' : '1'}" width="300" height="300" loading="lazy" decoding="async" data-item-id="${item.id}" data-try-idx="0" alt="${safeName}" onerror="handleProductImgError(this)" />` : ''}
+            ${safeImgPrimary ? `<img src="${safeImgPrimary}" width="300" height="300" referrerpolicy="no-referrer" loading="lazy" decoding="async" data-item-id="${item.id}" data-try-idx="0" alt="${safeName}" onerror="handleProductImgError(this)" />` : ''}
             <div id="prodFallback_${item.id}" class="flex flex-col items-center justify-center" style="${safeImgPrimary ? 'display:none;' : 'display:flex;'}">
               <div class="text-3xl mb-1">${safeEmoji}</div>
               <span class="font-en text-[10px] tracking-[0.16em] text-[#d4af37] font-bold">SWEET CITY</span>
@@ -4744,7 +4794,7 @@
           <div class="sc-spotlight-card">
             <div class="sc-spotlight-thumb">
               <span style="position:absolute;top:6px;right:6px;z-index:5;pointer-events:none;" class="px-1.5 py-0.5 rounded-md bg-[#d4af37] text-[#0a0a0a] text-[9px] font-black">${tagText}</span>
-              ${safeImg ? `<img src="${safeImg}" alt="${safeName}" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />` : ''}
+              ${safeImg ? `<img src="${safeImg}" alt="${safeName}" referrerpolicy="no-referrer" loading="lazy" decoding="async" data-item-id="${item.id}" data-try-idx="0" onerror="handleSpotlightImgError(this)" />` : ''}
               <div class="w-full h-full flex items-center justify-center text-3xl" style="${safeImg ? 'display:none;' : 'display:flex;'}">${safeEmoji}</div>
             </div>
             <div class="text-right min-w-0">
@@ -4843,8 +4893,27 @@
       }
     })();
 
+    function renderSyncStatusBanner() {
+      const bannerEl = document.getElementById('scSyncStatusBanner');
+      if (!bannerEl) return;
+      if (MENU_SYNC_STATE.status === 'offline_cache' && RAW.length > 0) {
+        const msg = escapeHtml(MENU_SYNC_STATE.errorMessage || 'تعذر الاتصال بالسيرفر — يتم عرض آخر نسخة مخزنة من المنيو.');
+        bannerEl.innerHTML = `
+          <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-[#1b160c] border border-[#d4af37]/50 text-[#f3d266] text-[11px] font-bold">
+            <span class="min-w-0 leading-snug">📡 ${msg}</span>
+            <button type="button" onclick="retryMenuSync()" class="shrink-0 px-2.5 py-1 rounded-lg bg-[#d4af37] text-[#0a0a0a] font-black text-[10.5px] cursor-pointer active:scale-95 transition">🔄 إعادة المحاولة</button>
+          </div>
+        `;
+        bannerEl.classList.remove('hidden');
+        return;
+      }
+      bannerEl.innerHTML = '';
+      bannerEl.classList.add('hidden');
+    }
+
     function renderProducts(preserveCount) {
       sortRawById();
+      renderSyncStatusBanner();
       const grid = document.getElementById('productsGrid');
       const visibleItems = getActiveBranchItems();
       const availableTotal = visibleItems.filter(i => isItemAvailable(i)).length;
@@ -4853,6 +4922,45 @@
 
       renderSpotlightCarousel();
 
+      if (RAW.length === 0) {
+        scFilteredItems = [];
+        scRenderedCount = 0;
+        if (!grid) return;
+        if (MENU_SYNC_STATE.status === 'loading') {
+          grid.innerHTML = `
+            <div class="col-span-full py-12 px-4 rounded-2xl bg-[#151515] border border-[#d4af37]/35 text-center space-y-2.5">
+              <div class="text-2xl animate-pulse">🥐</div>
+              <div class="text-sm font-black text-[#f3d266]">جاري تحميل المنيو الطازج من Google Sheets...</div>
+              <p class="text-[11px] text-stone-400">لحظات قليلة وتظهر جميع الأصناف المتاحة الآن</p>
+            </div>
+          `;
+          return;
+        }
+        const statusTitle = MENU_SYNC_STATE.status === 'unconfigured'
+          ? 'المنيو غير مرتبط بالسحابة بعد'
+          : (MENU_SYNC_STATE.status === 'empty'
+              ? 'لا توجد أصناف متاحة حالياً في المنيو'
+              : 'تعذر الاتصال بالسيرفر');
+        const statusDesc = escapeHtml(
+          MENU_SYNC_STATE.errorMessage ||
+          (MENU_SYNC_STATE.status === 'empty'
+            ? 'جميع الأصناف غير متاحة حالياً أو ورقة Products فارغة في Google Sheets.'
+            : 'تعذر جلب الأصناف من السيرفر حالياً. تأكد من اتصالك بالإنترنت ثم اضغط إعادة المحاولة.')
+        );
+        grid.innerHTML = `
+          <div class="col-span-full py-10 px-4 rounded-2xl bg-[#151515] border border-[#d4af37]/45 text-center space-y-3">
+            <div class="text-3xl">${MENU_SYNC_STATE.status === 'empty' ? '🍽️' : '📡'}</div>
+            <div class="text-sm font-black text-[#f3d266]">${statusTitle}</div>
+            <p class="text-xs text-stone-300 leading-relaxed max-w-xs mx-auto">${statusDesc}</p>
+            <button type="button" onclick="retryMenuSync()" class="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl gold-grad text-[#0a0a0a] font-black text-xs shadow-lg cursor-pointer active:scale-95 transition">
+              <span>🔄</span>
+              <span>إعادة المحاولة</span>
+            </button>
+          </div>
+        `;
+        return;
+      }
+
       const popularIds = activeCategory === 'الأكثر طلباً 🔥' ? getPopularItemsIds() : [];
       const normSearchQuery = normalizeSearchText(searchQuery);
 
@@ -4860,11 +4968,13 @@
         const hasItemDiscount = item.oldPrice && Number(item.oldPrice) > Number(item.price);
         const matchCat = activeCategory === 'الكل'
           ? true
-          : (activeCategory === 'الأكثر طلباً 🔥'
-              ? (isItemAvailable(item) && popularIds.includes(item.id))
-              : (activeCategory === 'عروض وخصومات 🎁'
-                  ? (item.category === 'عروض وخصومات 🎁' || Boolean(hasItemDiscount))
-                  : item.category === activeCategory));
+          : (activeCategory === CAFE_COMBINED_CATEGORY
+              ? isDrinkItem(item)
+              : (activeCategory === 'الأكثر طلباً 🔥'
+                  ? (isItemAvailable(item) && popularIds.includes(item.id))
+                  : (activeCategory === 'عروض وخصومات 🎁'
+                      ? (item.category === 'عروض وخصومات 🎁' || Boolean(hasItemDiscount))
+                      : item.category === activeCategory)));
         const matchSearch = !normSearchQuery ||
           normalizeSearchText(item.name).includes(normSearchQuery) ||
           normalizeSearchText(item.desc).includes(normSearchQuery) ||
@@ -5193,7 +5303,21 @@
     function getCloudApiUrl() {
       let isolatedUrl = '';
       try { isolatedUrl = (localStorage.getItem('sc26_api_url') || '').trim(); } catch (e) {}
-      return (API_URL || isolatedUrl || STORE_SETTINGS.webhookUrl || GOOGLE_SHEETS_CONFIG.scriptUrl || SCRIPT_URL || '').trim();
+      const candidates = [
+        isolatedUrl,
+        API_URL,
+        STORE_SETTINGS && STORE_SETTINGS.webhookUrl,
+        GOOGLE_SHEETS_CONFIG && GOOGLE_SHEETS_CONFIG.scriptUrl,
+        SCRIPT_URL,
+        DEFAULT_SCRIPT_URL
+      ];
+      for (let i = 0; i < candidates.length; i++) {
+        const u = String(candidates[i] || '').trim();
+        if (u && u.startsWith('https://script.google.com/')) {
+          return u;
+        }
+      }
+      return DEFAULT_SCRIPT_URL;
     }
 
     function normalizeCustEgyptPhone(raw) {
@@ -5522,7 +5646,7 @@
       }
     }
 
-    async function deductRedeemedPointsOnServer(phone, usedPoints) {
+    async function deductRedeemedPointsOnServer(phone, usedPoints, orderId) {
       const pts = Math.max(0, Math.floor(Number(usedPoints) || 0));
       if (pts <= 0) return { ok: true, deductedPoints: 0 };
       const apiUrl = getCloudApiUrl();
@@ -5536,7 +5660,8 @@
           body: JSON.stringify({
             action: 'deductRedeemedPoints',
             phone: normalizeCustEgyptPhone(phone),
-            usedPoints: pts
+            usedPoints: pts,
+            orderId: orderId ? String(orderId) : ''
           }),
           redirect: 'follow',
           signal: controller.signal
@@ -6234,11 +6359,12 @@
 
         // خصم النقاط المستبدلة فورياً من السيرفر لمنع إعادة استخدامها مرتين
         if (loyaltyInfo.redeemPoints > 0) {
-          deductRedeemedPointsOnServer(phone, loyaltyInfo.redeemPoints);
+          deductRedeemedPointsOnServer(phone, loyaltyInfo.redeemPoints, newOrderId);
           LOYALTY_STATE.points = loyaltyInfo.remainingPoints;
         }
-        // تحديث نقاط الولاء والفرع المفضل وسجل الإنفاق (مع skipRedeemDeduct لمنع الخصم المزدوج)
+        // تحديث نقاط الولاء والفرع المفضل وسجل الإنفاق (مع orderId للتحقق من الطلب ومع skipRedeemDeduct لمنع الخصم المزدوج)
         registerLoyaltyAfterOrder({
+          orderId: newOrderId,
           phone: phone,
           customerName: name,
           branchId: activeSheetBranchId,
@@ -6423,16 +6549,19 @@
 
     const chefAudioPlayer = new Audio();
     chefAudioPlayer.preload = 'auto';
+    chefAudioPlayer.setAttribute('playsinline', '');
+    let chefAudioCtx = null;
     const CHEF_SILENT_WAV_URI = 'data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQIAAAAAAA==';
     const chefAudioUrlCache = new Map();
     const CHEF_AUDIO_CACHE_LIMIT = 20;
     let chefAudioAbortController = null;
+    let chefAudioWatchdogTimer = null;
     let chefAudioSessionId = 0;
     let chefAudioState = { status: 'idle', msgIndex: null, textKey: '' };
 
     function normalizeChefSpeechCacheKey(rawText) {
       return String(rawText || '')
-        .replace(/[*_`#•↳—]/g, ' ')
+        .replace(/[*_`#•↳—|~]/g, ' ')
         .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, ' ')
         .replace(/[\u2600-\u27BF\uFE0E\uFE0F\u200D]/g, ' ')
         .replace(/\s+/g, ' ')
@@ -6440,7 +6569,46 @@
         .slice(0, 650);
     }
 
-    function unlockChefAudio() {
+    function clearChefAudioWatchdog() {
+      if (chefAudioWatchdogTimer) {
+        clearTimeout(chefAudioWatchdogTimer);
+        chefAudioWatchdogTimer = null;
+      }
+    }
+
+    function startChefAudioWatchdog(sessionId) {
+      clearChefAudioWatchdog();
+      chefAudioWatchdogTimer = setTimeout(() => {
+        chefAudioWatchdogTimer = null;
+        if (sessionId !== chefAudioSessionId) return;
+        if (chefAudioState.status !== 'playing') {
+          setChefAudioUiState('idle', null, '');
+          if (typeof showToast === 'function') {
+            showToast('🔇 تأكد من إلغاء الوضع الصامت ورفع الصوت', true);
+          }
+        }
+      }, 1500);
+    }
+
+    function unlockAudioEngine() {
+      try {
+        const AudioCtxCtor = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtxCtor) {
+          if (!chefAudioCtx) {
+            chefAudioCtx = new AudioCtxCtor();
+          }
+          if (chefAudioCtx && chefAudioCtx.state === 'suspended') {
+            chefAudioCtx.resume().catch(() => {});
+          }
+        }
+      } catch (e) {}
+
+      try {
+        if ('speechSynthesis' in window && chefAudioState.status !== 'playing') {
+          window.speechSynthesis.cancel();
+        }
+      } catch (e) {}
+
       try {
         if (chefAudioState.status === 'playing' && chefAudioPlayer && !chefAudioPlayer.paused) {
           return;
@@ -6467,10 +6635,23 @@
         try { chefAudioPlayer.muted = false; } catch (err) {}
       }
     }
+    const unlockChefAudio = unlockAudioEngine;
+    window.unlockAudioEngine = unlockAudioEngine;
+    window.unlockChefAudio = unlockAudioEngine;
 
     function buildPlayableAudioUrl(base64, mimeType) {
       const cleanB64 = String(base64 || '').replace(/^data:[^;]+;base64,/i, '').replace(/\s+/g, '');
       if (!cleanB64) throw new Error('EMPTY_AUDIO_BASE64');
+
+      const rawMime = String(mimeType || 'audio/wav').trim();
+      const baseMime = rawMime.split(';')[0].trim().toLowerCase();
+      if (/^audio\/(wav|wave|x-wav|mpeg|mp3|ogg|webm)$/i.test(baseMime)) {
+        const normalizedMime = baseMime === 'audio/mp3'
+          ? 'audio/mpeg'
+          : (/^audio\/(wave|x-wav)$/i.test(baseMime) ? 'audio/wav' : baseMime);
+        return `data:${normalizedMime};base64,${cleanB64}`;
+      }
+
       const binStr = atob(cleanB64);
       const len = binStr.length;
       const bytes = new Uint8Array(len);
@@ -6478,11 +6659,9 @@
         bytes[i] = binStr.charCodeAt(i);
       }
 
-      const rawMime = String(mimeType || 'audio/pcm;rate=24000').trim();
-      const baseMime = rawMime.split(';')[0].trim().toLowerCase();
-      if (/^audio\/(wav|wave|x-wav|mpeg|mp3|ogg|webm)$/i.test(baseMime)) {
-        const blob = new Blob([bytes], { type: baseMime === 'audio/mp3' ? 'audio/mpeg' : baseMime });
-        return URL.createObjectURL(blob);
+      // إذا كانت البيانات تحمل ترويسة RIFF/WAVE بالفعل، شغّلها كـ audio/wav مباشرة دون إعادة تغليف
+      if (len >= 12 && bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x46 && bytes[8] === 0x57 && bytes[9] === 0x41 && bytes[10] === 0x56 && bytes[11] === 0x45) {
+        return `data:audio/wav;base64,${cleanB64}`;
       }
 
       const rateMatch = rawMime.match(/rate=(\d+)/i);
@@ -6522,7 +6701,7 @@
       if (chefAudioUrlCache.has(cacheKey)) {
         const prevUrl = chefAudioUrlCache.get(cacheKey);
         chefAudioUrlCache.delete(cacheKey);
-        if (prevUrl && prevUrl !== url && prevUrl !== chefAudioPlayer.src) {
+        if (prevUrl && prevUrl !== url && prevUrl !== chefAudioPlayer.src && prevUrl.startsWith('blob:')) {
           try { URL.revokeObjectURL(prevUrl); } catch (e) {}
         }
       }
@@ -6530,7 +6709,7 @@
         const oldestKey = chefAudioUrlCache.keys().next().value;
         const oldestUrl = chefAudioUrlCache.get(oldestKey);
         chefAudioUrlCache.delete(oldestKey);
-        if (oldestUrl && oldestUrl !== chefAudioPlayer.src) {
+        if (oldestUrl && oldestUrl !== chefAudioPlayer.src && oldestUrl.startsWith('blob:')) {
           try { URL.revokeObjectURL(oldestUrl); } catch (e) {}
         }
       }
@@ -6579,11 +6758,13 @@
 
     function stopChefSpeaking() {
       chefAudioSessionId += 1;
+      clearChefAudioWatchdog();
       if (chefAudioAbortController) {
         try { chefAudioAbortController.abort(); } catch (e) {}
         chefAudioAbortController = null;
       }
       try {
+        chefAudioPlayer.onplay = null;
         chefAudioPlayer.onended = null;
         chefAudioPlayer.onerror = null;
         chefAudioPlayer.onpause = null;
@@ -6595,6 +6776,89 @@
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       } catch (e) {}
       setChefAudioUiState('idle', null, '');
+    }
+
+    function splitTextForBrowserTts(rawText, minChunk = 140, maxChunk = 160) {
+      const cleaned = normalizeChefSpeechCacheKey(rawText);
+      if (!cleaned) return [];
+      if (cleaned.length <= maxChunk) return [cleaned];
+
+      const chunks = [];
+      let remaining = cleaned;
+      while (remaining.length > maxChunk) {
+        let cut = -1;
+        const slice = remaining.slice(0, maxChunk + 1);
+        for (let i = slice.length - 1; i >= Math.min(minChunk - 20, slice.length - 1); i--) {
+          if (/[.!؟،؛\n]/.test(slice[i])) {
+            cut = i + 1;
+            break;
+          }
+        }
+        if (cut < 80) {
+          const lastSpace = slice.lastIndexOf(' ');
+          cut = lastSpace >= 80 ? lastSpace : maxChunk;
+        }
+        const piece = remaining.slice(0, cut).trim();
+        if (piece) chunks.push(piece);
+        remaining = remaining.slice(cut).trim();
+      }
+      if (remaining) chunks.push(remaining);
+      return chunks;
+    }
+
+    function speakWithBrowserFallback(cleanSpoken, msgIndex, sessionId) {
+      if (sessionId !== chefAudioSessionId) return false;
+      if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+        return false;
+      }
+      const chunks = splitTextForBrowserTts(cleanSpoken, 140, 160);
+      if (chunks.length === 0) return false;
+      try {
+        window.speechSynthesis.cancel();
+        const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+        const arVoice = voices.find(v => /^ar[-_]EG/i.test(v.lang || '')) || voices.find(v => /^ar/i.test(v.lang || ''));
+
+        const speakChunkAt = (chunkIdx) => {
+          if (sessionId !== chefAudioSessionId) return;
+          if (chunkIdx >= chunks.length) {
+            clearChefAudioWatchdog();
+            setChefAudioUiState('idle', null, '');
+            return;
+          }
+          const utter = new SpeechSynthesisUtterance(chunks[chunkIdx]);
+          utter.lang = (arVoice && arVoice.lang) ? arVoice.lang : 'ar-EG';
+          utter.rate = 0.96;
+          utter.pitch = 1.02;
+          if (arVoice) utter.voice = arVoice;
+
+          utter.onstart = () => {
+            if (sessionId !== chefAudioSessionId) return;
+            clearChefAudioWatchdog();
+            setChefAudioUiState('playing', msgIndex, cleanSpoken);
+          };
+          utter.onend = () => {
+            if (sessionId !== chefAudioSessionId) return;
+            speakChunkAt(chunkIdx + 1);
+          };
+          utter.onerror = () => {
+            if (sessionId !== chefAudioSessionId) return;
+            clearChefAudioWatchdog();
+            setChefAudioUiState('idle', null, '');
+          };
+
+          if (chunkIdx === 0) {
+            startChefAudioWatchdog(sessionId);
+          }
+          window.speechSynthesis.speak(utter);
+        };
+
+        speakChunkAt(0);
+        return true;
+      } catch (e) {
+        clearChefAudioWatchdog();
+        if (sessionId === chefAudioSessionId) setChefAudioUiState('idle', null, '');
+        return false;
+      }
     }
 
     async function fetchChefSpeechAudioWithRetry(cleanText, apiUrl, sessionId) {
@@ -6612,6 +6876,9 @@
           );
           if (res && res.ok === true && res.audioBase64) {
             return res;
+          }
+          if (res && res.fallbackToBrowserTTS === true) {
+            return { ok: false, fallbackToBrowserTTS: true };
           }
           throw new Error((res && res.error) ? String(res.error) : 'SPEAK_CHEF_FAILED');
         } finally {
@@ -6638,42 +6905,35 @@
       const sessionId = chefAudioSessionId;
 
       if (typeof navigator !== 'undefined' && navigator.onLine === false) {
-        if (!('speechSynthesis' in window)) {
+        if (!speakWithBrowserFallback(cleanSpoken, msgIndex, sessionId)) {
           showToast('⚠️ غير متصل بالإنترنت والمتصفح لا يدعم الصوت حالياً', true);
-          return;
-        }
-        try {
-          const utter = new SpeechSynthesisUtterance(cleanSpoken);
-          utter.lang = 'ar-EG';
-          utter.rate = 0.95;
-          utter.pitch = 1.02;
-          const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
-          const arVoice = voices.find(v => /ar-EG/i.test(v.lang)) || voices.find(v => /^ar/i.test(v.lang));
-          if (arVoice) utter.voice = arVoice;
-          utter.onstart = () => { if (sessionId === chefAudioSessionId) setChefAudioUiState('playing', msgIndex, cleanSpoken); };
-          utter.onend = () => { if (sessionId === chefAudioSessionId) setChefAudioUiState('idle', null, ''); };
-          utter.onerror = () => { if (sessionId === chefAudioSessionId) setChefAudioUiState('idle', null, ''); };
-          window.speechSynthesis.speak(utter);
-        } catch (e) {
-          setChefAudioUiState('idle', null, '');
         }
         return;
       }
 
       const playAudioUrl = async (audioUrl) => {
         if (sessionId !== chefAudioSessionId) return;
+        chefAudioPlayer.onplay = () => {
+          if (sessionId !== chefAudioSessionId) return;
+          clearChefAudioWatchdog();
+          setChefAudioUiState('playing', msgIndex, cleanSpoken);
+        };
         chefAudioPlayer.onended = () => {
+          clearChefAudioWatchdog();
           if (sessionId === chefAudioSessionId) setChefAudioUiState('idle', null, '');
         };
         chefAudioPlayer.onerror = () => {
+          clearChefAudioWatchdog();
           if (sessionId === chefAudioSessionId) {
-            setChefAudioUiState('idle', null, '');
-            showToast('تعذر تحميل صوت الشيف، اضغط 🔊 للمحاولة مجدداً', true);
+            if (!speakWithBrowserFallback(cleanSpoken, msgIndex, sessionId)) {
+              setChefAudioUiState('idle', null, '');
+              showToast('تعذر تحميل صوت الشيف، اضغط 🔊 للمحاولة مجدداً', true);
+            }
           }
         };
         chefAudioPlayer.muted = false;
         chefAudioPlayer.src = audioUrl;
-        setChefAudioUiState('playing', msgIndex, cleanSpoken);
+        startChefAudioWatchdog(sessionId);
         await chefAudioPlayer.play();
       };
 
@@ -6683,14 +6943,17 @@
           await playAudioUrl(cachedUrl);
           return;
         } catch (cachePlayErr) {
+          clearChefAudioWatchdog();
           chefAudioUrlCache.delete(cleanSpoken);
         }
       }
 
       const apiUrl = (typeof getCloudApiUrl === 'function') ? getCloudApiUrl() : '';
       if (!apiUrl || !/^https:\/\//i.test(apiUrl)) {
-        setChefAudioUiState('idle', null, '');
-        showToast('تعذر تحميل صوت الشيف، اضغط 🔊 للمحاولة مجدداً', true);
+        if (!speakWithBrowserFallback(cleanSpoken, msgIndex, sessionId)) {
+          setChefAudioUiState('idle', null, '');
+          showToast('تعذر تحميل صوت الشيف، اضغط 🔊 للمحاولة مجدداً', true);
+        }
         return;
       }
 
@@ -6698,13 +6961,23 @@
       try {
         const res = await fetchChefSpeechAudioWithRetry(cleanSpoken, apiUrl, sessionId);
         if (sessionId !== chefAudioSessionId) return;
+        if (res && res.fallbackToBrowserTTS === true) {
+          if (!speakWithBrowserFallback(cleanSpoken, msgIndex, sessionId)) {
+            setChefAudioUiState('idle', null, '');
+            showToast('تعذر تحميل صوت الشيف، اضغط 🔊 للمحاولة مجدداً', true);
+          }
+          return;
+        }
         const audioUrl = buildPlayableAudioUrl(res.audioBase64, res.mimeType);
         cacheChefAudioUrl(cleanSpoken, audioUrl);
         await playAudioUrl(audioUrl);
       } catch (err) {
+        clearChefAudioWatchdog();
         if (sessionId !== chefAudioSessionId) return;
-        setChefAudioUiState('idle', null, '');
-        showToast('تعذر تحميل صوت الشيف، اضغط 🔊 للمحاولة مجدداً', true);
+        if (!speakWithBrowserFallback(cleanSpoken, msgIndex, sessionId)) {
+          setChefAudioUiState('idle', null, '');
+          showToast('🔇 تأكد من إلغاء الوضع الصامت ورفع الصوت', true);
+        }
       }
     }
 
@@ -6717,7 +6990,7 @@
       }
       const m = aiChatHistory[numIdx];
       if (m && m.text) {
-        unlockChefAudio();
+        unlockAudioEngine();
         speakChefText(m.text, numIdx);
       }
     }
@@ -6725,7 +6998,7 @@
     function toggleAiAutoSpeak() {
       aiAutoSpeakEnabled = !aiAutoSpeakEnabled;
       if (aiAutoSpeakEnabled) {
-        unlockChefAudio();
+        unlockAudioEngine();
       } else {
         stopChefSpeaking();
       }
@@ -6761,14 +7034,14 @@
         return;
       }
       stopChefSpeaking();
+      unlockAudioEngine();
       if (aiIsListening && aiSpeechRecognition) {
-        unlockChefAudio();
         try { aiSpeechRecognition.stop(); } catch (e) {}
+        aiSpeechRecognition = null;
         updateVoiceMicUI(false);
         return;
       }
       try {
-        unlockChefAudio();
         const rec = new SR();
         rec.lang = 'ar-EG';
         rec.interimResults = false;
@@ -6787,12 +7060,17 @@
           }
         };
         rec.onerror = () => {
+          aiSpeechRecognition = null;
           updateVoiceMicUI(false);
           showToast('🎙️ مسمعتكش كويس يا فندم، جرّب تضغط المايك تاني أو اكتبلي 💛', true);
         };
-        rec.onend = () => updateVoiceMicUI(false);
+        rec.onend = () => {
+          aiSpeechRecognition = null;
+          updateVoiceMicUI(false);
+        };
         rec.start();
       } catch (e) {
+        aiSpeechRecognition = null;
         updateVoiceMicUI(false);
         showToast('🎙️ تعذر فتح الميكروفون حالياً — تأكد من إذن المايك', true);
       }
@@ -6971,36 +7249,790 @@
       return `<span class="sc-chef-msg-avatar" aria-hidden="true"><span style="font-size: 16px; display: inline-flex; align-items: center; justify-content: center; line-height: 1;">👨‍🍳</span></span>`;
     }
 
-    function quickAddFromAi(itemId) {
-      const item = RAW.find(i => Number(i.id) === Number(itemId));
-      if (!item || !isItemAvailable(item) || !getItemBranchFlag(item, window.CURRENT_BRANCH)) return;
+    function formatChefMoney(val) {
+      const n = roundMoney(val);
+      if (!Number.isFinite(n)) return '0';
+      return Number.isInteger(n) ? String(n) : String(Number(n.toFixed(2)));
+    }
+
+    function formatChefQtyShortLabel(mode, amount) {
+      if (mode === 'weight') {
+        const w = roundWeight(amount);
+        if (w === 0.25) return 'ربع كيلو';
+        if (w === 0.5) return 'نص كيلو';
+        if (w === 0.75) return 'كيلو إلا ربع';
+        if (w === 1) return '1 كيلو';
+        if (w === 1.25) return 'كيلو وربع';
+        if (w === 1.5) return 'كيلو ونص';
+        if (w === 1.75) return 'كيلو و3 أرباع';
+        if (w === 2) return '2 كيلو';
+        return `${w} كيلو`;
+      }
+      const count = Math.max(1, Math.round(Number(amount) || 1));
+      if (mode === 'box') {
+        if (count === 1) return '1 بوكس';
+        if (count === 2) return '2 بوكس';
+        return count <= 10 ? `${count} بوكسات` : `${count} بوكس`;
+      }
+      if (mode === 'cup') {
+        if (count === 1) return '1 كوب';
+        if (count === 2) return '2 كوب';
+        return count <= 10 ? `${count} أكواب` : `${count} كوب`;
+      }
+      if (count === 1) return '1 قطعة';
+      if (count === 2) return '2 قطعة';
+      return count <= 10 ? `${count} قطع` : `${count} قطعة`;
+    }
+
+    function normalizeChefAmount(mode, rawAmount) {
+      if (mode === 'weight') {
+        const w = roundWeight(Number(rawAmount) > 0 ? Number(rawAmount) : 0.5);
+        return Math.max(0.25, w);
+      }
+      return Math.max(1, Math.round(Number(rawAmount) || 1));
+    }
+
+    function computeChefLineTotal(item, mode, amount) {
+      const basePrice = Number(item && item.price) || 0;
+      if (basePrice <= 0) return 0;
+      const cleanAmt = normalizeChefAmount(mode, amount);
+      return roundMoney(basePrice * cleanAmt);
+    }
+
+    function getLiveChefCatalog() {
+      const branchItems = (typeof getActiveBranchItems === 'function' ? getActiveBranchItems() : RAW);
+      if (!Array.isArray(branchItems) || branchItems.length === 0) return [];
+      const drinksAllowed = typeof isDrinksAllowedForBranch === 'function' ? isDrinksAllowedForBranch() : false;
+      const seen = new Set();
+      const live = [];
+      for (let i = 0; i < branchItems.length; i++) {
+        const it = branchItems[i];
+        if (!it) continue;
+        const idNum = Number(it.id);
+        const priceNum = Number(it.price);
+        if (!idNum || seen.has(idNum)) continue;
+        if (!isItemAvailable(it) || !Number.isFinite(priceNum) || priceNum <= 0) continue;
+        if (!drinksAllowed && isDrinkItem(it)) continue;
+        seen.add(idNum);
+        live.push(it);
+      }
+      return live;
+    }
+
+    function classifyChefBucket(item) {
+      if (!item) return 'other';
+      if (isDrinkItem(item)) return 'drinks';
+      const hay = normalizeSearchText(`${item.category || ''} ${item.name || ''}`);
+      if (isAiBoxItem(item) || hay.includes('تورت') || hay.includes('كيك') || hay.includes('بوكس') || hay.includes('عروض')) {
+        return 'cakeBox';
+      }
+      if (
+        hay.includes('جاتو') || hay.includes('دونات') || hay.includes('سينابون') || hay.includes('الحلو') ||
+        hay.includes('نواعم') || hay.includes('كعك') || hay.includes('كحك') || hay.includes('بسكويت') ||
+        hay.includes('بيتي فور') || hay.includes('سابلي') || hay.includes('كوكيز') || hay.includes('شرقي') ||
+        hay.includes('بسبوس') || hay.includes('كناف') || hay.includes('جلاش') || hay.includes('تارت')
+      ) {
+        return 'sweets';
+      }
+      if (
+        hay.includes('مخبوزات') || hay.includes('فطير') || hay.includes('فطائر') || hay.includes('بقسماط') ||
+        hay.includes('كرواسون') || hay.includes('باتيه') || hay.includes('بوريك') || hay.includes('قرص') ||
+        hay.includes('دانش') || hay.includes('مناقيش') || hay.includes('سميط') || hay.includes('شابور') || hay.includes('قراقيش')
+      ) {
+        return 'bakery';
+      }
+      if (hay.includes('شوكولا') || hay.includes('شيكولا') || hay.includes('نوتيلا')) {
+        return 'sweets';
+      }
+      return 'other';
+    }
+
+    function createChefPlanEntry(item, rawAmount) {
+      if (!item) return null;
       const mode = getItemUnitMode(item);
+      const amount = normalizeChefAmount(mode, rawAmount);
+      const unitPriceBase = roundMoney(Number(item.price) || 0);
+      if (unitPriceBase <= 0) return null;
+      const lineTotal = computeChefLineTotal(item, mode, amount);
+      return {
+        itemId: Number(item.id),
+        mode,
+        amount,
+        qtyLabel: formatChefQtyShortLabel(mode, amount),
+        unitPriceBase,
+        lineTotal,
+        bucket: classifyChefBucket(item)
+      };
+    }
+
+    function verifyChefAssortmentQA(rawPlan, targetBudget) {
+      const liveCatalog = getLiveChefCatalog();
+      const liveById = new Map(liveCatalog.map(it => [Number(it.id), it]));
+      const seen = new Set();
+      const verified = [];
+
+      if (Array.isArray(rawPlan)) {
+        for (let i = 0; i < rawPlan.length; i++) {
+          const entry = rawPlan[i];
+          if (!entry) continue;
+          const idNum = Number(entry.itemId || entry.id);
+          if (!idNum || seen.has(idNum)) continue;
+          const liveItem = liveById.get(idNum);
+          if (!liveItem) continue;
+          const rebuilt = createChefPlanEntry(liveItem, entry.amount);
+          if (!rebuilt || rebuilt.lineTotal <= 0) continue;
+          seen.add(idNum);
+          verified.push(rebuilt);
+        }
+      }
+
+      const cleanBudget = Number(targetBudget) > 0 ? roundMoney(targetBudget) : 0;
+      let total = roundMoney(verified.reduce((sum, e) => sum + e.lineTotal, 0));
+
+      if (cleanBudget > 0 && total > cleanBudget) {
+        let guard = 0;
+        while (total > cleanBudget && verified.length > 0 && guard < 40) {
+          guard++;
+          let downgraded = false;
+          for (let i = verified.length - 1; i >= 0; i--) {
+            const p = verified[i];
+            const liveItem = liveById.get(p.itemId);
+            if (!liveItem) continue;
+            if (p.mode === 'weight' && p.amount > 0.25) {
+              const nextW = p.amount > 1 ? roundWeight(p.amount - 0.5) : roundWeight(p.amount - 0.25);
+              verified[i] = createChefPlanEntry(liveItem, Math.max(0.25, nextW));
+              downgraded = true;
+              break;
+            }
+            if (p.mode !== 'weight' && p.amount > 1) {
+              verified[i] = createChefPlanEntry(liveItem, p.amount - 1);
+              downgraded = true;
+              break;
+            }
+          }
+          if (!downgraded) {
+            verified.pop();
+          }
+          total = roundMoney(verified.reduce((sum, e) => sum + e.lineTotal, 0));
+        }
+      }
+
+      const variance = cleanBudget > 0 ? Math.max(0, (cleanBudget - total) / cleanBudget) : 0;
+      const utilization = cleanBudget > 0 ? (total / cleanBudget) : 1;
+      const passedStrictRange = cleanBudget > 0
+        ? (verified.length > 0 && total <= cleanBudget + 0.001 && variance <= 0.100001)
+        : (verified.length > 0);
+
+      return {
+        plan: verified,
+        verifiedTotal: total,
+        targetBudget: cleanBudget,
+        utilization,
+        variance,
+        passedStrictRange
+      };
+    }
+
+    function getChefCandidateSteps(item, allowExtendedScale) {
+      const mode = getItemUnitMode(item);
+      if (mode === 'weight') {
+        return allowExtendedScale
+          ? [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3, 4]
+          : [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2];
+      }
+      if (mode === 'box') {
+        return allowExtendedScale ? [1, 2, 3, 4, 5, 6] : [1, 2];
+      }
+      return allowExtendedScale ? [1, 2, 3, 4, 5, 6, 8, 10] : [1, 2, 3, 4, 5, 6];
+    }
+
+    function buildSmartBudgetAssortment(targetBudget, options) {
+      const opts = options || {};
+      const cleanBudget = roundMoney(Number(targetBudget) || 0);
+      const catalog = getLiveChefCatalog();
+      if (catalog.length === 0 || cleanBudget <= 0) {
+        return verifyChefAssortmentQA([], cleanBudget);
+      }
+
+      const minTarget = roundMoney(cleanBudget * 0.90);
+      const maxTarget = cleanBudget;
+      const drinksEnabled = typeof isDrinksAllowedForBranch === 'function' ? isDrinksAllowedForBranch() : false;
+      const popularSet = new Set((typeof getPopularItemsIds === 'function' ? getPopularItemsIds() : []).map(Number));
+      const keywordHints = Array.isArray(opts.keywords) ? opts.keywords : [];
+
+      const desiredMinItems = cleanBudget < 140 ? 3 : (cleanBudget < 260 ? 4 : (cleanBudget < 480 ? 5 : 6));
+      const maxItems = Math.min(7, catalog.length, cleanBudget < 160 ? 5 : (cleanBudget < 350 ? 6 : 7));
+
+      const scoreItem = (item) => {
+        let sc = 0;
+        if (popularSet.has(Number(item.id))) sc += 6;
+        if (item.oldPrice && Number(item.oldPrice) > Number(item.price)) sc += 3;
+        const hay = normalizeSearchText(`${item.name || ''} ${item.category || ''} ${item.desc || ''}`);
+        for (let k = 0; k < keywordHints.length; k++) {
+          if (hay.includes(keywordHints[k])) sc += 8;
+        }
+        const mode = getItemUnitMode(item);
+        if (mode === 'weight') sc += 2;
+        return sc;
+      };
+
+      const buckets = { bakery: [], sweets: [], cakeBox: [], drinks: [], other: [] };
+      catalog.forEach(item => {
+        const b = classifyChefBucket(item);
+        (buckets[b] || buckets.other).push(item);
+      });
+      Object.keys(buckets).forEach(bKey => {
+        buckets[bKey].sort((a, b) => {
+          const diff = scoreItem(b) - scoreItem(a);
+          if (diff !== 0) return diff;
+          return Number(a.price) - Number(b.price);
+        });
+      });
+
+      const minEntryCost = (item) => {
+        const mode = getItemUnitMode(item);
+        return computeChefLineTotal(item, mode, mode === 'weight' ? 0.25 : 1);
+      };
+
+      const picks = [];
+      const pickedIds = new Set();
+      const getTotal = () => roundMoney(picks.reduce((s, p) => s + p.lineTotal, 0));
+      const getBucketCount = (bName) => picks.filter(p => p.bucket === bName).length;
+
+      const pickInitialAmount = (item, remaining) => {
+        const mode = getItemUnitMode(item);
+        if (mode === 'weight') {
+          const halfCost = computeChefLineTotal(item, 'weight', 0.5);
+          const qCost = computeChefLineTotal(item, 'weight', 0.25);
+          if (cleanBudget >= 320 && halfCost <= remaining && halfCost <= cleanBudget * 0.28) return 0.5;
+          if (qCost <= remaining) return 0.25;
+          return 0;
+        }
+        const oneCost = computeChefLineTotal(item, mode, 1);
+        return oneCost <= remaining ? 1 : 0;
+      };
+
+      // المرحلة 1: بناء تشكيلة متنوعة ذكية من الأقسام المختلفة (مخبوزات + نواعم/حلويات + تورتة/بوكس إذا سمحت الميزانية + مشروبات بفرع 18)
+      const allowCakeBoxInSeed = cleanBudget >= 320 || Boolean(opts.isOccasion);
+      const seedOrder = allowCakeBoxInSeed
+        ? (drinksEnabled
+            ? ['cakeBox', 'sweets', 'bakery', 'sweets', 'bakery', 'drinks', 'other']
+            : ['cakeBox', 'sweets', 'bakery', 'sweets', 'bakery', 'other', 'sweets'])
+        : (drinksEnabled
+            ? ['bakery', 'sweets', 'bakery', 'sweets', 'drinks', 'other', 'cakeBox']
+            : ['bakery', 'sweets', 'bakery', 'sweets', 'other', 'bakery', 'sweets']);
+
+      for (let sIdx = 0; sIdx < seedOrder.length && picks.length < maxItems; sIdx++) {
+        const bName = seedOrder[sIdx];
+        const list = buckets[bName] || [];
+        const remaining = roundMoney(maxTarget - getTotal());
+        if (remaining <= 0) break;
+
+        let chosenItem = null;
+        let chosenAmt = 0;
+        for (let j = 0; j < list.length; j++) {
+          const cand = list[j];
+          if (pickedIds.has(Number(cand.id))) continue;
+          const amt = pickInitialAmount(cand, remaining);
+          if (amt <= 0) continue;
+          const cost = computeChefLineTotal(cand, getItemUnitMode(cand), amt);
+          // لا تسمح لصنف واحد في البداية بابتلاع نسبة كبيرة من الميزانية حتى نحافظ على التنوع (4-7 أصناف)
+          const perItemSeedCap = cleanBudget < 240
+            ? roundMoney((cleanBudget / Math.max(4, desiredMinItems)) * 1.07)
+            : roundMoney(cleanBudget * 0.36);
+          if (bName === 'cakeBox' && cost > cleanBudget * 0.58) continue;
+          if (bName !== 'cakeBox' && picks.length < 4 && cost > perItemSeedCap && minEntryCost(cand) === cost) continue;
+          chosenItem = cand;
+          chosenAmt = amt;
+          break;
+        }
+        if (chosenItem && chosenAmt > 0) {
+          const entry = createChefPlanEntry(chosenItem, chosenAmt);
+          if (entry && roundMoney(getTotal() + entry.lineTotal) <= maxTarget) {
+            picks.push(entry);
+            pickedIds.add(entry.itemId);
+          }
+        }
+      }
+
+      // المرحلة 2: استكمال التنوع حتى نصل لـ 4 أصناف مختلفة على الأقل إذا سمحت الميزانية
+      const allSortedByAffordability = catalog.slice().sort((a, b) => {
+        const ca = minEntryCost(a);
+        const cb = minEntryCost(b);
+        if (ca !== cb) return ca - cb;
+        return scoreItem(b) - scoreItem(a);
+      });
+
+      for (let i = 0; i < allSortedByAffordability.length && picks.length < Math.min(desiredMinItems, maxItems); i++) {
+        const cand = allSortedByAffordability[i];
+        if (pickedIds.has(Number(cand.id))) continue;
+        const remaining = roundMoney(maxTarget - getTotal());
+        const mode = getItemUnitMode(cand);
+        const minAmt = mode === 'weight' ? 0.25 : 1;
+        const cost = computeChefLineTotal(cand, mode, minAmt);
+        if (cost > 0 && cost <= remaining) {
+          const entry = createChefPlanEntry(cand, minAmt);
+          if (entry) {
+            picks.push(entry);
+            pickedIds.add(entry.itemId);
+          }
+        }
+      }
+
+      // لو الميزانية لم تكفِ إلا لصنف واحد بسعر مرتفع بينما توجد أصناف أرخص متعددة، أعد البذر بأرخص أصناف متنوعة
+      if (picks.length === 0) {
+        for (let i = 0; i < allSortedByAffordability.length && picks.length < maxItems; i++) {
+          const cand = allSortedByAffordability[i];
+          const remaining = roundMoney(maxTarget - getTotal());
+          const mode = getItemUnitMode(cand);
+          const minAmt = mode === 'weight' ? 0.25 : 1;
+          const cost = computeChefLineTotal(cand, mode, minAmt);
+          if (cost > 0 && cost <= remaining) {
+            const entry = createChefPlanEntry(cand, minAmt);
+            if (entry) {
+              picks.push(entry);
+              pickedIds.add(entry.itemId);
+            }
+          }
+        }
+      }
+
+      const itemById = new Map(catalog.map(it => [Number(it.id), it]));
+
+      // المرحلة 3: مُحسّن الميزانية الرياضي الدقيق للوصول إلى النطاق الإلزامي (88% - 100% من الميزانية)
+      const optimizeAssortment = (allowExtendedScale) => {
+        const maxPasses = 55;
+        for (let iter = 0; iter < maxPasses; iter++) {
+          const curTotal = getTotal();
+          const remaining = roundMoney(maxTarget - curTotal);
+          if (remaining <= 0) break;
+          if (curTotal >= roundMoney(cleanBudget * 0.985) && picks.length >= Math.min(desiredMinItems, maxItems)) break;
+
+          let bestMove = null;
+          const considerMove = (move) => {
+            if (!bestMove || move.score > bestMove.score) bestMove = move;
+          };
+
+          // أ) إضافة صنف جديد مختلف (حتى 7 أصناف)
+          if (picks.length < maxItems) {
+            for (let i = 0; i < catalog.length; i++) {
+              const cand = catalog[i];
+              if (pickedIds.has(Number(cand.id))) continue;
+              const mode = getItemUnitMode(cand);
+              const steps = mode === 'weight' ? [0.25, 0.5, 1] : [1, 2];
+              const bName = classifyChefBucket(cand);
+              const bucketBonus = getBucketCount(bName) === 0 ? 45 : (getBucketCount(bName) === 1 ? 18 : 0);
+              for (let s = 0; s < steps.length; s++) {
+                const amt = steps[s];
+                const cost = computeChefLineTotal(cand, mode, amt);
+                if (cost <= 0 || cost > remaining) continue;
+                const nextTotal = roundMoney(curTotal + cost);
+                const hitsRange = nextTotal >= minTarget && nextTotal <= maxTarget;
+                const needMoreVariety = picks.length < desiredMinItems ? 35 : 8;
+                const fillRatio = nextTotal / cleanBudget;
+                const moveScore = (hitsRange ? 180 : 0) + (fillRatio * 120) + bucketBonus + needMoreVariety + (scoreItem(cand) * 0.8);
+                considerMove({ type: 'add', item: cand, amount: amt, nextTotal, score: moveScore });
+              }
+            }
+          }
+
+          // ب) ترقية وزن أو كمية صنف مختار حالياً (ربع -> نص -> كيلو أو زيادة القطع)
+          for (let i = 0; i < picks.length; i++) {
+            const p = picks[i];
+            const liveItem = itemById.get(p.itemId);
+            if (!liveItem) continue;
+            const steps = getChefCandidateSteps(liveItem, allowExtendedScale);
+            for (let s = 0; s < steps.length; s++) {
+              const nextAmt = steps[s];
+              if (nextAmt <= p.amount) continue;
+              const nextLine = computeChefLineTotal(liveItem, p.mode, nextAmt);
+              const delta = roundMoney(nextLine - p.lineTotal);
+              if (delta <= 0 || delta > remaining) continue;
+              const nextTotal = roundMoney(curTotal + delta);
+              const hitsRange = nextTotal >= minTarget && nextTotal <= maxTarget;
+              const fillRatio = nextTotal / cleanBudget;
+              const naturalBonus = (p.mode === 'weight' && (nextAmt === 0.5 || nextAmt === 1 || nextAmt === 1.5 || nextAmt === 2)) ? 14 : 4;
+              const varietyPenalty = picks.length < desiredMinItems ? -20 : 0;
+              const moveScore = (hitsRange ? 175 : 0) + (fillRatio * 115) + naturalBonus + varietyPenalty;
+              considerMove({ type: 'upgrade', index: i, item: liveItem, amount: nextAmt, nextTotal, score: moveScore });
+            }
+          }
+
+          // ج) استبدال ذكي لصنف بصنف مختلف آخر إذا كنا ما زلنا تحت 88% أو لتحقيق مطابقة أدق
+          if (curTotal < minTarget || !bestMove) {
+            for (let i = 0; i < picks.length; i++) {
+              const oldPick = picks[i];
+              const baseWithout = roundMoney(curTotal - oldPick.lineTotal);
+              const maxAllowedForSwap = roundMoney(maxTarget - baseWithout);
+              for (let j = 0; j < catalog.length; j++) {
+                const cand = catalog[j];
+                if (pickedIds.has(Number(cand.id))) continue;
+                const mode = getItemUnitMode(cand);
+                const steps = getChefCandidateSteps(cand, allowExtendedScale);
+                const bName = classifyChefBucket(cand);
+                if (getBucketCount(oldPick.bucket) === 1 && bName !== oldPick.bucket && curTotal >= minTarget) continue;
+                const keepsDiversity = (bName === oldPick.bucket || getBucketCount(oldPick.bucket) > 1) ? 24 : -40;
+                for (let s = 0; s < steps.length; s++) {
+                  const amt = steps[s];
+                  const cost = computeChefLineTotal(cand, mode, amt);
+                  if (cost <= oldPick.lineTotal || cost > maxAllowedForSwap) continue;
+                  const nextTotal = roundMoney(baseWithout + cost);
+                  const hitsRange = nextTotal >= minTarget && nextTotal <= maxTarget;
+                  const fillRatio = nextTotal / cleanBudget;
+                  const moveScore = (hitsRange ? 170 : 0) + (fillRatio * 108) + keepsDiversity;
+                  considerMove({ type: 'swap', index: i, item: cand, amount: amt, nextTotal, score: moveScore });
+                }
+              }
+            }
+          }
+
+          if (!bestMove) break;
+
+          if (bestMove.type === 'add') {
+            const entry = createChefPlanEntry(bestMove.item, bestMove.amount);
+            if (entry) {
+              picks.push(entry);
+              pickedIds.add(entry.itemId);
+            }
+          } else if (bestMove.type === 'upgrade') {
+            const entry = createChefPlanEntry(bestMove.item, bestMove.amount);
+            if (entry) picks[bestMove.index] = entry;
+          } else if (bestMove.type === 'swap') {
+            const removedId = picks[bestMove.index].itemId;
+            const entry = createChefPlanEntry(bestMove.item, bestMove.amount);
+            if (entry) {
+              pickedIds.delete(removedId);
+              picks[bestMove.index] = entry;
+              pickedIds.add(entry.itemId);
+            }
+          }
+        }
+      };
+
+      optimizeAssortment(false);
+
+      // المرحلة 3-ب: إنقاذ ثنائي الخطوة (تخفيض صنف + ترقية/إضافة آخر) إذا لم نصل بعد لـ 88%
+      if (getTotal() < minTarget && picks.length > 0) {
+        let bestRescue = null;
+        for (let i = 0; i < picks.length; i++) {
+          const p = picks[i];
+          const pItem = itemById.get(p.itemId);
+          if (!pItem) continue;
+          const lowerSteps = getChefCandidateSteps(pItem, false).filter(st => st < p.amount);
+          const lowerOptions = lowerSteps.map(st => ({ remove: false, amount: st }));
+          if (picks.length > 4) lowerOptions.push({ remove: true, amount: 0 });
+
+          for (let l = 0; l < lowerOptions.length; l++) {
+            const lo = lowerOptions[l];
+            const reducedLine = lo.remove ? 0 : computeChefLineTotal(pItem, p.mode, lo.amount);
+            const baseAfterReduce = roundMoney(getTotal() - p.lineTotal + reducedLine);
+            const remAfterReduce = roundMoney(maxTarget - baseAfterReduce);
+
+            // جرّب ترقية صنف آخر
+            for (let j = 0; j < picks.length; j++) {
+              if (j === i) continue;
+              const q = picks[j];
+              const qItem = itemById.get(q.itemId);
+              if (!qItem) continue;
+              const upSteps = getChefCandidateSteps(qItem, true).filter(st => st > q.amount);
+              for (let u = 0; u < upSteps.length; u++) {
+                const upLine = computeChefLineTotal(qItem, q.mode, upSteps[u]);
+                const delta = roundMoney(upLine - q.lineTotal);
+                if (delta <= 0 || delta > remAfterReduce) continue;
+                const candTotal = roundMoney(baseAfterReduce + delta);
+                if (candTotal > getTotal() && candTotal <= maxTarget) {
+                  if (!bestRescue || candTotal > bestRescue.total) {
+                    bestRescue = { mode: 'reduceAndUpgrade', i, lo, j, upAmt: upSteps[u], total: candTotal };
+                  }
+                }
+              }
+            }
+
+            // أو جرّب إضافة صنف جديد مختلف
+            if (picks.length - (lo.remove ? 1 : 0) < maxItems) {
+              for (let k = 0; k < catalog.length; k++) {
+                const cand = catalog[k];
+                if (pickedIds.has(Number(cand.id))) continue;
+                const cMode = getItemUnitMode(cand);
+                const cSteps = getChefCandidateSteps(cand, false);
+                for (let s = 0; s < cSteps.length; s++) {
+                  const cLine = computeChefLineTotal(cand, cMode, cSteps[s]);
+                  if (cLine <= 0 || cLine > remAfterReduce) continue;
+                  const candTotal = roundMoney(baseAfterReduce + cLine);
+                  if (candTotal > getTotal() && candTotal <= maxTarget) {
+                    if (!bestRescue || candTotal > bestRescue.total) {
+                      bestRescue = { mode: 'reduceAndAdd', i, lo, cand, cAmt: cSteps[s], total: candTotal };
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        if (bestRescue) {
+          const pItem = itemById.get(picks[bestRescue.i].itemId);
+          if (bestRescue.mode === 'reduceAndUpgrade') {
+            const qItem = itemById.get(picks[bestRescue.j].itemId);
+            picks[bestRescue.j] = createChefPlanEntry(qItem, bestRescue.upAmt);
+            if (bestRescue.lo.remove) {
+              pickedIds.delete(picks[bestRescue.i].itemId);
+              picks.splice(bestRescue.i, 1);
+            } else {
+              picks[bestRescue.i] = createChefPlanEntry(pItem, bestRescue.lo.amount);
+            }
+          } else if (bestRescue.mode === 'reduceAndAdd') {
+            if (bestRescue.lo.remove) {
+              pickedIds.delete(picks[bestRescue.i].itemId);
+              picks.splice(bestRescue.i, 1);
+            } else {
+              picks[bestRescue.i] = createChefPlanEntry(pItem, bestRescue.lo.amount);
+            }
+            const added = createChefPlanEntry(bestRescue.cand, bestRescue.cAmt);
+            if (added) {
+              picks.push(added);
+              pickedIds.add(added.itemId);
+            }
+          }
+        }
+      }
+
+      // المرحلة 3-ج: للميزانيات الكبيرة جداً (مثل 1500+ ج.م) اسمح بتوسيع الكميات حتى نصل لـ 88%–100%
+      if (getTotal() < minTarget) {
+        optimizeAssortment(true);
+      }
+
+      // ترتيب العرض بشكل متناسق: تورتة/بوكس ثم مخبوزات ثم نواعم/حلويات ثم مشروبات
+      const bucketDisplayRank = { cakeBox: 1, bakery: 2, sweets: 3, drinks: 4, other: 5 };
+      picks.sort((a, b) => {
+        const ra = bucketDisplayRank[a.bucket] || 9;
+        const rb = bucketDisplayRank[b.bucket] || 9;
+        if (ra !== rb) return ra - rb;
+        return b.lineTotal - a.lineTotal;
+      });
+
+      // المرحلة 4: بوابة فحص QA الرياضية قبل إخراج الرد
+      return verifyChefAssortmentQA(picks, cleanBudget);
+    }
+
+    function buildSmartPairedPlan(preferredIds, options) {
+      const opts = options || {};
+      const catalog = getLiveChefCatalog();
+      if (catalog.length === 0) return verifyChefAssortmentQA([], 0);
+
+      const targetCount = Math.min(7, Math.max(4, Number(opts.targetCount) || 5), catalog.length);
+      const itemById = new Map(catalog.map(it => [Number(it.id), it]));
+      const chosenItems = [];
+      const seen = new Set();
+
+      const tryPush = (item) => {
+        if (!item) return false;
+        const idNum = Number(item.id);
+        if (!idNum || seen.has(idNum) || chosenItems.length >= targetCount) return false;
+        seen.add(idNum);
+        chosenItems.push(item);
+        return true;
+      };
+
+      // 1) نبدأ بالأصناف المطابقة لطلب المستخدم بدون تكرار
+      if (Array.isArray(preferredIds)) {
+        for (let i = 0; i < preferredIds.length && chosenItems.length < targetCount; i++) {
+          const liveItem = itemById.get(Number(preferredIds[i]));
+          if (liveItem) tryPush(liveItem);
+        }
+      }
+
+      // 2) تنويع ذكي من باقي الأقسام إذا كان العدد أقل من المطلوب (4-7 أصناف)
+      if (chosenItems.length < targetCount) {
+        const usedBuckets = new Set(chosenItems.map(classifyChefBucket));
+        const popularIds = typeof getPopularItemsIds === 'function' ? getPopularItemsIds() : [];
+        const pool = [];
+        popularIds.forEach(pid => {
+          const it = itemById.get(Number(pid));
+          if (it && !seen.has(Number(it.id))) pool.push(it);
+        });
+        catalog.forEach(it => {
+          if (!seen.has(Number(it.id))) pool.push(it);
+        });
+
+        // أولاً: أصناف من أقسام غير موجودة بعد لتحقيق Smart Pairing حقيقي
+        for (let i = 0; i < pool.length && chosenItems.length < targetCount; i++) {
+          const b = classifyChefBucket(pool[i]);
+          if (!usedBuckets.has(b)) {
+            if (tryPush(pool[i])) usedBuckets.add(b);
+          }
+        }
+        // ثانياً: استكمال العدد المطلوب من المتاح
+        for (let i = 0; i < pool.length && chosenItems.length < targetCount; i++) {
+          tryPush(pool[i]);
+        }
+      }
+
+      const planEntries = chosenItems.map((item, idx) => {
+        const mode = getItemUnitMode(item);
+        let amt = 1;
+        if (mode === 'weight') {
+          if (opts.mixedWeights) {
+            amt = idx % 2 === 0 ? 0.5 : 0.25;
+          } else if (opts.weightDefault) {
+            amt = opts.weightDefault;
+          } else {
+            amt = 0.5;
+          }
+        } else if (mode === 'piece' && opts.pieceDefault) {
+          amt = opts.pieceDefault;
+        }
+        return createChefPlanEntry(item, amt);
+      }).filter(Boolean);
+
+      return verifyChefAssortmentQA(planEntries, 0);
+    }
+
+    function extractChefBudgetFromQuery(rawText) {
+      const normalized = normalizeDigits(String(rawText || '').trim());
+      const norm = normalizeSearchText(normalized);
+      // تجاهل أرقام الفروع والمقاسات حتى لا تُفسّر كميزانية
+      const cleanedForNumbers = normalized
+        .replace(/\b\d{2}\s*\/\s*\d{2}\b/g, ' ')
+        .replace(/(?:مقاس|حجم)\s*\d{2}/g, ' ')
+        .replace(/(?:فرع|مجاورة|مجاوره|مول)\s*(?:الـ\s*)?(?:26|18|31|19|10)\b/g, ' ');
+
+      const currencyMatch = cleanedForNumbers.match(/(\d{2,5})\s*(?:جنيه|ج\.م|جنية|ج\b|مصري)/);
+      const prefixedMatch = cleanedForNumbers.match(/(?:بـ|ب\s+|ميزاني[ةت]ي?\s*|معايا\s*|في حدود\s*|حدود\s*|حوالي\s*|تحت\s*|اقل من\s*|أقل من\s*)(\d{2,5})\b/);
+      const bareBudgetMatch = (norm.includes('ميزانيه') || norm.includes('معايا') || norm.includes('في حدود') || norm.includes('اقل من') || norm.includes('توفير') || norm.includes('عزومه'))
+        ? cleanedForNumbers.match(/\b(\d{2,5})\b/)
+        : null;
+
+      const rawNum = currencyMatch
+        ? Number(currencyMatch[1])
+        : (prefixedMatch ? Number(prefixedMatch[1]) : (bareBudgetMatch ? Number(bareBudgetMatch[1]) : 0));
+
+      const isOccasion = norm.includes('عزومه') || norm.includes('مناسبه') || norm.includes('عيد ميلاد') || norm.includes('حفله') || norm.includes('ضيوف') || norm.includes('خطوبه');
+      const isGenericBudgetWord = norm.includes('ميزانيه') || norm.includes('معايا') || norm.includes('في حدود') || norm.includes('اقل من') || norm.includes('رخيص') || norm.includes('توفير');
+
+      const hasValidAmount = Number.isFinite(rawNum) && rawNum >= 30 && rawNum <= 25000;
+      const isBudgetQuery = hasValidAmount || isGenericBudgetWord;
+
+      return {
+        isBudgetQuery,
+        budgetAmount: hasValidAmount ? rawNum : 0,
+        isOccasion
+      };
+    }
+
+    function resolveMessageLivePlan(msgObj) {
+      if (!msgObj || msgObj.role === 'user') return [];
+      const liveCatalog = getLiveChefCatalog();
+      if (liveCatalog.length === 0) return [];
+      const liveById = new Map(liveCatalog.map(it => [Number(it.id), it]));
+
+      if (Array.isArray(msgObj.recommendedPlan) && msgObj.recommendedPlan.length > 0) {
+        const qa = verifyChefAssortmentQA(msgObj.recommendedPlan, msgObj.budgetTarget || 0);
+        return qa.plan.map(entry => ({
+          ...entry,
+          item: liveById.get(entry.itemId)
+        })).filter(e => e.item);
+      }
+
+      if (Array.isArray(msgObj.suggestedIds) && msgObj.suggestedIds.length > 0) {
+        const qa = buildSmartPairedPlan(msgObj.suggestedIds, {
+          targetCount: Math.min(7, Math.max(4, msgObj.suggestedIds.length))
+        });
+        return qa.plan.map(entry => ({
+          ...entry,
+          item: liveById.get(entry.itemId)
+        })).filter(e => e.item);
+      }
+
+      // لرسالة الترحيب الافتراضية التي تُنشأ قبل اكتمال تحميل شيت جوجل
+      if (msgObj === aiChatHistory[0]) {
+        const qa = buildSmartPairedPlan(
+          typeof getPopularItemsIds === 'function' ? getPopularItemsIds() : [],
+          { targetCount: 5 }
+        );
+        return qa.plan.map(entry => ({
+          ...entry,
+          item: liveById.get(entry.itemId)
+        })).filter(e => e.item);
+      }
+
+      return [];
+    }
+
+    function addChefPlanEntryToCartSilent(item, rawAmount) {
+      if (!item || !isItemAvailable(item) || !getItemBranchFlag(item, window.CURRENT_BRANCH)) return null;
+      const mode = getItemUnitMode(item);
+      const amount = normalizeChefAmount(mode, rawAmount);
+      const lineTotal = computeChefLineTotal(item, mode, amount);
 
       if (mode === 'box' || mode === 'cup' || mode === 'piece') {
         const key = `${item.id}_${mode}`;
         const existing = cart.find(c => c.key === key);
-        if (existing) existing.qty += 1;
-        else cart.push({
-          key,
-          itemId: item.id,
-          name: item.name,
-          unitType: mode,
-          unitMode: mode,
-          weightFactor: 1,
-          weightLabel: getUnitArabicWord(mode),
-          baseKiloPrice: item.price,
-          unitPrice: item.price,
-          qty: 1
-        });
+        if (existing) {
+          existing.qty += amount;
+          existing.unitPrice = Number(item.price);
+          existing.baseKiloPrice = Number(item.price);
+        } else {
+          cart.push({
+            key,
+            itemId: item.id,
+            name: item.name,
+            unitType: mode,
+            unitMode: mode,
+            weightFactor: 1,
+            weightLabel: getUnitArabicWord(mode),
+            baseKiloPrice: Number(item.price),
+            unitPrice: Number(item.price),
+            qty: amount
+          });
+        }
       } else {
-        addWeightToCartUnified(item, 0.5);
+        addWeightToCartUnified(item, amount);
       }
+      return {
+        itemId: item.id,
+        qtyLabel: formatChefQtyShortLabel(mode, amount),
+        lineTotal
+      };
+    }
+
+    function quickAddFromAi(itemId, customAmount) {
+      const item = RAW.find(i => Number(i.id) === Number(itemId));
+      const added = addChefPlanEntryToCartSilent(item, customAmount);
+      if (!added) return;
       updateCartBadge(true);
       persistCartToStorage();
       if (typeof updateSingleProductCard === 'function') updateSingleProductCard(item.id);
       if (typeof updateSpotlightCardControl === 'function') updateSpotlightCardControl(item.id);
-      showToast('🛒 بالهنا والشفا! "' + item.name + '" اتضاف لسلتك بنجاح', false);
+      showToast(`🛒 بالهنا والشفا! أضفنا «${item.name}» (${added.qtyLabel} • ${formatChefMoney(added.lineTotal)} ج.م) لسلتك`, false);
     }
+    window.quickAddFromAi = quickAddFromAi;
+
+    function quickAddAssortmentFromAi(msgIndex) {
+      const msg = aiChatHistory[Number(msgIndex)];
+      const livePlan = resolveMessageLivePlan(msg);
+      if (!livePlan || livePlan.length === 0) {
+        showToast('⚠️ التشكيلة غير متاحة حالياً في هذا الفرع.', true);
+        return;
+      }
+      let addedCount = 0;
+      let addedSum = 0;
+      livePlan.forEach(entry => {
+        const added = addChefPlanEntryToCartSilent(entry.item, entry.amount);
+        if (added) {
+          addedCount++;
+          addedSum = roundMoney(addedSum + added.lineTotal);
+          if (typeof updateSingleProductCard === 'function') updateSingleProductCard(entry.item.id);
+          if (typeof updateSpotlightCardControl === 'function') updateSpotlightCardControl(entry.item.id);
+        }
+      });
+      if (addedCount > 0) {
+        updateCartBadge(true);
+        persistCartToStorage();
+        showToast(`🛒 تمت إضافة التشكيلة بالكامل (${addedCount} أصناف • إجمالي ${formatChefMoney(addedSum)} ج.م) لسلتك!`, false);
+      }
+    }
+    window.quickAddAssortmentFromAi = quickAddAssortmentFromAi;
 
     function renderAiMessages(scrollMode = 'bottom') {
       const box = document.getElementById('aiMessagesBox');
@@ -7033,7 +8065,7 @@
                 ${buildChefBubbleAvatarHtml('b' + idx)}
                 <span class="text-[9.5px] font-bold text-[#d4af37]/90 truncate">شيف سويت سيتي</span>
               </div>
-              <button type="button" data-ai-speak-btn="${idx}" onclick="speakAiMessageByIndex(${idx})" class="${speakBtnClass}">${getSpeakButtonLabel(idx)}</button>
+              <button type="button" data-ai-speak-btn="${idx}" ontouchend="unlockAudioEngine()" onclick="unlockAudioEngine(); speakAiMessageByIndex(${idx})" class="${speakBtnClass}">${getSpeakButtonLabel(idx)}</button>
             </div>`
           : '';
         const customBoxHtml = m.customBoxKey && aiCustomBoxesMap[m.customBoxKey]
@@ -7058,35 +8090,54 @@
               </button>
             </div>`
           : '';
-        const validSuggestedItems = pickFiveBranchRecommendations(m.suggestedIds, 5)
-          .map(sid => RAW.find(i => Number(i.id) === Number(sid)))
-          .filter(sItem => sItem && isItemAvailable(sItem) && getItemBranchFlag(sItem, window.CURRENT_BRANCH));
-        const cardsHtml = validSuggestedItems.length > 0
+        const validPlan = !isUser ? resolveMessageLivePlan(m) : [];
+        const assortmentTotal = roundMoney(validPlan.reduce((sum, entry) => sum + entry.lineTotal, 0));
+        const budgetMetaNote = (m.budgetTarget && Number(m.budgetTarget) > 0 && assortmentTotal <= Number(m.budgetTarget))
+          ? (() => {
+              const remain = roundMoney(Number(m.budgetTarget) - assortmentTotal);
+              return `<span class="block text-[9.5px] text-stone-300 font-semibold mt-0.5">من ميزانية ${formatChefMoney(m.budgetTarget)} ج.م${remain > 0 ? ` • متبقي ${formatChefMoney(remain)} ج.م` : ' • بالمظبوط 100%'}</span>`;
+            })()
+          : '';
+        const cardsHtml = validPlan.length > 0
           ? `<div class="mt-2.5 pt-2 border-t border-[#d4af37]/20 space-y-1.5">
-              <div class="text-[10px] font-black text-[#f3d266]">✨ اختيارات الشيف الطازجة — ضيفها لسلتك بضغطة:</div>
-              ${validSuggestedItems.map(sItem => {
-                const sMode = getItemUnitMode(sItem);
-                const pricePrefix = sMode === 'box'
-                  ? 'البوكس'
-                  : (sMode === 'cup' ? 'الكوب' : (sMode === 'weight' ? 'الكيلو (يُضاف ½ كجم)' : 'القطعة'));
-                const oldPBadge = (sItem.oldPrice && Number(sItem.oldPrice) > Number(sItem.price))
-                  ? `<span class="line-through text-stone-400 mr-1">${sItem.oldPrice} ج</span>`
+              <div class="text-[10px] font-black text-[#f3d266]">✨ اختيارات الشيف الطازجة (${validPlan.length} أصناف) — ضيف أي صنف أو التشكيلة كلها:</div>
+              ${validPlan.map(entry => {
+                const sItem = entry.item;
+                const sMode = entry.mode;
+                const baseUnitLabel = sMode === 'weight'
+                  ? `سعر الكيلو ${formatChefMoney(entry.unitPriceBase)} ج.م`
+                  : (entry.amount > 1 ? `سعر ${getUnitArabicWord(sMode)} ${formatChefMoney(entry.unitPriceBase)} ج.م` : '');
+                const oldPBadge = (sItem.oldPrice && Number(sItem.oldPrice) > Number(sItem.price) && sMode !== 'weight' && entry.amount === 1)
+                  ? `<span class="line-through text-stone-400 mr-1">${formatChefMoney(sItem.oldPrice)} ج</span>`
                   : '';
                 return `
                   <div class="flex items-center justify-between gap-2 rounded-xl bg-[#18140e] border border-[#d4af37]/30 hover:border-[#f3d266]/70 transition" style="padding: 8px 10px;">
                     <div class="text-right min-w-0 flex-1">
                       <span class="font-black text-white text-[11px] block truncate">${escapeHtml(sItem.emoji || '🎂')} ${escapeHtml(sItem.name)}</span>
-                      <span class="block text-[10px] text-[#f3d266] font-bold">${pricePrefix}: ${sItem.price} ج.م ${oldPBadge}</span>
+                      <span class="block text-[10px] text-[#f3d266] font-black mt-0.5">${escapeHtml(entry.qtyLabel)} • ${formatChefMoney(entry.lineTotal)} ج.م ${oldPBadge}</span>
+                      ${baseUnitLabel ? `<span class="block text-[9px] text-stone-400 font-medium">${escapeHtml(baseUnitLabel)}</span>` : ''}
                     </div>
-                    <button type="button" onclick="quickAddFromAi(${sItem.id})" class="px-2.5 py-1.5 rounded-lg gold-grad text-black font-black text-[10px] shrink-0 cursor-pointer active:scale-95 transition">+ أضف للسلة</button>
+                    <button type="button" onclick="quickAddFromAi(${sItem.id}, ${entry.amount})" class="px-2.5 py-1.5 rounded-lg gold-grad text-black font-black text-[10px] shrink-0 cursor-pointer active:scale-95 transition">+ أضف للسلة</button>
                   </div>
                 `;
               }).join('')}
+              <div class="mt-2 p-2.5 rounded-xl bg-gradient-to-l from-[#261e0f] to-[#15110b] border border-[#e3b938]/80 flex flex-col gap-2">
+                <div class="flex items-center justify-between gap-2">
+                  <div class="text-right">
+                    <span class="block text-[11px] font-black text-[#f7df91]">إجمالي التشكيلة المقترحة: ${formatChefMoney(assortmentTotal)} ج.م</span>
+                    ${budgetMetaNote}
+                  </div>
+                  <span class="text-[10px] font-black text-[#d4af37] shrink-0">${validPlan.length} أصناف</span>
+                </div>
+                <button type="button" onclick="quickAddAssortmentFromAi(${idx})" class="w-full py-2 px-3 rounded-lg gold-grad text-black font-black text-[11px] flex items-center justify-center gap-1.5 cursor-pointer shadow-sm active:scale-95 transition">
+                  <span>🛒</span><span>أضف التشكيلة كلها للسلة</span>
+                </button>
+              </div>
             </div>`
           : '';
         const followUpsHtml = (!isUser && Array.isArray(m.followUpSuggestions) && m.followUpSuggestions.length > 0)
           ? `<div class="mt-2 pt-2 border-t border-[#d4af37]/15 flex flex-wrap items-center gap-1.5">
-              ${m.followUpSuggestions.slice(0, 4).map(sug => `<button type="button" data-prompt="${escapeHtml(sug)}" onclick="unlockChefAudio(); sendAiPrompt(this.dataset.prompt)" class="px-2.5 py-1 rounded-full bg-[#1e180d] hover:bg-[#2d2312] border border-[#d4af37]/45 text-[#f7df91] text-[9.5px] font-bold cursor-pointer transition active:scale-95">${escapeHtml(sug)}</button>`).join('')}
+              ${m.followUpSuggestions.slice(0, 4).map(sug => `<button type="button" data-prompt="${escapeHtml(sug)}" ontouchend="unlockAudioEngine()" onclick="unlockAudioEngine(); sendAiPrompt(this.dataset.prompt)" class="px-2.5 py-1 rounded-full bg-[#1e180d] hover:bg-[#2d2312] border border-[#d4af37]/45 text-[#f7df91] text-[9.5px] font-bold cursor-pointer transition active:scale-95">${escapeHtml(sug)}</button>`).join('')}
             </div>`
           : '';
         return `
@@ -7136,77 +8187,84 @@
       return `${item.name} (${item.price} ج.م${hasD ? ` بدل ${item.oldPrice} ج.م` : ''} لـ ${uText})`;
     }
 
-    function buildHappinessBoxSuggestion(budgetNum) {
-      const avail = getActiveBranchItems().filter(i => isItemAvailable(i));
+    function buildHappinessBoxSuggestion(budgetNum, options) {
+      const opts = options || {};
+      const liveCatalog = getLiveChefCatalog();
       const branchLabel = getActiveChefBranchShortLabel();
-      const targetBudget = (budgetNum && budgetNum >= 60) ? budgetNum : 300;
-
-      const picks = [];
-      let runningTotal = 0;
-      const candidates = avail.filter(i => (
-        i.category === 'الحلو' ||
-        i.category === 'مخبوزات وفطائر' ||
-        i.category === 'نواعم وكعك وبسكويت' ||
-        i.category === 'الجاتوه والمخبوزات الحلوة' ||
-        (isDrinksAllowedForBranch() && DRINK_CATEGORIES.includes(i.category))
-      ));
-
-      for (let i = 0; i < candidates.length; i++) {
-        const it = candidates[i];
-        const mode = getItemUnitMode(it);
-        const unitCost = mode === 'weight' ? roundMoney(it.price * 0.5) : it.price;
-        if (unitCost > 0 && runningTotal + unitCost <= targetBudget && picks.length < 5) {
-          picks.push({
-            item: it,
-            qtyText: mode === 'weight' ? 'نص كيلو' : '1 ' + getUnitArabicWord(mode),
-            cost: unitCost
-          });
-          runningTotal = roundMoney(runningTotal + unitCost);
-        }
-      }
-
-      const finalPrice = runningTotal > 0 ? runningTotal : targetBudget;
-      const boxKey = 'hbox_' + Date.now() + '_' + Math.floor(100 + Math.random() * 900);
-      const contentsSummary = picks.length > 0
-        ? picks.map(p => `${p.qtyText} ${p.item.name}`).join(' + ')
-        : 'تشكيلة طازجة من حلويات ومخبوزات ' + branchLabel;
-
-      aiCustomBoxesMap[boxKey] = {
-        id: 'BOX-' + boxKey,
-        name: `تشكيلة الشيف (${contentsSummary})`,
-        price: finalPrice,
-        unitType: 'box'
-      };
-
-      const spokenList = picks.length > 0
-        ? picks.map(p => `${p.qtyText} ${p.item.name} بـ ${p.cost} ج.م`).join('، ومعاهم ')
-        : 'تشكيلة مشكلة طازجة من المخبز';
-
-      const suggestedIds = pickFiveBranchRecommendations(picks.map(p => p.item.id), 5);
-      const remain = Math.max(0, roundMoney(targetBudget - finalPrice));
       const firstName = getCustomerFirstName();
       const nameTag = firstName ? ` يا ${firstName}` : ' يا غالي';
-      const opener = pickRandomChef([
-        `يا أهلاً بالذوق العالي${nameTag}! بص يا سيدي خدها مني على ضمانتي، جمعتلك من ${branchLabel} تشكيلة تفتح النفس: ${spokenList}.`,
-        `عنيا ليك${nameTag}! في ${branchLabel} ظبطتلك قعدة على المزاج فيها ${spokenList}.. الريحة لوحدها تجيب آخر الشارع!`
-      ]);
-      const budgetNote = budgetNum
-        ? `\nإجمالي التشكيلة ${finalPrice} ج.م من أصل ${targetBudget} ج.م${remain > 0 ? ` وهيتبقالك كمان ${remain} ج.م 😉` : ' بالمظبوط!'}`
-        : `\nسعر التشكيلة كلها ${finalPrice} ج.م بس!`;
+
+      if (liveCatalog.length === 0) {
+        return {
+          replyText: `لحظة واحدة${nameTag}.. بنحدّث المنيو المباشر من ${branchLabel} دلوقتي. أول ما الأصناف تظهر جرب تكتب الميزانية تاني وهحسبهالك بالمليم! ✨`,
+          recommendedPlan: [],
+          suggestedIds: [],
+          budgetTarget: 0
+        };
+      }
+
+      const explicitBudget = Number(budgetNum) > 0 ? roundMoney(Number(budgetNum)) : 0;
+      const targetBudget = explicitBudget >= 30 ? explicitBudget : 300;
+      const qaResult = buildSmartBudgetAssortment(targetBudget, opts);
+
+      // حالة الميزانية أقل من أرخص صنف حقيقي في الشيت
+      if (qaResult.plan.length === 0) {
+        const cheapestPlan = buildSmartPairedPlan(
+          liveCatalog
+            .slice()
+            .sort((a, b) => computeChefLineTotal(a, getItemUnitMode(a), getItemUnitMode(a) === 'weight' ? 0.25 : 1) - computeChefLineTotal(b, getItemUnitMode(b), getItemUnitMode(b) === 'weight' ? 0.25 : 1))
+            .map(i => i.id),
+          { targetCount: 4, weightDefault: 0.25 }
+        );
+        const minItemCost = cheapestPlan.plan.length > 0 ? cheapestPlan.plan[0].lineTotal : 0;
+        return {
+          replyText: `منورنا${nameTag} في ${branchLabel} 💛 أقل صنف متاح حالياً في المنيو المباشر يبدأ من ${formatChefMoney(minItemCost)} ج.م، فجبتلك تحت أوفر 4 اختيارات طازجة بأسعارها الحقيقية، أو قولي ميزانية تبدأ من ${formatChefMoney(Math.max(100, minItemCost * 3))} ج.م وهظبطلك أحلى تشكيلة!`,
+          recommendedPlan: cheapestPlan.plan,
+          suggestedIds: cheapestPlan.plan.map(p => p.itemId),
+          budgetTarget: 0,
+          followUpSuggestions: ['🎉 عزومة بـ 300 جنيه', '🎉 عزومة بـ 500 جنيه', '🥐 فطار سخن على الرايق']
+        };
+      }
+
+      const itemById = new Map(liveCatalog.map(it => [Number(it.id), it]));
+      const spokenList = qaResult.plan.map(p => {
+        const it = itemById.get(p.itemId);
+        return `${p.qtyLabel} ${it ? it.name : ''} (${formatChefMoney(p.lineTotal)} ج.م)`;
+      }).join(' + ');
+
+      const remain = Math.max(0, roundMoney(targetBudget - qaResult.verifiedTotal));
+      const opener = opts.isOccasion
+        ? `عنيا ليك${nameTag}! 🎉 جهزتلك لعزومتك من ${branchLabel} تشكيلة متكاملة ومتنوعة تشرفك قدام ضيوفك بأسعار المنيو الفعلية:`
+        : pickRandomChef([
+            `يا أهلاً بالذوق العالي${nameTag}! ✨ حسبتلك من أسعار ${branchLabel} الحقيقية تشكيلة متنوعة ومظبوطة على ميزانيتك بالمليم:`,
+            `عنيا ليك${nameTag}! 👨‍🍳💛 جمعتلك من ${branchLabel} تشكيلة متناسقة ومختلفة من أحلى الأصناف الطازجة:`
+          ]);
+
+      const budgetLine = explicitBudget > 0
+        ? `إجمالي التشكيلة الفعلي: ${formatChefMoney(qaResult.verifiedTotal)} ج.م من أصل ${formatChefMoney(targetBudget)} ج.م${remain > 0 ? ` (وهيتبقالك ${formatChefMoney(remain)} ج.م 😉)` : ' بالمظبوط 100%! 🎯'}`
+        : `إجمالي التشكيلة الفعلي: ${formatChefMoney(qaResult.verifiedTotal)} ج.م.`;
 
       return {
-        replyText: `${opener}${budgetNote}\nتحب تضيف التشكيلة كلها بضغطة تحت، ولا نزوّد صنف تاني على ذوقك؟`,
-        customBoxKey: boxKey,
-        suggestedIds: suggestedIds
+        replyText: `${opener}\n${spokenList}.\n${budgetLine}\nتقدر تضيف أي صنف لوحده أو تضيف التشكيلة كلها بضغطة واحدة تحت 👇`,
+        recommendedPlan: qaResult.plan,
+        suggestedIds: qaResult.plan.map(p => p.itemId),
+        budgetTarget: explicitBudget > 0 ? targetBudget : 0,
+        showRoyalStudioCta: Boolean(opts.isOccasion) || targetBudget >= 450,
+        followUpSuggestions: explicitBudget === 500
+          ? ['💰 تشكيلة بـ 300 جنيه', '💰 تشكيلة بـ 700 جنيه', '🎂 تورتة لعيد ميلاد']
+          : ['🎉 عزومة بـ 500 جنيه', '💰 تشكيلة بـ 300 جنيه', '🍪 ربع ونص مشكل']
       };
     }
 
     function buildOccasionRecommendation(guestCount) {
-      const avail = getActiveBranchItems().filter(i => isItemAvailable(i));
+      const avail = getLiveChefCatalog();
       const branchLabel = getActiveChefBranchShortLabel();
       const cakes = avail.filter(i => normalizeSearchText(i.category).includes('تورت') || normalizeSearchText(i.name).includes('تورت'));
       const gateaux = avail.filter(i => normalizeSearchText(i.category).includes('جاتو') || normalizeSearchText(i.name).includes('جاتو'));
-      const sweets = avail.filter(i => normalizeSearchText(i.category).includes('الحلو') || normalizeSearchText(i.category).includes('مخبوزات') || normalizeSearchText(i.category).includes('نواعم'));
+      const sweets = avail.filter(i => {
+        const b = classifyChefBucket(i);
+        return b === 'sweets' || b === 'bakery';
+      });
 
       const picks = [];
       let sizeAdvice = 'تورتة 25/25 أو مدورة مقاس 24 ومعاها جاتوه أو نص كيلو بيتي فور وكوكيز تشرفك قدام ضيوفك';
@@ -7221,11 +8279,13 @@
       }
 
       if (cakes.length > 0) picks.push(cakes[Math.min(cakes.length - 1, guestCount > 15 ? 3 : 0)]);
-      if (cakes.length > 1) picks.push(cakes[1]);
       if (gateaux.length > 0) picks.push(gateaux[0]);
       if (sweets.length > 0) picks.push(sweets[0]);
       if (sweets.length > 1) picks.push(sweets[1]);
-      const finalIds = pickFiveBranchRecommendations(picks.filter(Boolean).map(x => x.id), 5);
+      if (sweets.length > 2) picks.push(sweets[2]);
+      if (cakes.length > 1) picks.push(cakes[1]);
+
+      const qa = buildSmartPairedPlan(picks.filter(Boolean).map(x => x.id), { targetCount: 6 });
       const firstName = getCustomerFirstName();
       const nameTag = firstName ? ` يا ${firstName}` : '';
       const header = pickRandomChef([
@@ -7234,15 +8294,17 @@
       ]);
 
       return {
-        replyText: `${header} أنصحك تبدأ بـ ${sizeAdvice}، ولأصناف الوزن تقدر تختار ربع أو نص أو كيلو براحتك. قولي بقى ده لعيد ميلاد شوكولاتة غرقانة ولا فاكهة وفانيليا رايقة؟`,
-        suggestedIds: finalIds,
-        showRoyalStudioCta: true
+        replyText: `${header} أنصحك تبدأ بـ ${sizeAdvice}، وجهزتلك تحت تشكيلة مناسبة متكاملة بأسعارها الفعلية. ولو عندك ميزانية معينة (مثلاً 500 أو 800 جنيه) اكتبها وهحسبهالك بالمليم!`,
+        recommendedPlan: qa.plan,
+        suggestedIds: qa.plan.map(p => p.itemId),
+        showRoyalStudioCta: true,
+        followUpSuggestions: ['🎉 عزومة بـ 500 جنيه', '💰 عزومة بـ 800 جنيه', '🍫 عشاق الشوكولاتة']
       };
     }
 
     function getInstantAiReply(q) {
       sortRawById();
-      const branchItems = getActiveBranchItems();
+      const branchItems = getLiveChefCatalog();
       const branchLabel = getActiveChefBranchShortLabel();
       const drinksEnabled = isDrinksAllowedForBranch();
       const rawText = String(q || '').trim();
@@ -7251,19 +8313,39 @@
       const firstName = getCustomerFirstName();
       const nameTag = firstName ? ` يا ${firstName}` : '';
 
+      if (branchItems.length === 0) {
+        return {
+          replyText: `أهلاً بيك${nameTag} في ${branchLabel} 💛 المنيو المباشر بيتحمّل دلوقتي من السيرفر.. ثواني بسيطة وأول ما الأصناف تظهر اسألني تاني وهظبطك بأحلى ترشيحات بأسعارها الحقيقية!`,
+          recommendedPlan: [],
+          suggestedIds: []
+        };
+      }
+
+      // 0. فحص الميزانية أولاً قبل أي نية أخرى لضمان دقة المحرك الرياضي 100%
+      const budgetInfo = extractChefBudgetFromQuery(rawText);
+      if (budgetInfo.isBudgetQuery && budgetInfo.budgetAmount >= 30) {
+        const stopWords = ['رشح', 'لي', 'عايز', 'عاوز', 'محتاج', 'بميزانية', 'ميزانية', 'جنيه', 'معايا', 'حدود', 'عزومة', 'تشكيلة', 'تشكيله'];
+        const kwHints = norm.replace(/[؟?!.,،0-9]/g, ' ').split(/\s+/).filter(w => w.length >= 3 && !stopWords.includes(w));
+        return buildHappinessBoxSuggestion(budgetInfo.budgetAmount, {
+          isOccasion: budgetInfo.isOccasion,
+          keywords: kwHints
+        });
+      }
+
       // 0-أ. فطار سخن على الرايق
       const isBreakfastAsk = norm.includes('فطار') || norm.includes('سخن') || norm.includes('رايق') || norm.includes('صباح');
       if (isBreakfastAsk) {
         const bItems = branchItems.filter(item => {
-          if (!isItemAvailable(item) || isDrinkItem(item)) return false;
+          if (isDrinkItem(item)) return false;
           const hay = normalizeSearchText(`${item.name} ${item.desc} ${item.category}`);
           return hay.includes('كرواسون') || hay.includes('باتيه') || hay.includes('بوريك') || hay.includes('قرص') || hay.includes('فطير') || hay.includes('دانش') || hay.includes('سميط');
         });
-        const picks = pickFiveBranchRecommendations(bItems.map(i => i.id), 5);
+        const qa = buildSmartPairedPlan(bItems.map(i => i.id), { targetCount: 5, weightDefault: 0.5 });
         return {
-          replyText: `يا صباح الروقان${nameTag}! 🥐☀️ الفرن في ${branchLabel} لسه مطلّع كرواسون وباتيه وبوريك وقرص دافية ريحتها تجيب آخر الشارع، وتقدر تطلب ربع أو نص أو كيلو براحتك. تحب الفطار حلو مع مربى وعجوة ولا حادق بالجبنة والبوريك؟`,
-          suggestedIds: picks,
-          followUpSuggestions: ['☕ حاجة تظبط مع القهوة', '🍪 ربع ونص مشكل', '🥖 مخبوزات للدايت']
+          replyText: `يا صباح الروقان${nameTag}! 🥐☀️ الفرن في ${branchLabel} لسه مطلّع كرواسون وباتيه وبوريك وقرص دافية ريحتها تجيب آخر الشارع. جهزتلك تشكيلة فطار طازجة بأسعارها الحقيقية تحت، تحب تضيفها كلها ولا تختار منها؟`,
+          recommendedPlan: qa.plan,
+          suggestedIds: qa.plan.map(p => p.itemId),
+          followUpSuggestions: ['☕ حاجة تظبط مع القهوة', '🍪 ربع ونص مشكل', '💰 فطار بـ 200 جنيه']
         };
       }
 
@@ -7271,28 +8353,29 @@
       const isCoffeeOrTeaSnack = norm.includes('مع القهو') || norm.includes('القهوه') || norm.includes('مع الشاي') || norm.includes('جنب الشاي') || norm.includes('للشاي');
       if (isCoffeeOrTeaSnack) {
         const snackItems = branchItems.filter(item => {
-          if (!isItemAvailable(item)) return false;
           if (!drinksEnabled && isDrinkItem(item)) return false;
           const hay = normalizeSearchText(`${item.name} ${item.desc} ${item.category}`);
           return hay.includes('كوكيز') || hay.includes('بيتي فور') || hay.includes('سابلي') || hay.includes('سينابون') || hay.includes('دونات') || hay.includes('بسكويت') || hay.includes('كرواسون') || (drinksEnabled && hay.includes('لاتيه'));
         });
-        const picks = pickFiveBranchRecommendations(snackItems.map(i => i.id), 5);
+        const qa = buildSmartPairedPlan(snackItems.map(i => i.id), { targetCount: 5, weightDefault: 0.5 });
         return {
-          replyText: `يا سلام عليك${nameTag}، مزاج القهوة عايز صحبة تشرف! ☕🍪 نقيتلك من ${branchLabel} كوكيز وبيتي فور ودوناتس وسينابون ده اللي بيخطف القلب من أول قطمة، وطبعاً متاح ربع أو نص أو كيلو في النواعم. تحب مع القهوة حاجة بالشوكولاتة الغرقانة ولا بسكويت زبدة هادي؟`,
-          suggestedIds: picks,
-          followUpSuggestions: ['🍫 عشاق الشوكولاتة', '🍪 ربع ونص مشكل', '🎁 بوكس هدية يشرف']
+          replyText: `يا سلام عليك${nameTag}، مزاج القهوة عايز صحبة تشرف! ☕🍪 نقيتلك من ${branchLabel} تشكيلة كوكيز وبيتي فور ونواعم تخطف القلب من أول قطمة بأسعارها الفعلية تحت. تحب مع القهوة حاجة بالشوكولاتة الغرقانة ولا بسكويت زبدة هادي؟`,
+          recommendedPlan: qa.plan,
+          suggestedIds: qa.plan.map(p => p.itemId),
+          followUpSuggestions: ['🍫 عشاق الشوكولاتة', '🍪 ربع ونص مشكل', '💰 تشكيلة بـ 250 جنيه']
         };
       }
 
       // 0-ج. ربع ونص مشكل (أصناف الوزن)
       const isMixedWeightAsk = norm.includes('ربع ونص') || norm.includes('مشكل') || norm.includes('بالوزن') || (norm.includes('ربع') && norm.includes('نص'));
       if (isMixedWeightAsk) {
-        const weightItems = branchItems.filter(item => isItemAvailable(item) && !isDrinkItem(item) && getItemUnitMode(item) === 'weight');
-        const picks = pickFiveBranchRecommendations(weightItems.map(i => i.id), 5);
+        const weightItems = branchItems.filter(item => !isDrinkItem(item) && getItemUnitMode(item) === 'weight');
+        const qa = buildSmartPairedPlan(weightItems.map(i => i.id), { targetCount: 6, mixedWeights: true });
         return {
-          replyText: `يا أهلاً بأصحاب المزاج${nameTag}! بص يا سيدي خدها مني على ضمانتي، تشكيلة الربع والنص هي أذكى حاجة تدوق بيها كل الأنواع طازجة من ${branchLabel} 😋 تقدر تختار ربع أو نص أو كيلو من أي صنف تحت بضغطة واحدة. المود النهاردة نواعم وبسكويت ولا شرقي وفطاير؟`,
-          suggestedIds: picks,
-          followUpSuggestions: ['🍪 حاجة تظبط مع القهوة', '🍫 عشاق الشوكولاتة', '🎉 عزومة بـ 500 جنيه']
+          replyText: `يا أهلاً بأصحاب المزاج${nameTag}! 😋 تشكيلة الربع والنص هي أذكى حاجة تدوق بيها كل الأنواع طازجة من ${branchLabel}. ظبطتلك تحت 6 أصناف متنوعة بأوزان ربع ونص كيلو وأسعارها المحسوبة بالمظبوط!`,
+          recommendedPlan: qa.plan,
+          suggestedIds: qa.plan.map(p => p.itemId),
+          followUpSuggestions: ['💰 مشكل بـ 300 جنيه', '🎉 عزومة بـ 500 جنيه', '🍫 عشاق الشوكولاتة']
         };
       }
 
@@ -7300,118 +8383,111 @@
       const isDietAsk = norm.includes('دايت') || norm.includes('ريجيم') || norm.includes('لايت') || norm.includes('خفيف') || norm.includes('سعرات');
       if (isDietAsk) {
         const dietItems = branchItems.filter(item => {
-          if (!isItemAvailable(item) || isDrinkItem(item)) return false;
+          if (isDrinkItem(item)) return false;
           const hay = normalizeSearchText(`${item.name} ${item.desc} ${item.category}`);
           return hay.includes('بقسماط') || hay.includes('سن') || hay.includes('كمون') || hay.includes('شابور') || hay.includes('برازيل') || hay.includes('قرص ساد') || hay.includes('فطير ساد');
         });
-        const picks = pickFiveBranchRecommendations(dietItems.map(i => i.id), 5);
+        const qa = buildSmartPairedPlan(dietItems.map(i => i.id), { targetCount: 5, weightDefault: 0.5 });
         return {
-          replyText: `مظبطينك حتى في الدايت${nameTag}! 🥖✨ في ${branchLabel} هتلاقي بقسماط سن مقرمش وكمون وشابورة وقرص خفيفة تاخد منها ربع أو نص كيلو براحتك من غير تأنيب ضمير. تحب معاه بقسماط سادة خفيف ولا قراقيش مقرمشة؟`,
-          suggestedIds: picks,
-          followUpSuggestions: ['🥐 فطار سخن على الرايق', '🍪 ربع ونص مشكل', '☕ حاجة تظبط مع القهوة']
+          replyText: `مظبطينك حتى في الدايت${nameTag}! 🥖✨ في ${branchLabel} هتلاقي بقسماط سن مقرمش وكمون وشابورة ومخبوزات خفيفة بأسعارها الحقيقية تحت. تحب معاه بقسماط سادة خفيف ولا قراقيش مقرمشة؟`,
+          recommendedPlan: qa.plan,
+          suggestedIds: qa.plan.map(p => p.itemId),
+          followUpSuggestions: ['🥐 فطار سخن على الرايق', '🍪 ربع ونص مشكل', '💰 تشكيلة بـ 200 جنيه']
         };
       }
 
-      // 0. السؤال عن المشروبات أو الكافيه (مفعل فقط في فرع مول تن بوينت 18 ومخفي في فرع 26 و 31)
+      // 0-هـ. السؤال عن المشروبات أو الكافيه (مفعل فقط في فرع مول تن بوينت 18 ومخفي في فرع 26 و 31)
       const isDrinkAsk = norm.includes('قهو') || norm.includes('مشروب') || norm.includes('كافيه') || norm.includes('عصير') || norm.includes('لاتيه') || norm.includes('شاي') || norm.includes('سموذي') || norm.includes('فرابيه') || norm.includes('موهيتو') || norm.includes('ميلك شيك') || norm.includes('ماتشا') || norm.includes('اسبريسو') || norm.includes('كابتشينو') || norm.includes('موكا') || norm.includes('هوت شوكليت');
       if (isDrinkAsk) {
         if (!drinksEnabled) {
-          const popPicks = pickFiveBranchRecommendations(getPopularItemsIds(), 5);
+          const qa = buildSmartPairedPlan(getPopularItemsIds(), { targetCount: 5 });
           return {
-            replyText: `منورنا${nameTag} في ${branchLabel} 💛 ركن مشروبات الكافيه مخصوص لفرع\u00A018\u00A0(تن\u00A0بوينت) وتقدر تحوّل عليه من شريط الفروع فوق لو حابب تشرب قهوة، إنما هنا في ${branchLabel} مبدعين في المخبوزات السخنة والنواعم والتورت والحلويات الشرقية وبنقدملك اختيارات وزن مرنة ربع أو نص أو كيلو. قولي بقى نفسك في حاجة مسكرة ولا حادقة؟`,
-            suggestedIds: popPicks
+            replyText: `منورنا${nameTag} في ${branchLabel} 💛 ركن مشروبات الكافيه مخصوص لفرع\u00A018\u00A0(تن\u00A0بوينت) وتقدر تحوّل عليه من شريط الفروع فوق لو حابب تشرب قهوة، إنما هنا في ${branchLabel} مبدعين في المخبوزات السخنة والنواعم والتورت والحلويات الشرقية. بص على أحلى تشكيلة طازجة تحت:`,
+            recommendedPlan: qa.plan,
+            suggestedIds: qa.plan.map(p => p.itemId)
           };
         }
         const matchedDrinks = branchItems.filter(item => {
-          if (!isItemAvailable(item) || !isDrinkItem(item)) return false;
+          if (!isDrinkItem(item)) return false;
           const hay = normalizeSearchText(`${item.name} ${item.desc} ${item.category}`);
           return hay.includes(norm) || norm.split(/\s+/).some(w => w.length >= 3 && hay.includes(w));
         });
-        const allDrinks = branchItems.filter(i => isItemAvailable(i) && isDrinkItem(i));
-        const picks = pickFiveBranchRecommendations(
-          (matchedDrinks.length > 0 ? matchedDrinks : allDrinks).map(i => i.id),
-          5
-        );
+        const allDrinks = branchItems.filter(i => isDrinkItem(i));
+        const qa = buildSmartPairedPlan((matchedDrinks.length > 0 ? matchedDrinks : allDrinks).map(i => i.id), { targetCount: 5 });
         return {
           replyText: `أحلى مزاج في كافيه ${branchLabel}${nameTag} ☕✨ عندك سبانش لاتيه وآيس سبانش وميلك شيك وسموذي ينعش القلب، وضيفهم لسلتك بضغطة تحت! تحب المشروب ساخن يدفيك ولا بارد يروق عليك؟`,
-          suggestedIds: picks
+          recommendedPlan: qa.plan,
+          suggestedIds: qa.plan.map(p => p.itemId)
         };
       }
 
       // 1. لعشاق الشوكولاتة
       const isChocoLoverAsk = norm.includes('عشاق الشوكولا') || norm.includes('شوكولا') || norm.includes('شيكولا') || norm.includes('نوتيلا') || norm.includes('كاكاو') || norm.includes('مولتن') || norm.includes('مولتو');
-      if (isChocoLoverAsk && !norm.includes('ميزانيه') && !norm.includes('معايا')) {
+      if (isChocoLoverAsk) {
         const chocoItems = branchItems.filter(item => {
-          if (!isItemAvailable(item)) return false;
           const hay = normalizeSearchText(`${item.name} ${item.desc} ${item.category}`);
           return hay.includes('شوكولا') || hay.includes('شيكولا') || hay.includes('نوتيلا') || hay.includes('مولتن') || hay.includes('مولتو') || hay.includes('دونات') || hay.includes('كوكيز') || hay.includes('بيتي فور');
         });
-        const picks = pickFiveBranchRecommendations(chocoItems.map(i => i.id), 5);
+        const qa = buildSmartPairedPlan(chocoItems.map(i => i.id), { targetCount: 5 });
         const intro = pickRandomChef([
-          `آه يا سلام على مزاج عشاق الشوكولاتة${nameTag}! 🍫✨ نقيتلك من ${branchLabel} أحلى حاجات غرقانة شوكولاتة تخطف القلب من أول قطمة، والنواعم متاحة ربع أو نص أو كيلو براحتك.`,
+          `آه يا سلام على مزاج عشاق الشوكولاتة${nameTag}! 🍫✨ نقيتلك من ${branchLabel} أحلى تشكيلة غرقانة شوكولاتة بأسعارها الحقيقية تحت.`,
           `مفيش أحلى من الشوكولاتة تعدل المزاج${nameTag} 🍫💛 جهزتلك تشكيلة سعادة في ${branchLabel} كلها شوكولاتة وكوكيز وبيتي فور طازج!`
         ]);
         return {
           replyText: `${intro}\nقولي بقى ده ليك لوحدك تدلع نفسك ولا جايبين للبيت كله؟`,
-          suggestedIds: picks
+          recommendedPlan: qa.plan,
+          suggestedIds: qa.plan.map(p => p.itemId)
         };
       }
 
-      // 2. استخراج عدد الأفراد / العزومات والمناسبات
+      // 2. استخراج عدد الأفراد / العزومات والمناسبات (بدون رقم ميزانية)
       const guestMatch = normalizedDigitsText.match(/(\d{1,3})\s*(فرد|أفراد|افراد|شخص|أشخاص|اشخاص|ضيف|ضيوف|نفر)/i);
       const isOccasion = Boolean(guestMatch) || norm.includes('مناسبه') || norm.includes('عزومه') || norm.includes('عيد ميلاد') || norm.includes('خطوبه') || norm.includes('فرح') || norm.includes('حفله') || norm.includes('ضيوف');
       if (isOccasion) {
-        const budgetInOccasion = normalizedDigitsText.match(/(\d{2,4})\s*(?:جنيه|ج\.م|ج|مصري)/);
-        if (norm.includes('عزومه') && budgetInOccasion && Number(budgetInOccasion[1]) >= 80) {
-          return buildHappinessBoxSuggestion(Number(budgetInOccasion[1]));
-        }
         const guests = guestMatch ? Math.min(200, Math.max(2, Number(guestMatch[1]))) : 0;
         return buildOccasionRecommendation(guests);
       }
 
-      // 3. استخراج الميزانية
-      const budgetExplicit = normalizedDigitsText.match(/(?:معايا|ميزاني[ةت]ي?|في حدود|بـ|ب\s|حوالي|تحت|اقل من|أقل من)?\s*(\d{2,4})\s*(?:جنيه|ج\.م|ج|مصري)?/);
-      const isBudgetAsk = norm.includes('ميزانيه') || norm.includes('معايا') || norm.includes('في حدود') || norm.includes('اقل من') || norm.includes('رخيص') || norm.includes('توفير') || (budgetExplicit && Number(budgetExplicit[1]) >= 40 && !norm.includes('مقاس') && !norm.includes('20/20') && !norm.includes('25/25') && !norm.includes('30/30'));
-      if (isBudgetAsk) {
-        const budgetVal = budgetExplicit ? Number(budgetExplicit[1]) : 0;
-        if (budgetVal >= 40) {
-          return buildHappinessBoxSuggestion(budgetVal);
-        }
-        const b = buildHappinessBoxSuggestion(200);
+      // 3. سؤال عام عن الميزانية بدون تحديد رقم
+      if (budgetInfo.isBudgetQuery) {
+        const b = buildHappinessBoxSuggestion(300, {});
         return {
-          replyText: `قولّي بس ميزانيتك كام${nameTag} وأنا هفصّلك تشكيلة من ${branchLabel} على مقاسها بالظبط! 💰✨ كبداية عملتلك تشكيلة حلوة في حدود 200 جنيه تقدر تضيفها تحت. تحب نزوّد شرقي ولا مخبوزات؟`,
-          customBoxKey: b.customBoxKey,
-          suggestedIds: b.suggestedIds
+          replyText: `قولّي بس ميزانيتك كام${nameTag} وأنا هفصّلك تشكيلة من ${branchLabel} على مقاسها بالظبط وبالمليم! 💰✨ كبداية عملتلك تشكيلة متنوعة في حدود 300 ج.م تحت. تحب نزوّد شرقي ولا مخبوزات؟`,
+          recommendedPlan: b.recommendedPlan,
+          suggestedIds: b.suggestedIds,
+          budgetTarget: 300,
+          followUpSuggestions: ['💰 تشكيلة بـ 200 جنيه', '🎉 عزومة بـ 500 جنيه', '💰 عزومة بـ 800 جنيه']
         };
       }
 
       // 4. الأكثر مبيعاً اليوم
       const isBestSellers = norm.includes('الاكثر') || norm.includes('مبيعا') || norm.includes('تريند') || norm.includes('اشهر') || norm.includes('مميز');
       if (isBestSellers) {
-        const picks = pickFiveBranchRecommendations(getPopularItemsIds(), 5);
+        const qa = buildSmartPairedPlan(getPopularItemsIds(), { targetCount: 6 });
         const intro = pickRandomChef([
-          `دي أكتر حاجات زباين ${branchLabel} بيخطفوها أول ما تطلع من الفرن${nameTag} 🔥👑 وكل أصناف الوزن متاحة ربع أو نص أو كيلو.`,
+          `دي أكتر حاجات زباين ${branchLabel} بيخطفوها أول ما تطلع من الفرن${nameTag} 🔥👑 بأسعارها الحقيقية وأوزانها المرنة تحت:`,
           `لو عايز المضمون اللي كل الناس بتشكر فيه في ${branchLabel}${nameTag}.. بص التريندات بتاعتنا تحت 🔥✨`
         ]);
         return {
           replyText: `${intro}\nأي صنف فيهم يفتح نفسك أكتر؟`,
-          suggestedIds: picks
+          recommendedPlan: qa.plan,
+          suggestedIds: qa.plan.map(p => p.itemId)
         };
       }
 
       // 5. العروض وأكواد الخصم الحية وبوكسات الهدايا
       const isOfferOrBox = norm.includes('عرض') || norm.includes('عروض') || norm.includes('خصم') || norm.includes('خصومات') || norm.includes('بوكس') || norm.includes('هدايا') || norm.includes('هديه');
       if (isOfferOrBox) {
-        const offerItems = branchItems.filter(i => isItemAvailable(i) && ((i.oldPrice && Number(i.oldPrice) > Number(i.price)) || String(i.category || '').includes('عروض') || isItemPopular(i)));
-        const picks = pickFiveBranchRecommendations(offerItems.map(i => i.id), 5);
         const activePromos = (Array.isArray(LIVE_OFFERS) && LIVE_OFFERS.length > 0)
           ? LIVE_OFFERS.filter(o => o.active !== false).slice(0, 2).map(o => `كود ${o.code} لخصم ${o.discountType === 'fixed' ? o.discountValue + ' ج.م' : o.discountValue + '%'}`).join(' و')
           : '';
-        const boxSuggestion = buildHappinessBoxSuggestion(0);
+        const giftBox = buildHappinessBoxSuggestion(350, { isOccasion: true });
         return {
-          replyText: `يا بخت اللي رايحله الهدية منك${nameTag}! 🎁✨ جهزتلك في ${branchLabel} بوكس هدية شيك ويشرف، ومعاك كمان تحت 5 أصناف طازجة ومطلوبة جداً${activePromos ? ` (ومتنساش تستفيد بـ ${activePromos} في السلة)` : ''}. تحبها هدية شرقي ونواعم ولا تورتة وجاتوه؟`,
-          customBoxKey: boxSuggestion.customBoxKey,
-          suggestedIds: picks
+          replyText: `يا بخت اللي رايحله الهدية منك${nameTag}! 🎁✨ جهزتلك في ${branchLabel} تشكيلة هدية متناسقة وتشرف بأسعار المنيو الفعلية${activePromos ? ` (ومتنساش تستفيد بـ ${activePromos} في السلة)` : ''}. تقدر تضيف التشكيلة كلها بضغطة تحت، أو قولي ميزانيتك وهظبطهالك بالظبط!`,
+          recommendedPlan: giftBox.recommendedPlan,
+          suggestedIds: giftBox.suggestedIds,
+          budgetTarget: 350,
+          followUpSuggestions: ['💰 هدية بـ 250 جنيه', '🎉 عزومة بـ 500 جنيه', '🎂 تورتة لعيد ميلاد']
         };
       }
 
@@ -7423,9 +8499,11 @@
         const b31 = BRANCHES_CONFIG.b31;
         const rawThresh = STORE_SETTINGS.freeDeliveryThreshold;
         const freeThresh = (rawThresh !== undefined && rawThresh !== null && rawThresh !== '' && !isNaN(Number(rawThresh)) && Number(rawThresh) >= 0) ? Number(rawThresh) : 250;
+        const qa = buildSmartPairedPlan(getPopularItemsIds(), { targetCount: 5 });
         return {
           replyText: `تشرفنا في أي وقت في فروعنا بالعاشر من رمضان${nameTag}! 📍\nفرع\u00A0الـ\u00A026 الرئيسي: ${b26.address} (${b26.phones}). فرع\u00A018\u00A0(تن\u00A0بوينت) بالكافيه: ${b18.address} (${b18.phones}). فرع\u00A0الـ\u00A031: ${b31.address} (${b31.phones}).\nوالتوصيل مجاني لأي طلب من ${freeThresh} ج.م وطالع! تحب أوصلك إيه النهاردة من ${branchLabel}؟`,
-          suggestedIds: pickFiveBranchRecommendations(getPopularItemsIds(), 5)
+          recommendedPlan: qa.plan,
+          suggestedIds: qa.plan.map(p => p.itemId)
         };
       }
 
@@ -7440,7 +8518,6 @@
 
       const scored = [];
       branchItems.forEach(item => {
-        if (!isItemAvailable(item)) return;
         const hayName = normalizeSearchText(item.name);
         const hayCat = normalizeSearchText(item.category);
         const hayDesc = normalizeSearchText(item.desc);
@@ -7462,22 +8539,24 @@
 
       if (scored.length > 0) {
         scored.sort((a, b) => b.score - a.score);
-        const finalPicks = pickFiveBranchRecommendations(scored.map(s => s.item.id), 5);
+        const qa = buildSmartPairedPlan(scored.map(s => s.item.id), { targetCount: 5 });
         const foundIntro = pickRandomChef([
-          `اختيارك ذوقه عالي أوي${nameTag}! ✨ جبتلك من ${branchLabel} أحلى حاجات على طلبك دلوقتي وتقدر تضيف ربع أو نص أو كيلو في أصناف الوزن.`,
-          `من عيوني الاتنين${nameTag} 👨‍🍳💛 في ${branchLabel} جهزتلك أحلى 5 ترشيحات طازجة لسة طالعة من الفرن!`
+          `اختيارك ذوقه عالي أوي${nameTag}! ✨ جبتلك من ${branchLabel} أحلى تشكيلة طازجة على طلبك بأسعارها الحقيقية تحت.`,
+          `من عيوني الاتنين${nameTag} 👨‍🍳💛 في ${branchLabel} جهزتلك أحلى ترشيحات طازجة لسة طالعة من الفرن!`
         ]);
         return {
-          replyText: `${foundIntro}\nتحب تبدأ بأي واحد فيهم ولا نظبط جنبه صنف تاني؟`,
-          suggestedIds: finalPicks,
+          replyText: `${foundIntro}\nتحب تضيف التشكيلة كلها ولا تبدأ بصنف معين؟`,
+          recommendedPlan: qa.plan,
+          suggestedIds: qa.plan.map(p => p.itemId),
           showRoyalStudioCta: isCakeQuery
         };
       }
 
-      const popIds = pickFiveBranchRecommendations(getPopularItemsIds(), 5);
+      const fallbackQa = buildSmartPairedPlan(getPopularItemsIds(), { targetCount: 5 });
       return {
-        replyText: `منورني${nameTag} في ${branchLabel} 👨‍🍳✨ قولي المود النهاردة إيه (فطار سخن، شوكولاتة غرقانة، تورتة، ولا عزومة بميزانية معينة) وهظبطك فوراً! لحد ما تختار، بص على أحلى 5 ترشيحات طازجة دلوقتي تحت:`,
-        suggestedIds: popIds
+        replyText: `منورني${nameTag} في ${branchLabel} 👨‍🍳✨ قولي المود النهاردة إيه (فطار سخن، شوكولاتة غرقانة، تورتة، ولا عزومة بميزانية معينة) وهظبطك فوراً! لحد ما تختار، بص على أحلى تشكيلة طازجة دلوقتي تحت:`,
+        recommendedPlan: fallbackQa.plan,
+        suggestedIds: fallbackQa.plan.map(p => p.itemId)
       };
     }
 
@@ -7497,8 +8576,26 @@
       }
 
       const historyPayload = aiChatHistory
-        .slice(-4)
-        .map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', text: String(m.text || '').slice(0, 450) }));
+        .slice(-10)
+        .map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', text: String(m.text || '').slice(0, 500) }));
+
+      const cartPayload = Array.isArray(cart)
+        ? cart.slice(0, 20).map(c => {
+            const isWt = c.unitMode === 'weight' || c.unitType === 'weight' || c.by_weight === true;
+            const wf = Number(c.weightFactor) || 1;
+            const qNum = Number(c.qty) || 1;
+            const uPrice = roundMoney(Number(c.unitPrice || c.baseKiloPrice || c.price) || 0);
+            return {
+              id: Number(c.itemId || c.id) || 0,
+              name: String(c.name || '').slice(0, 120),
+              qty: isWt ? 1 : qNum,
+              weight: isWt ? roundWeight(wf * qNum) : null,
+              unitType: c.unitMode || c.unitType || (isWt ? 'weight' : 'piece'),
+              unitPrice: uPrice,
+              lineTotal: roundMoney(uPrice * qNum)
+            };
+          })
+        : [];
 
       aiChatHistory.push({ role: 'user', text: q });
       aiIsTyping = true;
@@ -7524,23 +8621,27 @@
           applyAssistantReply(null);
           return;
         }
+        const plan = Array.isArray(localReply.recommendedPlan) ? localReply.recommendedPlan : [];
         applyAssistantReply({
           role: 'assistant',
           text: localReply.replyText,
           customBoxKey: localReply.customBoxKey || null,
-          suggestedIds: pickFiveBranchRecommendations(localReply.suggestedIds || [], 5),
+          recommendedPlan: plan,
+          budgetTarget: Number(localReply.budgetTarget) || 0,
+          suggestedIds: plan.length > 0 ? plan.map(p => p.itemId) : pickFiveBranchRecommendations(localReply.suggestedIds || [], 5),
           followUpSuggestions: localReply.followUpSuggestions || [],
           showRoyalStudioCta: Boolean(localReply.showRoyalStudioCta)
         });
       };
 
+      const budgetCheck = extractChefBudgetFromQuery(q);
       const apiUrl = (typeof getCloudApiUrl === 'function') ? getCloudApiUrl() : '';
       if (apiUrl && /^https:\/\//i.test(apiUrl)) {
         const controller = new AbortController();
         aiActiveAbortController = controller;
         const timeoutId = setTimeout(() => {
           try { controller.abort(); } catch (e) {}
-        }, 12000);
+        }, 16000);
 
         try {
           const res = await fetchAppsScriptPost(
@@ -7549,7 +8650,8 @@
               action: 'askChef',
               message: q,
               branchId: getActiveSheetBranchId(window.CURRENT_BRANCH),
-              history: historyPayload
+              history: historyPayload,
+              cart: cartPayload
             },
             controller.signal
           );
@@ -7558,17 +8660,46 @@
           aiActiveAbortController = null;
 
           if (res && res.ok === true && res.fallback !== true && typeof res.reply === 'string' && res.reply.trim()) {
-            const safeIds = pickFiveBranchRecommendations(
-              Array.isArray(res.recommendedIds) ? res.recommendedIds : [],
-              5
-            );
+            const liveCatalog = getLiveChefCatalog();
+            const liveById = new Map(liveCatalog.map(it => [Number(it.id), it]));
+            const targetBudgetVal = Number(res.budgetTarget) || (budgetCheck.isBudgetQuery ? Number(budgetCheck.budget) : 0);
+
+            let finalPlan = [];
+            if (Array.isArray(res.recommendedItems) && res.recommendedItems.length > 0) {
+              const rawServerEntries = [];
+              for (let i = 0; i < res.recommendedItems.length; i++) {
+                const rec = res.recommendedItems[i];
+                if (!rec) continue;
+                const liveItem = liveById.get(Number(rec.id));
+                if (!liveItem) continue;
+                const mode = getItemUnitMode(liveItem);
+                const rawAmt = mode === 'weight'
+                  ? (Number(rec.weight) || Number(rec.qty) || 0.25)
+                  : (Number(rec.qty) || 1);
+                const built = createChefPlanEntry(liveItem, rawAmt);
+                if (built) rawServerEntries.push(built);
+              }
+              if (rawServerEntries.length > 0) {
+                const verified = verifyChefAssortmentQA(rawServerEntries, targetBudgetVal);
+                finalPlan = verified.plan;
+              }
+            }
+
+            if (finalPlan.length === 0) {
+              const rawRecIds = Array.isArray(res.recommendedIds) ? res.recommendedIds : [];
+              const qa = buildSmartPairedPlan(rawRecIds, { targetCount: Math.min(6, Math.max(5, rawRecIds.length)) });
+              finalPlan = qa.plan;
+            }
+
             const safeFollowUps = Array.isArray(res.followUpSuggestions)
               ? res.followUpSuggestions.map(s => String(s || '').trim()).filter(Boolean).slice(0, 4)
               : [];
             applyAssistantReply({
               role: 'assistant',
               text: res.reply.trim(),
-              suggestedIds: safeIds,
+              recommendedPlan: finalPlan,
+              budgetTarget: targetBudgetVal,
+              suggestedIds: finalPlan.map(p => p.itemId),
               followUpSuggestions: safeFollowUps,
               showRoyalStudioCta: /(تورت|كيك|عيد ميلاد)/i.test(q + ' ' + res.reply)
             });
@@ -8173,6 +9304,12 @@
     initApp();
     setActiveBranch('b26', { silent: true, animate: false });
     syncFromGoogleSheet(false);
+
+    window.addEventListener('online', function () {
+      if (RAW.length === 0 || MENU_SYNC_STATE.status !== 'ready') {
+        syncFromGoogleSheet(false);
+      }
+    });
   </script>
   <script>
     /**
@@ -8738,7 +9875,11 @@
       });
 
       function scInitIosInstallVisibility() {
-        if (scIsIosDevice() && !scIsStandalonePwa()) {
+        if (scIsStandalonePwa()) {
+          scPwaSetInstallBtnVisible(false);
+          return;
+        }
+        if (scIsIosDevice()) {
           scPwaSetInstallBtnVisible(true);
         }
       }
@@ -8748,6 +9889,10 @@
 
       window.addEventListener('beforeinstallprompt', function (e) {
         try {
+          if (scIsStandalonePwa()) {
+            scPwaSetInstallBtnVisible(false);
+            return;
+          }
           e.preventDefault();
           scPwaDeferredPrompt = e;
           scPwaSetInstallBtnVisible(true);
@@ -8786,10 +9931,22 @@
 
       window.addEventListener('load', function () {
         try {
-          if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-            navigator.serviceWorker.register('./sw.js').catch(function () {});
+          if (
+            typeof navigator !== 'undefined' &&
+            'serviceWorker' in navigator &&
+            navigator.serviceWorker &&
+            typeof navigator.serviceWorker.register === 'function' &&
+            (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+          ) {
+            navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then(function (reg) {
+              try {
+                if (reg && reg.waiting) {
+                  reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+                }
+              } catch (e) {}
+            }).catch(function () {});
           }
-        } catch (err) {}
+        } catch (e) {}
       });
     })();
   </script>
