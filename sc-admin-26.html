@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>لوحة التحكم السحابية — سويت سيتي 1999 | فرع الـ 26</title>
   <meta name="robots" content="noindex, nofollow" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,6 +27,9 @@
       width: 100%;
       max-width: 100%;
       overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      touch-action: manipulation;
+      overscroll-behavior-y: contain;
       background-color: var(--bg-base);
       color: var(--text-main);
       font-family: 'Cairo', system-ui, -apple-system, sans-serif;
@@ -34,6 +37,20 @@
         radial-gradient(circle at 12% 8%, rgba(212, 175, 55, 0.11), transparent 36%),
         radial-gradient(circle at 88% 12%, rgba(212, 175, 55, 0.08), transparent 32%);
       min-height: 100vh;
+    }
+    input, textarea, select {
+      font-size: 16px !important;
+      touch-action: manipulation;
+    }
+    button, a, [role="button"], label {
+      touch-action: manipulation;
+    }
+    .sc-admin-modal-card {
+      max-height: 92vh;
+      max-height: 92dvh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
     }
     .font-royal { font-family: 'Playfair Display', Georgia, serif; }
     .gold-gradient-text {
@@ -767,7 +784,7 @@
 
   <!-- ==================== PRODUCT ADD/EDIT MODAL ==================== -->
   <div id="productModal" class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 overflow-y-auto">
-    <div class="panel-card w-full max-w-xl rounded-3xl p-5 sm:p-6 my-auto">
+    <div class="panel-card sc-admin-modal-card max-h-[92vh] max-h-[92dvh] overflow-y-auto w-full max-w-xl rounded-3xl p-5 sm:p-6 my-auto">
       <div class="flex items-center justify-between gap-2 pb-3 mb-4 border-b border-[#d4af37]/20">
         <h3 id="productModalTitle" class="text-base font-black text-[#f5df9c]">إضافة صنف جديد</h3>
         <button type="button" id="closeProductModalBtn" class="w-8 h-8 rounded-lg bg-[#1d170f] border border-[#d4af37]/30 text-[#f3d266] font-bold cursor-pointer">✕</button>
@@ -849,7 +866,7 @@
 
           <div class="flex items-center gap-3">
             <div id="pmImgPreviewWrap" class="w-16 h-16 rounded-xl bg-[#1a150e] border border-[#d4af37]/35 flex items-center justify-center overflow-hidden shrink-0">
-              <img id="pmImgPreview" src="" alt="معاينة الصورة" class="hidden w-full h-full object-cover" />
+              <img id="pmImgPreview" src="" alt="معاينة الصورة" referrerpolicy="no-referrer" decoding="async" class="hidden w-full h-full object-cover" />
               <span id="pmImgPreviewFallback" class="text-2xl">🥐</span>
             </div>
             <div class="flex-1 min-w-0 space-y-1.5">
@@ -907,7 +924,7 @@
 
   <!-- ==================== QUICK POS WALK-IN INVOICE MODAL ==================== -->
   <div id="quickPosModal" class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 overflow-y-auto">
-    <div class="panel-card w-full max-w-2xl rounded-3xl p-5 sm:p-6 my-auto space-y-4">
+    <div class="panel-card sc-admin-modal-card max-h-[92vh] max-h-[92dvh] overflow-y-auto w-full max-w-2xl rounded-3xl p-5 sm:p-6 my-auto space-y-4">
       <div class="flex items-center justify-between gap-2 pb-3 border-b border-[#d4af37]/20">
         <div>
           <h3 class="text-base font-black text-[#f5df9c]">⚡ فاتورة كاشير سريعة (Quick POS)</h3>
@@ -1194,9 +1211,42 @@
       return el ? Boolean(el.checked) : fallback;
     }
 
+    function normalizeImageUrl(rawUrl) {
+      const s = String(rawUrl || "").trim();
+      if (!s) return "";
+      if (/^(?:javascript|vbscript|data):/i.test(s)) return "";
+      if (/^(?:\.\/|\.\.\/|\/(?!\/))/.test(s)) return s;
+
+      let fileId = "";
+      const fileDMatch = s.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]{10,})/i);
+      if (fileDMatch) fileId = fileDMatch[1];
+
+      if (!fileId) {
+        const lhMatch = s.match(/lh\d+\.googleusercontent\.com\/(?:u\/\d+\/)?d\/([a-zA-Z0-9_-]{10,})/i);
+        if (lhMatch) fileId = lhMatch[1];
+      }
+
+      if (!fileId) {
+        const queryIdMatch = s.match(/(?:drive\.google\.com\/(?:open|uc|thumbnail)|drive\.usercontent\.google\.com\/download)[^#]*?[?&]id=([a-zA-Z0-9_-]{10,})/i);
+        if (queryIdMatch) fileId = queryIdMatch[1];
+      }
+
+      if (!fileId && /drive\.google\.com/i.test(s)) {
+        const fallbackIdMatch = s.match(/[?&]id=([a-zA-Z0-9_-]{10,})/i);
+        if (fallbackIdMatch) fileId = fallbackIdMatch[1];
+      }
+
+      if (fileId) {
+        return `https://lh3.googleusercontent.com/d/${fileId}=w800`;
+      }
+
+      if (/^https?:\/\//i.test(s)) return s;
+      return "";
+    }
+
     function isSafeImgUrl(url) {
-      const s = String(url || "").trim();
-      return /^https?:\/\//i.test(s);
+      const normalized = normalizeImageUrl(url);
+      return Boolean(normalized && (/^https?:\/\//i.test(normalized) || /^(?:\.\/|\.\.\/|\/(?!\/))/.test(normalized)));
     }
 
     function normalizeDigits(val) {
@@ -1268,6 +1318,7 @@
             headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify({ action: "adminLogout", sessionToken: prevToken }),
             redirect: "follow",
+            keepalive: true,
             signal: controller.signal
           }).catch(() => {}).finally(() => clearTimeout(tid));
         } catch (err) {}
@@ -3107,8 +3158,9 @@
         const inB31 = getAdminItemBranchFlag(item, "b31");
         const delKey = "prod-" + item.id;
         const isConfirming = STATE.confirmDeleteKey === delKey;
-        const imgHtml = isSafeImgUrl(item.img)
-          ? `<img src="${escapeHtml(item.img)}" alt="" class="w-12 h-12 rounded-xl object-cover border border-[#d4af37]/30 shrink-0" />`
+        const prodImgUrl = normalizeImageUrl(item.img || item.image || item.ImageURL || "");
+        const imgHtml = isSafeImgUrl(prodImgUrl)
+          ? `<div class="w-12 h-12 rounded-xl bg-[#110e09] border border-[#d4af37]/30 flex items-center justify-center overflow-hidden shrink-0"><img src="${escapeHtml(prodImgUrl)}" alt="${escapeHtml(item.name || "")}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex';" class="w-full h-full object-cover" /><span style="display:none" class="w-full h-full items-center justify-center text-2xl">${escapeHtml(item.emoji || "🥐")}</span></div>`
           : `<div class="w-12 h-12 rounded-xl bg-[#110e09] border border-[#d4af37]/30 flex items-center justify-center text-2xl shrink-0">${escapeHtml(item.emoji || "🥐")}</div>`;
 
         return `
@@ -3276,16 +3328,21 @@
       const fbEl = $id("pmImgPreviewFallback");
       if (fbEl) fbEl.textContent = emojiFallback || getVal("pmEmoji", "🥐") || "🥐";
       const clean = String(srcUrl || "").trim();
-      const isAllowedPreview = isSafeImgUrl(clean) || /^data:image\/(jpeg|png|webp);base64,/i.test(clean);
+      const isDataPreview = /^data:image\/(jpeg|png|webp);base64,/i.test(clean);
+      const resolvedSrc = isDataPreview ? clean : normalizeImageUrl(clean);
+      const isAllowedPreview = isDataPreview || isSafeImgUrl(resolvedSrc);
       if (imgEl && isAllowedPreview) {
+        imgEl.referrerPolicy = "no-referrer";
         imgEl.onerror = () => {
+          imgEl.onerror = null;
           imgEl.classList.add("hidden");
           if (fbEl) fbEl.classList.remove("hidden");
         };
-        imgEl.src = clean;
+        imgEl.src = resolvedSrc;
         imgEl.classList.remove("hidden");
         if (fbEl) fbEl.classList.add("hidden");
       } else if (imgEl) {
+        imgEl.onerror = null;
         imgEl.src = "";
         imgEl.classList.add("hidden");
         if (fbEl) fbEl.classList.remove("hidden");
@@ -3379,8 +3436,9 @@
         }, 25000);
 
         if (res && res.imageUrl) {
-          setVal("pmImg", res.imageUrl);
-          updateModalImagePreview(res.imageUrl, getVal("pmEmoji", "🥐"));
+          const normalizedUploadedUrl = normalizeImageUrl(res.imageUrl) || String(res.imageUrl).trim();
+          setVal("pmImg", normalizedUploadedUrl);
+          updateModalImagePreview(normalizedUploadedUrl, getVal("pmEmoji", "🥐"));
           if (Array.isArray(res.items)) {
             STATE.items = res.items;
             updateLastSyncTime();
@@ -3440,7 +3498,7 @@
       const safeUnit = (item.by_weight === true || item.unitType === "weight")
         ? "weight"
         : (item.unitType === "cup" ? "cup" : (item.unitType === "box" ? "box" : "piece"));
-      const currentImg = item.img || item.image || item.ImageURL || "";
+      const currentImg = normalizeImageUrl(item.img || item.image || item.ImageURL || "");
       setText("productModalTitle", "تعديل الصنف: " + item.name);
       setVal("pmId", String(item.id));
       setVal("pmName", item.name || "");
@@ -4023,7 +4081,8 @@
         const nameVal = sanitizeText(getVal("pmName", ""));
         const priceVal = Number(normalizeDigits(getVal("pmPrice", "0")));
         const oldPriceRaw = Number(normalizeDigits(getVal("pmOldPrice", "0")));
-        const imgRaw = getVal("pmImg", "").trim();
+        const imgInputRaw = getVal("pmImg", "").trim();
+        const imgRaw = imgInputRaw ? normalizeImageUrl(imgInputRaw) : "";
         const b26 = getChecked("pmBranch26", true);
         const b18 = getChecked("pmBranch18", true);
         const b31 = getChecked("pmBranch31", true);
@@ -4040,8 +4099,8 @@
           showToast("السعر قبل الخصم يجب أن يكون أكبر من السعر الحالي (أو اتركه 0)", "error");
           return;
         }
-        if (imgRaw && !isSafeImgUrl(imgRaw)) {
-          showToast("رابط الصورة غير صالح — استخدم رابط https:// أو ارفع الصورة من الموبايل", "error");
+        if (imgInputRaw && !isSafeImgUrl(imgRaw)) {
+          showToast("رابط الصورة غير صالح — استخدم رابط https:// أو رابط Google Drive أو ارفع الصورة من الموبايل", "error");
           return;
         }
 
