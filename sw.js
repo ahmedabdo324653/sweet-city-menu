@@ -1,4 +1,4 @@
-const SC_PWA_CACHE_NAME = 'sweet-city-1999-pwa-v1';
+const SC_PWA_CACHE_NAME = 'sweet-city-v2026-final';
 const SC_PWA_CORE_ASSETS = [
   './',
   './index.html',
@@ -11,7 +11,9 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(SC_PWA_CACHE_NAME).then((cache) => {
       return Promise.allSettled(
-        SC_PWA_CORE_ASSETS.map((url) => cache.add(url).catch(() => null))
+        SC_PWA_CORE_ASSETS.map((url) =>
+          cache.add(new Request(url, { cache: 'reload' })).catch(() => null)
+        )
       );
     })
   );
@@ -27,6 +29,12 @@ self.addEventListener('activate', (event) => {
       );
     }).then(() => self.clients.claim())
   );
+});
+
+self.addEventListener('message', (event) => {
+  if (event && event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('fetch', (event) => {
@@ -46,16 +54,50 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Network-Only للسيرفر وبيانات Google Sheets / Apps Script / Drive
   const host = parsedUrl.hostname.toLowerCase();
   if (
     host.includes('script.google.com') ||
     host.includes('script.googleusercontent.com') ||
     host.includes('docs.google.com') ||
+    host.includes('drive.google.com') ||
+    host.includes('googleusercontent.com') ||
     host.includes('googleapis.com')
   ) {
     return;
   }
 
+  // Network-First لصفحات HTML والتنقل
+  const acceptHeader = req.headers ? (req.headers.get('accept') || '') : '';
+  const isHtmlRequest =
+    req.mode === 'navigate' ||
+    acceptHeader.includes('text/html') ||
+    parsedUrl.pathname.endsWith('/') ||
+    parsedUrl.pathname.endsWith('.html');
+
+  if (isHtmlRequest) {
+    event.respondWith(
+      fetch(req)
+        .then((networkRes) => {
+          if (networkRes && networkRes.status === 200 && networkRes.type === 'basic') {
+            const clone = networkRes.clone();
+            caches.open(SC_PWA_CACHE_NAME).then((cache) => {
+              cache.put(req, clone).catch(() => {});
+            }).catch(() => {});
+          }
+          return networkRes;
+        })
+        .catch(() => {
+          return caches.match(req).then((cached) => {
+            if (cached) return cached;
+            return caches.match('./index.html').then((idx) => idx || caches.match('./'));
+          });
+        })
+    );
+    return;
+  }
+
+  // Network-First مع حفظ احتياطي لبقية الأصول الثابتة
   event.respondWith(
     fetch(req)
       .then((networkRes) => {
@@ -74,9 +116,6 @@ self.addEventListener('fetch', (event) => {
       .catch(() => {
         return caches.match(req).then((cachedRes) => {
           if (cachedRes) return cachedRes;
-          if (req.mode === 'navigate') {
-            return caches.match('./index.html').then((idx) => idx || caches.match('./'));
-          }
           return new Response('', { status: 503, statusText: 'Offline' });
         });
       })
